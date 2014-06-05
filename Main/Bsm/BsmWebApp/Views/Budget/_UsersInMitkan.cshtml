@@ -1,0 +1,21 @@
+﻿
+@model BsmWebApp.ViewModels.Budgets.BudgetMainViewModel
+
+
+<div class="t-rtl">
+    @{
+        //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
+        Html.Kendo().Grid(Model.UsersInMitkan.Employees)
+           .Name("EmployeesList").Columns(columns =>
+           {
+               columns.Bound(o => o.BudgetEmployee.MisparIshi).Title("מספר אישי").Width(100);
+               columns.Bound(o => o.BudgetEmployee.FirstName).Title("שם פרטי").Width(100);
+               columns.Bound(o => o.BudgetEmployee.LastName).Title("שם משפחה").Width(100);
+
+           })
+           .Render();
+
+
+
+    }
+</div>

@@ -3,12 +3,64 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BsmWebApp", "BsmWebApp\BsmWebApp.csproj", "{97855240-CC49-475F-A96F-2C416FE3DF60}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedLib", "SharedLib", "{F8B05487-FF3E-48CC-B589-88A42F1394DE}"
+	ProjectSection(SolutionItems) = preProject
+		SharedLib\EntityFramework.dll = SharedLib\EntityFramework.dll
+		SharedLib\Kendo.Mvc.dll = SharedLib\Kendo.Mvc.dll
+		SharedLib\Microsoft.Practices.ServiceLocation.dll = SharedLib\Microsoft.Practices.ServiceLocation.dll
+		SharedLib\Microsoft.Practices.Unity.dll = SharedLib\Microsoft.Practices.Unity.dll
+		SharedLib\Oracle.DataAccess.dll = SharedLib\Oracle.DataAccess.dll
+		SharedLib\Topshelf.dll = SharedLib\Topshelf.dll
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BsmBL", "BsmBL\BsmBL.csproj", "{E2FD3825-12DE-4C45-9D22-D18E08B64CC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BsmCommon", "BsmCommon\BsmCommon.csproj", "{57D004F7-194B-4758-984C-49F1C77F69BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Egged.Infrastructure", "Egged.Infrastructure\Egged.Infrastructure.csproj", "{A414C1F8-0C57-4ECF-A356-2F23B257E9A1}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 1
+		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://tfssrv01:8080/tfs/ksafimcollection
 		SccLocalPath0 = .
+		SccProjectUniqueName1 = BsmWebApp\\BsmWebApp.csproj
+		SccProjectName1 = BsmWebApp
+		SccLocalPath1 = BsmWebApp
+		SccProjectUniqueName2 = BsmBL\\BsmBL.csproj
+		SccProjectName2 = BsmBL
+		SccLocalPath2 = BsmBL
+		SccProjectUniqueName3 = BsmCommon\\BsmCommon.csproj
+		SccProjectName3 = BsmCommon
+		SccLocalPath3 = BsmCommon
+		SccProjectUniqueName4 = Egged.Infrastructure\\Egged.Infrastructure.csproj
+		SccProjectName4 = Egged.Infrastructure
+		SccLocalPath4 = Egged.Infrastructure
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97855240-CC49-475F-A96F-2C416FE3DF60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97855240-CC49-475F-A96F-2C416FE3DF60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97855240-CC49-475F-A96F-2C416FE3DF60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97855240-CC49-475F-A96F-2C416FE3DF60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2FD3825-12DE-4C45-9D22-D18E08B64CC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2FD3825-12DE-4C45-9D22-D18E08B64CC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2FD3825-12DE-4C45-9D22-D18E08B64CC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2FD3825-12DE-4C45-9D22-D18E08B64CC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57D004F7-194B-4758-984C-49F1C77F69BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57D004F7-194B-4758-984C-49F1C77F69BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57D004F7-194B-4758-984C-49F1C77F69BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57D004F7-194B-4758-984C-49F1C77F69BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A414C1F8-0C57-4ECF-A356-2F23B257E9A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A414C1F8-0C57-4ECF-A356-2F23B257E9A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A414C1F8-0C57-4ECF-A356-2F23B257E9A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A414C1F8-0C57-4ECF-A356-2F23B257E9A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

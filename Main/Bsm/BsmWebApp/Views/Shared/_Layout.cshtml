@@ -1,0 +1,59 @@
+﻿@using BsmWebApp.ViewModels
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/kendo")
+
+    @Styles.Render("~/Content/kendo/css")
+
+
+</head>
+<body dir="rtl">
+    @{
+        LayoutViewModel MenuModel = ViewBag.LayoutViewModel;
+    }
+    <div >
+        <span  style="margin-left:100px">ניהול תקציב שעות נוספות במשק</span>
+    </div>
+    <div class="navbar navbar-inverse " >
+        <div class="container">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav pull-right">
+                    @if (MenuModel != null)
+                    {
+                        foreach (var menu in MenuModel.Menus)
+                        {
+                            <li>@Html.ActionLink(menu.LinkText, menu.ActionName, menu.ControllerName)</li>
+                        }
+                    }
+
+                </ul>
+             
+                @*@Html.Partial("_LoginBootstrapPartial")*@
+                @*<ul class="nav navbar-nav navbar-right">
+                <li class="navbar-text">Hello, @User.Identity.Name!</li>
+                <li class="navbar-btn">@Html.ActionLink("Logout","Logout","Account")</li>
+            </ul>*@
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    
+    @RenderSection("scripts", required: false)
+</body>
+</html>

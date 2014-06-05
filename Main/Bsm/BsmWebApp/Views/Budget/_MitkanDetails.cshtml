@@ -1,0 +1,47 @@
+﻿@model BsmWebApp.ViewModels.Budgets.BudgetMainViewModel
+
+<div>
+    <h4>MitkanBudget</h4>
+	<hr />
+    @using(Html.BeginForm())
+    { 
+    <div class="row">
+        <div class="col-md-1 col-md-push-11" > מתקן:</div>  
+        <div class="col-md-2 col-md-push-8">
+            @Html.TextBoxFor(m=>m.MitkanName)
+        </div>  
+        <div class="col-md-1 col-md-push-5"></div>
+        <div class="col-md-1 col-md-push-3" >חודש:</div>
+        <div class="col-md-2 ">
+            @*@Html.Kendo().DatePickerFor(m => m.Month).Format("{0:MM/yyyy}").ParseFormats(new List<string>() { "MM/yyyy" })*@
+            @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, "select month")
+        </div>
+        <div class="col-md-1 col-md-pull-5">
+            <input type="submit" value="הצג" />
+        </div>
+    </div>
+        if (Model.IsMitkanBudgetDetailEmpty == false)
+        {
+            <table class="styled">
+                <tr>
+                    <th class="styled">
+                        @Html.DisplayNameFor(model => model.MitkanBudgetDetail.BudgetVal)
+                    </th>
+                    <th class="styled">
+                        @Html.DisplayNameFor(model => model.MitkanBudgetDetail.AddSubtractHours)
+                    </th>
+                </tr>
+                <tr>
+                    <td class="styled">
+                        @Html.DisplayFor(model => model.MitkanBudgetDetail.BudgetVal)
+                    </td>
+                    <td class="styled">
+                        @Html.DisplayFor(model => model.MitkanBudgetDetail.AddSubtractHours)
+                    </td>
+                </tr>
+            </table>
+
+        }
+    }
+</div>
+    

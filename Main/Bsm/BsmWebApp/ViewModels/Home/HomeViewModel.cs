@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace BsmWebApp.ViewModels.Home
+{
+    public class HomeViewModel
+    {
+        public DateTime Today { get; set; }
+        public string UserName { get; set; }
+    }
+}
