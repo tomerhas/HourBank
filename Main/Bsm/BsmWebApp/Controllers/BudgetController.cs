@@ -1,6 +1,7 @@
 ﻿using BsmCommon.DataModels;
 using BsmCommon.DataModels.Budgets;
 using BsmCommon.Interfaces.Managers;
+using BsmWebApp.Infrastructure.Security;
 using BsmWebApp.ViewModels.Budgets;
 using Microsoft.Practices.Unity;
 using System;
@@ -18,9 +19,10 @@ namespace BsmWebApp.Controllers
         {
 
         }
-        
+        [PageAuthorize("aaa.aspx")]
         public ActionResult Index()
         {
+            
             BudgetMainViewModel vm = InitBudgetVm();
 
             return View(vm);
@@ -34,8 +36,10 @@ namespace BsmWebApp.Controllers
             return View(vmResult);
         }
 
+        
         private UsersInMitkanViewModel GetEmployeesInMitkan(string mitkanName, DateTime month)
         {
+
             var manager = _container.Resolve<IBudgetManager>();
             var employees =  manager.GetBudgetEmployees(int.Parse(mitkanName), month);
             UsersInMitkanViewModel vm = new UsersInMitkanViewModel();

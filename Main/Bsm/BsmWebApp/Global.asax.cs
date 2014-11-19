@@ -1,4 +1,5 @@
 ﻿using BsmWebApp.Infrastructure;
+using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,15 @@ namespace BsmWebApp
             UnityDependencyResolver resolver = new UnityDependencyResolver(container);
             DependencyResolver.SetResolver(resolver);
 
+            InitServiceLocator(container);
+
             boot.SetMenus(container);
+        }
+
+        private void InitServiceLocator(IUnityContainer container)
+        {
+            UnityServiceLocator sl = new UnityServiceLocator(container);
+            ServiceLocator.SetLocatorProvider(() => sl);
         }
     }
 }

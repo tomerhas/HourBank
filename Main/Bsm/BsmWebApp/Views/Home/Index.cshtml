@@ -14,6 +14,10 @@
         <div class="col-md-2 col-md-push-9"><input type="submit" value=" תקציב שעות נוספות " name="action:Budget" class="opening-btn" /> </div>
         <div class="col-md-2 col-md-push-5"><input type="submit" value=" bla bla" name="action:Budget2" class="opening-btn" /> </div>
     </div>
+    @if(Model.HasError)
+    {
+        <div>@Model.Error</div>
+    }
 </div>
 }
 

@@ -91,7 +91,7 @@ namespace BsmBL.Managers
         {
             List<PirteyOved> empDetails;
             DateTime EndOfMonth= Month.AddMonths(1).AddDays(-1);
-            using (var context = new KdsEntities())
+            using (var context = new KdsEntities())//עומדים לעבוד מול הטבלאות של kds Entiti
             {
                 var parFromDate = new OracleParameter("p_tar_me", OracleDbType.Date, Month, ParameterDirection.Input);
                 var parToDate = new OracleParameter("p_tar_ad", OracleDbType.Date, EndOfMonth, ParameterDirection.Input);

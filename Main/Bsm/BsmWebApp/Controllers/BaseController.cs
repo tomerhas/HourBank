@@ -1,4 +1,7 @@
-﻿using BsmWebApp.ViewModels;
+﻿using BsmCommon.DataModels.Profiles;
+using BsmCommon.Interfaces.CachedItems;
+using BsmCommon.Interfaces.Managers;
+using BsmWebApp.ViewModels;
 using Egged.Infrastructure.Menus.Interfaces;
 using Microsoft.Practices.Unity;
 using System;
@@ -29,6 +32,26 @@ namespace BsmWebApp.Controllers
             LayoutViewModel lvm = new LayoutViewModel(menus);
             ViewBag.LayoutViewModel = lvm;
             
+        }
+
+        public UserInfo CurrentUser
+        {
+            get 
+            {
+                string userName = HttpContext.User.Identity.Name;
+                var cache = _container.Resolve<IUserInfoCachedItems>();
+                UserInfo uf =  cache.Get(userName);
+                if (uf == null)
+                {
+                    var userInfo = _container.Resolve<ISecurityManager>().GetUserInfo(userName);
+                    cache.Add(userName, userInfo);
+                    return userInfo;
+                }
+                else
+                {
+                    return uf;
+                }
+            }
         }
 	}
 }

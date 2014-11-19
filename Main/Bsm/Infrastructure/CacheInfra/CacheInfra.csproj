@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{57D004F7-194B-4758-984C-49F1C77F69BF}</ProjectGuid>
+    <ProjectGuid>{D6968B94-1A4F-4F26-8095-5297AF0E0E83}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BsmCommon</RootNamespace>
-    <AssemblyName>BsmCommon</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>CacheInfra</RootNamespace>
+    <AssemblyName>CacheInfra</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -34,12 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\SharedLib\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,35 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CachedItems\UserInfoCachedItems.cs" />
-    <Compile Include="DataModels\Budgets\Budget.cs" />
-    <Compile Include="DataModels\Budgets\BudgetChange.cs" />
-    <Compile Include="DataModels\Budgets\BudgetEmployee.cs" />
-    <Compile Include="DataModels\Employees\Oved.cs" />
-    <Compile Include="DataModels\Employees\PirteyOved.cs" />
-    <Compile Include="DataModels\Ezor.cs" />
-    <Compile Include="DataModels\MonthHolder.cs" />
-    <Compile Include="DataModels\Parameter.cs" />
-    <Compile Include="DataModels\Profiles\Harshaa.cs" />
-    <Compile Include="DataModels\Profiles\Masach.cs" />
-    <Compile Include="DataModels\Profiles\Profile.cs" />
-    <Compile Include="DataModels\Profiles\ProfilesMasachim.cs" />
-    <Compile Include="DataModels\Profiles\UserInfo.cs" />
-    <Compile Include="Helpers\DateHelper.cs" />
-    <Compile Include="Interfaces\CachedItems\IUserInfoCachedItems.cs" />
-    <Compile Include="Interfaces\Managers\IBudgetManager.cs" />
-    <Compile Include="Interfaces\Managers\ISecurityManager.cs" />
+    <Compile Include="Implements\CachedDictionary.cs" />
+    <Compile Include="Implements\NetCacheManager.cs" />
+    <Compile Include="Interfaces\ICachedDictionary.cs" />
+    <Compile Include="Interfaces\ICacheManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Enums\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\CacheInfra\CacheInfra.csproj">
-      <Project>{d6968b94-1a4f-4f26-8095-5297af0e0e83}</Project>
-      <Name>CacheInfra</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

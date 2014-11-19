@@ -18,9 +18,12 @@ namespace BsmWebApp.Controllers
         {
             
         }
-        public ActionResult Index()
+        public ActionResult Index(string error="")
         {
+            //This is added to casuse the cache to filled in with user info 
+            var user = CurrentUser;
             HomeViewModel vm = new HomeViewModel();
+            vm.Error = error;
             vm.Today = DateTime.Now;
             vm.UserName = "Merav";
             return View(vm);
