@@ -89,3 +89,22 @@ td.styledFixed {
     padding: 5px;
     border: solid 2px #e8eef4;
 }
+
+.FilterFieldSet
+{	
+	border-style:solid; 
+	border-width:1px; 
+	border-color:Gray;
+	font:16px;
+	padding:0px;
+	margin:0px;
+	vertical-align:middle;
+	text-align:right;
+	width:1005px;
+}
+
+hr.styled {
+    BACKGROUND-COLOR: #ffffff; 
+    HEIGHT: 5px; COLOR: #ffffff;
+    BORDER-TOP: black 2px solid;
+}

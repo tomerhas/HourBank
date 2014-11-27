@@ -19,10 +19,9 @@ namespace BsmWebApp.Controllers
         {
 
         }
-        [PageAuthorize("aaa.aspx")]
+       // [PageAuthorize("aaa.aspx")]
         public ActionResult Index()
-        {
-            
+        {         
             BudgetMainViewModel vm = InitBudgetVm();
 
             return View(vm);
@@ -31,8 +30,11 @@ namespace BsmWebApp.Controllers
         public ActionResult Index(BudgetMainViewModel vm)
         {
             DateTime month = DateTime.Parse(vm.SelectedMonth);
-            BudgetMainViewModel vmResult = GetBudgetDetailForMitkan(vm.MitkanName, month);
-            vmResult.UsersInMitkan =  GetEmployeesInMitkan(vm.MitkanName, month);
+
+            var manager = _container.Resolve<IBudgetManager>();
+            var pirteyMitkan = manager.GetYechidaByName(vm.MitkanName);
+            BudgetMainViewModel vmResult = GetBudgetDetailForMitkan(pirteyMitkan.KodYechida, month);
+        //    vmResult.UsersInMitkan =  GetEmployeesInMitkan(vm.MitkanName, month);
             return View(vmResult);
         }
 
@@ -52,17 +54,14 @@ namespace BsmWebApp.Controllers
             return manager.GetMonthsBack(kodParam);
         }
 
-        private BudgetMainViewModel GetBudgetDetailForMitkan(string mitkanName, DateTime dateTime)
+        private BudgetMainViewModel GetBudgetDetailForMitkan(int kodMitkan, DateTime dateTime)
         {
-            //TODO -manager to fill in the MitkanBudget
-          //  Budget mb = new Budget() { BudgetHoursMounthly = 20, BudgetHoursRemender = 10, RemainHours = 8 };
-            Budget mb = _container.Resolve<IBudgetManager>().GetBudget(int.Parse(mitkanName), dateTime);
+           
+            Budget mb = _container.Resolve<IBudgetManager>().GetBudget(kodMitkan, dateTime);
             BudgetMainViewModel vm = InitBudgetVm();
             vm.MitkanBudgetDetail = mb;
-            vm.MitkanName = mitkanName;
+            vm.KodMitkan = kodMitkan;
             vm.Month = dateTime;
-            //var months = new List<string>() { "1", "2", "3" };
-            //vm.FillMonths(months);
             vm.IsMitkanBudgetDetailEmpty = false;
 
             return vm;
@@ -76,5 +75,15 @@ namespace BsmWebApp.Controllers
             vm.MitkanBudgetDetail = new Budget();
             return vm;
         }
+
+
+        public JsonResult GetMitkanStartsWith(string startsWith)
+        {
+            var manager = _container.Resolve<IBudgetManager>();
+            var namelist = manager.GetYechidot(startsWith);
+
+            return Json(namelist, JsonRequestBehavior.AllowGet);
+        }
+
 	}
 }

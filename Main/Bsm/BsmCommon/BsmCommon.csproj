@@ -61,6 +61,7 @@
     <Compile Include="DataModels\Profiles\Profile.cs" />
     <Compile Include="DataModels\Profiles\ProfilesMasachim.cs" />
     <Compile Include="DataModels\Profiles\UserInfo.cs" />
+    <Compile Include="DataModels\Yechida.cs" />
     <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Interfaces\CachedItems\IUserInfoCachedItems.cs" />
     <Compile Include="Interfaces\Managers\IBudgetManager.cs" />

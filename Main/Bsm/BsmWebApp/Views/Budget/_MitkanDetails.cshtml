@@ -1,27 +1,69 @@
 ﻿@model BsmWebApp.ViewModels.Budgets.BudgetMainViewModel
 
+<script src="../../Scripts/jquery-ui-1.10.2.js" type="text/javascript"></script>
+<script src="../../Scripts/jquery-ui-1.10.2.min.js" type="text/javascript"></script>
+
+  <script>
+      $(document).ready(function () {
+          $("#MitkanName").kendoAutoComplete({
+              // placeholder: "Enter site ...",
+              // dataTextField: "SiteName",
+              dataTextField: "TeurYechida",
+              dataValueField: "KodYechida",
+              filter: "startswith",
+              minLength: 1,
+              dataSource: {
+                  type: "json",
+                  serverFiltering: true,
+                  serverPaging: true,
+                  pageSize: 20,
+                  transport: {
+                      read:
+                          {
+                              url: "Budget/GetMitkanStartsWith"
+                          }, //read
+                      parameterMap: function () {// send value of autocomplete as the "startsWith" parameter
+                          return {
+                              startsWith: $("#MitkanName").data("kendoAutoComplete").value()
+                          };
+                      }
+                  } //transport
+              } //datasource
+          }); //kendoAutoComplete
+      }); //DocumentReady
+     
+        </script>
 <div>
-    <h4>MitkanBudget</h4>
-	<hr />
+    @*<h4>MitkanBudget</h4>*@
+    
+    <hr class="styled" />
+
     @using(Html.BeginForm())
     { 
     <div class="row">
-        <div class="col-md-1 col-md-push-11" > מתקן:</div>  
-        <div class="col-md-2 col-md-push-8">
-            @Html.TextBoxFor(m=>m.MitkanName)
+        <div class="col-md-1 col-md-push-11" > שם מתקן:</div>  
+        <div class="col-md-2 col-md-push-8">    
+              @Html.TextBoxFor(m=>m.MitkanName)
         </div>  
+
+
         <div class="col-md-1 col-md-push-5"></div>
         <div class="col-md-1 col-md-push-3" >חודש:</div>
         <div class="col-md-2 ">
             @*@Html.Kendo().DatePickerFor(m => m.Month).Format("{0:MM/yyyy}").ParseFormats(new List<string>() { "MM/yyyy" })*@
-            @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, "select month")
+            @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, "")
         </div>
-        <div class="col-md-1 col-md-pull-5">
-            <input type="submit" value="הצג" />
+        <div class="col-md-1 col-md-pull-3">
+            <input type="submit" value="הצג"  />
         </div>
+       
     </div>
-        if (Model.IsMitkanBudgetDetailEmpty == false)
-        {
+
+   <hr class="styled" />
+
+   
+    if (Model.IsMitkanBudgetDetailEmpty == false)
+    { 
             <table class="styled">
                 <tr>
                     <th class="styled">
@@ -41,7 +83,11 @@
                 </tr>
             </table>
 
-        }
     }
+ }
+
+
+
+
 </div>
     

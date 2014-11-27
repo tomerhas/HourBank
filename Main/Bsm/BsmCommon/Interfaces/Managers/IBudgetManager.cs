@@ -14,5 +14,7 @@ namespace BsmCommon.Interfaces.Managers
         Budget GetBudget(int KodYechida, DateTime Month);
 
         List<BudgetEmployee> GetBudgetEmployees(int KodYechida, DateTime Month);
+        List<Yechida> GetYechidot(string query);
+        Yechida GetYechidaByName(string TeurYechida);
     }
 }

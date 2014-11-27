@@ -20,8 +20,14 @@ namespace BsmBL.Managers
         {
             int num = GetMonthsBackFromParameters(KodParam);
             var list = new List<MonthHolder>();
-            list.Add(new MonthHolder() { Id = "01/04/2014", Val = "04/2014" });
-            list.Add(new MonthHolder() { Id = "01/05/2014", Val = "05/2014" });
+            var date = DateTime.Now;
+            for (int i = 0; i < num; i++ )
+            {
+                var id = date.Month.ToString().PadLeft(2, '0') + "/" + date.Year;
+                list.Add(new MonthHolder() { Id = "01/"+  id, Val = id });
+                //list.Add(new MonthHolder() { Id = "01/05/2014", Val = "05/2014" });
+                date = date.AddMonths(-1);
+            }
             return list;
         }
 
@@ -126,8 +132,27 @@ namespace BsmBL.Managers
                 return result;
             }
         }
+
+        public List<Yechida> GetYechidot(string query)
+        {
+            using (var db = new KdsEntities())
+            {
+                return String.IsNullOrEmpty(query) ? db.Yechidot.ToList() :
+                db.Yechidot.Where(y => y.TeurYechida.StartsWith(query)).ToList();
+            }   
+        }
+
+        public Yechida GetYechidaByName(string TeurYechida)
+        {
+            using (var db = new KdsEntities())
+            {
+                return db.Yechidot.SingleOrDefault(y => y.TeurYechida.Trim().Equals(TeurYechida.Trim()));
+            }   
+        }
     }
 
+
+   
     //empDetails = context.PirteyOvdim.Where(x => x.YechidaIrgunit == KodYechida &&
     //                (
     //                    (Month >= x.TaarichMe && Month<=x.TaarichAd) ||

@@ -25,7 +25,7 @@ namespace BsmWebApp.Controllers
             HomeViewModel vm = new HomeViewModel();
             vm.Error = error;
             vm.Today = DateTime.Now;
-            vm.UserName = "Merav";
+            vm.UserName = user.EmployeeFullName;
             return View(vm);
         }
 

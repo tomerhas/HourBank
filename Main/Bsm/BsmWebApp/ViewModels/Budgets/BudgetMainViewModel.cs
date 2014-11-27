@@ -13,8 +13,7 @@ namespace BsmWebApp.ViewModels.Budgets
         public BudgetMainViewModel()
         {
             IsMitkanBudgetDetailEmpty = true;
-            UsersInMitkan = new UsersInMitkanViewModel();
-            
+            UsersInMitkan = new UsersInMitkanViewModel();   
         }
 
         public BudgetMainViewModel(List<MonthHolder> months) : this()
@@ -29,6 +28,7 @@ namespace BsmWebApp.ViewModels.Budgets
             //SelectedMonth = 1;
         }
         public string MitkanName { get; set; }
+        public int KodMitkan { get; set; }
         public DateTime Month { get; set; }
         public bool IsMitkanBudgetDetailEmpty { get; set; }
         public Budget MitkanBudgetDetail { get; set; }

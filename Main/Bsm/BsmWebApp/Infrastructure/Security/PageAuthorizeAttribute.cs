@@ -31,7 +31,7 @@ namespace BsmWebApp.Infrastructure.Security
             else
             {
                 //filterContext.Result=new RedirectToRouteResult(new RouteValueDictionary(new {controller="Home", action="Index"}));
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "Index", error="NotPermitted" }));
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "Index", error="אינך רשאי לצפות בדף זה, לקבלת הרשאות אנא פנה למנהל המערכת." }));
             }
         }
     }

@@ -4,20 +4,28 @@
 {
 <div style="height:500px">
     <div class="row" style="background-color:lightgray;margin-bottom:60px">
-        <div class="col-md-2 col-md-push-10"><span>שלום </span><span>@Model.UserName</span></div>
-        <div class="col-md-8"> </div>
-        <div class="col-md-2 col-md-pull-10"><span>תאריך</span><span>@Model.Today.ToShortDateString()</span></div>
+        <div class="col-md-2 col-md-push-10"><span style="font-size:14pt" >שלום </span><span style="font-size:14pt;font-weight:bolder;color:blue;" >@Model.UserName</span></div>
+        <div class="col-md-7"> </div>
+        <div class="col-md-3 col-md-pull-9"><span style="font-size:12pt" >תאריך </span><span style="font-size:12pt" >@Model.Today </span></div>
     </div>
    
     <div class="row">
         <div class="col-md-1"></div>
-        <div class="col-md-2 col-md-push-9"><input type="submit" value=" תקציב שעות נוספות " name="action:Budget" class="opening-btn" /> </div>
-        <div class="col-md-2 col-md-push-5"><input type="submit" value=" bla bla" name="action:Budget2" class="opening-btn" /> </div>
+        <div class="col-md-2 col-md-push-7"><input type="submit" value=" תקציב שעות נוספות " name="action:Budget" class="opening-btn" /> </div>
+        <div class="col-md-2 col-md-push-3"><input type="submit" value=" הפחתה/הוספה שעות נוספות" name="action:Budget2" class="opening-btn" /> </div>
+        <div class="col-md-2 col-md-pull-1"><input type="submit" value=" אישור חריגות" name="action:Budget2" class="opening-btn" /> </div>
+        <div class="col-md-2 col-md-pull-5"><input type="submit" value=" דוחו''ת" name="action:Budget2" class="opening-btn" /> </div>
     </div>
-    @if(Model.HasError)
-    {
-        <div>@Model.Error</div>
-    }
+    <br />
+    <br />
+     <div class="row">
+     <div class="col-md-3"></div>
+        @if(Model.HasError)
+        {
+            <div  class="col-md-7" style="font-size:14pt;font-weight:bolder;color:red;text-align: center; "  >@Model.Error</div>
+        }
+    <div class="col-md-3"></div>
+    </div>
 </div>
 }
 
