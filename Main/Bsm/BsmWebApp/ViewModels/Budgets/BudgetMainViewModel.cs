@@ -38,6 +38,9 @@ namespace BsmWebApp.ViewModels.Budgets
         public string SelectedMonth { get; set; }
 
         public UsersInMitkanViewModel UsersInMitkan { get; set; }
+
+        public int MisparIshi { get; set; }
+        public string OvedName { get; set; }
     }
 
    

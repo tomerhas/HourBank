@@ -34,19 +34,24 @@ namespace BsmBL.Managers
         public Budget GetBudget(int KodYechida, DateTime Month)
         {
             Budget budget = null;
-            Budget budgetUsed = null;
+            Budget budgetPrevMonth = null;
+           // Budget budgetUsed = null;
             using (var context = new BsmEntities())
             {
-                budget = context.Budgets.SingleOrDefault(x => x.KodYechida == KodYechida && x.Month == Month);
+                budget = context.Budgets.OrderByDescending(X => X.TaarichIdkun).FirstOrDefault(x => x.KodYechida == KodYechida && x.Month == Month);
+                DateTime prevMonth = DateHelper.GetPreviosMonth(Month);
+                budgetPrevMonth = context.Budgets.OrderByDescending(X => X.TaarichIdkun).FirstOrDefault(x => x.KodYechida == KodYechida && x.Month == prevMonth);
                 if (budget != null)
                 {
+                    
                     budget.BudgetChanges = context.BudgetChanges.Where(x => x.KodYechida == KodYechida && x.Month == Month).ToList();
 
-                    DateTime prevMonth = DateHelper.GetPreviosMonth(Month);
-                    budgetUsed = context.Budgets.SingleOrDefault(x => x.KodYechida == KodYechida && x.Month == prevMonth);
+                   // DateTime prevMonth = DateHelper.GetPreviosMonth(Month);
+                   // budgetUsed = context.Budgets.SingleOrDefault(x => x.KodYechida == KodYechida && x.Month == prevMonth);
                 }
             }
 
+            //הפחתה/הוספה ש''נ
             if (budget != null && budget.BudgetChanges.Count > 0)
             {
                 int ToAdd = budget.BudgetChanges.Where(x => x.Type == 1).Sum(x => x.Val);
@@ -54,10 +59,16 @@ namespace BsmBL.Managers
 
                 budget.AddSubtractHours = ToAdd - ToSubtract;
             }
-            if (budgetUsed != null && budget != null)
+            //סה''כ תקציב ש''נ
+            if (budget != null)
             {
-                budget.RemainHoursLastMonth = budgetUsed.BudgetUsed;
+                int val = budget.BudgetVal + budget.AddSubtractHours;
+                if(budgetPrevMonth != null)
+                    val -= budgetPrevMonth.BudgetUsed;
+                
+                budget.SachTakzivShaotNosafot = val;
             }
+            
 
             return budget;
 
@@ -143,10 +154,10 @@ namespace BsmBL.Managers
         }
 
         public Yechida GetYechidaByName(string TeurYechida)
-        {
+        {//מה קורה כשיש 2 שעונים על אותה הגדרה
             using (var db = new KdsEntities())
             {
-                return db.Yechidot.SingleOrDefault(y => y.TeurYechida.Trim().Equals(TeurYechida.Trim()));
+                 return db.Yechidot.SingleOrDefault(y => y.TeurYechida.Trim().Equals(TeurYechida.Trim()));
             }   
         }
     }

@@ -1,21 +1,41 @@
 ﻿
 @model BsmWebApp.ViewModels.Budgets.BudgetMainViewModel
 
+@using(Html.BeginForm())
+    { 
+    <hr class="styled" />
+    
+    <fieldset class="FilterFieldSet" style="width:950px;height:80px">   
+       <div class="col-md-2 col-md-push-10" ><span style="text-decoration:underline; font-size:medium;font-weight:bold"> חיפוש עובד:</span></div>
+       <br /> <br /> 
+       <div class="row">
+            <div class="col-md-2 col-md-push-9" >מספר עובד:</div>  
+            <div class="col-md-2 col-md-push-6"> @Html.TextBoxFor(m=>m.MisparIshi)</div> 
+            <div class="col-md-1 col-md-push-3"></div>
+            <div class="col-md-1 col-md-push-1" style="text-align:left" >שם:</div>
+            <div class="col-md-2 col-md-pull-2"> @Html.TextBoxFor(m=>m.OvedName)</div> 
+            <div class="col-md-1 col-md-pull-6">
+                <input type="submit" value="חפש"  />
+            </div>
+       </div>
+    </fieldset>
+   
+  <br />
+    <div class="t-rtl">
+        @{
+            //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
+            Html.Kendo().Grid(Model.UsersInMitkan.Employees)
+               .Name("EmployeesList").Columns(columns =>
+               {
+                   columns.Bound(o => o.BudgetEmployee.MisparIshi).Title("מספר אישי").Width(100);
+                   columns.Bound(o => o.BudgetEmployee.FirstName).Title("שם פרטי").Width(100);
+                   columns.Bound(o => o.BudgetEmployee.LastName).Title("שם משפחה").Width(100);
 
-<div class="t-rtl">
-    @{
-        //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
-        Html.Kendo().Grid(Model.UsersInMitkan.Employees)
-           .Name("EmployeesList").Columns(columns =>
-           {
-               columns.Bound(o => o.BudgetEmployee.MisparIshi).Title("מספר אישי").Width(100);
-               columns.Bound(o => o.BudgetEmployee.FirstName).Title("שם פרטי").Width(100);
-               columns.Bound(o => o.BudgetEmployee.LastName).Title("שם משפחה").Width(100);
-
-           })
-           .Render();
+               })
+               .Render();
 
 
 
-    }
-</div>
+        }
+    </div>
+}

@@ -34,16 +34,16 @@ namespace BsmWebApp.Controllers
             var manager = _container.Resolve<IBudgetManager>();
             var pirteyMitkan = manager.GetYechidaByName(vm.MitkanName);
             BudgetMainViewModel vmResult = GetBudgetDetailForMitkan(pirteyMitkan.KodYechida, month);
-        //    vmResult.UsersInMitkan =  GetEmployeesInMitkan(vm.MitkanName, month);
+            vmResult.UsersInMitkan = GetEmployeesInMitkan(pirteyMitkan.KodYechida, month);
             return View(vmResult);
         }
 
-        
-        private UsersInMitkanViewModel GetEmployeesInMitkan(string mitkanName, DateTime month)
+
+        private UsersInMitkanViewModel GetEmployeesInMitkan(int KodYechida, DateTime month)
         {
 
             var manager = _container.Resolve<IBudgetManager>();
-            var employees =  manager.GetBudgetEmployees(int.Parse(mitkanName), month);
+            var employees = manager.GetBudgetEmployees(KodYechida, month);
             UsersInMitkanViewModel vm = new UsersInMitkanViewModel();
             employees.ForEach(x=>vm.Employees.Add(new UserInMitkanVM(x)));
             return vm;

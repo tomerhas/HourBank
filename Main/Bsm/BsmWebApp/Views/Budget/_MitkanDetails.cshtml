@@ -64,13 +64,21 @@
    
     if (Model.IsMitkanBudgetDetailEmpty == false)
     { 
+    <div class="row">
+        <div  class="col-md-8 col-md-push-3">
             <table class="styled">
                 <tr>
                     <th class="styled">
                         @Html.DisplayNameFor(model => model.MitkanBudgetDetail.BudgetVal)
                     </th>
                     <th class="styled">
+                        @Html.DisplayNameFor(model => model.MitkanBudgetDetail.RemainHoursLastMonth)
+                    </th>
+                    <th class="styled">
                         @Html.DisplayNameFor(model => model.MitkanBudgetDetail.AddSubtractHours)
+                    </th>
+                    <th class="styled">
+                        @Html.DisplayNameFor(model => model.MitkanBudgetDetail.SachTakzivShaotNosafot)
                     </th>
                 </tr>
                 <tr>
@@ -78,11 +86,38 @@
                         @Html.DisplayFor(model => model.MitkanBudgetDetail.BudgetVal)
                     </td>
                     <td class="styled">
+                        @Html.DisplayFor(model => model.MitkanBudgetDetail.RemainHoursLastMonth)
+                    </td>
+                     <td class="styled">
                         @Html.DisplayFor(model => model.MitkanBudgetDetail.AddSubtractHours)
+                    </td>
+                    <td class="styled">
+                        @Html.DisplayFor(model => model.MitkanBudgetDetail.SachTakzivShaotNosafot)
                     </td>
                 </tr>
             </table>
-
+        </div>
+        <div class="col-md-4 col-md-pull-7">
+            <table class="styled">
+                    <tr>
+                        <th class="styled">
+                            @Html.DisplayNameFor(model => model.MitkanBudgetDetail.YitratTakzivToDivide)
+                        </th>
+                        <th class="styled">
+                            @Html.DisplayNameFor(model => model.MitkanBudgetDetail.HoursNotUsed)
+                        </th>
+                    </tr>
+                    <tr>
+                        <td class="styled">
+                            @Html.DisplayFor(model => model.MitkanBudgetDetail.YitratTakzivToDivide)
+                        </td>
+                        <td class="styled">
+                            @Html.DisplayFor(model => model.MitkanBudgetDetail.HoursNotUsed)
+                        </td>  
+                    </tr>
+                </table>
+            </div>
+    </div>
     }
  }
 
