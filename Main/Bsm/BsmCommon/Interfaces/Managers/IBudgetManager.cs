@@ -1,5 +1,6 @@
 ﻿using BsmCommon.DataModels;
 using BsmCommon.DataModels.Budgets;
+using BsmCommon.DataModels.Employees;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,11 @@ namespace BsmCommon.Interfaces.Managers
 
         List<BudgetEmployee> GetBudgetEmployees(int KodYechida, DateTime Month);
         List<Yechida> GetYechidot(string query);
+        List<int> GetOvdimIdStartWith(string query);
+        List<Oved> GetOvdimNameStartWith(string query);
+        int GetOvedIdByName(string sName);
+        string GetOvedNameById(string query);
         Yechida GetYechidaByName(string TeurYechida);
+        List<BudgetChange> GetBudgetChanges(int KodYechida, DateTime Month);
     }
 }

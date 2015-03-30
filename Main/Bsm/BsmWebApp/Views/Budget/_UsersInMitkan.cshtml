@@ -1,26 +1,97 @@
-﻿
-@model BsmWebApp.ViewModels.Budgets.BudgetMainViewModel
+﻿@model BsmWebApp.ViewModels.Budgets.BudgetMainViewModel
 
+ <script>
+     $(document).ready(function () {
+         $("#MisparIshi").kendoAutoComplete({
+             // placeholder: "Enter site ...",
+             // dataTextField: "SiteName",
+            // dataTextField: "MisparIshi",
+            // dataValueField: "MisparIshi",
+             filter: "startswith",
+             minLength: 1,
+             maxLength:5,
+             dataSource: {
+                 type: "json",
+                 serverFiltering: true,
+                 serverPaging: true,
+                 pageSize: 20,
+                 transport: {
+                     read:
+                         {
+                             url: "Budget/GetMisparIshiWith?kod=@Model.KodMitkan&tarrich=@Model.Month"
+                         }, //read
+                     parameterMap: function () {// send value of autocomplete as the "startsWith" parameter
+                         return {
+                             startsWith: $("#MisparIshi").data("kendoAutoComplete").value()
+                         };
+                     }
+                 } //transport
+             } //datasource
+         }); //kendoAutoComplete
+     }); //DocumentReady
+
+
+     $(document).ready(function () {
+         $("#OvedName").kendoAutoComplete({
+             // placeholder: "Enter site ...",
+             // dataTextField: "SiteName",
+             dataTextField: "FullName",
+             dataValueField: "MisparIshi",
+             filter: "startswith",
+             minLength: 1,
+             dataSource: {
+                 type: "json",
+                 serverFiltering: true,
+                 serverPaging: true,
+                 pageSize: 20,
+                 transport: {
+                     read:
+                         {
+                             url: "Budget/GetOvdimNameWith"
+                         }, //read
+                     parameterMap: function () {// send value of autocomplete as the "startsWith" parameter
+                         return {
+                             startsWith: $("#OvedName").data("kendoAutoComplete").value()
+                         };
+                     }
+                 } //transport
+             } //datasource
+         }); //kendoAutoComplete
+     }); //DocumentReady
+        </script>
 @using(Html.BeginForm())
     { 
-    <hr class="styled" />
     
-    <fieldset class="FilterFieldSet" style="width:950px;height:80px">   
-       <div class="col-md-2 col-md-push-10" ><span style="text-decoration:underline; font-size:medium;font-weight:bold"> חיפוש עובד:</span></div>
-       <br /> <br /> 
-       <div class="row">
-            <div class="col-md-2 col-md-push-9" >מספר עובד:</div>  
-            <div class="col-md-2 col-md-push-6"> @Html.TextBoxFor(m=>m.MisparIshi)</div> 
-            <div class="col-md-1 col-md-push-3"></div>
-            <div class="col-md-1 col-md-push-1" style="text-align:left" >שם:</div>
-            <div class="col-md-2 col-md-pull-2"> @Html.TextBoxFor(m=>m.OvedName)</div> 
-            <div class="col-md-1 col-md-pull-6">
-                <input type="submit" value="חפש"  />
-            </div>
-       </div>
-    </fieldset>
+    if (Model.UsersInMitkan.Employees.Count >0)
+    {
+    <hr class="styled" />
+      
+        <fieldset class="FilterFieldSet" style="width:950px;height:80px">   
+           <div class="col-md-2 col-md-push-10" ><span style="text-decoration:underline; font-size:medium;font-weight:bold"> חיפוש עובד:</span></div>
+           <br /> <br /> 
+           <div class="row">
+                <div class="col-md-2 col-md-push-9" >מספר עובד:</div>  
+                <div class="col-md-2 col-md-push-6"> 
+                    @Html.TextBoxFor(m=>m.MisparIshi, new { @Value = "" , @onblur = "SetNameOved(this);",data_val_number="אנא הזן מספרים בלבד",required="false" })
+                    @*@Html.ValidationMessageFor(model => model.MisparIshi)*@
+                    <span class="k-invalid-msg" data-for="MisparIshi"></span>
+                    </div> 
+                <div class="col-md-1 col-md-push-3"></div>
+                <div class="col-md-1 col-md-push-1" style="text-align:left" >שם:</div>
+                <div class="col-md-2 col-md-pull-2"> @Html.TextBoxFor(m=>m.OvedName, new { @onblur = "SetMisparIshi(this);" })</div> 
+                <div class="col-md-1 col-md-pull-6">
+                    <input type="button" value="חפש" onclick="findDataItem();"  />
+                </div>
+           </div>
+
+    @*    <div id="dialog" title="Basic dialog" style="overflow: hidden;">
+        </div>*@
+
+
+        </fieldset>
    
-  <br />
+      <br />
+
     <div class="t-rtl">
         @{
             //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
@@ -30,12 +101,156 @@
                    columns.Bound(o => o.BudgetEmployee.MisparIshi).Title("מספר אישי").Width(100);
                    columns.Bound(o => o.BudgetEmployee.FirstName).Title("שם פרטי").Width(100);
                    columns.Bound(o => o.BudgetEmployee.LastName).Title("שם משפחה").Width(100);
+                  
+                   columns.Bound(o => o.BudgetEmployee.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  style='float: right;' name='buttonName' value='הפק דוח' onclick='ButtonClick(this)'/>").Width(100);
+   
+
+                  @* columns.Template(o=> @Html.ActionLink("הפק דו''ח","CreateNochechutRdl",new{ovedId=o.BudgetEmployee.MisparIshi})).Width(100);
+                   columns.Template(o=>{
+                                    return string.Format("<a href='#' onclick='ShowPopUp({0});'>פתח</a>",o.BudgetEmployee.MisparIshi);
+                                    }).Width(100);*@
+
 
                })
+               .Pageable()
+              @* .Sortable()
+               .Scrollable()
+              .Filterable()*@
+                .DataSource(dataSource => dataSource        
+                             .Ajax()
+                               .PageSize(4)
+
+                             .ServerOperation(false))
                .Render();
-
-
-
+           
+        
         }
     </div>
+ <br />
+        <div class="row">
+            <div class="col-md-2 col-md-push-10"><input type="submit" value="איפוס מכסות " name="action:Budget"  /> </div>
+            <div class="col-md-2 col-md-push-6"><input type="submit" value="העתקת ש''נ מחודש קודם" name="action:Changes"  /> </div>
+            <div class="col-md-2 col-md-push-2"><input type="submit" value="העתקת מכסת ש''נ מחודש קודם" name="action:Budget2"  /> </div>
+          @*   <div class="col-md-2 col-md-pull-5"><input type="submit" value=" דוחו''ת" name="action:Budget2" /> </div>*@
+        </div>
 }
+
+}
+
+<script type="text/javascript" >
+   
+    function SetMisparIshi(obj) {
+
+        $.ajax({
+            type: "POST",
+            url: "/Budget/GetOvedIdByName",
+            contentType: "application/json; charset=utf-8",
+            data: "{sName:'" + obj.value + "'}",
+            dataType: "json",
+            async: false,
+            success: function (response) {
+                $('#MisparIshi').val(response);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("תקלה:" + errorThrown);
+            }
+    });
+  }
+
+    function SetNameOved(obj) {
+       
+        $.ajax({
+            type: "POST",
+            url: "/Budget/GetOvedNameById",
+            contentType: "application/json; charset=utf-8",
+            data: "{id:'" + obj.value + "'}",
+            dataType: "json",
+            async: false,
+            success: function (response) {
+                $('#OvedName').val(response);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("תקלה:" + errorThrown);
+            }
+        });
+    }
+    
+    function ButtonClick( button) {
+        alert("111");
+    }
+
+    function findDataItem() {
+        //get grid datasource
+      //  debugger;
+        var theGrid = $('#EmployeesList')
+        var dataItem = $('#MisparIshi');
+        var ds = theGrid.dataSource;
+      
+        var ds = $('#EmployeesList').data("kendoGrid").dataSource;//.data()[0].BudgetEmployee.MisparIshi
+
+        var view = kendo.data.Query.process(ds.data(), {
+            filter: ds.filter(),
+            sort: ds.sort()
+        }).data;
+
+        var index = -1;
+        // find the index of the matching dataItem
+        for (var x = 0; x < view.length; x++) {
+            if (view[x].BudgetEmployee.MisparIshi == dataItem.val()) { //dataItem.Id) {
+                index = x;
+                break;
+            }
+        }
+
+        if (index === -1) {
+            return;
+        }
+
+        var page = Math.floor(index / ds.pageSize());
+        var targetIndex = index - (page * ds.pageSize()) + 1;
+        //page is 1-based index    
+        ds.page(++page);
+        //grid wants a html element. tr:eq(x) by itself searches in the first grid!    
+        var row = $("#EmployeesList").find("tr:eq(" + targetIndex + ")")[0];
+        theGrid.select(row);
+        $("#EmployeesList").find("tr:eq(" + targetIndex + ")")[0].className = "clickable";
+
+       // console.log('Found it at Page: ' + page + 'index: ' + targetIndex);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //function ShowPopUp(misparIshi) {
+    //    //  $("#dialog").dialog();
+    //    $("#dialog").html("")
+    //        .dialog("option", "title", "הפחתות והוספות")
+    //        .load('/Budget/DispalyChanges?ovedId=' + misparIshi,
+    //      function () { $("#dialog").dialog("open"); });
+
+    //}
+
+    //$(function ()
+    //{
+    //    $("#dialog").dialog(
+    //        {
+    //            autoOpen: false, width: 400, height: 450, model: true,
+    //            buttons: {
+    //                "Close": function () {
+    //                    $(this).dialog("close");
+    //                }
+    //            }
+    //        });
+    //});
+
+</script>

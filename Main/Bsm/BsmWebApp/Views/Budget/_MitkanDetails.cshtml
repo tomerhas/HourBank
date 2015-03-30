@@ -1,8 +1,5 @@
 ﻿@model BsmWebApp.ViewModels.Budgets.BudgetMainViewModel
 
-<script src="../../Scripts/jquery-ui-1.10.2.js" type="text/javascript"></script>
-<script src="../../Scripts/jquery-ui-1.10.2.min.js" type="text/javascript"></script>
-
   <script>
       $(document).ready(function () {
           $("#MitkanName").kendoAutoComplete({
@@ -54,7 +51,7 @@
             @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, "")
         </div>
         <div class="col-md-1 col-md-pull-3">
-            <input type="submit" value="הצג"  />
+            <input type="submit" value="הצג" onclick="ShowPartialView();"  />
         </div>
        
     </div>
@@ -89,7 +86,11 @@
                         @Html.DisplayFor(model => model.MitkanBudgetDetail.RemainHoursLastMonth)
                     </td>
                      <td class="styled">
-                        @Html.DisplayFor(model => model.MitkanBudgetDetail.AddSubtractHours)
+
+<a href="#" onclick="ShowPopUp('@Html.DisplayFor(model => model.KodMitkan)','@Html.DisplayFor(model => model.MitkanName)','@Html.ValueFor(model => model.Month,"{0:dd/MM/yyyy}")');"> @Html.DisplayFor(model => model.MitkanBudgetDetail.AddSubtractHours)</a>
+
+                
+                       @* @Html.DisplayFor(model => model.MitkanBudgetDetail.AddSubtractHours)*@
                     </td>
                     <td class="styled">
                         @Html.DisplayFor(model => model.MitkanBudgetDetail.SachTakzivShaotNosafot)
@@ -118,11 +119,67 @@
                 </table>
             </div>
     </div>
+
     }
  }
 
-
-
-
 </div>
     
+
+ <div id="dialog" title="Basic dialog" style="overflow: hidden;">
+
+ </div>
+
+<script type="text/javascript" >
+
+    function ShowPopUp(kod, name, month) {
+        var titel = " פירוט שעות הוספה/הפחתה למתקן ";
+        titel = titel + name + " לחודש " + " \n ";
+        titel = titel + month;
+            $("#dialog").html("")
+                .dialog("option", "title", titel )
+                .load('/Budget/DispalyChanges?KodYechida=' + kod + "&chodesh=" + month, function () { $("#dialog").dialog("open"); });
+
+    }
+
+    $(function ()
+    {
+        $("#dialog").dialog(
+            {
+                autoOpen: false, width: 'auto',
+                height: 'auto',
+                modal: true,
+                buttons: {
+                    "סגור": function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+    });
+
+    function ShowPartialView() {
+        $("#pv1").show();
+    }
+        //var url = "/Budget/DispalyChanges?KodYechida=" + kod + "&chodesh=" + month;
+     
+        //$(function () {
+        //    $("#dialog").dialog(
+        //        {
+        //            autoOpen: false,
+        //            width: 400,
+        //            height: 450,
+        //            modal: true,
+        //            buttons: {
+        //                "Close": function () {
+        //                    $(this).dialog("close");
+        //                }
+        //            }
+        //        });
+        //    $.get(url, function (data) {
+        //        $("#dialog").html(data);
+        //    });
+        //    $('#dialog').dialog('open');
+        //});
+
+
+</script>

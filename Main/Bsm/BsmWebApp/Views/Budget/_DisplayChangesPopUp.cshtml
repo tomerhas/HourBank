@@ -1,0 +1,30 @@
+﻿@model BsmWebApp.ViewModels.Budgets.BudgetChangesVM
+
+@*    <div >
+        <span  style="font-size:13px;text-align: center; ">פירוט שעות הוספה/הפחתה למתקן </span>
+    </div>
+   *@
+@using(Html.BeginForm())
+    { 
+   
+    
+
+  <br />
+
+  <div class="t-rtl">
+        @{
+            //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
+            Html.Kendo().Grid(Model.BudgetChanges)
+               .Name("BudgetChangesList").Columns(columns =>
+               {
+                   columns.Bound(o => o.BudgetChange.TaarichIdkun).Title("<center><strong>תאריך</strong></center>").Format("{0:dd/MM/yyyy}").Width(100);               
+                   columns.Bound(o => o.BudgetChange.MeadkenName).Title("<center><strong>מעדכן</strong></center>").Width(100);
+                   columns.Bound(o => o.BudgetChange.Val).Title("<center><strong>הפחתה/הוספה</strong></center>").Width(100);
+                   columns.Bound(o => o.BudgetChange.Reason).Title("<center><strong>הנמקה</strong></center>").Width(100);
+
+
+               })
+               .Render();
+        }
+    </div>
+}

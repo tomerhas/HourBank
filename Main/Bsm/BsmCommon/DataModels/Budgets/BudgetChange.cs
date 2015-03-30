@@ -23,8 +23,21 @@ namespace BsmCommon.DataModels.Budgets
         [Column("ERECH")]
         public int Val { get; set; }
 
-         [Column("TYPE")]
+        [Column("TYPE")]
         public int Type { get; set; }
+         
+        [Column("REASON")]
+        public string Reason { get; set; }
+
+        [Column("MEADKEN")]
+        public int Meadken { get; set; }
+
+        [Column("TAARICH_IDKUN")]
+        public DateTime TaarichIdkun { get; set; }
+
+        [NotMapped]
+        public string MeadkenName { get; set; }
+       
         			
     }
 }

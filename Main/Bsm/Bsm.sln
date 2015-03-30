@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BsmWebApp", "BsmWebApp\BsmWebApp.csproj", "{97855240-CC49-475F-A96F-2C416FE3DF60}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedLib", "SharedLib", "{F8B05487-FF3E-48CC-B589-88A42F1394DE}"
 	ProjectSection(SolutionItems) = preProject
 		SharedLib\EntityFramework.dll = SharedLib\EntityFramework.dll
@@ -27,43 +25,41 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheInfra", "Infrastructure\CacheInfra\CacheInfra.csproj", "{D6968B94-1A4F-4F26-8095-5297AF0E0E83}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BsmWebApp", "BsmWebApp\BsmWebApp.csproj", "{97855240-CC49-475F-A96F-2C416FE3DF60}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 7
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://tfssrv01:8080/tfs/ksafimcollection
 		SccLocalPath0 = .
-		SccProjectUniqueName1 = BsmWebApp\\BsmWebApp.csproj
-		SccProjectName1 = BsmWebApp
-		SccLocalPath1 = BsmWebApp
-		SccProjectUniqueName2 = BsmBL\\BsmBL.csproj
-		SccProjectName2 = BsmBL
-		SccLocalPath2 = BsmBL
-		SccProjectUniqueName3 = BsmCommon\\BsmCommon.csproj
-		SccProjectName3 = BsmCommon
-		SccLocalPath3 = BsmCommon
-		SccProjectUniqueName4 = Egged.Infrastructure\\Egged.Infrastructure.csproj
+		SccProjectUniqueName1 = BsmBL\\BsmBL.csproj
+		SccProjectName1 = BsmBL
+		SccLocalPath1 = BsmBL
+		SccProjectUniqueName2 = BsmCommon\\BsmCommon.csproj
+		SccProjectName2 = BsmCommon
+		SccLocalPath2 = BsmCommon
+		SccProjectUniqueName3 = Egged.Infrastructure\\Egged.Infrastructure.csproj
+		SccProjectTopLevelParentUniqueName3 = Bsm.sln
+		SccProjectName3 = Egged.Infrastructure
+		SccLocalPath3 = Egged.Infrastructure
+		SccProjectUniqueName4 = Tests\\BLTests\\BLTests.csproj
 		SccProjectTopLevelParentUniqueName4 = Bsm.sln
-		SccProjectName4 = Egged.Infrastructure
-		SccLocalPath4 = Egged.Infrastructure
-		SccProjectUniqueName5 = Tests\\BLTests\\BLTests.csproj
+		SccProjectName4 = Tests/BLTests
+		SccLocalPath4 = Tests\\BLTests
+		SccProjectUniqueName5 = Infrastructure\\CacheInfra\\CacheInfra.csproj
 		SccProjectTopLevelParentUniqueName5 = Bsm.sln
-		SccProjectName5 = Tests/BLTests
-		SccLocalPath5 = Tests\\BLTests
-		SccProjectUniqueName6 = Infrastructure\\CacheInfra\\CacheInfra.csproj
-		SccProjectTopLevelParentUniqueName6 = Bsm.sln
-		SccProjectName6 = Infrastructure/CacheInfra
-		SccLocalPath6 = Infrastructure\\CacheInfra
+		SccProjectName5 = Infrastructure/CacheInfra
+		SccLocalPath5 = Infrastructure\\CacheInfra
+		SccProjectUniqueName6 = BsmWebApp\\BsmWebApp.csproj
+		SccProjectName6 = BsmWebApp
+		SccLocalPath6 = BsmWebApp
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{97855240-CC49-475F-A96F-2C416FE3DF60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97855240-CC49-475F-A96F-2C416FE3DF60}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97855240-CC49-475F-A96F-2C416FE3DF60}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97855240-CC49-475F-A96F-2C416FE3DF60}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E2FD3825-12DE-4C45-9D22-D18E08B64CC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E2FD3825-12DE-4C45-9D22-D18E08B64CC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2FD3825-12DE-4C45-9D22-D18E08B64CC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -84,13 +80,17 @@ Global
 		{D6968B94-1A4F-4F26-8095-5297AF0E0E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6968B94-1A4F-4F26-8095-5297AF0E0E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6968B94-1A4F-4F26-8095-5297AF0E0E83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97855240-CC49-475F-A96F-2C416FE3DF60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97855240-CC49-475F-A96F-2C416FE3DF60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97855240-CC49-475F-A96F-2C416FE3DF60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97855240-CC49-475F-A96F-2C416FE3DF60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C61CC266-FA7C-41D6-BCBC-7A1889B42113} = {7195885B-DF3F-4D48-B4CA-1FBBD0A452B9}
-		{D6968B94-1A4F-4F26-8095-5297AF0E0E83} = {CEA86DD8-9BD3-48FB-B4A9-34C8A3EEA221}
 		{A414C1F8-0C57-4ECF-A356-2F23B257E9A1} = {CEA86DD8-9BD3-48FB-B4A9-34C8A3EEA221}
+		{D6968B94-1A4F-4F26-8095-5297AF0E0E83} = {CEA86DD8-9BD3-48FB-B4A9-34C8A3EEA221}
+		{C61CC266-FA7C-41D6-BCBC-7A1889B42113} = {7195885B-DF3F-4D48-B4CA-1FBBD0A452B9}
 	EndGlobalSection
 EndGlobal

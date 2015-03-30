@@ -30,6 +30,7 @@ namespace BsmWebApp
             InitServiceLocator(container);
 
             boot.SetMenus(container);
+            DataAnnotationsModelValidatorProvider.AddImplicitRequiredAttributeForValueTypes = false;
         }
 
         private void InitServiceLocator(IUnityContainer container)

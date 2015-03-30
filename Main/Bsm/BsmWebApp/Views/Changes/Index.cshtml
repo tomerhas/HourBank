@@ -1,0 +1,67 @@
+﻿@model BsmWebApp.ViewModels.Changes.ChangesMainViewModel
+
+ <script>
+      $(document).ready(function () {
+          $("#MitkanName").kendoAutoComplete({
+              // placeholder: "Enter site ...",
+              // dataTextField: "SiteName",
+              dataTextField: "TeurYechida",
+              dataValueField: "KodYechida",
+              filter: "startswith",
+              minLength: 1,
+              dataSource: {
+                  type: "json",
+                  serverFiltering: true,
+                  serverPaging: true,
+                  pageSize: 20,
+                  transport: {
+                      read:
+                          {
+                              url: "Changes/GetMitkanStartsWith"
+                          }, //read
+                      parameterMap: function () {// send value of autocomplete as the "startsWith" parameter
+                          return {
+                              startsWith: $("#MitkanName").data("kendoAutoComplete").value()
+                          };
+                      }
+                  } //transport
+              } //datasource
+          }); //kendoAutoComplete
+      }); //DocumentReady
+     
+        </script>
+<div>
+    @*<h4>MitkanBudget</h4>*@
+    
+    <hr class="styled" />
+
+    @using(Html.BeginForm())
+    { 
+    <div class="row">
+        <div class="col-md-1 col-md-push-11" > איזור:</div>  
+        <div class="col-md-2 col-md-push-8">    
+              @Html.DropDownListFor(m => m.SelectedEzor, Model.Ezors, "")
+        </div>  
+
+        <div class="col-md-1 col-md-push-5" > שם מתקן:</div>  
+        <div class="col-md-1 col-md-push-3">    
+              @Html.TextBoxFor(m=>m.MitkanName)
+        </div>  
+
+        <div class="col-md-1 col-md-pull-0" > חודש:</div>  
+        <div class="col-md-1 col-md-pull-2">
+            @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, "")
+        </div>
+        
+        <div class="col-md-1 col-md-pull-5">
+            <input type="submit" value="הצג"  />
+        </div>
+       
+    </div>
+    
+    <div id="grdChanges" class="t-rtl">
+
+    </div>
+   <hr class="styled" />
+}
+</div>

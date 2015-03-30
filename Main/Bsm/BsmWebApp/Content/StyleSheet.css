@@ -1,0 +1,11 @@
+﻿.ui-dialog .ui-dialog-title{
+    font-size: 80% !important;
+    direction:rtl;
+    margin-right:10px;
+    float :none;
+}
+
+.clickable{
+    cursor: pointer;
+    background: #ffff99;
+}

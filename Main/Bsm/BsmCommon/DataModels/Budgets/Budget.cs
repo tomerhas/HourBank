@@ -26,7 +26,20 @@ namespace BsmCommon.DataModels.Budgets
         public int BudgetVal{ get; set; }
   
         [Column("BUDGET_USED")]
-        public int BudgetUsed { get; set; }
+        public int? Budget_Used { get; set; }
+        [NotMapped]
+        public int BudgetUsed
+        {
+            get
+            {
+                return Budget_Used ?? 0;
+            }
+            set
+            {
+                Budget_Used = value == 0 ? new Nullable<int>() : value;
+            }
+        }
+
 
         [Column("TAARICH_IDKUN")]
         public DateTime TaarichIdkun { get; set; }

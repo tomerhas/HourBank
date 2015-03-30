@@ -40,6 +40,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,16 +62,18 @@
     <Compile Include="DataModels\Profiles\Profile.cs" />
     <Compile Include="DataModels\Profiles\ProfilesMasachim.cs" />
     <Compile Include="DataModels\Profiles\UserInfo.cs" />
+    <Compile Include="DataModels\Reports\Report.cs" />
+    <Compile Include="DataModels\Reports\ReportParam.cs" />
     <Compile Include="DataModels\Yechida.cs" />
+    <Compile Include="Enums\eFormat.cs" />
     <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Interfaces\CachedItems\IUserInfoCachedItems.cs" />
     <Compile Include="Interfaces\Managers\IBudgetManager.cs" />
+    <Compile Include="Interfaces\Managers\IGeneralManager.cs" />
     <Compile Include="Interfaces\Managers\ISecurityManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Enums\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\CacheInfra\CacheInfra.csproj">
       <Project>{d6968b94-1a4f-4f26-8095-5297af0e0e83}</Project>

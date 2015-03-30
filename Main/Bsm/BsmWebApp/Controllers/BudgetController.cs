@@ -1,5 +1,6 @@
 ﻿using BsmCommon.DataModels;
 using BsmCommon.DataModels.Budgets;
+using BsmCommon.DataModels.Employees;
 using BsmCommon.Interfaces.Managers;
 using BsmWebApp.Infrastructure.Security;
 using BsmWebApp.ViewModels.Budgets;
@@ -34,6 +35,7 @@ namespace BsmWebApp.Controllers
             var manager = _container.Resolve<IBudgetManager>();
             var pirteyMitkan = manager.GetYechidaByName(vm.MitkanName);
             BudgetMainViewModel vmResult = GetBudgetDetailForMitkan(pirteyMitkan.KodYechida, month);
+            vmResult.MitkanName = vm.MitkanName;
             vmResult.UsersInMitkan = GetEmployeesInMitkan(pirteyMitkan.KodYechida, month);
             return View(vmResult);
         }
@@ -48,11 +50,11 @@ namespace BsmWebApp.Controllers
             employees.ForEach(x=>vm.Employees.Add(new UserInMitkanVM(x)));
             return vm;
         }
-        private List<MonthHolder> GetMonthsBackList(int kodParam)
-        {
-            var manager = _container.Resolve<IBudgetManager>();
-            return manager.GetMonthsBack(kodParam);
-        }
+        //private List<MonthHolder> GetMonthsBackList(int kodParam)
+        //{
+        //    var manager = _container.Resolve<IBudgetManager>();
+        //    return manager.GetMonthsBack(kodParam);
+        //}
 
         private BudgetMainViewModel GetBudgetDetailForMitkan(int kodMitkan, DateTime dateTime)
         {
@@ -76,14 +78,27 @@ namespace BsmWebApp.Controllers
             return vm;
         }
 
-
-        public JsonResult GetMitkanStartsWith(string startsWith)
+        public ActionResult CreateNochechutRdl(int ovedId)
         {
-            var manager = _container.Resolve<IBudgetManager>();
-            var namelist = manager.GetYechidot(startsWith);
-
-            return Json(namelist, JsonRequestBehavior.AllowGet);
+            return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public PartialViewResult DispalyChanges(int KodYechida, string chodesh) //int KodYechida,DateTime chodesh)
+        {
+         
+            var manager = _container.Resolve<IBudgetManager>();
+            var changes = manager.GetBudgetChanges(KodYechida,DateTime.Parse(chodesh));
+
+            BudgetChangesVM vm = new BudgetChangesVM();
+            vm.kod_mitkan = KodYechida;
+            vm.month = DateTime.Parse(chodesh);
+            changes.ForEach(x => vm.BudgetChanges.Add(new BudgetChangeVM(x)));
+            //יוצרים פה  viewmodelמודל ומעבירים אותו
+              
+            //var res = PartialView("_DisplayChangesPopUp");
+           // return res;
+            return  PartialView("_DisplayChangesPopUp",vm);
+        }
 	}
 }

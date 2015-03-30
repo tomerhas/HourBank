@@ -21,6 +21,7 @@ namespace BsmWebApp
         {
             container.RegisterType<IBudgetManager, BudgetManager>();
             container.RegisterType<ISecurityManager,SecurityManager>();
+            container.RegisterType<IGeneralManager,GeneralManager>();
 
             container.RegisterInstance<IUserInfoCachedItems>(container.Resolve<UserInfoCachedItems>());
             container.RegisterInstance<IMenusManager>(new MenusManager());
@@ -31,9 +32,13 @@ namespace BsmWebApp
 
         public void SetMenus(IUnityContainer container)
         {
+            SingleMenu menuItem;
             IMenusManager manager = container.Resolve<IMenusManager>();
-            SingleMenu menuItem = new SingleMenu() { LinkText = "תקציב שעות נוספות" , ControllerName="Budget", ActionName="Index" };
+            menuItem = new SingleMenu() { LinkText = "הפחתה/הוספה שעות נוספות", ControllerName = "Changes", ActionName = "Index" };
             manager.AddMenu(menuItem);
+            menuItem = new SingleMenu() { LinkText = "תקציב שעות נוספות" , ControllerName="Budget", ActionName="Index" };
+            manager.AddMenu(menuItem);
+           
         }
 
     }

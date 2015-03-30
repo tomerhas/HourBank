@@ -36,11 +36,11 @@ namespace BsmWebApp.Controllers
             return RedirectToAction("Index", "Budget");
         }
 
-        [MultipleButton(Name = "action", Argument = "Budget2")]
+        [MultipleButton(Name = "action", Argument = "Changes")]
         [HttpPost]
-        public ActionResult BlaBla(object a)
+        public ActionResult IndexChanges(object a)
         {
-            return View("Index");
+            return RedirectToAction("Index", "Changes");
         }
 
         public ActionResult About()

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace BsmCommon.DataModels.Employees
 {
     public class Oved
@@ -19,5 +20,25 @@ namespace BsmCommon.DataModels.Employees
         [Key, Column("SHEM_MISH", Order = 2)]
         public string LastName { get; set; }
 
+        [NotMapped]
+        public string FullName {
+            get
+            {
+                string c = " ";
+                return LastName + c + FirstName;
+            }
+            set
+            {
+                FullName = value;
+            }
+        }
+
+        [System.Data.Objects.DataClasses.EdmFunction("Store","to_char")]
+        public string to_char(decimal value)
+        {
+            // don’t need to implement the function
+            throw new ApplicationException();
+        }
+        
     }
 }
