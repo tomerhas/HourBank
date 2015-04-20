@@ -4,9 +4,12 @@ using BsmCommon.DataModels.Employees;
 using BsmCommon.Interfaces.Managers;
 using BsmWebApp.Infrastructure.Security;
 using BsmWebApp.ViewModels.Budgets;
+using Kendo.Mvc.UI;
 using Microsoft.Practices.Unity;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -34,20 +37,43 @@ namespace BsmWebApp.Controllers
 
             var manager = _container.Resolve<IBudgetManager>();
             var pirteyMitkan = manager.GetYechidaByName(vm.MitkanName);
-            BudgetMainViewModel vmResult = GetBudgetDetailForMitkan(pirteyMitkan.KodYechida, month);
-            vmResult.MitkanName = vm.MitkanName;
-            vmResult.UsersInMitkan = GetEmployeesInMitkan(pirteyMitkan.KodYechida, month);
-            return View(vmResult);
+            if (pirteyMitkan != null)
+            {
+                IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
+                long bakasha_id = Gmanager.GetLastBakasha(month);
+
+                BudgetMainViewModel vmResult = GetBudgetDetailForMitkan(pirteyMitkan.KodYechida, month, bakasha_id);
+                vmResult.MitkanName = vm.MitkanName;
+                vmResult.UsersInMitkan = GetEmployeesInMitkan(pirteyMitkan.KodYechida, month,bakasha_id);
+                return View(vmResult);
+            }
+            else
+            {
+                BudgetMainViewModel view = InitBudgetVm();
+
+                return View(view);
+            }
         }
 
 
-        private UsersInMitkanViewModel GetEmployeesInMitkan(int KodYechida, DateTime month)
+        private UsersInMitkanViewModel GetEmployeesInMitkan(int KodYechida, DateTime month, long bakasha_id)
         {
 
+            //var manager = _container.Resolve<IBudgetManager>();
+            //var employees = manager.GetBudgetEmployees(KodYechida, month);
+            //UsersInMitkanViewModel vm = new UsersInMitkanViewModel();
+            //employees.ForEach(x => vm.Employees.Add(new UserInMitkanVM(x)));
+            //return vm;
+
             var manager = _container.Resolve<IBudgetManager>();
-            var employees = manager.GetBudgetEmployees(KodYechida, month);
+            var employees = manager.getEmployeeDetails(KodYechida, month, bakasha_id);
             UsersInMitkanViewModel vm = new UsersInMitkanViewModel();
-            employees.ForEach(x=>vm.Employees.Add(new UserInMitkanVM(x)));
+            foreach (DataRow dr in employees.Rows)
+            {
+                vm.Employees.Add(new UserInMitkanVM(dr));
+            }
+            Session["EmployeesGrid"] = vm.Employees;
+           // employees.ForEach(x => vm.Employees.Add(new UserInMitkanVM(x)));
             return vm;
         }
         //private List<MonthHolder> GetMonthsBackList(int kodParam)
@@ -56,10 +82,16 @@ namespace BsmWebApp.Controllers
         //    return manager.GetMonthsBack(kodParam);
         //}
 
-        private BudgetMainViewModel GetBudgetDetailForMitkan(int kodMitkan, DateTime dateTime)
+        public ActionResult Products_Read([DataSourceRequest]DataSourceRequest request, int KodYechida, DateTime month, long bakasha_id)
         {
-           
-            Budget mb = _container.Resolve<IBudgetManager>().GetBudget(kodMitkan, dateTime);
+            var employees = GetEmployeesInMitkan(KodYechida, month, bakasha_id);
+            return Json(employees);
+        }
+
+        private BudgetMainViewModel GetBudgetDetailForMitkan(int kodMitkan, DateTime dateTime, long bakasha_id)
+        {
+
+            Budget mb = _container.Resolve<IBudgetManager>().GetBudget(kodMitkan, dateTime, bakasha_id);
             BudgetMainViewModel vm = InitBudgetVm();
             vm.MitkanBudgetDetail = mb;
             vm.KodMitkan = kodMitkan;
@@ -100,5 +132,63 @@ namespace BsmWebApp.Controllers
            // return res;
             return  PartialView("_DisplayChangesPopUp",vm);
         }
+
+        public JsonResult GetMisparIshiWith(string startsWith) //, int kod, DateTime tarrich)
+        {
+            int inpValidate = -1;
+            if (!int.TryParse(startsWith, out inpValidate))
+            {
+                return Json(new List<int>(), JsonRequestBehavior.AllowGet);
+            }
+      
+            List<UserInMitkanVM> employees = (List<UserInMitkanVM>)(Session["EmployeesGrid"]);
+            var listIds = employees
+                .Where(x => x.BudgetEmployee.MisparIshi.ToString().StartsWith(startsWith))
+                .Select(x => x.BudgetEmployee.MisparIshi).ToList();
+    
+            return Json(listIds, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetOvdimNameWith(string startsWith)
+        {
+            var manager = _container.Resolve<IBudgetManager>();
+           // var namelist = manager.GetOvdimNameStartWith(startsWith);
+
+            List<UserInMitkanVM> employees = (List<UserInMitkanVM>)(Session["EmployeesGrid"]);
+            var namelist = employees
+                .Where(x => x.BudgetEmployee.FullName.ToString().StartsWith(startsWith))
+                .Select(x => x.BudgetEmployee.FullName).ToList();
+    
+
+            return Json(namelist, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetOvedIdByName(string sName)
+        {
+            List<UserInMitkanVM> employees = (List<UserInMitkanVM>)(Session["EmployeesGrid"]);
+            var listIds = employees
+                .Where(x => x.BudgetEmployee.FullName==sName)
+                .Select(x => x.BudgetEmployee.MisparIshi).ToList();
+
+            return Json(listIds, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetOvedNameById(string id)
+        {
+            List<UserInMitkanVM> employees = (List<UserInMitkanVM>)(Session["EmployeesGrid"]);
+            var listIds = employees
+                .Where(x => x.BudgetEmployee.MisparIshi.ToString() == id)
+                .Select(x => x.BudgetEmployee.FullName).ToList();
+
+            return Json(listIds, JsonRequestBehavior.AllowGet);
+        }
+        //public JsonResult GetDashboardData([DataSourceRequest] DataSourceRequest request)
+        //{
+        //    var manager = _container.Resolve<IBudgetManager>();
+
+        //    var dt = manager.getEmployeeDetails(87783, DateTime.Parse("01/04/2015"), 19009);
+        //    string JsonResult = JsonConvert.SerializeObject(dt, Formatting.Indented);
+        //    return  Json(JsonResult, JsonRequestBehavior.AllowGet);
+        //}
 	}
 }
