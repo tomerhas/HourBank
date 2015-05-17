@@ -1,4 +1,5 @@
 ﻿using BsmCommon.DataModels;
+using BsmCommon.DataModels.Employees;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace BsmCommon.Interfaces.Managers
 {
     public interface IGeneralManager
     {
-        List<Ezor> GetEzors();
+        List<Oved> GetOvdim(int[] PirteyOvedIds);
+        List<TeurEzor> GetEzors();
+        long GetLastBakasha(DateTime Month);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BsmCommon.DataModels.Budgets;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,8 +10,10 @@ namespace BsmWebApp.ViewModels.Budgets
     {
         public UsersInMitkanViewModel()
         {
-            Employees = new List<UserInMitkanVM>();
+            Employees = new List<BudgetEmployeeGrid>();
         }
-        public List<UserInMitkanVM> Employees { get; set; }
+        public List<BudgetEmployeeGrid> Employees { get; set; }
     }
+
+
 }

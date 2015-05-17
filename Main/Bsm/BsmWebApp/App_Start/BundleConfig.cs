@@ -21,13 +21,15 @@ namespace BsmWebApp
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Scripts/GeneralFunctions.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                      "~/Content/bootstrap.css",
                        "~/Content/jquery-ui*",
                       "~/Content/site.css",
-                      "~/Content/StyleSheet.css"  ));
+                       "~/Content/StyleSheet.css" 
+                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
             "~/Scripts/kendo/kendo.all.min.js",

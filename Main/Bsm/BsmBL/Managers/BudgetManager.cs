@@ -12,11 +12,19 @@ using System.Data.Objects.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Practices.Unity;
+using BsmCommon.Interfaces.DAL;
 
 namespace BsmBL.Managers
 {
     public class BudgetManager : IBudgetManager
     {
+        private IUnityContainer _container;
+
+        public BudgetManager(IUnityContainer container)
+        {
+            _container = container;
+        }
         public List<MonthHolder> GetMonthsBack(int KodParam)
         {
             int num = GetMonthsBackFromParameters(KodParam);
@@ -32,54 +40,112 @@ namespace BsmBL.Managers
             return list;
         }
 
-        public Budget GetBudget(int KodYechida, DateTime Month)
+        public Budget GetBudget(int KodYechida, DateTime Month, long bakasha_id)
         {
+            long  bakasha_id_prev=0;
             Budget budget = null;
             Budget budgetPrevMonth = null;
+            int ToAdd, ToSubtract, prevChanges=0;
            // Budget budgetUsed = null;
+
+            IGeneralManager manager = _container.Resolve<IGeneralManager>();
+            bakasha_id_prev = manager.GetLastBakasha(Month.AddMonths(-1));
             using (var context = new BsmEntities())
             {
-                budget = context.Budgets.OrderByDescending(X => X.TaarichIdkun).FirstOrDefault(x => x.KodYechida == KodYechida && x.Month == Month);
+                budget = context.Budgets.OrderByDescending(X => X.TaarichIdkun).FirstOrDefault(x => x.KodYechida == KodYechida && x.Month == Month && x.BakashaId == bakasha_id);
                 DateTime prevMonth = DateHelper.GetPreviosMonth(Month);
-                budgetPrevMonth = context.Budgets.OrderByDescending(X => X.TaarichIdkun).FirstOrDefault(x => x.KodYechida == KodYechida && x.Month == prevMonth);
+                budgetPrevMonth = context.Budgets.OrderByDescending(X => X.TaarichIdkun).FirstOrDefault(x => x.KodYechida == KodYechida && x.Month == prevMonth && x.BakashaId == bakasha_id_prev);
                 if (budget != null)
-                {
-                    
+                { 
                     budget.BudgetChanges = context.BudgetChanges.Where(x => x.KodYechida == KodYechida && x.Month == Month).ToList();
 
                    // DateTime prevMonth = DateHelper.GetPreviosMonth(Month);
                    // budgetUsed = context.Budgets.SingleOrDefault(x => x.KodYechida == KodYechida && x.Month == prevMonth);
+                }
+                if (budgetPrevMonth != null)
+                {
+                    budgetPrevMonth.BudgetChanges = context.BudgetChanges.Where(x => x.KodYechida == KodYechida && x.Month == prevMonth).ToList();
                 }
             }
 
             //הפחתה/הוספה ש''נ
             if (budget != null && budget.BudgetChanges.Count > 0)
             {
-                int ToAdd = budget.BudgetChanges.Where(x => x.Type == 1).Sum(x => x.Val);
-                int ToSubtract = budget.BudgetChanges.Where(x => x.Type == 2).Sum(x => x.Val);
+                 ToAdd = budget.BudgetChanges.Where(x => x.Type == 1).Sum(x => x.Val);
+                 ToSubtract = budget.BudgetChanges.Where(x => x.Type == 2).Sum(x => x.Val);
 
                 budget.AddSubtractHours = ToAdd - ToSubtract;
             }
+
+
+            if (budgetPrevMonth != null && budgetPrevMonth.BudgetChanges.Count > 0)
+            {
+                 ToAdd = budgetPrevMonth.BudgetChanges.Where(x => x.Type == 1).Sum(x => x.Val);
+                 ToSubtract = budgetPrevMonth.BudgetChanges.Where(x => x.Type == 2).Sum(x => x.Val);
+
+                 prevChanges =  ToAdd - ToSubtract;
+
+                  
+            }
+           
+
+
             //סה''כ תקציב ש''נ
             if (budget != null)
             {
+                budget.RemainHoursLastMonth = (budgetPrevMonth.BudgetVal + prevChanges) - budgetPrevMonth.BudgetUsed;
                 int val = budget.BudgetVal + budget.AddSubtractHours;
                 if(budgetPrevMonth != null)
                     val -= budgetPrevMonth.BudgetUsed;
                 
                 budget.SachTakzivShaotNosafot = val;
+
+                var BudgetDal = _container.Resolve<IBudgetDal>();
+
+                budget.YitratTakzivToDivide = budget.SachTakzivShaotNosafot - BudgetDal.GetSumMeafyen14(KodYechida, Month, bakasha_id);
+                budget.HoursNotUsed = budget.SachTakzivShaotNosafot - BudgetDal.GetShaotnosafotMeshek(KodYechida, Month, bakasha_id);
             }
             
-
+             
             return budget;
 
         }
 
+      
+
+        private int GetSachMeafyen14(int KodYechida, DateTime Month, long bakasha_id)
+        {
+           // try
+            //{
+                var BudgetManager = _container.Resolve<IBudgetDal>();
+                int sum = BudgetManager.GetSumMeafyen14(KodYechida, Month, bakasha_id);
+                return sum;     
+                //using (var context = new BsmEntities())
+                //{
+                //    var parFromDate = new OracleParameter("p_mitkan", OracleDbType.Int32, KodYechida, ParameterDirection.Input);
+                //    var parToDate = new OracleParameter("p_date", OracleDbType.Date, Month, ParameterDirection.Input);
+                //    var parYechida = new OracleParameter("p_bakasha_id", OracleDbType.Int64, bakasha_id, ParameterDirection.Input);
+                //    //   var result = new OracleParameter("p_cur", OracleDbType.RefCursor, ParameterDirection.Output);
+
+                //    int sum = (context.Database.SqlQuery<int>("PKG_BUDGET.fun_get_sum_meafyen14 @p_mitkan, @p_date, @p_bakasha_id", KodYechida, Month, bakasha_id).ToList())[0];
+                   
+                //  //  int sum = (context.Database.SqlQuery<int>("begin PKG_BUDGET.fun_get_sum_meafyen14(:p_mitkan,:p_date,:p_bakasha_id); end;", KodYechida, Month, bakasha_id).ToList())[0];
+                //    return sum;
+                //}
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
+           
+        }
         public List<BudgetEmployee> GetBudgetEmployees(int KodYechida, DateTime Month)
         {
+            IGeneralManager manager = _container.Resolve<IGeneralManager>();
+
             List<PirteyOved> empDetails = GetPirteyOvdim(KodYechida, Month);
             int[] ids = empDetails.Select(x => x.MisparIshi).ToArray();
-            List<Oved> ovdim = GetOvdim(ids);
+            List<Oved> ovdim = manager.GetOvdim(ids);
             List<BudgetEmployee> list = GetBudgetOvdim(ids, Month);
             EnrichBudgetmployeeList(list, ovdim, empDetails);
             return list;
@@ -136,14 +202,7 @@ namespace BsmBL.Managers
                 
         }
 
-        private List<Oved> GetOvdim(int[] PirteyOvedIds)
-        {
-            using (var context = new KdsEntities())
-            {
-                var result = context.Ovdim.Where(x => PirteyOvedIds.Contains(x.MisparIshi)).ToList();
-                return result;
-            }
-        }
+       
         
         private int GetMonthsBackFromParameters(int KodParam)
         {
@@ -198,18 +257,26 @@ namespace BsmBL.Managers
            
         }
 
-        public int GetOvedIdByName(string query)
+        public string GetOvedIdByName(string query)
         {
+            int valQuery = -1;
+            if (string.IsNullOrEmpty(query))
+            {
+                return "";
+            }
             using (var db = new KdsEntities())
             {
                 var sql = string.Format("select mispar_ishi from ovdim where (shem_mish || ' ' ||  shem_prat) = '{0}'", query);
                 var res = db.Database.SqlQuery<int>(sql).ToList();
 
 
-               // oved = db.Ovdim.Where(x => x.FullName == query).ToList();
-
-                return res[0]; //oved[0].MisparIshi;// db.Ovdim.Where(x => x.FullName.StartsWith(query)).ToList();
+                // oved = db.Ovdim.Where(x => x.FullName == query).ToList();
+                if (res.Count > 0)
+                    return res[0].ToString(); //oved[0].MisparIshi;// db.Ovdim.Where(x => x.FullName.StartsWith(query)).ToList();
+                else
+                    return "";
             }
+           
            
         }
         public string GetOvedNameById(string query)
@@ -242,40 +309,36 @@ namespace BsmBL.Managers
             }   
         }
 
-        public List<BudgetChange> GetBudgetChanges(int KodYechida, DateTime Month)
-        {
-          
-         //   List<PirteyOved> empDetails = GetPirteyOvdim(KodYechida, Month);
-         //   int[] ids = empDetails.Select(x => x.MisparIshi).ToArray();
-          //  List<Oved> ovdim = GetOvdim(ids);
-            List<BudgetChange> list = GetBudgeChanges(KodYechida, Month);
-            int[] ids = list.Select(x => x.Meadken).ToArray();
-            List<Oved> ovdim = GetOvdim(ids);
+      
 
-             EnrichBudgetChangesList(list, ovdim);
-            return list;
+        public List<BudgetEmployeeGrid> GetEmployeeDetails(int KodYechida, DateTime Month, long bakasha_id)
+        {
+            List<BudgetEmployeeGrid> list = new List<BudgetEmployeeGrid>();
+             var dt = _container.Resolve<IBudgetDal>().GetEmployeeDatails(KodYechida, Month, bakasha_id);
+             foreach (DataRow dr in dt.Rows)
+             {
+                 list.Add(CreateBudgetEmployeeFromDataRow(dr));
+             }
+             return list;
         }
 
-        private void EnrichBudgetChangesList(List<BudgetChange> list, List<Oved> ovdim)
+        private BudgetEmployeeGrid CreateBudgetEmployeeFromDataRow(DataRow row)
         {
-            list.ForEach(budgetChange =>
-            {
-                var oved = ovdim.SingleOrDefault(x => x.MisparIshi == budgetChange.Meadken);
-                if (oved != null)
-                {
-                    budgetChange.MeadkenName = oved.FirstName + " " + oved.LastName;
-              
-                }
-            });
-        }
-
-        private List<BudgetChange> GetBudgeChanges(int KodYechida, DateTime Month)
-        {
-            using (var context = new BsmEntities())
-            {
-                return context.BudgetChanges.Where(x => x.KodYechida == KodYechida && x.Month == Month).ToList();
-
-            }
+            BudgetEmployeeGrid budgetEmployee = new BudgetEmployeeGrid();
+            budgetEmployee.Masad = int.Parse(row["MASAD"].ToString());
+            budgetEmployee.MisparIshi = int.Parse(row["mispar_ishi"].ToString());
+            budgetEmployee.FullName = row["Full_Name"].ToString();
+            budgetEmployee.TeurIsuk =row["Teur_Isuk"].ToString();
+            budgetEmployee.AlTikni = row["Al_Tikni"].ToString();
+            budgetEmployee.TeurMutamut =row["Teur_Mutamut"].ToString();
+            budgetEmployee.MichsaYomit = float.Parse(row["Michsa_Yomit"].ToString());
+            budgetEmployee.NosafotPrev = float.Parse(row["Nosafot_Prev"].ToString());
+            budgetEmployee.MichsaPrev = float.Parse(row["Michsa_Prev"].ToString());
+            budgetEmployee.NosafotCur = float.Parse(row["Nosafot_Cur"].ToString());
+            budgetEmployee.MichsaCur = float.Parse(row["Michsa_Cur"].ToString());
+            budgetEmployee.NosafotNotUsed = float.Parse(row["Nosafot_Not_Used"].ToString());
+            budgetEmployee.Meafyen14 = float.Parse(row["Meafyen14"].ToString());
+            return budgetEmployee;
         }
     }
 

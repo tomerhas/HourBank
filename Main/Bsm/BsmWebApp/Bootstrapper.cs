@@ -1,6 +1,9 @@
-﻿using BsmBL.Managers;
+﻿using BsmBL.DAL;
+using BsmBL.Managers;
 using BsmCommon.CachedItems;
 using BsmCommon.Interfaces.CachedItems;
+using BsmCommon.Interfaces.Dal;
+using BsmCommon.Interfaces.DAL;
 using BsmCommon.Interfaces.Managers;
 using CacheInfra.Implement;
 using CacheInfra.Interfaces;
@@ -22,6 +25,10 @@ namespace BsmWebApp
             container.RegisterType<IBudgetManager, BudgetManager>();
             container.RegisterType<ISecurityManager,SecurityManager>();
             container.RegisterType<IGeneralManager,GeneralManager>();
+            container.RegisterType<IChangesManager, ChangesManager>();
+            
+            container.RegisterType<IBudgetDal, BudgetDal>();
+            container.RegisterType<IChangesDal, ChangesDal>();
 
             container.RegisterInstance<IUserInfoCachedItems>(container.Resolve<UserInfoCachedItems>());
             container.RegisterInstance<IMenusManager>(new MenusManager());

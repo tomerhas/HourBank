@@ -17,4 +17,12 @@ namespace BsmCommon.DataModels
         public int KOD_EZOR { get; set; }
         public string TEUR_EZOR { get; set; }
     }
+
+    public class TeurEzor
+    {
+    //    [Column("KOD_EZOR")]
+        public decimal KOD_EZOR { get; set; }
+      //  [Column("TEUR_EZOR")]
+        public string TEUR_EZOR { get; set; }
+    }
 }

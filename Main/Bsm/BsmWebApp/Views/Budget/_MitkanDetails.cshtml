@@ -21,7 +21,8 @@
                           }, //read
                       parameterMap: function () {// send value of autocomplete as the "startsWith" parameter
                           return {
-                              startsWith: $("#MitkanName").data("kendoAutoComplete").value()
+                             
+                          startsWith: $("#MitkanName").data("kendoAutoComplete").value()
                           };
                       }
                   } //transport
@@ -35,12 +36,12 @@
     
     <hr class="styled" />
 
-    @using(Html.BeginForm())
+    @using (Html.BeginForm())
     { 
     <div class="row">
         <div class="col-md-1 col-md-push-11" > שם מתקן:</div>  
         <div class="col-md-2 col-md-push-8">    
-              @Html.TextBoxFor(m=>m.MitkanName)
+              @Html.TextBoxFor(m => m.MitkanName, new { @onchange = "EnableButton();" })
         </div>  
 
 
@@ -48,10 +49,16 @@
         <div class="col-md-1 col-md-push-3" >חודש:</div>
         <div class="col-md-2 ">
             @*@Html.Kendo().DatePickerFor(m => m.Month).Format("{0:MM/yyyy}").ParseFormats(new List<string>() { "MM/yyyy" })*@
-            @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, "")
+            @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, new { @onchange = "EnableButton();" })
         </div>
         <div class="col-md-1 col-md-pull-3">
-            <input type="submit" value="הצג" onclick="ShowPartialView();"  />
+            @if (Model.IsMitkanBudgetDetailEmpty == false)
+            {
+                 <input type="submit" id="btnExec" value="הצג"  name='action:Index'    />
+            }
+            else {
+                <input type="submit" id="btnExec" value="הצג"  name='action:Index'   disabled   />
+            }
         </div>
        
     </div>
@@ -59,35 +66,37 @@
    <hr class="styled" />
 
    
-    if (Model.IsMitkanBudgetDetailEmpty == false)
-    { 
+            if (Model.IsMitkanBudgetDetailEmpty == false)
+            {  
+    <div  class="col-md-8 col-md-push-3">  <span>שעות נוספות</span></div>
+     <div  class="col-md-4 col-md-pull-7">  <span>שעות נוספות - יתרה</span></div>
     <div class="row">
         <div  class="col-md-8 col-md-push-3">
             <table class="styled">
                 <tr>
-                    <th class="styled">
+                    <th class="styled" style="width:100px;" >
                         @Html.DisplayNameFor(model => model.MitkanBudgetDetail.BudgetVal)
                     </th>
-                    <th class="styled">
+                    <th class="styled" style="width:150px;" >
                         @Html.DisplayNameFor(model => model.MitkanBudgetDetail.RemainHoursLastMonth)
                     </th>
-                    <th class="styled">
+                    <th class="styled" style="width:100px;" >
                         @Html.DisplayNameFor(model => model.MitkanBudgetDetail.AddSubtractHours)
                     </th>
-                    <th class="styled">
+                    <th class="styled" style="width:100px;" >
                         @Html.DisplayNameFor(model => model.MitkanBudgetDetail.SachTakzivShaotNosafot)
                     </th>
                 </tr>
                 <tr>
-                    <td class="styled">
+                    <td class="styled" style="width:100px;" >
                         @Html.DisplayFor(model => model.MitkanBudgetDetail.BudgetVal)
                     </td>
-                    <td class="styled">
+                    <td class="styled" style="width:100px;" >
                         @Html.DisplayFor(model => model.MitkanBudgetDetail.RemainHoursLastMonth)
                     </td>
                      <td class="styled">
 
-<a href="#" onclick="ShowPopUp('@Html.DisplayFor(model => model.KodMitkan)','@Html.DisplayFor(model => model.MitkanName)','@Html.ValueFor(model => model.Month,"{0:dd/MM/yyyy}")');"> @Html.DisplayFor(model => model.MitkanBudgetDetail.AddSubtractHours)</a>
+<a href="#" onclick="ShowPopUp('@Html.DisplayFor(model => model.KodMitkan)','@Html.DisplayFor(model => model.MitkanName)','@Html.ValueFor(model => model.Month, "{0:dd/MM/yyyy}")');"> @Html.DisplayFor(model => model.MitkanBudgetDetail.AddSubtractHours)</a>
 
                 
                        @* @Html.DisplayFor(model => model.MitkanBudgetDetail.AddSubtractHours)*@
@@ -101,10 +110,10 @@
         <div class="col-md-4 col-md-pull-7">
             <table class="styled">
                     <tr>
-                        <th class="styled">
+                        <th class="styled" style="width:100px;" > 
                             @Html.DisplayNameFor(model => model.MitkanBudgetDetail.YitratTakzivToDivide)
                         </th>
-                        <th class="styled">
+                        <th class="styled" style="width:100px;" >
                             @Html.DisplayNameFor(model => model.MitkanBudgetDetail.HoursNotUsed)
                         </th>
                     </tr>
@@ -120,8 +129,8 @@
             </div>
     </div>
 
+                }
     }
- }
 
 </div>
     
@@ -131,6 +140,14 @@
  </div>
 
 <script type="text/javascript" >
+
+    function EnableButton() {
+        if ($('#MitkanName').val() != "")
+            $("#btnExec").removeAttr('disabled');
+        else 
+            $("#btnExec").attr('disabled','disabled');
+        ;
+    }
 
     function ShowPopUp(kod, name, month) {
         var titel = " פירוט שעות הוספה/הפחתה למתקן ";
@@ -157,9 +174,7 @@
             });
     });
 
-    function ShowPartialView() {
-        $("#pv1").show();
-    }
+    
         //var url = "/Budget/DispalyChanges?KodYechida=" + kod + "&chodesh=" + month;
      
         //$(function () {

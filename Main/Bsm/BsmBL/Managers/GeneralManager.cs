@@ -1,5 +1,6 @@
 ﻿using BsmBL.DAL;
 using BsmCommon.DataModels;
+using BsmCommon.DataModels.Employees;
 using BsmCommon.Interfaces.Managers;
 using System;
 using System.Collections.Generic;
@@ -11,17 +12,49 @@ namespace BsmBL.Managers
 {
     public class GeneralManager : IGeneralManager
     {
-        public List<Ezor> GetEzors()
+        public List<Oved> GetOvdim(int[] PirteyOvedIds)
         {
-           
-            List<Ezor> list = new List<Ezor>();
             using (var context = new KdsEntities())
             {
-                //עודד - להוציא דיסטינקתים של אזורים
-                var  zz = context.Ezors.Select(p =>  new { p.KOD_EZOR, p.TEUR_EZOR }).Distinct().ToList();//context.Ezors.GroupBy(p => new { p.KOD_EZOR, p.TEUR_EZOR }).Distinct().ToList();
-                list = context.Ezors.ToList();
-               return list;
-            
+                var result = context.Ovdim.Where(x => PirteyOvedIds.Contains(x.MisparIshi)).ToList();
+                return result;
+            }
+        }
+
+        public List<TeurEzor> GetEzors()
+        {
+          using (var db = new KdsEntities())
+            {
+                var sql = string.Format("select distinct kod_ezor,teur_ezor from ctb_ezor");
+                var res = db.Database.SqlQuery<TeurEzor>(sql);
+                return res.ToList();
+            }
+        }
+
+        public long GetLastBakasha(DateTime Month)
+        {
+            string chodesh = Month.Date.Month.ToString().PadLeft(2, '0') + "/" + Month.Date.Year;
+            using (var context = new KdsEntities())
+            {
+
+                var sql = string.Format("select max(b.bakasha_id) from tb_bakashot b,tb_bakashot_params p where b.sug_bakasha=27 and b.bakasha_id=p.bakasha_id and p.erech='{0}'", chodesh);
+                var res = context.Database.SqlQuery<decimal>(sql).ToList();
+
+                return (long)res[0];
+            }
+        }
+
+        public long GetLastBakashatChishuv(DateTime Month)
+        {
+            string chodesh = Month.Date.Month.ToString().PadLeft(2, '0') + "/" + Month.Date.Year;
+            using (var context = new KdsEntities())
+            {
+
+                var sql = string.Format("select b.bakasha_id from tb_bakashot b,tb_bakashot_params p where b.sug_bakasha=1 and b.bakasha_id=p.bakasha_id and b.huavra_lesachar='1'  and p.param_id=2 p.erech='{0}'", chodesh);
+                                                                                                                                                            			
+                var res = context.Database.SqlQuery<decimal>(sql).ToList();
+
+                return (long)res[0];
             }
         }
     }

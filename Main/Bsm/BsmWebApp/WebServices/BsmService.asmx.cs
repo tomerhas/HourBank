@@ -28,14 +28,14 @@ namespace BsmWebApp.WebServices
 
         }
 
-        [WebMethod]
-        public int GetOvedIdByName(string sName)
-        {
-            var manager = _container.Resolve<IBudgetManager>();
-            var OvedId = manager.GetOvedIdByName(sName);
+        //[WebMethod]
+        //public int GetOvedIdByName(string sName)
+        //{
+        //    var manager = _container.Resolve<IBudgetManager>();
+        //    var OvedId = manager.GetOvedIdByName(sName);
 
-            return OvedId;// Json(OvedId, JsonRequestBehavior.AllowGet);
-        }
+        //    return OvedId;// Json(OvedId, JsonRequestBehavior.AllowGet);
+        //}
 
         
         //public string GetOvedMisparIshi(string sName)

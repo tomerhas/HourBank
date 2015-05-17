@@ -1,5 +1,6 @@
 ﻿using BsmCommon.DataModels;
 using BsmCommon.DataModels.Budgets;
+using BsmWebApp.ViewModels.Reports;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace BsmWebApp.ViewModels.Budgets
         }
         public string MitkanName { get; set; }
         public int KodMitkan { get; set; }
+        public long BakashaId { get; set; }
         public DateTime Month { get; set; }
         public bool IsMitkanBudgetDetailEmpty { get; set; }
         public Budget MitkanBudgetDetail { get; set; }
@@ -38,6 +40,7 @@ namespace BsmWebApp.ViewModels.Budgets
         public string SelectedMonth { get; set; }
 
         public UsersInMitkanViewModel UsersInMitkan { get; set; }
+       // public ReportingServicesReportViewModel ReportVM { get; set; }
 
         public int MisparIshi { get; set; }
         public string OvedName { get; set; }

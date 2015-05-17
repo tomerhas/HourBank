@@ -41,6 +41,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,6 +53,8 @@
     <Compile Include="DataModels\Budgets\Budget.cs" />
     <Compile Include="DataModels\Budgets\BudgetChange.cs" />
     <Compile Include="DataModels\Budgets\BudgetEmployee.cs" />
+    <Compile Include="DataModels\Budgets\BudgetEmployeeGrid.cs" />
+    <Compile Include="DataModels\Changes\BudgetChangesGrid.cs" />
     <Compile Include="DataModels\Employees\Oved.cs" />
     <Compile Include="DataModels\Employees\PirteyOved.cs" />
     <Compile Include="DataModels\Ezor.cs" />
@@ -68,17 +71,33 @@
     <Compile Include="Enums\eFormat.cs" />
     <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Interfaces\CachedItems\IUserInfoCachedItems.cs" />
+    <Compile Include="Interfaces\Dal\IBudgetDal.cs" />
+    <Compile Include="Interfaces\Dal\IChangesDal.cs" />
     <Compile Include="Interfaces\Managers\IBudgetManager.cs" />
+    <Compile Include="Interfaces\Managers\IChangesManager.cs" />
     <Compile Include="Interfaces\Managers\IGeneralManager.cs" />
     <Compile Include="Interfaces\Managers\ISecurityManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\CacheInfra\CacheInfra.csproj">
       <Project>{d6968b94-1a4f-4f26-8095-5297af0e0e83}</Project>
       <Name>CacheInfra</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\jquery-1.4.4-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.4.js" />
+    <Content Include="Scripts\jquery-1.4.4.min.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

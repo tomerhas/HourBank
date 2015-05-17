@@ -21,7 +21,7 @@ namespace BsmCommon.DataModels.Budgets
         [Key, Column("CHODESH", Order = 1)] 
         public DateTime Month { get; set; }
 
-        [Display(Name = "תקציב ש''נ חודשי לפי תקן")]
+        [Display(Name = "תקן")]
         [Column("BUDGET")]
         public int BudgetVal{ get; set; }
   
@@ -44,26 +44,29 @@ namespace BsmCommon.DataModels.Budgets
         [Column("TAARICH_IDKUN")]
         public DateTime TaarichIdkun { get; set; }
 
+        [Column("BAKASHA_ID")]
+        public long BakashaId { get; set; }
+
         public List<BudgetChange> BudgetChanges { get; set; }
 
-        [Display(Name = "יתרת ש''נ מחודש קודם")]
+        [Display(Name = "יתרת מחודש קודם")]
         [NotMapped]
         public int RemainHoursLastMonth { get; set; }
 
-        [Display(Name = "הפחתה/הוספה ש''נ")]
+        [Display(Name = "הפחתה/הוספה")]
         [NotMapped]
         public int AddSubtractHours { get; set; }
 
-        [Display(Name = "ס''הכ תקציב ש''נ")]
+        [Display(Name = "ס''הכ תקציב")]
         [NotMapped]
         public int SachTakzivShaotNosafot { get; set; }
 
 
-        [Display(Name = "יתרת תקציב ש''נ לחלוקה")]
+        [Display(Name = "לחלוקה")]
         [NotMapped]
         public int YitratTakzivToDivide { get; set; }
 
-        [Display(Name = "ש''נ בלתי מנוצלות")]
+        [Display(Name = "לביצוע בפועל")]
         [NotMapped]
         public int HoursNotUsed { get; set; }
     }

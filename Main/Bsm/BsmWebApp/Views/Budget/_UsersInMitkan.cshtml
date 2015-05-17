@@ -18,7 +18,7 @@
                  transport: {
                      read:
                          {
-                             url: "Budget/GetMisparIshiWith?kod=@Model.KodMitkan&tarrich=@Model.Month"
+                             url: "Budget/GetMisparIshiWith" @* ?kod=@Model.KodMitkan&tarrich=@Model.Month"*@
                          }, //read
                      parameterMap: function () {// send value of autocomplete as the "startsWith" parameter
                          return {
@@ -35,8 +35,8 @@
          $("#OvedName").kendoAutoComplete({
              // placeholder: "Enter site ...",
              // dataTextField: "SiteName",
-             dataTextField: "FullName",
-             dataValueField: "MisparIshi",
+           //  dataTextField: "FullName",
+           //  dataValueField: "FullName",
              filter: "startswith",
              minLength: 1,
              dataSource: {
@@ -58,6 +58,9 @@
              } //datasource
          }); //kendoAutoComplete
      }); //DocumentReady
+
+
+
         </script>
 @using(Html.BeginForm())
     { 
@@ -68,19 +71,20 @@
       
         <fieldset class="FilterFieldSet" style="width:950px;height:80px">   
            <div class="col-md-2 col-md-push-10" ><span style="text-decoration:underline; font-size:medium;font-weight:bold"> חיפוש עובד:</span></div>
-           <br /> <br /> 
+           <br />  
            <div class="row">
-                <div class="col-md-2 col-md-push-9" >מספר עובד:</div>  
-                <div class="col-md-2 col-md-push-6"> 
-                    @Html.TextBoxFor(m=>m.MisparIshi, new { @Value = "" , @onblur = "SetNameOved(this);",data_val_number="אנא הזן מספרים בלבד",required="false" })
+                <div class="col-md-2 col-md-push-6" >מספר עובד:</div>  
+                <div class="col-md-2 col-md-push-3"> 
+                    @Html.TextBoxFor(m=>m.MisparIshi, new { @Value = "" ,@maxlength="5", @onblur = "CheakValid(this);" }) @*,data_val_number="אנא הזן מספרים בלבד",required="false"*@
                     @*@Html.ValidationMessageFor(model => model.MisparIshi)*@
-                    <span class="k-invalid-msg" data-for="MisparIshi"></span>
+                    @*<span class="k-invalid-msg" data-for="MisparIshi"></span>*@
                     </div> 
-                <div class="col-md-1 col-md-push-3"></div>
-                <div class="col-md-1 col-md-push-1" style="text-align:left" >שם:</div>
-                <div class="col-md-2 col-md-pull-2"> @Html.TextBoxFor(m=>m.OvedName, new { @onblur = "SetMisparIshi(this);" })</div> 
-                <div class="col-md-1 col-md-pull-6">
-                    <input type="button" value="חפש" onclick="findDataItem();"  />
+                <div class="col-md-1 col-md-pull-1"></div>
+                <div class="col-md-1 col-md-pull-2" style="text-align:left" >שם:</div>
+             @*  <div class="col-md-2 col-md-pull-5"> @Html.TextBoxFor(m=>m.OvedName)</div> *@
+                <div class="col-md-2 col-md-pull-5"> @Html.TextBoxFor(m=>m.OvedName, new { @onblur = "SetMisparIshi(this);" })</div> 
+                <div class="col-md-1 col-md-pull-9">
+                    <input type="button" id="btnExecSearch" name="btnExecSearch" disabled="disabled"  value="חפש" onclick="findDataItem();"  />
                 </div>
            </div>
 
@@ -93,164 +97,348 @@
       <br />
 
     <div class="t-rtl">
+
+
         @{
             //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
-            Html.Kendo().Grid(Model.UsersInMitkan.Employees)
-               .Name("EmployeesList").Columns(columns =>
-               {
-                   columns.Bound(o => o.BudgetEmployee.MisparIshi).Title("מספר אישי").Width(100);
-                   columns.Bound(o => o.BudgetEmployee.FirstName).Title("שם פרטי").Width(100);
-                   columns.Bound(o => o.BudgetEmployee.LastName).Title("שם משפחה").Width(100);
-                  
-                   columns.Bound(o => o.BudgetEmployee.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  style='float: right;' name='buttonName' value='הפק דוח' onclick='ButtonClick(this)'/>").Width(100);
-   
+        //Html.Kendo().Grid(Model.UsersInMitkan.Employees)
+        Html.Kendo().Grid<BsmCommon.DataModels.Budgets.BudgetEmployeeGrid>()
+           .Name("EmployeesList").Columns(columns =>
+           {
+               columns.Bound(o => o.Masad).Title("מס''ד").Width(50);
+               columns.Bound(o => o.MisparIshi).Title("מספר אישי").Width(80);
+               columns.Bound(o => o.FullName).Title("שם עובד").Width(100);
+               columns.Bound(o => o.TeurIsuk).Title("עיסוק").Width(100);
+               columns.Bound(o => o.AlTikni).Title("על תקני").Width(50);
+               columns.Bound(o => o.TeurMutamut).Title("קוד מותאם").Width(80);
 
-                  @* columns.Template(o=> @Html.ActionLink("הפק דו''ח","CreateNochechutRdl",new{ovedId=o.BudgetEmployee.MisparIshi})).Width(100);
+               columns.Bound(o => o.MichsaYomit).Title("מכסה יומית").Width(80);
+               columns.Bound(o => o.NosafotPrev).Title("ש''נ שבוצעו  </br> בחודש קודם").Width(80);
+               columns.Bound(o => o.MichsaPrev).Title("מכסת ש''נ </br> בחודש קודם").Width(80);
+               columns.Bound(o => o.NosafotCur).Title("ש''נ שבוצעו  </br>בחודש נוכחי").Width(80);
+               columns.Bound(o => o.MichsaCur).Title("מכסת ש''נ</br>  בחודש נוכחי").HtmlAttributes(new { style = "border: 8px double lightgray;" }).Width(30);
+               //columns.Bound(o => o.MichsaCur).Title("מכסת ש''נ</br>  בחודש נוכחי").ClientTemplate("<input style='float: right;width:80px;' value='#=MichsaCur#'  name=''  />").Width(30);
+               columns.Bound(o => o.NosafotNotUsed).Title("ש''נ בלתי  </br> מנוצלות").Width(80);
+
+               // columns.Bound(o => o.MisparIshi).Filterable(false).Width(125).ClientTemplate(Html.Kendo().NumericTextBox().Name("mp_sss").Min(0).HtmlAttributes(new { value = "#=o.MisparIshi#", style = "width: 100px;" }).ToClientTemplate().ToHtmlString());
+             // onclick="ShowPopUp('@Html.DisplayFor(model => model.KodMitkan)','@Html.DisplayFor(model => model.MitkanName)','@Html.ValueFor(model => model.Month, "{0:dd/MM/yyyy}")');
+             //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  style='float: right;'  value='הפק דוח' onclick='ShowReportNochechut(dataItem.MisparIshi, 4545)'  />").Width(80);
+               columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input style='float: right;' type='button' value= 'הפק דוח' onclick='ShowReportNochechut(#= MisparIshi #);'     />").Width(80);
+
+               //   columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='submit'  style='float: right;'  value='הפק דוח' name='action:Nochechut' />").Width(80);
+               columns.Bound(o => o.Meafyen14).Hidden();
+
+                  @* columns.Template(o=> @Html.ActionLink("הפק דו''ח","CreateNochechutRdl",new{ovedId=o.MisparIshi})).Width(100);
                    columns.Template(o=>{
-                                    return string.Format("<a href='#' onclick='ShowPopUp({0});'>פתח</a>",o.BudgetEmployee.MisparIshi);
+                                    return string.Format("<a href='#' onclick='ShowPopUp({0});'>פתח</a>",o.MisparIshi);
                                     }).Width(100);*@
 
 
-               })
-               .Pageable()
-              @* .Sortable()
-               .Scrollable()
-              .Filterable()*@
-                .DataSource(dataSource => dataSource        
-                             .Ajax()
-                               .PageSize(4)
+           })
+            .ToolBar(toolbar =>
+            {
 
-                             .ServerOperation(false))
-               .Render();
+                toolbar.Custom().Text("עדכן מכסות").HtmlAttributes(new { @onclick = "CheckHaveChanges();" , @class = "k-grid-save-changes k-update" });
+               toolbar.Custom().Text("בטל שינויים").HtmlAttributes(new { @class = "k-grid-cancel-changes k-cancel" ,  @imageClass="k-icon ob-icon-only k-i-custom" });
+            })
+            .Editable(editable => editable.Mode(GridEditMode.InCell))
+            .Pageable()
+            .Events(events => events.DataBound("onDataBound"))
+           //.Editable(editable => editable.Mode(GridEditMode.InCell)) // Use in-cell editing mode
+            .DataSource(dataSource =>
+                dataSource.Ajax()
+                    .PageSize(10)
+                    .ServerOperation(false)
+                    .Batch(true) // Enable batch updates
+                    .Model(model =>
+                    {
+                        model.Id(employee => employee.MisparIshi); // Specify the property which is the unique identifier of the model
+
+                        model.Field(employee => employee.Masad).Editable(false); 
+                        model.Field(employee => employee.MisparIshi).Editable(false);
+                        model.Field(employee => employee.FullName).Editable(false);
+                        model.Field(employee => employee.TeurIsuk).Editable(false);
+                        model.Field(employee => employee.AlTikni).Editable(false);
+                        model.Field(employee => employee.TeurMutamut).Editable(false);
+                        model.Field(employee => employee.MichsaYomit).Editable(false);
+                        model.Field(employee => employee.NosafotPrev).Editable(false);
+                        model.Field(employee => employee.MichsaPrev).Editable(false);
+                        model.Field(employee => employee.NosafotCur).Editable(false); 
+                        model.Field(employee => employee.NosafotNotUsed).Editable(false); 
+
+                    })
+                .Read(read => read.Action("EmployeesInMitkanRead", "Budget", new { KodYechida = Model.KodMitkan, month = Model.Month, bakasha_id = Model.BakashaId }))  // Action method invoked when the grid needs data
+                //.Create(create => create.Action("Products_Create", "Home")) // Action method invoked when the user saves a new data item
+                .Update(update => update.Action("EmployeesInMitkanUpdate", "Budget"))  // Action method invoked when the user saves an updated data item
+                //.Destroy(destroy => destroy.Action("Products_Destroy", "Home")) // Action method invoked when the user removes a data item
+            )
+
+           .Render();
            
         
         }
     </div>
  <br />
         <div class="row">
-            <div class="col-md-2 col-md-push-10"><input type="submit" value="איפוס מכסות " name="action:Budget"  /> </div>
-            <div class="col-md-2 col-md-push-6"><input type="submit" value="העתקת ש''נ מחודש קודם" name="action:Changes"  /> </div>
-            <div class="col-md-2 col-md-push-2"><input type="submit" value="העתקת מכסת ש''נ מחודש קודם" name="action:Budget2"  /> </div>
-          @*   <div class="col-md-2 col-md-pull-5"><input type="submit" value=" דוחו''ת" name="action:Budget2" /> </div>*@
+            <div class="col-md-2 col-md-push-10"><input type="button" value="איפוס  מכסות "  style="width:140px"  onclick="ModifyGrid()"/> </div>
+            <div class="col-md-2 col-md-push-6"><input type="button" value="העתקת ש''נ &#10; מחודש קודם"  style="width:140px" /> </div>
+            <div class="col-md-2 col-md-push-2"><input type="button" value="העתקת מכסת ש''נ &#10; מחודש קודם" onclick="CopyMichsotLastMonth()" style="width:140px"  /> </div>
+            <div class="col-md-2 col-md-pull-2"><input type="button" value="העתקת חלוקה &#10; אחרונה מחודש נוכחי"  style="width:140px"  /> </div>
+        
+             <div class="col-md-2 col-md-pull-8"><input type="submit" value="עדכון מכסות" name="action:Budget" hidden style="width:140px"  /> </div>
         </div>
 }
 
 }
 
+
+ <div id="dialogNoch" title="Basic dialog" >
+
+</div>
+
 <script type="text/javascript" >
-   
-    function SetMisparIshi(obj) {
-
-        $.ajax({
-            type: "POST",
-            url: "/Budget/GetOvedIdByName",
-            contentType: "application/json; charset=utf-8",
-            data: "{sName:'" + obj.value + "'}",
-            dataType: "json",
-            async: false,
-            success: function (response) {
-                $('#MisparIshi').val(response);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("תקלה:" + errorThrown);
-            }
-    });
-  }
-
-    function SetNameOved(obj) {
-       
-        $.ajax({
-            type: "POST",
-            url: "/Budget/GetOvedNameById",
-            contentType: "application/json; charset=utf-8",
-            data: "{id:'" + obj.value + "'}",
-            dataType: "json",
-            async: false,
-            success: function (response) {
-                $('#OvedName').val(response);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("תקלה:" + errorThrown);
-            }
+    function CheckHaveChanges()
+    {
+        var grid = $("#EmployeesList").data("kendoGrid");
+        var data = grid.dataSource.data();
+        var num=0;
+        $.each(data, function (i, row) {
+            var dt = row;
+            if (dt.dirty == false)
+                num++;
         });
+        if (data.length == num)
+            alert("לא בוצע שינוי במסך");
     }
-    
-    function ButtonClick( button) {
-        alert("111");
-    }
+   
 
-    function findDataItem() {
-        //get grid datasource
-      //  debugger;
-        var theGrid = $('#EmployeesList')
-        var dataItem = $('#MisparIshi');
-        var ds = theGrid.dataSource;
-      
-        var ds = $('#EmployeesList').data("kendoGrid").dataSource;//.data()[0].BudgetEmployee.MisparIshi
+    function ShowReportNochechut(misparIshi) {
+     //   alert(kod);
+        var titel = " דו''ח נוכחות ";
+       // titel = titel + name + " לחודש " + " \n ";
+       // titel = titel + month;
+        //$("#dialogNoch").html("")
+        //    .dialog("option", "title", titel)
+        //    .load('/Budget/GetReportNochechut?MisparIshi=' + kod + "&chodesh=" + month, function () { $("#dialogNoch").dialog("open"); });
+        var model = @Html.Raw(Json.Encode(Model));
+        var month =model.SelectedMonth;
+       
+        //SelectedMonth
+        window.open('/Budget/GetReportNochechut?MisparIshi=' + misparIshi + "&chodesh=" + month, '_blank', "toolbar=no,scrollbars=yes,location=no,resizable =yes,left=150,top=10,width=950,height=850");
 
-        var view = kendo.data.Query.process(ds.data(), {
-            filter: ds.filter(),
-            sort: ds.sort()
-        }).data;
-
-        var index = -1;
-        // find the index of the matching dataItem
-        for (var x = 0; x < view.length; x++) {
-            if (view[x].BudgetEmployee.MisparIshi == dataItem.val()) { //dataItem.Id) {
-                index = x;
-                break;
-            }
-        }
-
-        if (index === -1) {
-            return;
-        }
-
-        var page = Math.floor(index / ds.pageSize());
-        var targetIndex = index - (page * ds.pageSize()) + 1;
-        //page is 1-based index    
-        ds.page(++page);
-        //grid wants a html element. tr:eq(x) by itself searches in the first grid!    
-        var row = $("#EmployeesList").find("tr:eq(" + targetIndex + ")")[0];
-        theGrid.select(row);
-        $("#EmployeesList").find("tr:eq(" + targetIndex + ")")[0].className = "clickable";
-
-       // console.log('Found it at Page: ' + page + 'index: ' + targetIndex);
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    //function ShowPopUp(misparIshi) {
-    //    //  $("#dialog").dialog();
-    //    $("#dialog").html("")
-    //        .dialog("option", "title", "הפחתות והוספות")
-    //        .load('/Budget/DispalyChanges?ovedId=' + misparIshi,
-    //      function () { $("#dialog").dialog("open"); });
-
-    //}
-
-    //$(function ()
-    //{
-    //    $("#dialog").dialog(
+    //$(function () {
+    //    $("#dialogNoch").dialog(
     //        {
-    //            autoOpen: false, width: 400, height: 450, model: true,
+    //            autoOpen: false, width: 'auto',
+    //            height: 'auto',
+    //            modal: false,
     //            buttons: {
-    //                "Close": function () {
+    //                "סגור": function () {
     //                    $(this).dialog("close");
     //                }
     //            }
     //        });
     //});
+
+
+    //$(function ()
+    //{
+    //    $("#EmployeesList").find(".k-grid-toolbar").insertAfter($("#grid .k-grid-content"));
+    //});
+
+    function onDataBound(arg) {
+        var grid = $("#EmployeesList").data("kendoGrid");
+        var trs = grid.tbody.find('tr');
+        trs.each(function () {
+            var dt = grid.dataItem($(this));
+            if (dt.dirty == true) {
+                grid._modelChange({ field: "MichsaCur", model: dt });
+            }
+        });
+    }
+
+    function ModifyGrid() {
+        var grid = $("#EmployeesList").data("kendoGrid");
+        var data = grid.dataSource.data();
+        $.each(data, function (i, row) {
+            var dt = row;
+            dt.MichsaCur = 1;
+            dt.dirty = true;
+            grid._modelChange({ field: "MichsaCur", model: dt });
+        });
+
+        //var trs = grid.tbody.find('tr');
+        //trs.each(function ()
+        //{
+        //    var dt = grid.dataItem($(this));
+        //    dt.MichsaCur = 1;
+        //    dt.dirty = true;
+        //    grid._modelChange({ field: "MichsaCur", model: dt });
+        //});
+    }
+
+    function CopyMichsotLastMonth(){
+        var grid = $("#EmployeesList").data("kendoGrid");
+        var data = grid.dataSource.data();
+        $.each(data, function (i, row) {
+            var dt = row;
+            dt.MichsaCur = dt.Meafyen14;
+            dt.dirty = true;
+            grid._modelChange({ field: "MichsaCur", model: dt });
+        });
+    }
+    function GetColumnIndex(columnName) {
+        var grid = $("#EmployeesList").data("kendoGrid");
+        var columns = grid.columns;
+        for (var i = 0; i < columns.length; i++)
+            if (columns[i].field == columnName)
+                return i;
+        return -1;
+    };
+
+        function CheakValid(obj) {
+          //  debugger;
+            if (obj.value != '') {
+                if (IsNumeric(obj.value) == false) {
+                    $("#btnExecSearch").attr('disabled', 'disabled');
+                    // $("#btnExecSearch").prop("disabled", true);             
+                    alert("מספר אישי לא חוקי");
+                    $('#MisparIshi').focus();
+                }
+                else {
+                    SetNameOved(obj);
+                    //$("#btnExecSearch").prop("disabled", false);
+                    $("#btnExecSearch").removeAttr('disabled');
+                }
+            }
+        }
+
+   
+
+        function SetMisparIshi(obj) {
+            if (obj.value != '') {
+                $.ajax({
+                    type: "POST",
+                    url: "/Budget/GetOvedIdByName",
+                    contentType: "application/json; charset=utf-8",
+                    data: "{sName:'" + obj.value + "'}",
+                    dataType: "json",
+                    async: false,
+                    success: function (response) {
+
+                        if (response != '')
+                            $('#MisparIshi').val(response);
+                        else {
+                            $('#OvedName').focus();
+                            alert('שם זה לא קיים למתקן זה');
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("תקלה:" + errorThrown);
+                    }
+                });
+            }
+        }
+
+        function SetNameOved(obj) {
+
+            $.ajax({
+                type: "POST",
+                url: "/Budget/GetOvedNameById",
+                contentType: "application/json; charset=utf-8",
+                data: "{id:'" + obj.value + "'}",
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                    if (response != '')
+                        $('#OvedName').val(response);
+                    else {
+                        $('#MisparIshi').focus();
+                        alert('מספר אישי זה לא קיים למתקן זה');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("תקלה:" + errorThrown);
+                }
+            });
+        }
+
+
+        function findDataItem() {
+            //get grid datasource
+            //  debugger;
+            var theGrid = $('#EmployeesList')
+            var dataItem = $('#MisparIshi');
+            var ds = theGrid.dataSource;
+      
+            var ds = $('#EmployeesList').data("kendoGrid").dataSource;//.data()[0].MisparIshi
+
+            var view = kendo.data.Query.process(ds.data(), {
+                filter: ds.filter(),
+                sort: ds.sort()
+            }).data;
+
+            var index = -1;
+            // find the index of the matching dataItem
+            for (var x = 0; x < view.length; x++) {
+                if (view[x].MisparIshi == dataItem.val()) { //dataItem.Id) {
+                    index = x;
+                    break;
+                }
+            }
+
+            if (index === -1) {
+                return;
+            }
+
+            var page = Math.floor(index / ds.pageSize());
+            var targetIndex = index - (page * ds.pageSize()) + 1;
+            //page is 1-based index    
+            ds.page(++page);
+            //grid wants a html element. tr:eq(x) by itself searches in the first grid!    
+            var row = $("#EmployeesList").find("tr:eq(" + targetIndex + ")")[0];
+            theGrid.select(row);
+            $("#EmployeesList").find("tr:eq(" + targetIndex + ")")[0].className = "clickable";
+
+            // console.log('Found it at Page: ' + page + 'index: ' + targetIndex);
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //function ShowPopUp(misparIshi) {
+        //    //  $("#dialog").dialog();
+        //    $("#dialog").html("")
+        //        .dialog("option", "title", "הפחתות והוספות")
+        //        .load('/Budget/DispalyChanges?ovedId=' + misparIshi,
+        //      function () { $("#dialog").dialog("open"); });
+
+        //}
+
+        //$(function ()
+        //{
+        //    $("#dialog").dialog(
+        //        {
+        //            autoOpen: false, width: 400, height: 450, model: true,
+        //            buttons: {
+        //                "Close": function () {
+        //                    $(this).dialog("close");
+        //                }
+        //            }
+        //        });
+        //});
 
 </script>

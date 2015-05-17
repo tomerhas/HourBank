@@ -1,4 +1,5 @@
 ﻿using BsmCommon.DataModels;
+using BsmCommon.DataModels.Changes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace BsmWebApp.ViewModels.Changes
             : this()
         {
             FillMonths(months);
-           
+            Changes = new List<BudgetChangesGrid>();
         }
 
         public void FillMonths(List<MonthHolder> months)
@@ -36,5 +37,6 @@ namespace BsmWebApp.ViewModels.Changes
         public SelectList Ezors { get; set; }
         public string SelectedMonth { get; set; }
         public string SelectedEzor { get; set; }
+        public List<BudgetChangesGrid> Changes { get; set; }
     }
 }

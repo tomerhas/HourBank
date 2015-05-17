@@ -13,6 +13,11 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Microsoft.Reporting.WebForms;
+using Egged.Infrastructure.Attribute;
+using BsmWebApp.ViewModels.Reports;
+using System.Configuration;
 
 namespace BsmWebApp.Controllers
 {
@@ -30,6 +35,8 @@ namespace BsmWebApp.Controllers
 
             return View(vm);
         }
+
+      //[MultipleButton(Name = "action", Argument = "Index")]
         [HttpPost]
         public ActionResult Index(BudgetMainViewModel vm)
         {
@@ -44,7 +51,9 @@ namespace BsmWebApp.Controllers
 
                 BudgetMainViewModel vmResult = GetBudgetDetailForMitkan(pirteyMitkan.KodYechida, month, bakasha_id);
                 vmResult.MitkanName = vm.MitkanName;
+                vmResult.SelectedMonth = vm.SelectedMonth;
                 vmResult.UsersInMitkan = GetEmployeesInMitkan(pirteyMitkan.KodYechida, month,bakasha_id);
+                //vmResult.ReportVM = GetReportDetails();
                 return View(vmResult);
             }
             else
@@ -55,6 +64,43 @@ namespace BsmWebApp.Controllers
             }
         }
 
+     
+       
+       [HttpGet]
+        public ActionResult GetReportNochechut(int MisparIshi, string chodesh) //int KodYechida,DateTime chodesh)
+        {
+
+            ReportingServicesReportViewModel model = new ReportingServicesReportViewModel(
+            "Presence",
+            new List<Microsoft.Reporting.WebForms.ReportParameter>()
+              { 
+                new Microsoft.Reporting.WebForms.ReportParameter("P_MISPAR_ISHI",MisparIshi.ToString(),false) ,
+                new Microsoft.Reporting.WebForms.ReportParameter("P_STARTDATE", DateTime.Parse(chodesh).ToShortDateString(),false),
+                new Microsoft.Reporting.WebForms.ReportParameter("P_ENDDATE", DateTime.Parse(chodesh).AddMonths(1).AddDays(-1).ToShortDateString(),false)
+              });
+
+            ViewBag.ReportViewer = model.ReportViewer;
+            ViewBag.NameReport = "דו''ח נוכחות לעובד";
+            return View("~/Views/Report/ViewReport.cshtml");
+        }
+
+        //[MultipleButton(Name = "action", Argument = "Nochechut")]
+        //[HttpPost]
+        //public ActionResult GetNochechut(object a)
+        // {
+        //     ReportingServicesReportViewModel model = new ReportingServicesReportViewModel(
+        //     "ReportPath",
+        //     new List<Microsoft.Reporting.WebForms.ReportParameter>()
+        //      { 
+        //        new Microsoft.Reporting.WebForms.ReportParameter("P_MISPAR_ISHI","75757",false) ,
+        //        new Microsoft.Reporting.WebForms.ReportParameter("P_STARTDATE", DateTime.Now.AddDays(-1).ToShortDateString(),false),
+        //        new Microsoft.Reporting.WebForms.ReportParameter("P_ENDDATE", DateTime.Now.ToShortDateString(),false)
+        //      });
+
+        //      return View("ViewReport", model);
+        //     //ReportViewer reportViewer = new ReportViewer();
+        //    // return View();
+        // }
 
         private UsersInMitkanViewModel GetEmployeesInMitkan(int KodYechida, DateTime month, long bakasha_id)
         {
@@ -66,12 +112,9 @@ namespace BsmWebApp.Controllers
             //return vm;
 
             var manager = _container.Resolve<IBudgetManager>();
-            var employees = manager.getEmployeeDetails(KodYechida, month, bakasha_id);
+            var employees = manager.GetEmployeeDetails(KodYechida, month, bakasha_id);
             UsersInMitkanViewModel vm = new UsersInMitkanViewModel();
-            foreach (DataRow dr in employees.Rows)
-            {
-                vm.Employees.Add(new UserInMitkanVM(dr));
-            }
+            vm.Employees = employees;
             Session["EmployeesGrid"] = vm.Employees;
            // employees.ForEach(x => vm.Employees.Add(new UserInMitkanVM(x)));
             return vm;
@@ -82,11 +125,21 @@ namespace BsmWebApp.Controllers
         //    return manager.GetMonthsBack(kodParam);
         //}
 
-        public ActionResult Products_Read([DataSourceRequest]DataSourceRequest request, int KodYechida, DateTime month, long bakasha_id)
+        public ActionResult EmployeesInMitkanRead([DataSourceRequest]DataSourceRequest request, int KodYechida, DateTime month, long bakasha_id)
         {
-            var employees = GetEmployeesInMitkan(KodYechida, month, bakasha_id);
-            return Json(employees);
+            var employeesContainer = GetEmployeesInMitkan(KodYechida, month, bakasha_id);
+            return Json(employeesContainer.Employees.ToDataSourceResult(request));
         }
+
+        public ActionResult EmployeesInMitkanUpdate([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<BudgetEmployeeGrid> employees)
+        {
+            employees.ToList().ForEach(employee => 
+            {
+                var val = employee.MichsaCur;
+            });
+            return Json(employees.ToDataSourceResult(request));
+        }
+ 
 
         private BudgetMainViewModel GetBudgetDetailForMitkan(int kodMitkan, DateTime dateTime, long bakasha_id)
         {
@@ -96,6 +149,7 @@ namespace BsmWebApp.Controllers
             vm.MitkanBudgetDetail = mb;
             vm.KodMitkan = kodMitkan;
             vm.Month = dateTime;
+            vm.BakashaId = bakasha_id;
             vm.IsMitkanBudgetDetailEmpty = false;
 
             return vm;
@@ -119,7 +173,7 @@ namespace BsmWebApp.Controllers
         public PartialViewResult DispalyChanges(int KodYechida, string chodesh) //int KodYechida,DateTime chodesh)
         {
          
-            var manager = _container.Resolve<IBudgetManager>();
+            var manager = _container.Resolve<IChangesManager>();
             var changes = manager.GetBudgetChanges(KodYechida,DateTime.Parse(chodesh));
 
             BudgetChangesVM vm = new BudgetChangesVM();
@@ -140,11 +194,11 @@ namespace BsmWebApp.Controllers
             {
                 return Json(new List<int>(), JsonRequestBehavior.AllowGet);
             }
-      
-            List<UserInMitkanVM> employees = (List<UserInMitkanVM>)(Session["EmployeesGrid"]);
+
+            List<BudgetEmployeeGrid> employees = (List<BudgetEmployeeGrid>)(Session["EmployeesGrid"]);
             var listIds = employees
-                .Where(x => x.BudgetEmployee.MisparIshi.ToString().StartsWith(startsWith))
-                .Select(x => x.BudgetEmployee.MisparIshi).ToList();
+                .Where(x => x.MisparIshi.ToString().StartsWith(startsWith))
+                .Select(x => x.MisparIshi).ToList();
     
             return Json(listIds, JsonRequestBehavior.AllowGet);
         }
@@ -154,10 +208,10 @@ namespace BsmWebApp.Controllers
             var manager = _container.Resolve<IBudgetManager>();
            // var namelist = manager.GetOvdimNameStartWith(startsWith);
 
-            List<UserInMitkanVM> employees = (List<UserInMitkanVM>)(Session["EmployeesGrid"]);
+            List<BudgetEmployeeGrid> employees = (List<BudgetEmployeeGrid>)(Session["EmployeesGrid"]);
             var namelist = employees
-                .Where(x => x.BudgetEmployee.FullName.ToString().StartsWith(startsWith))
-                .Select(x => x.BudgetEmployee.FullName).ToList();
+                .Where(x => x.FullName.ToString().StartsWith(startsWith))
+                .Select(x => x.FullName).ToList();
     
 
             return Json(namelist, JsonRequestBehavior.AllowGet);
@@ -165,20 +219,20 @@ namespace BsmWebApp.Controllers
 
         public JsonResult GetOvedIdByName(string sName)
         {
-            List<UserInMitkanVM> employees = (List<UserInMitkanVM>)(Session["EmployeesGrid"]);
+            List<BudgetEmployeeGrid> employees = (List<BudgetEmployeeGrid>)(Session["EmployeesGrid"]);
             var listIds = employees
-                .Where(x => x.BudgetEmployee.FullName==sName)
-                .Select(x => x.BudgetEmployee.MisparIshi).ToList();
+                .Where(x => x.FullName==sName)
+                .Select(x => x.MisparIshi).ToList();
 
             return Json(listIds, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetOvedNameById(string id)
         {
-            List<UserInMitkanVM> employees = (List<UserInMitkanVM>)(Session["EmployeesGrid"]);
+            List<BudgetEmployeeGrid> employees = (List<BudgetEmployeeGrid>)(Session["EmployeesGrid"]);
             var listIds = employees
-                .Where(x => x.BudgetEmployee.MisparIshi.ToString() == id)
-                .Select(x => x.BudgetEmployee.FullName).ToList();
+                .Where(x => x.MisparIshi.ToString() == id)
+                .Select(x => x.FullName).ToList();
 
             return Json(listIds, JsonRequestBehavior.AllowGet);
         }
