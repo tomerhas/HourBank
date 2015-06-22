@@ -1,6 +1,7 @@
 ﻿using BsmCommon.DataModels;
 using BsmCommon.DataModels.Budgets;
 using BsmCommon.DataModels.Employees;
+using BsmCommon.DataModels.Profiles;
 using Oracle.DataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -25,8 +26,10 @@ namespace BsmBL.DAL
         public DbSet<BudgetChange> BudgetChanges { get; set; }
 
         public DbSet<BudgetEmployee> Employees { get; set; }
-        
-  
+        public DbSet<Harshaa> HarshaotOvdim { get; set; }
+        public DbSet<Masach> Mashacim { get; set; }
+        public DbSet<HarshaatMasach> HarshaatMasach { get; set; }
+     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             string schemaName = ConfigurationManager.AppSettings["BsmOracleSchemaName"];
@@ -34,6 +37,9 @@ namespace BsmBL.DAL
             modelBuilder.Entity<Budget>().ToTable("TB_BUDGET", schemaName);
             modelBuilder.Entity<BudgetChange>().ToTable("TB_BUDGET_CHANGE", schemaName);
             modelBuilder.Entity<BudgetEmployee>().ToTable("TB_BUDGET_EMPLOYEES", schemaName);
+            modelBuilder.Entity<Harshaa>().ToTable("TB_HARSHAA", schemaName);
+            modelBuilder.Entity<Masach>().ToTable("TB_MASACH", schemaName);
+            modelBuilder.Entity<HarshaatMasach>().ToTable("TB_HARSHAOT_MASACH", schemaName);
         }
     }
 }

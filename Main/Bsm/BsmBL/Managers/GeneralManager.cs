@@ -1,9 +1,12 @@
 ﻿using BsmBL.DAL;
 using BsmCommon.DataModels;
 using BsmCommon.DataModels.Employees;
+using BsmCommon.Interfaces.Dal;
 using BsmCommon.Interfaces.Managers;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +15,13 @@ namespace BsmBL.Managers
 {
     public class GeneralManager : IGeneralManager
     {
+        private IUnityContainer _container;
+
+        public GeneralManager(IUnityContainer container)
+        {
+            _container = container;
+        }
+
         public List<Oved> GetOvdim(int[] PirteyOvedIds)
         {
             using (var context = new KdsEntities())
@@ -56,6 +66,13 @@ namespace BsmBL.Managers
 
                 return (long)res[0];
             }
+        }
+
+        public DataTable GetYechidutForUser(DateTime Month, int KodYechida, string PreFix="")
+        {
+            var GeneralDal = _container.Resolve<IGeneralDal>();
+            return GeneralDal.GetYechidotForUser(Month, KodYechida, PreFix);
+             
         }
     }
 }

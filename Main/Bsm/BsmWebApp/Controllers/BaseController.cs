@@ -9,6 +9,7 @@ using Egged.Infrastructure.Menus.Interfaces;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -54,15 +55,35 @@ namespace BsmWebApp.Controllers
            return manager.GetEzors();
         }
 
-        public JsonResult GetMitkanStartsWith(string startsWith)
+        public JsonResult GetMitkanStartsWith(string taarich,    string startsWith)
         {
-            var manager = _container.Resolve<IBudgetManager>();
-            var namelist = manager.GetYechidot(startsWith);
+
+            IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
+            DataTable yechidot = Gmanager.GetYechidutForUser(DateTime.Parse(taarich), GetYechidatOvedForEzNihuly(), startsWith);
+            List<Yechida> list = new List<Yechida>();
+            foreach(DataRow dr in yechidot.Rows)
+            {
+                Yechida item= new Yechida();
+                item.TeurYechida =dr["TeurYechida"].ToString();
+                item.KodYechida = int.Parse(dr["KodYechida"].ToString());
+                list.Add(item);
+            }
+            //var manager = _container.Resolve<IBudgetManager>();
+            //var namelist = manager.GetYechidot(startsWith);
            
-            return Json(namelist, JsonRequestBehavior.AllowGet);
+            //return Json(namelist, JsonRequestBehavior.AllowGet);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-       
+        public int GetYechidatOvedForEzNihuly()
+        {
+            int KodYechida;
+            if (CurrentUser.HarshaatOved.KodYechidaIchus > 0)
+                KodYechida = CurrentUser.HarshaatOved.KodYechidaIchus;
+            else KodYechida = CurrentUser.HarshaatOved.KodYechida;
+
+            return KodYechida;
+        }
 
       
       

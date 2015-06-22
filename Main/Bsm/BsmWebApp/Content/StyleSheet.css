@@ -22,3 +22,8 @@
 .grid tbody td:first-child {
     border-left-width :1px;
 }
+
+.disabled{
+    color:gray;
+    background-color:lightgray;
+}

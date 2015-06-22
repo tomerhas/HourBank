@@ -13,19 +13,19 @@ namespace BsmCommon.DataModels.Profiles
 
         public Masach()
         {
-            Harshaot = new List<Harshaa>();
-            Profiles = new List<Profile>();
+            Harshaot = new List<HarshaatMasach>();
+         //   Profiles = new List<Profile>();
         }
-        [Key, Column("MASACH_ID", Order = 0)]
+        [Column("KOD_MASACH")]
         public int MasachId{ get; set; }
 
-        [Key, Column("PAKAD_ID", Order = 1)]
-        public int PakadId { get; set; }
+        [Column("PAIL")]
+        public int Pail { get; set; }
 
-        [Column("SHEM")]
-        public string Name { get; set; }
+        [Column("NAME_VIEW")]
+        public string MasachName { get; set; }
 
-        public List<Harshaa> Harshaot { get; set; }
-        public List<Profile> Profiles { get; set; }
+        public List<HarshaatMasach> Harshaot { get; set; }
+      //  public List<Profile> Profiles { get; set; }
     }
 }

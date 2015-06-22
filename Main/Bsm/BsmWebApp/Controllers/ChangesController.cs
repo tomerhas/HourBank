@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
+using BsmWebApp.Infrastructure.Security;
 
 
 namespace BsmWebApp.Controllers
@@ -21,7 +22,7 @@ namespace BsmWebApp.Controllers
         {
 
         }
-        //// [PageAuthorize("aaa.aspx")]
+        [PageAuthorize("Changes")]
         public ActionResult Index()
         {
             ChangesMainViewModel vm = InitChangesVm();

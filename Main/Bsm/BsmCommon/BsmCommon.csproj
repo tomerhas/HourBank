@@ -61,6 +61,7 @@
     <Compile Include="DataModels\MonthHolder.cs" />
     <Compile Include="DataModels\Parameter.cs" />
     <Compile Include="DataModels\Profiles\Harshaa.cs" />
+    <Compile Include="DataModels\Profiles\HarshaatMasach.cs" />
     <Compile Include="DataModels\Profiles\Masach.cs" />
     <Compile Include="DataModels\Profiles\Profile.cs" />
     <Compile Include="DataModels\Profiles\ProfilesMasachim.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Interfaces\CachedItems\IUserInfoCachedItems.cs" />
     <Compile Include="Interfaces\Dal\IBudgetDal.cs" />
     <Compile Include="Interfaces\Dal\IChangesDal.cs" />
+    <Compile Include="Interfaces\Dal\IGeneralDal.cs" />
     <Compile Include="Interfaces\Managers\IBudgetManager.cs" />
     <Compile Include="Interfaces\Managers\IChangesManager.cs" />
     <Compile Include="Interfaces\Managers\IGeneralManager.cs" />

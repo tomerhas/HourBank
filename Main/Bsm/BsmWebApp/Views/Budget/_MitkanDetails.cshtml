@@ -1,6 +1,7 @@
 ﻿@model BsmWebApp.ViewModels.Budgets.BudgetMainViewModel
 
   <script>
+      var valid;
       $(document).ready(function () {
           $("#MitkanName").kendoAutoComplete({
               // placeholder: "Enter site ...",
@@ -9,6 +10,27 @@
               dataValueField: "KodYechida",
               filter: "startswith",
               minLength: 1,
+              change: function (e) {
+                  var autocomplete = $("#MitkanName").data("kendoAutoComplete");
+                  var dataItem = autocomplete.dataSource.data();
+                  var selectedVal = autocomplete.value();
+                  var isExist = false;
+                  $.each(dataItem, function (key, value)
+                  {
+                      if (selectedVal===value.TeurYechida)
+                      {
+                          isExist = true;
+                      }
+                  });
+                  if (isExist == false) {
+                      alert("מתקן לא קיים/אינך רשאי לצפות במתקן זה");
+                      $("#btnExec").click();
+                      $("#btnExec").attr('disabled', 'disabled');
+                     
+                  }
+                  else $("#btnExec").removeAttr('disabled');
+                
+              },
               dataSource: {
                   type: "json",
                   serverFiltering: true,
@@ -17,7 +39,7 @@
                   transport: {
                       read:
                           {
-                              url: "Budget/GetMitkanStartsWith"
+                              url: "Budget/GetMitkanStartsWith?taarich=@Model.Month"
                           }, //read
                       parameterMap: function () {// send value of autocomplete as the "startsWith" parameter
                           return {
@@ -41,7 +63,16 @@
     <div class="row">
         <div class="col-md-1 col-md-push-11" > שם מתקן:</div>  
         <div class="col-md-2 col-md-push-8">    
-              @Html.TextBoxFor(m => m.MitkanName, new { @onchange = "EnableButton();" })
+             @if (Model.OnlyOneYechida)
+             {
+              @Html.TextBoxFor(m => m.MitkanName, new {@readonly = "readonly", style = "background:lightgray;"    , @onchange = "EnableButton();" })
+             }
+             else
+             {
+              @Html.TextBoxFor(m => m.MitkanName)
+             }
+            
+            
         </div>  
 
 
@@ -52,11 +83,12 @@
             @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, new { @onchange = "EnableButton();" })
         </div>
         <div class="col-md-1 col-md-pull-3">
-            @if (Model.IsMitkanBudgetDetailEmpty == false)
+            @if (Model.IsMitkanBudgetDetailEmpty == false || Model.OnlyOneYechida)
             {
                  <input type="submit" id="btnExec" value="הצג"  name='action:Index'    />
             }
-            else {
+            else
+            {
                 <input type="submit" id="btnExec" value="הצג"  name='action:Index'   disabled   />
             }
         </div>
@@ -64,13 +96,12 @@
     </div>
 
    <hr class="styled" />
-
-   
+      
             if (Model.IsMitkanBudgetDetailEmpty == false)
             {  
     <div  class="col-md-8 col-md-push-3">  <span>שעות נוספות</span></div>
      <div  class="col-md-4 col-md-pull-7">  <span>שעות נוספות - יתרה</span></div>
-    <div class="row">
+    <div id="divPratim" class="row">
         <div  class="col-md-8 col-md-push-3">
             <table class="styled">
                 <tr>
@@ -131,7 +162,7 @@
 
                 }
     }
-
+   
 </div>
     
 

@@ -28,7 +28,7 @@ namespace BsmWebApp.Controllers
         {
 
         }
-       // [PageAuthorize("aaa.aspx")]
+        [PageAuthorize("Budget")]
         public ActionResult Index()
         {         
             BudgetMainViewModel vm = InitBudgetVm();
@@ -158,9 +158,20 @@ namespace BsmWebApp.Controllers
 
         private BudgetMainViewModel InitBudgetVm()
         {
+            
             var months = GetMonthsBackList(6);
             BudgetMainViewModel vm = new BudgetMainViewModel(months);
             vm.MitkanBudgetDetail = new Budget();
+            vm.Month=DateTime.Parse(months[0].Id);
+             
+
+            IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
+            DataTable yechidot = Gmanager.GetYechidutForUser(vm.Month, GetYechidatOvedForEzNihuly());
+            if (yechidot.Rows.Count == 1)
+            {
+                vm.MitkanName = yechidot.Rows[0]["TeurYechida"].ToString();
+                vm.OnlyOneYechida = true; ;
+            }
             return vm;
         }
 

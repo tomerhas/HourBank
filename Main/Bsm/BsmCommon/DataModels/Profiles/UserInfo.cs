@@ -12,13 +12,16 @@ namespace BsmCommon.DataModels.Profiles
         public string UserName { get; set; }
         public string EmployeeFullName { get; set; }
         public string EmployeeNumber { get; set; }
-        public List<ProfilesMasachim> ProfilesMasachim { get; set; }
+        public Harshaa HarshaatOved { get; set; }
+        public List<Masach> Screens  { get; set; }
+       // public List<ProfilesMasachim> ProfilesMasachim { get; set; }
 
         public bool IsPermittedForMasach(string masachName)
         {
-            var permitted = ProfilesMasachim.Where(x => x.Masach!= null && x.Masach.Name.Trim().ToLower() == masachName.Trim().ToLower());
+            var permitted = Screens.Where(x =>  x.MasachName.Trim().ToLower() == masachName.Trim().ToLower());
 
             return (permitted.Count() > 0);
+         //   return true;
         }
     }
 }

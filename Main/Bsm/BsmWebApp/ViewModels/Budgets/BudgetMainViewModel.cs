@@ -14,7 +14,12 @@ namespace BsmWebApp.ViewModels.Budgets
         public BudgetMainViewModel()
         {
             IsMitkanBudgetDetailEmpty = true;
-            UsersInMitkan = new UsersInMitkanViewModel();   
+            OnlyOneYechida = false;
+            UsersInMitkan = new UsersInMitkanViewModel();
+            KodList = new List<KodListItem>();
+            KodList.Add(new KodListItem() { ProductID = 2, ProductName = "prod1" });
+            KodList.Add(new KodListItem() { ProductID = 3, ProductName = "prod2" });
+            KodList.Add(new KodListItem() { ProductID = 4, ProductName = "prod3" });
         }
 
         public BudgetMainViewModel(List<MonthHolder> months) : this()
@@ -33,6 +38,7 @@ namespace BsmWebApp.ViewModels.Budgets
         public long BakashaId { get; set; }
         public DateTime Month { get; set; }
         public bool IsMitkanBudgetDetailEmpty { get; set; }
+        public bool OnlyOneYechida { get; set; }
         public Budget MitkanBudgetDetail { get; set; }
 
         public SelectList Months { get; set; }
@@ -44,6 +50,14 @@ namespace BsmWebApp.ViewModels.Budgets
 
         public int MisparIshi { get; set; }
         public string OvedName { get; set; }
+        public List<KodListItem> KodList { get; set; }
+    }
+
+
+    public class KodListItem
+    {
+        public string ProductName { get; set; }
+        public int ProductID { get; set; }
     }
 
    

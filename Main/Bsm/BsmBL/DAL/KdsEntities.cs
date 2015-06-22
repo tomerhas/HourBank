@@ -24,9 +24,10 @@ namespace BsmBL.DAL
         public DbSet<Ezor> Ezors { get; set; }
         public DbSet<Oved> Ovdim { get; set; }
         public DbSet<PirteyOved> PirteyOvdim { get; set; }
-        public DbSet<Profile> Profiles { get; set; }
-        public DbSet<ProfilesMasachim> ProfileMasachims { get; set; }
-        public DbSet<Masach> Masachs { get; set; }
+      
+       // public DbSet<Profile> Profiles { get; set; }
+       // public DbSet<ProfilesMasachim> ProfileMasachims { get; set; }
+       // public DbSet<Masach> Masachs { get; set; }
         public DbSet<Yechida> Yechidot { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -35,10 +36,11 @@ namespace BsmBL.DAL
             modelBuilder.Entity<Ezor>().ToTable("CTB_EZOR", schemaName);
             modelBuilder.Entity<Oved>().ToTable("OVDIM", schemaName);
             modelBuilder.Entity<PirteyOved>().ToTable("PIVOT_PIRTEY_OVDIM", schemaName);
-            modelBuilder.Entity<Profile>().ToTable("CTB_PROFIL", schemaName);
-            modelBuilder.Entity<ProfilesMasachim>().ToTable("TB_HARSHAOT_MASACHIM", schemaName);
-            modelBuilder.Entity<Masach>().ToTable("TB_MASACH", schemaName);
+          //  modelBuilder.Entity<Profile>().ToTable("CTB_PROFIL", schemaName);
+          //  modelBuilder.Entity<ProfilesMasachim>().ToTable("TB_HARSHAOT_MASACHIM", schemaName);
+          //  modelBuilder.Entity<Masach>().ToTable("TB_MASACH", schemaName);
             modelBuilder.Entity<Yechida>().ToTable("CTB_YECHIDA", schemaName);
+          
 
         }
     }

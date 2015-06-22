@@ -62,6 +62,7 @@
     <Compile Include="DAL\BsmEntities.cs" />
     <Compile Include="DAL\BudgetDal.cs" />
     <Compile Include="DAL\ChangesDal.cs" />
+    <Compile Include="DAL\GeneralDal.cs" />
     <Compile Include="DAL\KdsEntities.cs" />
     <Compile Include="Managers\BudgetManager.cs" />
     <Compile Include="Managers\ChangesManager.cs" />
