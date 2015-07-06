@@ -25,13 +25,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheInfra", "Infrastructure\CacheInfra\CacheInfra.csproj", "{D6968B94-1A4F-4F26-8095-5297AF0E0E83}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalOraInfra", "DalOraInfra\DalOraInfra.csproj", "{C9B59C0B-A7C3-433A-9C5C-C11EB2E8EA7F}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BsmWebApp", "BsmWebApp\BsmWebApp.csproj", "{97855240-CC49-475F-A96F-2C416FE3DF60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalOraInfra", "DalOraInfra\DalOraInfra.csproj", "{C9B59C0B-A7C3-433A-9C5C-C11EB2E8EA7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BsmWebApp2", "BsmWebApp2\BsmWebApp2.csproj", "{B682107C-6B89-49B0-BF9C-F5131891DE80}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
+		SccNumberOfProjects = 9
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://tfssrv01:8080/tfs/ksafimcollection
 		SccLocalPath0 = .
@@ -53,13 +55,16 @@ Global
 		SccProjectTopLevelParentUniqueName5 = Bsm.sln
 		SccProjectName5 = Infrastructure/CacheInfra
 		SccLocalPath5 = Infrastructure\\CacheInfra
-		SccProjectUniqueName6 = BsmWebApp\\BsmWebApp.csproj
-		SccProjectName6 = BsmWebApp
-		SccLocalPath6 = BsmWebApp
-		SccProjectUniqueName7 = DalOraInfra\\DalOraInfra.csproj
-		SccProjectTopLevelParentUniqueName7 = Bsm.sln
-		SccProjectName7 = DalOraInfra
-		SccLocalPath7 = DalOraInfra
+		SccProjectUniqueName6 = DalOraInfra\\DalOraInfra.csproj
+		SccProjectTopLevelParentUniqueName6 = Bsm.sln
+		SccProjectName6 = DalOraInfra
+		SccLocalPath6 = DalOraInfra
+		SccProjectUniqueName7 = BsmWebApp\\BsmWebApp.csproj
+		SccProjectName7 = BsmWebApp
+		SccLocalPath7 = BsmWebApp
+		SccProjectUniqueName8 = BsmWebApp2\\BsmWebApp2.csproj
+		SccProjectName8 = BsmWebApp2
+		SccLocalPath8 = BsmWebApp2
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,14 +91,18 @@ Global
 		{D6968B94-1A4F-4F26-8095-5297AF0E0E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6968B94-1A4F-4F26-8095-5297AF0E0E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6968B94-1A4F-4F26-8095-5297AF0E0E83}.Release|Any CPU.Build.0 = Release|Any CPU
-		{97855240-CC49-475F-A96F-2C416FE3DF60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97855240-CC49-475F-A96F-2C416FE3DF60}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97855240-CC49-475F-A96F-2C416FE3DF60}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97855240-CC49-475F-A96F-2C416FE3DF60}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9B59C0B-A7C3-433A-9C5C-C11EB2E8EA7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9B59C0B-A7C3-433A-9C5C-C11EB2E8EA7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9B59C0B-A7C3-433A-9C5C-C11EB2E8EA7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9B59C0B-A7C3-433A-9C5C-C11EB2E8EA7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97855240-CC49-475F-A96F-2C416FE3DF60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97855240-CC49-475F-A96F-2C416FE3DF60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97855240-CC49-475F-A96F-2C416FE3DF60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97855240-CC49-475F-A96F-2C416FE3DF60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B682107C-6B89-49B0-BF9C-F5131891DE80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B682107C-6B89-49B0-BF9C-F5131891DE80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B682107C-6B89-49B0-BF9C-F5131891DE80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B682107C-6B89-49B0-BF9C-F5131891DE80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
