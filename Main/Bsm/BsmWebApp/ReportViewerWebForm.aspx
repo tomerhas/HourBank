@@ -31,7 +31,7 @@
                     <asp:ScriptReference  Assembly="ReportViewerForMvc" Name="ReportViewerForMvc.Scripts.PostMessage.js" />
                 </Scripts>
             </asp:ScriptManager>   
-            <rsweb:ReportViewer ID="ReportViewer1"   style="Height:800px;Width:850px;direction:rtl" AsyncRendering="false" SizeToReportContent="false"    ZoomMode="FullPage"   runat="server"></rsweb:ReportViewer>
+            <rsweb:ReportViewer ID="ReportViewer1"   style="Height:800px;Width:850px;direction:rtl" AsyncRendering="false" SizeToReportContent="true"    ZoomMode="FullPage"   runat="server"></rsweb:ReportViewer>
         </div>
          
     </form>

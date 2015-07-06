@@ -91,18 +91,32 @@ namespace BsmWebApp.Controllers
         {
             get 
             {
-                string userName = HttpContext.User.Identity.Name;
-                var cache = _container.Resolve<IUserInfoCachedItems>();
-                UserInfo uf =  cache.Get(userName);
-                if (uf == null)
+                if (HttpContext.User.Identity.IsAuthenticated)
                 {
-                    var userInfo = _container.Resolve<ISecurityManager>().GetUserInfo(userName);
-                    cache.Add(userName, userInfo);
-                    return userInfo;
+                    string userName = HttpContext.User.Identity.Name;
+                    var cache = _container.Resolve<IUserInfoCachedItems>();
+                    UserInfo uf = cache.Get(userName);
+                    if (uf == null)
+                    {
+                        try
+                        {
+                            var userInfo = _container.Resolve<ISecurityManager>().GetUserInfo(userName);
+                            cache.Add(userName, userInfo);
+                            return userInfo;
+                        }
+                        catch (Exception ex)
+                        {
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        return uf;
+                    }
                 }
                 else
                 {
-                    return uf;
+                    return null;
                 }
             }
         }

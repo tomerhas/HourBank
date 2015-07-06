@@ -43,15 +43,17 @@ namespace BsmBL.Managers
                     using (var context = new BsmEntities())
                     {
                         uf.HarshaatOved = context.HarshaotOvdim.SingleOrDefault(h => h.KodIsuk == Isuk && h.KodYechida == YechidaIrgunit);
-                        List<Masach> Screens = context.Mashacim.Where(m => m.Pail == 1).ToList();
-                        foreach (Masach Screen in Screens.ToList())
-                        {
-                            Screen.Harshaot = context.HarshaatMasach.Where(h => h.MasachId == Screen.MasachId && h.SugHarshaa == uf.HarshaatOved.SugHarshaa).ToList();
-                            if (Screen.Harshaot.Count == 0)
-                                Screens.Remove(Screen);
-                        }
+                        if(uf.HarshaatOved != null){
+                            List<Masach> Screens = context.Mashacim.Where(m => m.Pail == 1).ToList();
+                            foreach (Masach Screen in Screens.ToList())
+                            {
+                                Screen.Harshaot = context.HarshaatMasach.Where(h => h.MasachId == Screen.MasachId && h.SugHarshaa == uf.HarshaatOved.SugHarshaa).ToList();
+                                if (Screen.Harshaot.Count == 0)
+                                    Screens.Remove(Screen);
+                            }
 
-                        uf.Screens = Screens;
+                            uf.Screens = Screens;
+                        }
                     }
 
                 }

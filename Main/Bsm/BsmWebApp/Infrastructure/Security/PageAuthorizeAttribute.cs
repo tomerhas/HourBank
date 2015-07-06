@@ -24,7 +24,7 @@ namespace BsmWebApp.Infrastructure.Security
              var cache = ServiceLocator.Current.GetInstance<IUserInfoCachedItems>();
              var userName= HttpContext.Current.User.Identity.Name;
              var uf = cache.Get(userName);
-            if(uf.IsPermittedForMasach(_pageName))
+            if(uf != null && uf.IsPermittedForMasach(_pageName))
             {
                 return;
             }
