@@ -25,7 +25,7 @@ namespace BsmBL.DAL
             {//מחזיר נתוני עובד: 
                 oDal.AddParameter("p_result", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
                 oDal.AddParameter("p_mitkan", ParameterType.ntOracleInteger, KodYechida, ParameterDir.pdInput);
-                oDal.AddParameter("p_date", ParameterType.ntOracleDate, DateTime.Parse("01/03/2015"), ParameterDir.pdInput);
+                oDal.AddParameter("p_date",  ParameterType.ntOracleDate, Month, ParameterDir.pdInput);
                 oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, BakashaId, ParameterDir.pdInput);
                // oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
               //  oDal.ExecuteSP(cfunGetSumMeafyen14, ref dt);

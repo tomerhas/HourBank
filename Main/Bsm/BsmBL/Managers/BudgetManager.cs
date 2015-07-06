@@ -4,7 +4,7 @@ using BsmCommon.DataModels.Budgets;
 using BsmCommon.DataModels.Employees;
 using BsmCommon.Helpers;
 using BsmCommon.Interfaces.Managers;
-using Oracle.DataAccess.Client;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Data;

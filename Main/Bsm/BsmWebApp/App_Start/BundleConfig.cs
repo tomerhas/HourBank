@@ -8,8 +8,9 @@ namespace BsmWebApp
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            BundleTable.EnableOptimizations = false;
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-2.1.3.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryUi").Include(
                          "~/Scripts/jquery-ui-{version}.js"));

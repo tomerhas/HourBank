@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Data; 
 using System.Configuration; 
-using Oracle.DataAccess; 
-using Oracle.DataAccess.Client; 
-using Oracle.DataAccess.Types;
+using Oracle.ManagedDataAccess;
+using Oracle.ManagedDataAccess.Client; 
+//using Oracle.DataAccess.Client; 
+//using Oracle.DataAccess.Types;
 
 
 namespace DalOraInfra.DAL
@@ -21,8 +22,8 @@ namespace DalOraInfra.DAL
         ntOracleDate = OracleDbType.Date,
         ntOracleInt64 = OracleDbType.Int64,
         ntOracleDecimal = OracleDbType.Decimal,    
-        ntOracleObject = OracleDbType.Object,
-        ntOracleArray = OracleDbType.Array,
+        //ntOracleObject = OracleDbType.Object,
+        //ntOracleArray = OracleDbType.Array,
         ntOracleClob =  OracleDbType.Clob,
         ntOracleBlob = OracleDbType.Blob
     }
@@ -372,28 +373,28 @@ namespace DalOraInfra.DAL
     {
         return cmd.Parameters[ParamName].Value;
     }
-    public void InsertXML(string sXML, string sTableName, string[] ucols)
-    {
-        try
-        {
-            Open();
-            cmd.Connection = conn;
-            cmd.XmlCommandType = OracleXmlCommandType.Insert;
-            cmd.CommandText = sXML;
-            cmd.XmlSaveProperties.Table = sTableName;
-            cmd.XmlSaveProperties.UpdateColumnsList = ucols;
-            // Insert rows
-            int rows = cmd.ExecuteNonQuery();
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
-        finally
-        {
-            Close();
-        }
-    }
+    //public void InsertXML(string sXML, string sTableName, string[] ucols)
+    //{
+    //    try
+    //    {
+    //        //Open();
+    //        //cmd.Connection = conn;
+    //        //cmd.XmlCommandType = OracleXmlCommandType.Insert;
+    //        //cmd.CommandText = sXML;
+    //        //cmd.XmlSaveProperties.Table = sTableName;
+    //        //cmd.XmlSaveProperties.UpdateColumnsList = ucols;
+    //        //// Insert rows
+    //        //int rows = cmd.ExecuteNonQuery();
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        throw ex;
+    //    }
+    //    finally
+    //    {
+    //        Close();
+    //    }
+    //}
     void IDisposable.Dispose()
     {
         cmd.Dispose();
@@ -416,7 +417,7 @@ namespace DalOraInfra.DAL
             TablesNamesSplit = TablesNames.Split(',');
             for (int i = 0; i < cmd.Parameters.Count; i++)
             {
-                if (cmd.Parameters[i].OracleDbType == Oracle.DataAccess.Client.OracleDbType.RefCursor)
+                if (cmd.Parameters[i].OracleDbType == Oracle.ManagedDataAccess.Client.OracleDbType.RefCursor)
                 {
                     OldName = "Table";
                     if (i > 0) OldName += i;

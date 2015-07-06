@@ -2,7 +2,7 @@
 using BsmCommon.DataModels;
 using BsmCommon.DataModels.Employees;
 using BsmCommon.DataModels.Profiles;
-using Oracle.DataAccess.Client;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,7 +16,7 @@ namespace BsmBL.DAL
     public class KdsEntities : DbContext
     {
         public KdsEntities()
-            : base(new OracleConnection(ConfigurationManager.ConnectionStrings["KDS_CONNECTION"].ConnectionString), true)
+            : base("KDS_CONNECTION")
         {
         }
 

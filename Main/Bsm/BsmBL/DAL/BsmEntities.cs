@@ -2,7 +2,7 @@
 using BsmCommon.DataModels.Budgets;
 using BsmCommon.DataModels.Employees;
 using BsmCommon.DataModels.Profiles;
-using Oracle.DataAccess.Client;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,8 +16,8 @@ namespace BsmBL.DAL
 {
     public class BsmEntities : DbContext 
     {
-        public BsmEntities()
-            : base(new OracleConnection(ConfigurationManager.ConnectionStrings["BSM_CONNECTION"].ConnectionString), true) 
+        public BsmEntities() : base("BSM_CONNECTION")
+            //: base(new OracleConnection(ConfigurationManager.ConnectionStrings["BSM_CONNECTION"].ConnectionString), true) 
         { 
         }
 

@@ -29,11 +29,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalOraInfra", "DalOraInfra\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BsmWebApp", "BsmWebApp\BsmWebApp.csproj", "{97855240-CC49-475F-A96F-2C416FE3DF60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BsmWebApp2", "BsmWebApp2\BsmWebApp2.csproj", "{B682107C-6B89-49B0-BF9C-F5131891DE80}"
-EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 9
+		SccNumberOfProjects = 8
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://tfssrv01:8080/tfs/ksafimcollection
 		SccLocalPath0 = .
@@ -62,9 +60,6 @@ Global
 		SccProjectUniqueName7 = BsmWebApp\\BsmWebApp.csproj
 		SccProjectName7 = BsmWebApp
 		SccLocalPath7 = BsmWebApp
-		SccProjectUniqueName8 = BsmWebApp2\\BsmWebApp2.csproj
-		SccProjectName8 = BsmWebApp2
-		SccLocalPath8 = BsmWebApp2
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,10 +94,6 @@ Global
 		{97855240-CC49-475F-A96F-2C416FE3DF60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97855240-CC49-475F-A96F-2C416FE3DF60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97855240-CC49-475F-A96F-2C416FE3DF60}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B682107C-6B89-49B0-BF9C-F5131891DE80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B682107C-6B89-49B0-BF9C-F5131891DE80}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B682107C-6B89-49B0-BF9C-F5131891DE80}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B682107C-6B89-49B0-BF9C-F5131891DE80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
