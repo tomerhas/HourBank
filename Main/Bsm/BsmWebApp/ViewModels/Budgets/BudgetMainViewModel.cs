@@ -37,6 +37,7 @@ namespace BsmWebApp.ViewModels.Budgets
         public int KodMitkan { get; set; }
         public long BakashaId { get; set; }
         public DateTime Month { get; set; }
+        public DateTime LastBakashaDate { get; set; }
         public bool IsMitkanBudgetDetailEmpty { get; set; }
         public bool OnlyOneYechida { get; set; }
         public Budget MitkanBudgetDetail { get; set; }

@@ -53,7 +53,17 @@ namespace BsmBL.Managers
                 return (long)res[0];
             }
         }
+        public DateTime GetZmanBakasha(long bakasha_id)
+        {
+            using (var context = new KdsEntities())
+            {
 
+                var sql = string.Format("select zman_hatchala from tb_bakashot where bakasha_id={0}", bakasha_id);
+                var res = context.Database.SqlQuery<DateTime>(sql).ToList();
+
+                return (DateTime)res[0];
+            }
+        }
         public long GetLastBakashatChishuv(DateTime Month)
         {
             string chodesh = Month.Date.Month.ToString().PadLeft(2, '0') + "/" + Month.Date.Year;

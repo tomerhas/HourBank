@@ -14,6 +14,7 @@ namespace BsmCommon.Interfaces.Managers
         List<Oved> GetOvdim(int[] PirteyOvedIds);
         List<TeurEzor> GetEzors();
         long GetLastBakasha(DateTime Month);
+        DateTime GetZmanBakasha(long bakasha_id);
         DataTable GetYechidutForUser(DateTime Month, int KodYechida,string PreFix="");
     }
 }

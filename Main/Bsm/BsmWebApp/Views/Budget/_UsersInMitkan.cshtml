@@ -67,7 +67,7 @@
     
     if (Model.UsersInMitkan.Employees.Count >0)
     {
-    <hr class="styled" />
+    @*<hr class="styled" />*@
       
         <fieldset class="FilterFieldSet" style="width:950px;height:80px">   
            <div class="col-md-2 col-md-push-10" ><span style="text-decoration:underline; font-size:medium;font-weight:bold"> חיפוש עובד:</span></div>
@@ -105,26 +105,26 @@
         Html.Kendo().Grid<BsmCommon.DataModels.Budgets.BudgetEmployeeGrid>()
            .Name("EmployeesList").Columns(columns =>
            {
-               columns.Bound(o => o.Masad).Title("מס''ד").Width(50);
-               columns.Bound(o => o.MisparIshi).Title("מספר אישי").Width(80);
+               columns.Bound(o => o.MisparIshi).Title("מספר אישי").Title("ddd").Width(80);
                columns.Bound(o => o.FullName).Title("שם עובד").Width(100);
                columns.Bound(o => o.TeurIsuk).Title("עיסוק").Width(100);
                columns.Bound(o => o.AlTikni).Title("על תקני").Width(50);
                columns.Bound(o => o.TeurMutamut).Title("קוד מותאם").Width(80);
-
-               columns.Bound(o => o.MichsaYomit).Title("מכסה יומית").Width(80);
-               columns.Bound(o => o.NosafotPrev).Title("ש''נ שבוצעו  </br> בחודש קודם").Width(80);
-               columns.Bound(o => o.MichsaPrev).Title("מכסת ש''נ </br> בחודש קודם").Width(80);
-               columns.Bound(o => o.NosafotCur).Title("ש''נ שבוצעו  </br>בחודש נוכחי").Width(80);
-               columns.Bound(o => o.MichsaCur).Title("מכסת ש''נ</br>  בחודש נוכחי").HtmlAttributes(new { style = "border: 8px double lightgray;" }).Width(30);
+               columns.Bound(o => o.TeurGil).Title("קוד גיל").Width(80);
+               columns.Bound(o => o.MichsaYomit).Title("מכסה יומית </br> (כולל הלבשה)").Width(80);
+               columns.Bound(o => o.NosafotPrev).Title(String.Format("{0:MM/yyyy}", Model.Month.AddMonths(-1)) + "</br>ש''נ שבוצעו").Width(80);
+               columns.Bound(o => o.MichsaPrev).Title(String.Format("{0:MM/yyyy}", Model.Month.AddMonths(-1)) + "</br> מאפיין ש''נ</br>תפקיד ").Width(80);
+               columns.Bound(o => o.NosafotCur).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br>ש''נ שבוצעו").Width(80);
+               columns.Bound(o => o.MichsaCur).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br> מאפיין ש''נ</br>תפקיד ").HtmlAttributes(new { onchange = "ShowDialogsSave();", style = "border: 8px double lightgray;" }).Width(30);
                //columns.Bound(o => o.MichsaCur).Title("מכסת ש''נ</br>  בחודש נוכחי").ClientTemplate("<input style='float: right;width:80px;' value='#=MichsaCur#'  name=''  />").Width(30);
-               columns.Bound(o => o.NosafotNotUsed).Title("ש''נ בלתי  </br> מנוצלות").Width(80);
+               columns.Bound(o => o.NosafotNotUsed).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br> ש''נ בלתי  </br> מנוצלות").Width(80);
 
                // columns.Bound(o => o.MisparIshi).Filterable(false).Width(125).ClientTemplate(Html.Kendo().NumericTextBox().Name("mp_sss").Min(0).HtmlAttributes(new { value = "#=o.MisparIshi#", style = "width: 100px;" }).ToClientTemplate().ToHtmlString());
-             // onclick="ShowPopUp('@Html.DisplayFor(model => model.KodMitkan)','@Html.DisplayFor(model => model.MitkanName)','@Html.ValueFor(model => model.Month, "{0:dd/MM/yyyy}")');
-             //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  style='float: right;'  value='הפק דוח' onclick='ShowReportNochechut(dataItem.MisparIshi, 4545)'  />").Width(80);
+               // onclick="ShowPopUp('@Html.DisplayFor(model => model.KodMitkan)','@Html.DisplayFor(model => model.MitkanName)','@Html.ValueFor(model => model.Month, "{0:dd/MM/yyyy}")');
+               //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  style='float: right;'  value='הפק דוח' onclick='ShowReportNochechut(dataItem.MisparIshi, 4545)'  />").Width(80);
                columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input style='float: right;' type='button' value= 'הפק דוח' onclick='ShowReportNochechut(#= MisparIshi #);'     />").Width(80);
 
+              
                //   columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='submit'  style='float: right;'  value='הפק דוח' name='action:Nochechut' />").Width(80);
                columns.Bound(o => o.Meafyen14).Hidden();
 
@@ -137,12 +137,17 @@
            })
             .ToolBar(toolbar =>
             {
-
-                toolbar.Custom().Text("עדכן מכסות").HtmlAttributes(new { @onclick = "CheckHaveChanges();" , @class = "k-grid-save-changes k-update" });
+                toolbar.Custom().Text("עדכן מכסות").HtmlAttributes(new { @class = "k-grid-save-changes k-update" });
+               // toolbar.Custom().Text("עדכן מכסות").HtmlAttributes(new { @onclick = "CheckHaveChanges();", @class = "k-grid-save-changes k-update" });
                toolbar.Custom().Text("בטל שינויים").HtmlAttributes(new { @class = "k-grid-cancel-changes k-cancel" ,  @imageClass="k-icon ob-icon-only k-i-custom" });
             })
+           
             .Editable(editable => editable.Mode(GridEditMode.InCell))
             .Pageable()
+            .Sortable()
+           
+
+           .Filterable()
             .Events(events => events.DataBound("onDataBound"))
            //.Editable(editable => editable.Mode(GridEditMode.InCell)) // Use in-cell editing mode
             .DataSource(dataSource =>
@@ -154,12 +159,13 @@
                     {
                         model.Id(employee => employee.MisparIshi); // Specify the property which is the unique identifier of the model
 
-                        model.Field(employee => employee.Masad).Editable(false); 
+                        
                         model.Field(employee => employee.MisparIshi).Editable(false);
                         model.Field(employee => employee.FullName).Editable(false);
                         model.Field(employee => employee.TeurIsuk).Editable(false);
                         model.Field(employee => employee.AlTikni).Editable(false);
                         model.Field(employee => employee.TeurMutamut).Editable(false);
+                        model.Field(employee => employee.TeurGil).Editable(false);
                         model.Field(employee => employee.MichsaYomit).Editable(false);
                         model.Field(employee => employee.NosafotPrev).Editable(false);
                         model.Field(employee => employee.MichsaPrev).Editable(false);
@@ -171,13 +177,25 @@
                 //.Create(create => create.Action("Products_Create", "Home")) // Action method invoked when the user saves a new data item
                 .Update(update => update.Action("EmployeesInMitkanUpdate", "Budget"))  // Action method invoked when the user saves an updated data item
                 //.Destroy(destroy => destroy.Action("Products_Destroy", "Home")) // Action method invoked when the user removes a data item
-            )
 
+                // .Update(update => update
+                // .Action("EmployeesInMitkanUpdate", "Budget"))  // Action invoked when the user saves an updated data item
+                // .Events(events => events.SaveChanges("CheckHaveChanges"))
+                )
+      /*  .Events(events => events.SaveChanges(
+              @<text>
+                function(e) {
+                alert("jj");
+              CheckHaveChanges();
+                }
+                </text>
+                ))*/
            .Render();
            
         
         }
     </div>
+    <div id="dialog-confirm"></div>
  <br />
         <div class="row">
             <div class="col-md-2 col-md-push-10"><input type="button" value="איפוס  מכסות "  style="width:140px"  onclick="ModifyGrid()"/> </div>
@@ -187,9 +205,9 @@
         
              <div class="col-md-2 col-md-pull-8"><input type="submit" value="עדכון מכסות" name="action:Budget" hidden style="width:140px"  /> </div>
         </div>
-}
+    }
 
-}
+    }
 
 
  <div id="dialogNoch" title="Basic dialog" >
@@ -197,6 +215,12 @@
 </div>
 
 <script type="text/javascript" >
+    $(".k-grid-save-changes").click(function(e) { return CheckHaveChanges();  });
+    var ShowdSave=true;
+    function ShowDialogsSave()
+    {
+        ShowdSave=true;
+    }
     function CheckHaveChanges()
     {
         var grid = $("#EmployeesList").data("kendoGrid");
@@ -207,8 +231,39 @@
             if (dt.dirty == false)
                 num++;
         });
-        if (data.length == num)
+        if (data.length == num){
             alert("לא בוצע שינוי במסך");
+            return false;
+        }
+        else{
+            $("#dialog-confirm").html("הנך בטוח שאתה רוצה לעדכן את המכסות?");
+         //   return  confirm('הנך בטוח שאתה רוצה לעדכן את המכסות?'); 
+       
+            if(ShowdSave == true)
+            {
+                // Define the Dialog and its properties.
+                $("#dialog-confirm").dialog({    
+                    resizable: false,
+                    modal: true,
+                    title: "עידכון מכסות",
+                    height: 150,
+                    width: 400,
+                    buttons: {
+                        "כן": function () {
+                            $(this).dialog('close');
+                            ShowdSave= false;
+                            $(".k-grid-save-changes").click();
+                            return true;
+                        },
+                        "לא": function () {
+                            $(this).dialog('close');
+                            return false;
+                        }
+                    }
+                });
+                return false;
+            }else return true;
+       }
     }
    
 
@@ -261,23 +316,35 @@
     }
 
     function ModifyGrid() {
-        var grid = $("#EmployeesList").data("kendoGrid");
-        var data = grid.dataSource.data();
-        $.each(data, function (i, row) {
-            var dt = row;
-            dt.MichsaCur = 1;
-            dt.dirty = true;
-            grid._modelChange({ field: "MichsaCur", model: dt });
+
+        $("#dialog-confirm").html("הנך בטוח שאתה רוצה לאפס את המכסות?");
+
+        // Define the Dialog and its properties.
+        $("#dialog-confirm").dialog({    
+            resizable: false,
+            modal: true,
+            title: "איפוס מכסות",
+            height: 150,
+            width: 400,
+            buttons: {
+                "כן": function () {
+                    $(this).dialog('close');
+                    var grid = $("#EmployeesList").data("kendoGrid");
+                        var data = grid.dataSource.data();
+                        $.each(data, function (i, row) {
+                            var dt = row;
+                            dt.MichsaCur = 1;
+                            dt.dirty = true;
+                            grid._modelChange({ field: "MichsaCur", model: dt });
+                        });
+                },
+                "לא": function () {
+                    $(this).dialog('close');
+                  
+                }
+            }
         });
 
-        //var trs = grid.tbody.find('tr');
-        //trs.each(function ()
-        //{
-        //    var dt = grid.dataItem($(this));
-        //    dt.MichsaCur = 1;
-        //    dt.dirty = true;
-        //    grid._modelChange({ field: "MichsaCur", model: dt });
-        //});
     }
 
     function CopyMichsotLastMonth(){
@@ -411,6 +478,7 @@
 
 
 
+        
 
 
 

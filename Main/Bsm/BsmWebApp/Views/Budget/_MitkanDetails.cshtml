@@ -53,116 +53,60 @@
       }); //DocumentReady
      
         </script>
-<div>
+<div >
     @*<h4>MitkanBudget</h4>*@
     
-    <hr class="styled" />
-
     @using (Html.BeginForm())
     { 
-    <div class="row">
-        <div class="col-md-1 col-md-push-11" > שם מתקן:</div>  
-        <div class="col-md-2 col-md-push-8">    
-             @if (Model.OnlyOneYechida)
-             {
-              @Html.TextBoxFor(m => m.MitkanName, new {@readonly = "readonly", style = "background:lightgray;"    , @onchange = "EnableButton();" })
-             }
-             else
-             {
-              @Html.TextBoxFor(m => m.MitkanName)
-             }
-            
-            
-        </div>  
+        <div style="padding:10px; text-align:right" >
+            <span class="col-md-9">
+                 <span class="textBold" style="padding-left:10px">תאריך:
+                  @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, new { @onchange = "EnableButton();" }) </span>
+                  <span  style="padding-left:20px">
+                      <input type="button" id="btnPrevMonth" value="<  חודש קודם"  class="monthButton medumFont"   />
+                      <input type="button" id="btnNextMonth" value="חודש הבא  >"    class="monthButton medumFont"  />
+                  </span>
 
+                 <span >
+                      <input type="submit"  id="btnShow" value="הצג >>"  name='action:Index'    class="purpleButton title"   />     
+                  </span>
+            </span>
+            <span class="col-md-3 tabFont  text-left">
+                סגירת משכורת: יום חמישי 30/10/2015  
+                <img src="~/Content/Images/warning.png" />
+            </span>
 
-        <div class="col-md-1 col-md-push-5"></div>
-        <div class="col-md-1 col-md-push-3" >חודש:</div>
-        <div class="col-md-2 ">
-            @*@Html.Kendo().DatePickerFor(m => m.Month).Format("{0:MM/yyyy}").ParseFormats(new List<string>() { "MM/yyyy" })*@
-            @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, new { @onchange = "EnableButton();" })
+           
         </div>
-        <div class="col-md-1 col-md-pull-3">
-            @if (Model.IsMitkanBudgetDetailEmpty == false || Model.OnlyOneYechida)
+          if (Model.IsMitkanBudgetDetailEmpty == false)
             {
-                 <input type="submit" id="btnExec" value="הצג"  name='action:Index'    />
-            }
-            else
-            {
-                <input type="submit" id="btnExec" value="הצג"  name='action:Index'   disabled   />
-            }
-        </div>
+                <div  class="col-md-2 "> <span class="tabFont">תקציב חודשי:</span>
+                                <label   class="txtBoxRO medumFont" style="width:120px;" >    @Html.DisplayFor(model => model.MitkanBudgetDetail.BudgetVal)
+                                     <span style="text-align:left"><img src="~/Content/Images/alert.png" /></span>
+                                 </label>
+                </div>
+                <div  class="col-md-4 "> <span class="tabFont" >שעות שבוצעו:</span>
+                                  <label   class="txtBoxRO medumFont" style="width:120px" >   @Html.DisplayFor(model => model.MitkanBudgetDetail.BudgetVal)
+                                     <img src="~/Content/Images/alert.png" />
+                                 </label>
+                </div>
+        
+                <div  class="col-md-2 "> <span class="tabFont">שעות שהוקצו:</span>
+                                 <span class="txtBoxRO" style="width:100px">    @Html.DisplayFor(model => model.MitkanBudgetDetail.BudgetVal)
+                                     <img src="~/Content/Images/alert.png" />
+                                 </span>
+                </div>
+                <div  class="col-md-4 "> <span class="tabFont" >שעות שנותרו להקצאה:</span>
+                                 <span class="txtBoxRO" style="width:100px">    @Html.DisplayFor(model => model.MitkanBudgetDetail.BudgetVal)
+                                     <img src="~/Content/Images/alert.png" />
+                                 </span>
+                </div>
+            }   
        
-    </div>
-
-   <hr class="styled" />
-      
-            if (Model.IsMitkanBudgetDetailEmpty == false)
-            {  
-    <div  class="col-md-8 col-md-push-3">  <span>שעות נוספות</span></div>
-     <div  class="col-md-4 col-md-pull-7">  <span>שעות נוספות - יתרה</span></div>
-    <div id="divPratim" class="row">
-        <div  class="col-md-8 col-md-push-3">
-            <table class="styled">
-                <tr>
-                    <th class="styled" style="width:100px;" >
-                        @Html.DisplayNameFor(model => model.MitkanBudgetDetail.BudgetVal)
-                    </th>
-                    <th class="styled" style="width:150px;" >
-                        @Html.DisplayNameFor(model => model.MitkanBudgetDetail.RemainHoursLastMonth)
-                    </th>
-                    <th class="styled" style="width:100px;" >
-                        @Html.DisplayNameFor(model => model.MitkanBudgetDetail.AddSubtractHours)
-                    </th>
-                    <th class="styled" style="width:100px;" >
-                        @Html.DisplayNameFor(model => model.MitkanBudgetDetail.SachTakzivShaotNosafot)
-                    </th>
-                </tr>
-                <tr>
-                    <td class="styled" style="width:100px;" >
-                        @Html.DisplayFor(model => model.MitkanBudgetDetail.BudgetVal)
-                    </td>
-                    <td class="styled" style="width:100px;" >
-                        @Html.DisplayFor(model => model.MitkanBudgetDetail.RemainHoursLastMonth)
-                    </td>
-                     <td class="styled">
-
-<a href="#" onclick="ShowPopUp('@Html.DisplayFor(model => model.KodMitkan)','@Html.DisplayFor(model => model.MitkanName)','@Html.ValueFor(model => model.Month, "{0:dd/MM/yyyy}")');"> @Html.DisplayFor(model => model.MitkanBudgetDetail.AddSubtractHours)</a>
-
-                
-                       @* @Html.DisplayFor(model => model.MitkanBudgetDetail.AddSubtractHours)*@
-                    </td>
-                    <td class="styled">
-                        @Html.DisplayFor(model => model.MitkanBudgetDetail.SachTakzivShaotNosafot)
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="col-md-4 col-md-pull-7">
-            <table class="styled">
-                    <tr>
-                        <th class="styled" style="width:100px;" > 
-                            @Html.DisplayNameFor(model => model.MitkanBudgetDetail.YitratTakzivToDivide)
-                        </th>
-                        <th class="styled" style="width:100px;" >
-                            @Html.DisplayNameFor(model => model.MitkanBudgetDetail.HoursNotUsed)
-                        </th>
-                    </tr>
-                    <tr>
-                        <td class="styled">
-                            @Html.DisplayFor(model => model.MitkanBudgetDetail.YitratTakzivToDivide)
-                        </td>
-                        <td class="styled">
-                            @Html.DisplayFor(model => model.MitkanBudgetDetail.HoursNotUsed)
-                        </td>  
-                    </tr>
-                </table>
-            </div>
-    </div>
-
-                }
+           
+        
     }
-   
+  
 </div>
     
 

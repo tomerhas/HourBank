@@ -32,7 +32,7 @@ namespace BsmBL.DAL
 
                 oDal.ExecuteSP(cfunGetSumMeafyen14);
 
-                return int.Parse(oDal.GetValParam("p_result").ToString());
+                return oDal.GetValParam("p_result") != "null" ? int.Parse(oDal.GetValParam("p_result").ToString()) : 0;
 
               //  return dt;
             }

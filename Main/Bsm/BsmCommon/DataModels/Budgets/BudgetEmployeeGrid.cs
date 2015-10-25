@@ -15,6 +15,7 @@ namespace BsmCommon.DataModels.Budgets
         public string TeurIsuk { get; set; }
         public string AlTikni { get; set; }
         public string TeurMutamut { get; set; }
+        public string TeurGil { get; set; }
         public float MichsaYomit { get; set; }
         public float NosafotPrev { get; set; }
         public float MichsaPrev { get; set; }

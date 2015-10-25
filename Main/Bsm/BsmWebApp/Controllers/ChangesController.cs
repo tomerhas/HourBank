@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
 using BsmWebApp.Infrastructure.Security;
+using Egged.Infrastructure.Menus.DataModels;
 
 
 namespace BsmWebApp.Controllers
@@ -20,7 +21,7 @@ namespace BsmWebApp.Controllers
         public ChangesController(IUnityContainer container)
             : base(container)
         {
-
+            SelectdMenu = MenuTypes.HourChanges;
         }
         [PageAuthorize("Changes")]
         public ActionResult Index()

@@ -94,9 +94,9 @@ namespace BsmBL.Managers
             if (budget != null)
             {
                 budget.RemainHoursLastMonth = (budgetPrevMonth.BudgetVal + prevChanges) - budgetPrevMonth.BudgetUsed;
-                int val = budget.BudgetVal + budget.AddSubtractHours;
-                if(budgetPrevMonth != null)
-                    val -= budgetPrevMonth.BudgetUsed;
+                int val = budget.BudgetVal + budget.AddSubtractHours + budget.RemainHoursLastMonth;
+                //if(budgetPrevMonth != null)
+                //    val -= budgetPrevMonth.BudgetUsed;
                 
                 budget.SachTakzivShaotNosafot = val;
 
@@ -331,6 +331,7 @@ namespace BsmBL.Managers
             budgetEmployee.TeurIsuk =row["Teur_Isuk"].ToString();
             budgetEmployee.AlTikni = row["Al_Tikni"].ToString();
             budgetEmployee.TeurMutamut =row["Teur_Mutamut"].ToString();
+            budgetEmployee.TeurGil = row["TEUR_KOD_GIL"].ToString();
             budgetEmployee.MichsaYomit = float.Parse(row["Michsa_Yomit"].ToString());
             budgetEmployee.NosafotPrev = float.Parse(row["Nosafot_Prev"].ToString());
             budgetEmployee.MichsaPrev = float.Parse(row["Michsa_Prev"].ToString());

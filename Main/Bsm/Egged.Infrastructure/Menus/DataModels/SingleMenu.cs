@@ -15,6 +15,18 @@ namespace Egged.Infrastructure.Menus.DataModels
         public string LinkText { get; set; }
         public string ActionName { get; set; }
         public string ControllerName { get; set; }
+        public string ImagSrc { get; set; }
+        public MenuTypes MenuType { get; set; }
+        public string TabClassName { get; set; }
         public List<string> ForRoles { get; set; }
+    }
+
+    public enum MenuTypes
+    { 
+        None,
+        HomePage,
+        MamagementHourExtenstions,
+        HourChanges
+
     }
 }

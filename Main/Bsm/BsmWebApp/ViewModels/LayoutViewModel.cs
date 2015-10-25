@@ -9,6 +9,12 @@ namespace BsmWebApp.ViewModels
     public class LayoutViewModel
     {
         public List<SingleMenu> Menus { get; set; }
+        public string Username { get; set; }
+
+        public LayoutViewModel()
+        {
+
+        }
 
         public LayoutViewModel(List<SingleMenu> menus)
         {

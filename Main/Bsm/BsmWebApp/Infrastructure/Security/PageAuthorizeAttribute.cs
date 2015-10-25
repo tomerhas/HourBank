@@ -22,7 +22,7 @@ namespace BsmWebApp.Infrastructure.Security
         {
             //If valid - just return, else redirect to error page
              var cache = ServiceLocator.Current.GetInstance<IUserInfoCachedItems>();
-             var userName= HttpContext.Current.User.Identity.Name;
+             var userName = HttpContext.Current.User.Identity.Name;
              var uf = cache.Get(userName);
             if(uf != null && uf.IsPermittedForMasach(_pageName))
             {

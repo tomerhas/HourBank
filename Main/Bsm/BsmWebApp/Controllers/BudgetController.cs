@@ -18,6 +18,7 @@ using Microsoft.Reporting.WebForms;
 using Egged.Infrastructure.Attribute;
 using BsmWebApp.ViewModels.Reports;
 using System.Configuration;
+using Egged.Infrastructure.Menus.DataModels;
 
 namespace BsmWebApp.Controllers
 {
@@ -26,7 +27,7 @@ namespace BsmWebApp.Controllers
         public BudgetController(IUnityContainer container)
             : base(container)
         {
-
+            SelectdMenu = MenuTypes.MamagementHourExtenstions;
         }
         [PageAuthorize("Budget")]
         public ActionResult Index()
@@ -43,19 +44,33 @@ namespace BsmWebApp.Controllers
             DateTime month = DateTime.Parse(vm.SelectedMonth);
 
             var manager = _container.Resolve<IBudgetManager>();
-            var pirteyMitkan = manager.GetYechidaByName(vm.MitkanName);
-            if (pirteyMitkan != null)
+            SelectedMitkan = 88468;
+            if (SelectedMitkan > 0)
             {
-                IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
-                long bakasha_id = Gmanager.GetLastBakasha(month);
-
-                BudgetMainViewModel vmResult = GetBudgetDetailForMitkan(pirteyMitkan.KodYechida, month, bakasha_id);
+                 IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
+                long bakasha_id = Gmanager.GetLastBakasha(month);           
+                BudgetMainViewModel vmResult = GetBudgetDetailForMitkan(SelectedMitkan, month, bakasha_id);
+                if (bakasha_id != null)
+                    vmResult.LastBakashaDate = Gmanager.GetZmanBakasha(bakasha_id);
                 vmResult.MitkanName = vm.MitkanName;
                 vmResult.SelectedMonth = vm.SelectedMonth;
-                vmResult.UsersInMitkan = GetEmployeesInMitkan(pirteyMitkan.KodYechida, month,bakasha_id);
+                vmResult.UsersInMitkan = GetEmployeesInMitkan(SelectedMitkan, month,bakasha_id);
                 //vmResult.ReportVM = GetReportDetails();
                 return View(vmResult);
             }
+            //var pirteyMitkan = manager.GetYechidaByName(vm.MitkanName);
+            //if (pirteyMitkan != null)
+            //{
+            //    IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
+            //    long bakasha_id = Gmanager.GetLastBakasha(month);           
+            //    BudgetMainViewModel vmResult = GetBudgetDetailForMitkan(pirteyMitkan.KodYechida, month, bakasha_id);
+            //    if (bakasha_id != null)
+            //        vmResult.LastBakashaDate = Gmanager.GetZmanBakasha(bakasha_id);
+            //    vmResult.MitkanName = vm.MitkanName;
+            //    vmResult.SelectedMonth = vm.SelectedMonth;
+            //    vmResult.UsersInMitkan = GetEmployeesInMitkan(pirteyMitkan.KodYechida, month,bakasha_id);
+            //    //vmResult.ReportVM = GetReportDetails();
+            //    return View(vmResult); 
             else
             {
                 BudgetMainViewModel view = InitBudgetVm();

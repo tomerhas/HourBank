@@ -1,5 +1,4 @@
 ﻿@using BsmWebApp.ViewModels
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +7,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    
+
     @Scripts.Render("~/bundles/jqueryUi")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -21,44 +20,60 @@
 
 
 </head>
+
 <body dir="rtl">
     @{
         LayoutViewModel MenuModel = ViewBag.LayoutViewModel;
     }
-    <div >
-        <span  style="margin-left:100px;font-size:18px;text-align: center; ">ניהול תקציב שעות נוספות במשק</span>
-    </div>
-    <div class="navbar navbar-inverse " >
-        <div class="container">
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav pull-right">
-                    @if (MenuModel != null)
-                    {
-                        foreach (var menu in MenuModel.Menus)
-                        {
-                            <li>@Html.ActionLink(menu.LinkText, menu.ActionName, menu.ControllerName)</li>
-                        }
-                    }
-
-                </ul>
-             
-                @*@Html.Partial("_LoginBootstrapPartial")*@
-                @*<ul class="nav navbar-nav navbar-right">
-                <li class="navbar-text">Hello, @User.Identity.Name!</li>
-                <li class="navbar-btn">@Html.ActionLink("Logout","Logout","Account")</li>
-            </ul>*@
-            </div>
+    <div class="navbar navbar-inverse ">
+        <div>
+            <p>
+                
+                <span class="title col-md-4">
+                    <img src="~/Content/Images/Logoegged.png" />
+                    &nbsp;&nbsp; מערכת ניהול שעות עבודה משק
+                </span>
+                <span class="col-md-8 text-left"><span class="name">@MenuModel.Username </span></span>
+               
+            </p>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
-    
+         
+        <span>
+      
+         <div class="col-md-8 col-md-pull-4" >
+          
+                 
+                        <ul class="nav navbar-nav menu">
+                            @if (MenuModel != null)
+                            {
+                                foreach (var menu in MenuModel.Menus)
+                                { 
+                                    <li class="@menu.TabClassName">
+                                        <span class="tabFont"><img src="@menu.ImagSrc" />
+                                        @Html.ActionLink(menu.LinkText, menu.ActionName,menu.ControllerName)</span>
+                                    </li>
+                                }
+                            }
+              
+                        </ul>
+                     
+              </div>      
+         
+   </span>
+       
+  
+         
+            
+        
+   </div>
+         <div  class="MainDiv">
+                @RenderBody()
+                <hr />
+              @*  <footer>
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+                </footer>*@
+            </div>   
     @RenderSection("scripts", required: false)
 </body>
+
 </html>

@@ -66,7 +66,7 @@ namespace BsmCommon.DataModels.Budgets
         [NotMapped]
         public int YitratTakzivToDivide { get; set; }
 
-        [Display(Name = "לביצוע בפועל")]
+        [Display(Name = "ניצול בפועל")]
         [NotMapped]
         public int HoursNotUsed { get; set; }
     }

@@ -5,6 +5,7 @@ using BsmCommon.Interfaces.CachedItems;
 using BsmCommon.Interfaces.Managers;
 using BsmWebApp.Infrastructure.Security;
 using BsmWebApp.ViewModels;
+using Egged.Infrastructure.Menus.DataModels;
 using Egged.Infrastructure.Menus.Interfaces;
 using Microsoft.Practices.Unity;
 using System;
@@ -20,6 +21,10 @@ namespace BsmWebApp.Controllers
     public class BaseController : Controller
     {
         protected IUnityContainer _container;
+
+        public MenuTypes SelectdMenu { get; set; }
+        public int SelectedMitkan { get; set; }
+
         public BaseController(IUnityContainer container)
         {
             _container = container;
@@ -34,9 +39,16 @@ namespace BsmWebApp.Controllers
         private void SetMenus()
         {
             var menus = _container.Resolve<IMenusManager>().GetMenusForRole();
+            menus.ForEach(menu =>
+            {
+                if (menu.MenuType == SelectdMenu)
+                    menu.TabClassName = "selectedTab";
+                else
+                    menu.TabClassName = "";
+            });
             LayoutViewModel lvm = new LayoutViewModel(menus);
+            lvm.Username = CurrentUser.EmployeeFullName;
             ViewBag.LayoutViewModel = lvm;
-            
         }
 
       

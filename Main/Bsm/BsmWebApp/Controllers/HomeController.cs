@@ -1,6 +1,7 @@
 ﻿using BsmBL.DAL;
 using BsmWebApp.ViewModels.Home;
 using Egged.Infrastructure.Attribute;
+using Egged.Infrastructure.Menus.DataModels;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,13 @@ namespace BsmWebApp.Controllers
         public HomeController(IUnityContainer container)
             : base(container)
         {
-            
+            SelectdMenu = MenuTypes.HomePage;
+
+            SelectedMitkan = 88468;
         }
         public ActionResult Index(string error="")
         {
+            
             //This is added to casuse the cache to filled in with user info 
             HomeViewModel vm = new HomeViewModel();
             var user = CurrentUser;

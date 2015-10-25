@@ -29,6 +29,7 @@ namespace BsmBL.DAL
        // public DbSet<ProfilesMasachim> ProfileMasachims { get; set; }
        // public DbSet<Masach> Masachs { get; set; }
         public DbSet<Yechida> Yechidot { get; set; }
+       
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

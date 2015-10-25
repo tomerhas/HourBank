@@ -21,14 +21,14 @@ namespace BsmWebApp
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap-rtl.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/GeneralFunctions.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                     "~/Content/bootstrap.css",
+                     "~/Content/bootstrap-rtl.css",
                        "~/Content/jquery-ui*",
-                      "~/Content/site.css",
+                       "~/Content/site.css",
                        "~/Content/StyleSheet.css" 
                       ));
 
