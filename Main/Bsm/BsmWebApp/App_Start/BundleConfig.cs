@@ -25,10 +25,10 @@ namespace BsmWebApp
                       "~/Scripts/respond.js",
                       "~/Scripts/GeneralFunctions.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css",
                      "~/Content/bootstrap-rtl.css",
                        "~/Content/jquery-ui*",
-                       "~/Content/site.css",
+                     
                        "~/Content/StyleSheet.css" 
                       ));
 

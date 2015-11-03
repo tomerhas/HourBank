@@ -15,10 +15,8 @@
                   var dataItem = autocomplete.dataSource.data();
                   var selectedVal = autocomplete.value();
                   var isExist = false;
-                  $.each(dataItem, function (key, value)
-                  {
-                      if (selectedVal===value.TeurYechida)
-                      {
+                  $.each(dataItem, function (key, value) {
+                      if (selectedVal === value.TeurYechida) {
                           isExist = true;
                       }
                   });
@@ -26,10 +24,10 @@
                       alert("מתקן לא קיים/אינך רשאי לצפות במתקן זה");
                       $("#btnExec").click();
                       $("#btnExec").attr('disabled', 'disabled');
-                     
+
                   }
                   else $("#btnExec").removeAttr('disabled');
-                
+
               },
               dataSource: {
                   type: "json",
@@ -43,84 +41,86 @@
                           }, //read
                       parameterMap: function () {// send value of autocomplete as the "startsWith" parameter
                           return {
-                             
-                          startsWith: $("#MitkanName").data("kendoAutoComplete").value()
+
+                              startsWith: $("#MitkanName").data("kendoAutoComplete").value()
                           };
                       }
                   } //transport
               } //datasource
           }); //kendoAutoComplete
       }); //DocumentReady
-     
-        </script>
-<div >
+
+  </script>
+<div>
     @*<h4>MitkanBudget</h4>*@
-    
+
     @using (Html.BeginForm())
     { 
-        <div style="padding:10px; text-align:right" >
-            <span class="col-md-9">
-                 <span class="textBold" style="padding-left:10px">תאריך:
-                  @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, new { @onchange = "EnableButton();" }) </span>
-                  <span  style="padding-left:20px">
-                      <input type="button" id="btnPrevMonth" value="<  חודש קודם"  class="monthButton medumFont"   />
-                      <input type="button" id="btnNextMonth" value="חודש הבא  >"    class="monthButton medumFont"  />
-                  </span>
+      
+        <div class="bgGray" style="height: 64px;">
+            <div class="row">
+                <div class="col-md-8" style="padding-top: 18px">
+                    <label class="TextBold" style="margin-right: 20px;">תאריך:</label>
+                    @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, new { @onchange = "EnableButton();", @class = "ddl" })
+                    <input type="button" id="btnPrevMonth" value="חודש קודם" class="WhiteButton BgPrev GeneralText" />
+                    <input type="button" id="btnNextMonth" value="חודש הבא" class="WhiteButton BgNext GeneralText" />
+                    <input type="submit" id="btnShow" value="הצג" name='action:Index' style="margin-right: 31px" class="PurpleButton DoubleArrow" />
+                </div>
 
-                 <span >
-                      <input type="submit"  id="btnShow" value="הצג >>"  name='action:Index'    class="purpleButton title"   />     
-                  </span>
-            </span>
-            <span class="col-md-3 tabFont  text-left">
-                סגירת משכורת: יום חמישי 30/10/2015  
-                <img src="~/Content/Images/warning.png" />
-            </span>
-
-           
+                <div class="col-md-4">
+                    <div align="left" style="padding-left:20px">
+                        <label class="GeneralText" style="padding-top: 22px;">סגירת משכורת: יום חמישי 30/10/2015  </label>
+                        <label>עוד 3 ימים</label>
+                        <img class="imgRed"  src="~/Content/Images/warning.png" />
+                    </div>
+                </div>
+            </div>
+            @*    <hr style="width: 1898px;padding-right:11px;"/>*@
         </div>
-          if (Model.IsMitkanBudgetDetailEmpty == false)
-            {
-                <div  class="col-md-2 "> <span class="tabFont">תקציב חודשי:</span>
-                                <label   class="txtBoxRO medumFont" style="width:120px;" >    @Html.DisplayFor(model => model.MitkanBudgetDetail.BudgetVal)
-                                     <span style="text-align:left"><img src="~/Content/Images/alert.png" /></span>
-                                 </label>
-                </div>
-                <div  class="col-md-4 "> <span class="tabFont" >שעות שבוצעו:</span>
-                                  <label   class="txtBoxRO medumFont" style="width:120px" >   @Html.DisplayFor(model => model.MitkanBudgetDetail.BudgetVal)
-                                     <img src="~/Content/Images/alert.png" />
-                                 </label>
-                </div>
-        
-                <div  class="col-md-2 "> <span class="tabFont">שעות שהוקצו:</span>
-                                 <span class="txtBoxRO" style="width:100px">    @Html.DisplayFor(model => model.MitkanBudgetDetail.BudgetVal)
-                                     <img src="~/Content/Images/alert.png" />
-                                 </span>
-                </div>
-                <div  class="col-md-4 "> <span class="tabFont" >שעות שנותרו להקצאה:</span>
-                                 <span class="txtBoxRO" style="width:100px">    @Html.DisplayFor(model => model.MitkanBudgetDetail.BudgetVal)
-                                     <img src="~/Content/Images/alert.png" />
-                                 </span>
-                </div>
-            }   
        
-           
+        <div class="line"></div>
+       
+         if (Model.IsMitkanBudgetDetailEmpty == false)
+         {  
+            <div class="bgGray" style="height: 64px;">
+                <div class="row" style="padding-top: 18px;">
+                    <div class="col-md-5">
+                        <label class="TextBold" style="margin-right:20px;margin-bottom:0px">תקציב חודשי:</label>
+                        <input type="text" readonly  class="TextBoxRO GeneralText alertImg" value="@Model.MitkanBudgetDetail.BudgetVal" style="width: 111px;padding-right:7px"/>       
+                        <label class="TextBold" style="margin-right:20px;margin-bottom:0px">שעות שבוצעו:</label>
+                        <input type="text" readonly  class="TextBoxRO GeneralText alertImg" value="@Model.MitkanBudgetDetail.BudgetVal" style="width: 111px;padding-right:7px"/>           
+                    </div>
+                    <div class="col-md-7">
+                        <label class="TextBold" style="margin-right:20px;margin-bottom:0px">שעות שהוקצו:</label>
+                        <input type="text" readonly  class="TextBoxRO GeneralText alertImg" value="@Model.MitkanBudgetDetail.BudgetVal" style="width: 111px;padding-right:7px"/>       
+                        <label class="TextBold" style="margin-right:20px;margin-bottom:0px">שעות שנותרו להקצאה:</label>
+                        <input type="text" readonly  class="TextBoxRO GeneralText alertImg" value="@Model.MitkanBudgetDetail.BudgetVal" style="width: 111px;padding-right:7px"/>           
+                    </div>
+
+                </div>
+            </div>
+        }
+        
+        <div class="line"></div>
+        
+     
+        
         
     }
-  
+
 </div>
-    
 
- <div id="dialog" title="Basic dialog" style="overflow: hidden;">
 
- </div>
+<div id="dialog" title="Basic dialog" style="overflow: hidden;">
+</div>
 
-<script type="text/javascript" >
+<script type="text/javascript">
 
     function EnableButton() {
         if ($('#MitkanName').val() != "")
             $("#btnExec").removeAttr('disabled');
-        else 
-            $("#btnExec").attr('disabled','disabled');
+        else
+            $("#btnExec").attr('disabled', 'disabled');
         ;
     }
 
@@ -128,14 +128,13 @@
         var titel = " פירוט שעות הוספה/הפחתה למתקן ";
         titel = titel + name + " לחודש " + " \n ";
         titel = titel + month;
-            $("#dialog").html("")
-                .dialog("option", "title", titel )
-                .load('/Budget/DispalyChanges?KodYechida=' + kod + "&chodesh=" + month, function () { $("#dialog").dialog("open"); });
+        $("#dialog").html("")
+            .dialog("option", "title", titel)
+            .load('/Budget/DispalyChanges?KodYechida=' + kod + "&chodesh=" + month, function () { $("#dialog").dialog("open"); });
 
     }
 
-    $(function ()
-    {
+    $(function () {
         $("#dialog").dialog(
             {
                 autoOpen: false, width: 'auto',
@@ -149,27 +148,27 @@
             });
     });
 
-    
-        //var url = "/Budget/DispalyChanges?KodYechida=" + kod + "&chodesh=" + month;
-     
-        //$(function () {
-        //    $("#dialog").dialog(
-        //        {
-        //            autoOpen: false,
-        //            width: 400,
-        //            height: 450,
-        //            modal: true,
-        //            buttons: {
-        //                "Close": function () {
-        //                    $(this).dialog("close");
-        //                }
-        //            }
-        //        });
-        //    $.get(url, function (data) {
-        //        $("#dialog").html(data);
-        //    });
-        //    $('#dialog').dialog('open');
-        //});
+
+    //var url = "/Budget/DispalyChanges?KodYechida=" + kod + "&chodesh=" + month;
+
+    //$(function () {
+    //    $("#dialog").dialog(
+    //        {
+    //            autoOpen: false,
+    //            width: 400,
+    //            height: 450,
+    //            modal: true,
+    //            buttons: {
+    //                "Close": function () {
+    //                    $(this).dialog("close");
+    //                }
+    //            }
+    //        });
+    //    $.get(url, function (data) {
+    //        $("#dialog").html(data);
+    //    });
+    //    $('#dialog').dialog('open');
+    //});
 
 
 </script>

@@ -216,17 +216,25 @@ namespace BsmWebApp.Controllers
         public JsonResult GetMisparIshiWith(string startsWith) //, int kod, DateTime tarrich)
         {
             int inpValidate = -1;
+            List<BudgetEmployeeGrid> employees = (List<BudgetEmployeeGrid>)(Session["EmployeesGrid"]);
             if (!int.TryParse(startsWith, out inpValidate))
             {
-                return Json(new List<int>(), JsonRequestBehavior.AllowGet);
-            }
+                var namelist = employees
+                    .Where(x => x.FullName.ToString().StartsWith(startsWith))
+                    .Select(x => x.FullName).ToList();
 
-            List<BudgetEmployeeGrid> employees = (List<BudgetEmployeeGrid>)(Session["EmployeesGrid"]);
-            var listIds = employees
-                .Where(x => x.MisparIshi.ToString().StartsWith(startsWith))
-                .Select(x => x.MisparIshi).ToList();
-    
-            return Json(listIds, JsonRequestBehavior.AllowGet);
+
+                return Json(namelist, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+              
+                var listIds = employees
+                    .Where(x => x.MisparIshi.ToString().StartsWith(startsWith))
+                    .Select(x => x.MisparIshi).ToList();
+
+                return Json(listIds, JsonRequestBehavior.AllowGet);
+            }
         }
 
         public JsonResult GetOvdimNameWith(string startsWith)

@@ -68,35 +68,50 @@
     if (Model.UsersInMitkan.Employees.Count >0)
     {
     @*<hr class="styled" />*@
-      
-        <fieldset class="FilterFieldSet" style="width:950px;height:80px">   
-           <div class="col-md-2 col-md-push-10" ><span style="text-decoration:underline; font-size:medium;font-weight:bold"> חיפוש עובד:</span></div>
-           <br />  
-           <div class="row">
-                <div class="col-md-2 col-md-push-6" >מספר עובד:</div>  
-                <div class="col-md-2 col-md-push-3"> 
-                    @Html.TextBoxFor(m=>m.MisparIshi, new { @Value = "" ,@maxlength="5", @onblur = "CheakValid(this);" }) @*,data_val_number="אנא הזן מספרים בלבד",required="false"*@
-                    @*@Html.ValidationMessageFor(model => model.MisparIshi)*@
-                    @*<span class="k-invalid-msg" data-for="MisparIshi"></span>*@
-                    </div> 
-                <div class="col-md-1 col-md-pull-1"></div>
-                <div class="col-md-1 col-md-pull-2" style="text-align:left" >שם:</div>
-             @*  <div class="col-md-2 col-md-pull-5"> @Html.TextBoxFor(m=>m.OvedName)</div> *@
-                <div class="col-md-2 col-md-pull-5"> @Html.TextBoxFor(m=>m.OvedName, new { @onblur = "SetMisparIshi(this);" })</div> 
-                <div class="col-md-1 col-md-pull-9">
-                    <input type="button" id="btnExecSearch" name="btnExecSearch" disabled="disabled"  value="חפש" onclick="findDataItem();"  />
-                </div>
-           </div>
+    @*<div>
+        <input type="button" value="שמור" onclick="CheckHaveChanges()" />
+    </div>*@
 
-    @*    <div id="dialog" title="Basic dialog" style="overflow: hidden;">
-        </div>*@
+   <div class="bgGray" style="height: 64px;">
+            <div  class="row" style="padding-top: 18px;">
+                 <div class="col-md-4"  >
+                @*      <input type="text"  id="txtSearch" class="TextBoxRO GeneralText styleTBSearch"  /> *@ 
+                    <span>@Html.TextBoxFor(m=>m.MisparIshi, new { @Value = "" , @onblur = "CheakValid(this);", data_val_number="אנא הזן מספרים בלבד",required="false" ,@class = "styleTBSearch GeneralText TextBoxRO"})   </span> 
+                      <input class="SearchBG" onclick="findDataItem();" type="button"/> 
 
+                           
+                      <input class="CheackBoxBG" type="checkbox" style="margin-right:65px;float:right;"/> 
+                      <label  class="GeneralText">הצג חריגים בלבד</label>
+                 </div>
+ 
+                   <div class="col-md-4"  >
+                    <a class="PurpleTextBoldLink" ><img  src="~/Content/Images/calender.png" style="margin-right:150px"   />
+                        הקצאה אוטומטית</a> 
+                     @* <label class="PurpleTextBold"   >הקצאה אוטומטית</label>  *@ 
 
-        </fieldset>
-   
-      <br />
+                      <a class="PurpleTextBoldLink" > <img  src="~/Content/Images/refresh.png" style="margin-right:28px" />
+                           איפוס</a>
+                      @*<label class="PurpleTextBoldLink"   >איפוס</label>*@
+                 </div>
 
-    <div class="t-rtl">
+                <div class="col-md-4" align="left"  style="padding-left:30px"  >
+                       <input type="button" id="btnUpdate" value="עדכן מכסות" onclick="CheckHaveChanges();" style="width:124px;margin-left:10px" class="PurpleButton DoubleArrow k-grid-save-changes" />
+                       <a class="PurpleTextLink">בטל שינויים</a>
+                 </div>
+            </div>
+        </div>
+    <div class="bgGray" >
+          <div  class="BgFirstTitleGrid" style="padding-top:5px" >
+                 <div class="col-md-6 divFirstHeader"  >
+                     <label class="TextBold"    >נתוני עובד</label>
+                 </div>
+            
+                 <div class="col-md-6 divFirstHeader"   >
+                    <label class="TextBold"    > נתוני הקצאה לחודש נוכחי</label>
+                 </div>
+              </div>
+    </div>
+    <div class="bgGray">
 
 
         @{
@@ -105,24 +120,37 @@
         Html.Kendo().Grid<BsmCommon.DataModels.Budgets.BudgetEmployeeGrid>()
            .Name("EmployeesList").Columns(columns =>
            {
-               columns.Bound(o => o.MisparIshi).Title("מספר אישי").Title("ddd").Width(80);
-               columns.Bound(o => o.FullName).Title("שם עובד").Width(100);
-               columns.Bound(o => o.TeurIsuk).Title("עיסוק").Width(100);
-               columns.Bound(o => o.AlTikni).Title("על תקני").Width(50);
-               columns.Bound(o => o.TeurMutamut).Title("קוד מותאם").Width(80);
-               columns.Bound(o => o.TeurGil).Title("קוד גיל").Width(80);
-               columns.Bound(o => o.MichsaYomit).Title("מכסה יומית </br> (כולל הלבשה)").Width(80);
-               columns.Bound(o => o.NosafotPrev).Title(String.Format("{0:MM/yyyy}", Model.Month.AddMonths(-1)) + "</br>ש''נ שבוצעו").Width(80);
-               columns.Bound(o => o.MichsaPrev).Title(String.Format("{0:MM/yyyy}", Model.Month.AddMonths(-1)) + "</br> מאפיין ש''נ</br>תפקיד ").Width(80);
-               columns.Bound(o => o.NosafotCur).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br>ש''נ שבוצעו").Width(80);
-               columns.Bound(o => o.MichsaCur).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br> מאפיין ש''נ</br>תפקיד ").HtmlAttributes(new { onchange = "ShowDialogsSave();", style = "border: 8px double lightgray;" }).Width(30);
-               //columns.Bound(o => o.MichsaCur).Title("מכסת ש''נ</br>  בחודש נוכחי").ClientTemplate("<input style='float: right;width:80px;' value='#=MichsaCur#'  name=''  />").Width(30);
-               columns.Bound(o => o.NosafotNotUsed).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br> ש''נ בלתי  </br> מנוצלות").Width(80);
+               columns.Bound(o => o.MisparIshi).Title("מספר אישי");
+               columns.Bound(o => o.FullName).Title("שם עובד") ;
+               columns.Bound(o => o.TeurIsuk).Title("עיסוק") ;
+               columns.Bound(o => o.AlTikni).Title("על תקני");
+               columns.Bound(o => o.TeurMutamut).Title("מותאם");
+               columns.Bound(o => o.TeurGil).Title("גיל");
+               columns.Bound(o => o.MichsaYomit).Title("מכסה יומית");
+               columns.Bound(o => o.NosafotPrev).Title("הקצאה לחודש קודם");
+               columns.Bound(o => o.MichsaCur).Title("הקצאת שעות").HtmlAttributes(new { onchange = "ShowDialogsSave();", @class="CellEditGrid"  }).Width(80);
+               columns.Bound(o => o.NosafotCur).Title("שעות שבוצעו");
+               columns.Bound(o => o.NosafotNotUsed).Title("פער");
+
+               
+               ////columns.Bound(o => o.MisparIshi).Title("מספר אישי").Title("ddd").Width(80);
+               ////columns.Bound(o => o.FullName).Title("שם עובד").Width(100);
+               ////columns.Bound(o => o.TeurIsuk).Title("עיסוק").Width(100);
+               ////columns.Bound(o => o.AlTikni).Title("על תקני").Width(50);
+               ////columns.Bound(o => o.TeurMutamut).Title("קוד מותאם").Width(80);
+               ////columns.Bound(o => o.TeurGil).Title("קוד גיל").Width(80);
+               ////columns.Bound(o => o.MichsaYomit).Title("מכסה יומית </br> (כולל הלבשה)").Width(80);
+               ////columns.Bound(o => o.NosafotPrev).Title(String.Format("{0:MM/yyyy}", Model.Month.AddMonths(-1)) + "</br>ש''נ שבוצעו").Width(80);
+               ////columns.Bound(o => o.MichsaPrev).Title(String.Format("{0:MM/yyyy}", Model.Month.AddMonths(-1)) + "</br> מאפיין ש''נ</br>תפקיד ").Width(80);
+               ////columns.Bound(o => o.NosafotCur).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br>ש''נ שבוצעו").Width(80);
+               ////columns.Bound(o => o.MichsaCur).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br> מאפיין ש''נ</br>תפקיד ").HtmlAttributes(new { onchange = "ShowDialogsSave();", style = "border: 8px double lightgray;" }).Width(30);
+               //////columns.Bound(o => o.MichsaCur).Title("מכסת ש''נ</br>  בחודש נוכחי").ClientTemplate("<input style='float: right;width:80px;' value='#=MichsaCur#'  name=''  />").Width(30);
+               ////columns.Bound(o => o.NosafotNotUsed).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br> ש''נ בלתי  </br> מנוצלות").Width(80);
 
                // columns.Bound(o => o.MisparIshi).Filterable(false).Width(125).ClientTemplate(Html.Kendo().NumericTextBox().Name("mp_sss").Min(0).HtmlAttributes(new { value = "#=o.MisparIshi#", style = "width: 100px;" }).ToClientTemplate().ToHtmlString());
                // onclick="ShowPopUp('@Html.DisplayFor(model => model.KodMitkan)','@Html.DisplayFor(model => model.MitkanName)','@Html.ValueFor(model => model.Month, "{0:dd/MM/yyyy}")');
                //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  style='float: right;'  value='הפק דוח' onclick='ShowReportNochechut(dataItem.MisparIshi, 4545)'  />").Width(80);
-               columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input style='float: right;' type='button' value= 'הפק דוח' onclick='ShowReportNochechut(#= MisparIshi #);'     />").Width(80);
+               ////columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input style='float: right;' type='button' value= 'הפק דוח' onclick='ShowReportNochechut(#= MisparIshi #);'     />").Width(80);
 
               
                //   columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='submit'  style='float: right;'  value='הפק דוח' name='action:Nochechut' />").Width(80);
@@ -147,12 +175,12 @@
             .Sortable()
            
 
-           .Filterable()
+           //.Filterable()
             .Events(events => events.DataBound("onDataBound"))
            //.Editable(editable => editable.Mode(GridEditMode.InCell)) // Use in-cell editing mode
             .DataSource(dataSource =>
                 dataSource.Ajax()
-                    .PageSize(10)
+                    .PageSize(12)
                     .ServerOperation(false)
                     .Batch(true) // Enable batch updates
                     .Model(model =>
@@ -168,7 +196,6 @@
                         model.Field(employee => employee.TeurGil).Editable(false);
                         model.Field(employee => employee.MichsaYomit).Editable(false);
                         model.Field(employee => employee.NosafotPrev).Editable(false);
-                        model.Field(employee => employee.MichsaPrev).Editable(false);
                         model.Field(employee => employee.NosafotCur).Editable(false); 
                         model.Field(employee => employee.NosafotNotUsed).Editable(false); 
 
@@ -195,16 +222,9 @@
         
         }
     </div>
-    <div id="dialog-confirm"></div>
- <br />
-        <div class="row">
-            <div class="col-md-2 col-md-push-10"><input type="button" value="איפוס  מכסות "  style="width:140px"  onclick="ModifyGrid()"/> </div>
-            <div class="col-md-2 col-md-push-6"><input type="button" value="העתקת ש''נ &#10; מחודש קודם"  style="width:140px" /> </div>
-            <div class="col-md-2 col-md-push-2"><input type="button" value="העתקת מכסת ש''נ &#10; מחודש קודם" onclick="CopyMichsotLastMonth()" style="width:140px"  /> </div>
-            <div class="col-md-2 col-md-pull-2"><input type="button" value="העתקת חלוקה &#10; אחרונה מחודש נוכחי"  style="width:140px"  /> </div>
-        
-             <div class="col-md-2 col-md-pull-8"><input type="submit" value="עדכון מכסות" name="action:Budget" hidden style="width:140px"  /> </div>
-        </div>
+    <div id="dialog-confirm" ></div>
+
+    
     }
 
     }
@@ -372,7 +392,7 @@
                 if (IsNumeric(obj.value) == false) {
                     $("#btnExecSearch").attr('disabled', 'disabled');
                     // $("#btnExecSearch").prop("disabled", true);             
-                    alert("מספר אישי לא חוקי");
+                  //  alert("מספר אישי לא חוקי");
                     $('#MisparIshi').focus();
                 }
                 else {
@@ -451,7 +471,7 @@
             var index = -1;
             // find the index of the matching dataItem
             for (var x = 0; x < view.length; x++) {
-                if (view[x].MisparIshi == dataItem.val()) { //dataItem.Id) {
+                if (view[x].MisparIshi == dataItem.val() || view[x].FullName == dataItem.val()) { //dataItem.Id) {
                     index = x;
                     break;
                 }

@@ -12,5 +12,26 @@ namespace BsmCommon.Helpers
         {
             return current.AddMonths(-1);
         }
+
+        public static string getMonthHeb(int month)
+        {
+            switch (month)
+            {
+                case 1: return "ינו'";  
+                case 2: return "פבר'";
+                case 3: return "מרץ";
+                case 4: return "אפר'";
+                case 5: return "מאי";
+                case 6: return "יוני";
+                case 7: return "יולי";
+                case 8: return "אוג'";
+                case 9: return "ספט'";
+                case 10: return "אוק'";
+                case 11: return "נוב'";
+                case 12: return "דצמ'";
+                default: return "";
+
+            }
+        }
     }
 }

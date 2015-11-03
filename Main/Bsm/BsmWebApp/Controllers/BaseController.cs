@@ -42,7 +42,7 @@ namespace BsmWebApp.Controllers
             menus.ForEach(menu =>
             {
                 if (menu.MenuType == SelectdMenu)
-                    menu.TabClassName = "selectedTab";
+                    menu.TabClassName = "SelectedTab";
                 else
                     menu.TabClassName = "";
             });

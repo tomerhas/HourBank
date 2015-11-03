@@ -42,9 +42,9 @@ namespace BsmWebApp
         {
             SingleMenu menuItem;
             IMenusManager manager = container.Resolve<IMenusManager>();
-            menuItem = new SingleMenu() { LinkText = "דף הבית", ControllerName = "Home", ActionName = "Index", MenuType = MenuTypes.HomePage, ImagSrc = "Content/Images/home.png" };
+            menuItem = new SingleMenu() { LinkText = "דף הבית", ControllerName = "Home", ActionName = "Index", MenuType = MenuTypes.HomePage, ImagSrc = "homeImg" };
             manager.AddMenu(menuItem);
-            menuItem = new SingleMenu() { LinkText = "ניהול תקציב", ControllerName = "Budget", ActionName = "Index", MenuType = MenuTypes.MamagementHourExtenstions, ImagSrc = "Content/Images/calculator.png" };
+            menuItem = new SingleMenu() { LinkText = "ניהול תקציב", ControllerName = "Budget", ActionName = "Index", MenuType = MenuTypes.MamagementHourExtenstions, ImagSrc = "calculatorImg" };
             manager.AddMenu(menuItem);
             //menuItem = new SingleMenu() { LinkText = "הפחתה/הוספה שעות נוספות", ControllerName = "Changes", ActionName = "Index", MenuType = MenuTypes.HourChanges, ImagSrc = "~/Content/Images/home.png" };
             //manager.AddMenu(menuItem);

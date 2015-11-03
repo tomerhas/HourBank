@@ -33,7 +33,8 @@ namespace BsmBL.Managers
             for (int i = 0; i < num; i++ )
             {
                 var id = date.Month.ToString().PadLeft(2, '0') + "/" + date.Year;
-                list.Add(new MonthHolder() { Id = "01/"+  id, Val = id });
+                var text = DateHelper.getMonthHeb(date.Month) + " " + date.Year;
+                list.Add(new MonthHolder() { Id = "01/" + id, Val = text });
                 //list.Add(new MonthHolder() { Id = "01/05/2014", Val = "05/2014" });
                 date = date.AddMonths(-1);
             }
