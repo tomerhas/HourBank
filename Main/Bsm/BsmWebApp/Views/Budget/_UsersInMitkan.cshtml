@@ -3,7 +3,7 @@
  <script>
      $(document).ready(function () {
          $("#MisparIshi").kendoAutoComplete({
-             // placeholder: "Enter site ...",
+             placeholder: "הקלד מ.א/שם עובד...",
              // dataTextField: "SiteName",
             // dataTextField: "MisparIshi",
             // dataValueField: "MisparIshi",
@@ -31,33 +31,33 @@
      }); //DocumentReady
 
 
-     $(document).ready(function () {
-         $("#OvedName").kendoAutoComplete({
-             // placeholder: "Enter site ...",
-             // dataTextField: "SiteName",
-           //  dataTextField: "FullName",
-           //  dataValueField: "FullName",
-             filter: "startswith",
-             minLength: 1,
-             dataSource: {
-                 type: "json",
-                 serverFiltering: true,
-                 serverPaging: true,
-                 pageSize: 20,
-                 transport: {
-                     read:
-                         {
-                             url: "Budget/GetOvdimNameWith"
-                         }, //read
-                     parameterMap: function () {// send value of autocomplete as the "startsWith" parameter
-                         return {
-                             startsWith: $("#OvedName").data("kendoAutoComplete").value()
-                         };
-                     }
-                 } //transport
-             } //datasource
-         }); //kendoAutoComplete
-     }); //DocumentReady
+     //$(document).ready(function () {
+     //    $("#OvedName").kendoAutoComplete({
+     //        placeholder:"הקלד מ.א\שם עובד...",
+     //        // dataTextField: "SiteName",
+     //      //  dataTextField: "FullName",
+     //      //  dataValueField: "FullName",
+     //        filter: "startswith",
+     //        minLength: 1,
+     //        dataSource: {
+     //            type: "json",
+     //            serverFiltering: true,
+     //            serverPaging: true,
+     //            pageSize: 20,
+     //            transport: {
+     //                read:
+     //                    {
+     //                        url: "Budget/GetOvdimNameWith"
+     //                    }, //read
+     //                parameterMap: function () {// send value of autocomplete as the "startsWith" parameter
+     //                    return {
+     //                        startsWith: $("#OvedName").data("kendoAutoComplete").value()
+     //                    };
+     //                }
+     //            } //transport
+     //        } //datasource
+     //    }); //kendoAutoComplete
+     //}); //DocumentReady
 
 
 
@@ -73,24 +73,42 @@
     </div>*@
 
    <div class="bgGray" style="height: 64px;">
-            <div  class="row" style="padding-top: 18px;">
-                 <div class="col-md-4"  >
-                @*      <input type="text"  id="txtSearch" class="TextBoxRO GeneralText styleTBSearch"  /> *@ 
-                    <span>@Html.TextBoxFor(m=>m.MisparIshi, new { @Value = "" , @onblur = "CheakValid(this);", data_val_number="אנא הזן מספרים בלבד",required="false" ,@class = "styleTBSearch GeneralText TextBoxRO"})   </span> 
-                      <input class="SearchBG" onclick="findDataItem();" type="button"/> 
+            <div  class="row" style="padding-top: 18px">
+                 <div class="col-md-4"   > 
+                     <label style="width:20px;float:right"></label>
+                     <input id="MisparIshi" style="width: 250px;" class = "styleTBSearch GeneralText TextBoxRO" />
+                     <input class="SearchBG" onclick="findDataItem();"  type="button"/> 
+                 @*    <input type="text"  id="txtSearch" class="TextBoxRO GeneralText styleTBSearch" value=""  />*@
+       @*            @Html.TextBoxFor(m=>m.MisparIshi, new { @Value = "" , Style="margin-right:20px;" , @onblur = "CheakValid(this);", data_val_number="אנא הזן מספרים בלבד",required="false" ,@class = "styleTBSearch GeneralText TextBoxRO"})    *@
+                @*   @Html.TextBoxFor(m=>m.MisparIshi, new { @Value = "" , Style="margin-right:20px;" ,data_val_number="אנא הזן מספרים בלבד",required="false" ,@class = "styleTBSearch GeneralText TextBoxRO"}) 
+               *@    
 
                            
-                      <input class="CheackBoxBG" type="checkbox" style="margin-right:65px;float:right;"/> 
+                      <input class="CheackBoxBG" type="checkbox" style="margin-right:65px;"/> 
                       <label  class="GeneralText">הצג חריגים בלבד</label>
                  </div>
  
-                   <div class="col-md-4"  >
-                    <a class="PurpleTextBoldLink" ><img  src="~/Content/Images/calender.png" style="margin-right:150px"   />
-                        הקצאה אוטומטית</a> 
-                     @* <label class="PurpleTextBold"   >הקצאה אוטומטית</label>  *@ 
+                   <div class="col-md-2"  >
+                     
+                        <a> 
+                               <div id="divCal" style="text-align:right;width:200px;text-align:left">
+                                   <label class="PurpleTextBoldLink" style="padding-top:5px" >הקצאה אוטומטית</label>
+                               </div>
+                          </a>
+                   
+                  @*  <a class="PurpleTextBoldLink" ><img  src="~/Content/Images/calender.png" style="margin-right:150px"   />
+                        הקצאה אוטומטית</a> *@
+                 </div>
+                    <div class="col-md-2"  >
+                         <a> 
+                               <div id="divIpus" style="text-align:right;width:80px;text-align:left">
+                                   <label class="PurpleTextBoldLink" style="padding-top:5px" >איפוס</label>
+                               </div>
+                          </a>
+               
 
-                      <a class="PurpleTextBoldLink" > <img  src="~/Content/Images/refresh.png" style="margin-right:28px" />
-                           איפוס</a>
+                      @*  <a class="PurpleTextBoldLink"   > <img  src="~/Content/Images/refresh.png" style="margin-right:28px" />
+                               איפוס</a>*@
                       @*<label class="PurpleTextBoldLink"   >איפוס</label>*@
                  </div>
 

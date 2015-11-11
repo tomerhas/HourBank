@@ -245,11 +245,40 @@ hr {
     vertical-align:middle;
 }
 
+
+.PurpleButton:hover {
+    
+    background-color:#6e486f;
+    text-decoration:none
+
+
+}
+
+
+.PurpleButton:active {
+    background-color: #59315a;
+    text-decoration:none
+}
+
+
+.PurpleButton:disabled {
+    background-color: #e2e7e7;
+    text-decoration:none
+}
+
+
+
 .DoubleArrow {
     background: url("Images/double-arrow.png") no-repeat left #895e8a;
     background-position-x: 10px;
     background-position-y: 8px;
     padding-left: 20px;
+
+
+
+
+
+
 }
 
 .imgRed {
@@ -274,6 +303,56 @@ hr {
     font-weight:  700;
 }
 
+
+
+.PurpleTextBoldLink:hover {
+  color:  #6e486f;
+  text-decoration:none
+}
+
+
+.PurpleTextBoldLink:active {
+  color:  #59315a;
+  text-decoration:none
+}
+
+
+.PurpleTextBoldLink:disabled {
+  color:  #e7e7e7;
+  text-decoration:none
+}
+
+
+#divIpus {
+      background: url("Images/refresh.png") no-repeat left  #e7e7e7;
+      background-position-y: 4px;
+      background-position-x: 50px;
+}
+#divIpus:hover {
+    
+
+     background: url("Images/refresh_h.png") no-repeat left #e7e7e7;
+     background-position-y: 4px;
+      background-position-x: 50px;
+    
+}
+
+
+#divCal {
+      background: url("Images/calender.png") no-repeat left  #e7e7e7;
+
+      background-position-x: 130px;
+      margin-right:50px;
+}
+#divCal:hover {
+    
+
+     background: url("Images/calender_h.png") no-repeat left #e7e7e7;
+       background-position-x: 130px;
+      margin-right:50px;
+    
+}
+
 .PurpleTextLink {
    color:  #895e8a;
     font-size:  17.89px;
@@ -283,11 +362,59 @@ hr {
 }
 
 
+
+.PurpleTextLink:hover {
+    color: #6e486f;
+    text-decoration:none
+}
+
+
+.PurpleTextLink:active {
+    color: #59315a;
+    text-decoration:none
+}
+
+
+.PurpleTextLink:disabled {
+    color: #e7e7e7;
+    text-decoration:none
+}
+
+
+
 .alertImg {
     background: url("Images/alert.png") no-repeat left #f3f3f3;
     background-position-x: 10px;
     background-position-y: 6px;
     padding-left: 20px;
+}
+
+.alertImg:hover {
+    
+
+     background: url("Images/alert hover.png") no-repeat left #f3f3f3;
+     background-position-x: 10px;
+    background-position-y: 6px;
+    
+}
+
+.alertImg:active {
+    
+
+     background: url("Images/alert press.png") no-repeat left #f3f3f3;
+     background-position-x: 10px;
+    background-position-y: 6px;
+    
+}
+
+
+.alertImg:disabled {
+    
+
+     background: url("Images/alert disabled.png") no-repeat left #f3f3f3;
+     background-position-x: 10px;
+    background-position-y: 6px;
+    
 }
 
 .SearchBG {
@@ -316,7 +443,7 @@ hr {
 }
 
 .styleTBSearch {
-    margin-right:20px;
+    /*margin-right:20px;*/
     /*width:200px;*/
     float:right;
     /*border:1px solid white;*/
@@ -324,19 +451,17 @@ hr {
  
 }
 
-.PurpleTextBoldLink:hover {
-  color:  #6e486f;
-  text-decoration:none
-}
-.PurpleTextLink:hover {
-    color: #6e486f;
-    text-decoration:none
-}
 
-.PurpleButton:hover {
-    color: #6e486f;
-    text-decoration:none
-}
+
+
+
+
+
+
+
+
+
+
 .BgFirstTitleGrid {
     background-color:  rgba(137, 94, 138, 0.5);
     height:  38px;
@@ -454,4 +579,15 @@ box-shadow:  0px 0px 6.86px 0.14px #a7a9af;
     background:   #895e8a;
     color: #ffffff;
     font-weight: bold;
+}
+
+::-webkit-input-placeholder {
+ 
+   font-family:  Arial;
+color:  #333333;
+font-size:  17.89px;
+font-weight:  400;
+line-height:  30.2px;
+/*text-align:  left;*/
+
 }

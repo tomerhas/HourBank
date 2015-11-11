@@ -185,6 +185,9 @@
     <Content Include="Content\bootstrap-rtl.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\alert disabled.png" />
+    <Content Include="Content\Images\alert hover.png" />
+    <Content Include="Content\Images\alert press.png" />
     <Content Include="Content\Images\alert.png" />
     <Content Include="Content\Images\arrow_copy_16.png" />
     <Content Include="Content\Images\arrow_next_disabled.png" />
@@ -192,6 +195,7 @@
     <Content Include="Content\Images\BG.jpg" />
     <Content Include="Content\Images\calculator.png" />
     <Content Include="Content\Images\calender.png" />
+    <Content Include="Content\Images\calender_h.png" />
     <Content Include="Content\Images\clipboard.jpg" />
     <Content Include="Content\Images\double-arrow.png" />
     <Content Include="Content\Images\home.png" />
@@ -199,6 +203,7 @@
     <Content Include="Content\Images\opening-btn.png" />
     <Content Include="Content\Images\Rectangle 42.png" />
     <Content Include="Content\Images\refresh.png" />
+    <Content Include="Content\Images\refresh_h.png" />
     <Content Include="Content\Images\searchImg.png" />
     <Content Include="Content\Images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
     <Content Include="Content\Images\ui-bg_diagonals-thick_20_666666_40x40.png" />
