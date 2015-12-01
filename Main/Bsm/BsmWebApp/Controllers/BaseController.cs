@@ -56,6 +56,8 @@ namespace BsmWebApp.Controllers
        
         public List<MonthHolder> GetMonthsBackList(int kodParam)
         {
+           
+
             var manager = _container.Resolve<IBudgetManager>();
             return manager.GetMonthsBack(kodParam);
         }
