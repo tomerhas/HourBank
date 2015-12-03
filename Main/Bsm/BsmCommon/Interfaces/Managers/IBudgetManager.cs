@@ -1,6 +1,7 @@
 ﻿using BsmCommon.DataModels;
 using BsmCommon.DataModels.Budgets;
 using BsmCommon.DataModels.Employees;
+using BsmCommon.UDT;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,6 +23,7 @@ namespace BsmCommon.Interfaces.Managers
         string GetOvedIdByName(string sName);
         string GetOvedNameById(string query);
         Yechida GetYechidaByName(string TeurYechida);
-        List<BudgetEmployeeGrid> GetEmployeeDetails(int KodYechida, DateTime Month, long bakasha_id);
+        List<BudgetEmployeeGrid> GetEmployeeDetails(int KodYechida, DateTime Month);
+        void SaveEmployeeMichsot(COLL_BUDGET_EMPLOYEES_MICHSA ocollMichsot);
     }
 }

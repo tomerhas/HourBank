@@ -35,8 +35,9 @@ namespace BLTests
 
         private UserInfo getUserInfo()
         {
-            SecurityManager sm = new SecurityManager();
-             return sm.GetUserInfo(@"EGGED_D\meravn");
+            return new UserInfo();
+            //SecurityManager sm = new SecurityManager();
+            //  return sm.GetUserInfo(@"EGGED_D\meravn");
         }
     }
 

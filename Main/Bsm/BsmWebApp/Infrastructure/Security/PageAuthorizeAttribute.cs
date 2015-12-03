@@ -2,6 +2,7 @@
 using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -22,7 +23,13 @@ namespace BsmWebApp.Infrastructure.Security
         {
             //If valid - just return, else redirect to error page
              var cache = ServiceLocator.Current.GetInstance<IUserInfoCachedItems>();
-             var userName = HttpContext.Current.User.Identity.Name;
+
+            // var userName = "EGGED_D\\igalr";// HttpContext.Current.User.Identity.Name;
+             string userName;
+             if (ConfigurationSettings.AppSettings["DebugModeUserName"] == "true")
+                 userName = ConfigurationSettings.AppSettings["DebugUserName"];
+             else userName = HttpContext.Current.User.Identity.Name;
+
              var uf = cache.Get(userName);
             if(uf != null && uf.IsPermittedForMasach(_pageName))
             {

@@ -8,14 +8,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using BsmCommon.Interfaces.Managers;
+using BsmCommon.DataModels;
+using Microsoft.Practices.Unity;
 
 namespace BsmBL.Managers
 {
     public class SecurityManager : ISecurityManager
     {
+        private IUnityContainer _container;
+
+        public SecurityManager(IUnityContainer container)
+        {
+            _container = container;
+        }
+
         public UserInfo GetUserInfo(string UserName)
         {
-            int EmpNum=0,Isuk=0,YechidaIrgunit=0;
+            int EmpNum = 0, Isuk = 0, YechidaIrgunit = 0, KodYechida=0;
             //הבא את נתוני המשתמש מתוך active directory
             var exchangeSrv = new ExchangeInfoServiceSoapClient();
             UserInfo uf = new UserInfo();
@@ -56,6 +65,14 @@ namespace BsmBL.Managers
                         }
                     }
 
+                    if (uf.HarshaatOved.KodYechidaIchus > 0)
+                        KodYechida = uf.HarshaatOved.KodYechidaIchus;
+                    else KodYechida = uf.HarshaatOved.KodYechida;
+
+                    uf.Yechidot = GetYechidotToUser(KodYechida);
+                    if (uf.Yechidot.Count > 0)
+                        uf.CurYechida = uf.Yechidot[0];
+                    
                 }
 
             }
@@ -80,6 +97,14 @@ namespace BsmBL.Managers
             return userGroups;  
         }
 
+        private List<Yechida> GetYechidotToUser(int kodYechida)
+        {
+            IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
+            return Gmanager.GetYechidutForUser(DateTime.Now.Date, kodYechida);
+            
+        }
+
+        
         //private List<Profile> GetProfilesByGroup(string[]  groups)
         //{
         //    List<string> groupsLC = new List<string>();

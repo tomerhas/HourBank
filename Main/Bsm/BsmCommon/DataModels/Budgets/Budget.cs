@@ -13,7 +13,7 @@ namespace BsmCommon.DataModels.Budgets
 
         public Budget()
         {
-            BudgetChanges = new List<BudgetChange>();
+        //    BudgetChanges = new List<BudgetChange>();
         }
         [Key, Column("KOD_YECHIDA", Order = 0)] 			
         public int KodYechida { get; set; }
@@ -21,14 +21,16 @@ namespace BsmCommon.DataModels.Budgets
         [Key, Column("CHODESH", Order = 1)] 
         public DateTime Month { get; set; }
 
-        [Display(Name = "תקן")]
+        [Display(Name = "תקציב חודשי")]
         [Column("BUDGET")]
         public int BudgetVal{ get; set; }
-  
+
+       [Display(Name = "שעות שבוצעו")]
         [Column("BUDGET_USED")]
-        public int? Budget_Used { get; set; }
+        public decimal? Budget_Used { get; set; }
+       
         [NotMapped]
-        public int BudgetUsed
+        public decimal BudgetUsed
         {
             get
             {
@@ -36,10 +38,17 @@ namespace BsmCommon.DataModels.Budgets
             }
             set
             {
-                Budget_Used = value == 0 ? new Nullable<int>() : value;
+                Budget_Used = value == 0 ? new Nullable<decimal>() : value;
             }
         }
 
+        [Display(Name = "שעות שהוקצו")]
+        [NotMapped]
+        public int ShaotByMeafyen14 { get; set; }
+
+        [Display(Name = "שעות שנותרו להקצאה")]
+        [NotMapped]
+        public int YitratTakzivToDivide { get; set; }
 
         [Column("TAARICH_IDKUN")]
         public DateTime TaarichIdkun { get; set; }
@@ -47,27 +56,27 @@ namespace BsmCommon.DataModels.Budgets
         [Column("BAKASHA_ID")]
         public long BakashaId { get; set; }
 
-        public List<BudgetChange> BudgetChanges { get; set; }
+        //public List<BudgetChange> BudgetChanges { get; set; }
 
-        [Display(Name = "יתרת מחודש קודם")]
-        [NotMapped]
-        public int RemainHoursLastMonth { get; set; }
+        //[Display(Name = "יתרת מחודש קודם")]
+        //[NotMapped]
+        //public int RemainHoursLastMonth { get; set; }
 
-        [Display(Name = "הפחתה/הוספה")]
-        [NotMapped]
-        public int AddSubtractHours { get; set; }
+        //[Display(Name = "הפחתה/הוספה")]
+        //[NotMapped]
+        //public int AddSubtractHours { get; set; }
 
-        [Display(Name = "ס''הכ תקציב")]
-        [NotMapped]
-        public int SachTakzivShaotNosafot { get; set; }
+        //[Display(Name = "ס''הכ תקציב")]
+        //[NotMapped]
+        //public int SachTakzivShaotNosafot { get; set; }
 
 
-        [Display(Name = "לחלוקה")]
-        [NotMapped]
-        public int YitratTakzivToDivide { get; set; }
+        //[Display(Name = "לחלוקה")]
+        //[NotMapped]
+        //public int YitratTakzivToDivide { get; set; }
 
-        [Display(Name = "ניצול בפועל")]
-        [NotMapped]
-        public int HoursNotUsed { get; set; }
+        //[Display(Name = "ניצול בפועל")]
+        //[NotMapped]
+        //public int HoursNotUsed { get; set; }
     }
 }

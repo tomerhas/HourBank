@@ -16,10 +16,10 @@ namespace BsmWebApp.ViewModels.Budgets
             IsMitkanBudgetDetailEmpty = true;
             OnlyOneYechida = false;
             UsersInMitkan = new UsersInMitkanViewModel();
-            KodList = new List<KodListItem>();
-            KodList.Add(new KodListItem() { ProductID = 2, ProductName = "prod1" });
-            KodList.Add(new KodListItem() { ProductID = 3, ProductName = "prod2" });
-            KodList.Add(new KodListItem() { ProductID = 4, ProductName = "prod3" });
+        //    KodList = new List<KodListItem>();
+        //    KodList.Add(new KodListItem() { ProductID = 2, ProductName = "prod1" });
+        //    KodList.Add(new KodListItem() { ProductID = 3, ProductName = "prod2" });
+        //    KodList.Add(new KodListItem() { ProductID = 4, ProductName = "prod3" });
         }
 
         public BudgetMainViewModel(List<MonthHolder> months) : this()
@@ -31,35 +31,40 @@ namespace BsmWebApp.ViewModels.Budgets
         {
          
             Months = new SelectList(months, "Id", "Val");
-            //SelectedMonth = 1;
+            SelectedMonth =months[0].Id;
         }
-        public string MitkanName { get; set; }
-        public int KodMitkan { get; set; }
-        public long BakashaId { get; set; }
-        public DateTime Month { get; set; }
-        public DateTime LastBakashaDate { get; set; }
-        public bool IsMitkanBudgetDetailEmpty { get; set; }
-        public bool OnlyOneYechida { get; set; }
-        public Budget MitkanBudgetDetail { get; set; }
-
         public SelectList Months { get; set; }
-
         public string SelectedMonth { get; set; }
+        public string LastDateIdkunBankStr { get; set; }
+        public DateTime LastDateIdkunBank { get; set; }
+        public string NumDays { get; set; }
+        public Budget MitkanBudgetDetail { get; set; }
+        public bool IsMitkanBudgetDetailEmpty { get; set; }
+        public int KodMitkan { get; set; }
+        public DateTime Month { get; set; }
+        /// <summary>
+        /// ///////////////////////////////////////
+        /// </summary>
 
+        public string MitkanName { get; set; }
+      
+        public long BakashaId { get; set; }
+       
+        public DateTime LastBakashaDate { get; set; }
+        public bool OnlyOneYechida { get; set; }
         public UsersInMitkanViewModel UsersInMitkan { get; set; }
        // public ReportingServicesReportViewModel ReportVM { get; set; }
-
         public int MisparIshi { get; set; }
         public string OvedName { get; set; }
-        public List<KodListItem> KodList { get; set; }
+      //  public List<KodListItem> KodList { get; set; }
     }
 
 
-    public class KodListItem
-    {
-        public string ProductName { get; set; }
-        public int ProductID { get; set; }
-    }
+    //public class KodListItem
+    //{
+    //    public string ProductName { get; set; }
+    //    public int ProductID { get; set; }
+    //}
 
    
 }

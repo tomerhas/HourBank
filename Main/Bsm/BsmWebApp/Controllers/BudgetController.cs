@@ -19,6 +19,8 @@ using Egged.Infrastructure.Attribute;
 using BsmWebApp.ViewModels.Reports;
 using System.Configuration;
 using Egged.Infrastructure.Menus.DataModels;
+using BsmCommon.Helpers;
+using BsmCommon.UDT;
 
 namespace BsmWebApp.Controllers
 {
@@ -31,30 +33,44 @@ namespace BsmWebApp.Controllers
         }
         [PageAuthorize("Budget")]
         public ActionResult Index()
-        {         
+        {
+            //if (this.Request.QueryString["mitkan"] != null)
+            //{
+            //    var mitkan = int.Parse(this.Request.QueryString["mitkan"]);
+            //    Yechida yechida = CurrentUser.Yechidot.SingleOrDefault(y => y.KodYechida == mitkan);
+            //    CurrentUser.CurYechida = yechida;
+            //}
             BudgetMainViewModel vm = InitBudgetVm();
-
             return View(vm);
         }
-
+        public void ChangeMitkan(int mitkan)
+        {
+          //  var x= mitkan;
+            //if (this.Request.QueryString["mitkan"] != null)
+            //{
+            Yechida yechida = CurrentUser.Yechidot.SingleOrDefault(y => y.KodYechida == mitkan);
+            CurrentUser.CurYechida = yechida;
+            //}
+        }
       //[MultipleButton(Name = "action", Argument = "Index")]
         [HttpPost]
         public ActionResult Index(BudgetMainViewModel vm)
         {
             DateTime month = DateTime.Parse(vm.SelectedMonth);
-
+            var curMitkan=CurrentUser.CurYechida.KodYechida;
             var manager = _container.Resolve<IBudgetManager>();
-            SelectedMitkan = 88468;
-            if (SelectedMitkan > 0)
+            if (curMitkan > 0)
             {
                  IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
-                long bakasha_id = Gmanager.GetLastBakasha(month);           
-                BudgetMainViewModel vmResult = GetBudgetDetailForMitkan(SelectedMitkan, month, bakasha_id);
-                if (bakasha_id != null)
-                    vmResult.LastBakashaDate = Gmanager.GetZmanBakasha(bakasha_id);
-                vmResult.MitkanName = vm.MitkanName;
-                vmResult.SelectedMonth = vm.SelectedMonth;
-                vmResult.UsersInMitkan = GetEmployeesInMitkan(SelectedMitkan, month,bakasha_id);
+                long bakasha_id = Gmanager.GetLastBakashaOfTeken(month);
+                BudgetMainViewModel vmResult = GetBudgetDetailForMitkan(curMitkan, month, bakasha_id);
+                ////if (bakasha_id != null)
+                ////    vmResult.LastBakashaDate = Gmanager.GetZmanBakasha(bakasha_id);
+                ////vmResult.MitkanName = vm.MitkanName;
+                ////vmResult.SelectedMonth = vm.SelectedMonth;
+                vmResult.KodMitkan = curMitkan;
+                vmResult.Month = month;
+                vmResult.UsersInMitkan = GetEmployeesInMitkan(curMitkan, month);
                 //vmResult.ReportVM = GetReportDetails();
                 return View(vmResult);
             }
@@ -79,25 +95,110 @@ namespace BsmWebApp.Controllers
             }
         }
 
-     
-       
-       [HttpGet]
-        public ActionResult GetReportNochechut(int MisparIshi, string chodesh) //int KodYechida,DateTime chodesh)
+
+        private BudgetMainViewModel InitBudgetVm()
         {
 
-            ReportingServicesReportViewModel model = new ReportingServicesReportViewModel(
-            "Presence",
-            new List<Microsoft.Reporting.WebForms.ReportParameter>()
-              { 
-                new Microsoft.Reporting.WebForms.ReportParameter("P_MISPAR_ISHI",MisparIshi.ToString(),false) ,
-                new Microsoft.Reporting.WebForms.ReportParameter("P_STARTDATE", DateTime.Parse(chodesh).ToShortDateString(),false),
-                new Microsoft.Reporting.WebForms.ReportParameter("P_ENDDATE", DateTime.Parse(chodesh).AddMonths(1).AddDays(-1).ToShortDateString(),false)
-              });
+            var months = GetMonthsBackList(6);
+            BudgetMainViewModel vm = new BudgetMainViewModel(months);
+            vm.MitkanBudgetDetail = new Budget();
+            vm.Month = DateTime.Parse(months[0].Id);
 
-            ViewBag.ReportViewer = model.ReportViewer;
-            ViewBag.NameReport = "דו''ח נוכחות לעובד";
-            return View("~/Views/Report/ViewReport.cshtml");
+            IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
+            vm.LastDateIdkunBank = Gmanager.GetLastDateIdkunBank(vm.Month);
+            vm.LastDateIdkunBankStr = string.Concat("יום ", DateHelper.getDayHeb(vm.LastDateIdkunBank), " ,", vm.LastDateIdkunBank.ToShortDateString());
+
+            TimeSpan span = vm.LastDateIdkunBank - DateTime.Now;
+            int numDays = span.Days;
+            vm.NumDays = "";
+            if (numDays > 0)
+                vm.NumDays = string.Concat("עוד ", numDays, " ימים");
+            
+
+            //IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
+            //DataTable yechidot = Gmanager.GetYechidutForUser(vm.Month, GetYechidatOvedForEzNihuly());
+            //if (yechidot.Rows.Count == 1)
+            //{
+            //    vm.MitkanName = yechidot.Rows[0]["TeurYechida"].ToString();
+            //    vm.OnlyOneYechida = true; ;
+            //}
+            return vm;
         }
+
+
+        private BudgetMainViewModel GetBudgetDetailForMitkan(int kodMitkan, DateTime dateTime, long bakasha_id)
+        {
+
+            Budget mb = _container.Resolve<IBudgetManager>().GetBudget(kodMitkan, dateTime, bakasha_id);
+            BudgetMainViewModel vm = InitBudgetVm();
+            vm.MitkanBudgetDetail = mb;
+            //vm.KodMitkan = kodMitkan;
+            //vm.Month = dateTime;
+            //vm.BakashaId = bakasha_id;
+            vm.IsMitkanBudgetDetailEmpty = false;
+
+            return vm;
+        }
+
+        public ActionResult EmployeesInMitkanRead([DataSourceRequest]DataSourceRequest request, int KodYechida, DateTime month)
+        {
+            var employeesContainer = GetEmployeesInMitkan(KodYechida, month);
+            return Json(employeesContainer.Employees.ToDataSourceResult(request));
+        }
+
+        public ActionResult EmployeesInMitkanUpdate([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<BudgetEmployeeGrid> employees,DateTime month)
+        {
+            COLL_BUDGET_EMPLOYEES_MICHSA oCollBudgetMichsa = new COLL_BUDGET_EMPLOYEES_MICHSA();
+            employees.ToList().ForEach(employee =>
+            {
+                OBJ_BUDGET_EMPLOYEES_MICHSA objBudgetMichsa = new OBJ_BUDGET_EMPLOYEES_MICHSA();
+                objBudgetMichsa.MISPAR_ISHI = employee.MisparIshi;
+                objBudgetMichsa.CHODESH = month;
+                objBudgetMichsa.MICHSA = employee.MichsaCur;
+                objBudgetMichsa.MEADKEN = CurrentUser.UserId;
+                oCollBudgetMichsa.Add(objBudgetMichsa);
+            });
+
+            var budget = _container.Resolve<IBudgetManager>();
+            budget.SaveEmployeeMichsot(oCollBudgetMichsa);
+            return Json(employees.ToDataSourceResult(request));
+        }
+
+        private UsersInMitkanViewModel GetEmployeesInMitkan(int KodYechida, DateTime month)
+        {
+
+            //var manager = _container.Resolve<IBudgetManager>();
+            //var employees = manager.GetBudgetEmployees(KodYechida, month);
+            //UsersInMitkanViewModel vm = new UsersInMitkanViewModel();
+            //employees.ForEach(x => vm.Employees.Add(new UserInMitkanVM(x)));
+            //return vm;
+
+            var manager = _container.Resolve<IBudgetManager>();
+            var employees = manager.GetEmployeeDetails(KodYechida, month);
+            UsersInMitkanViewModel vm = new UsersInMitkanViewModel();
+            vm.Employees = employees;
+            Session["EmployeesGrid"] = vm.Employees;
+            // employees.ForEach(x => vm.Employees.Add(new UserInMitkanVM(x)));
+            return vm;
+        }
+
+       //[HttpGet]
+       // public ActionResult GetReportNochechut(int MisparIshi, string chodesh) //int KodYechida,DateTime chodesh)
+       // {
+
+       //     ReportingServicesReportViewModel model = new ReportingServicesReportViewModel(
+       //     "Presence",
+       //     new List<Microsoft.Reporting.WebForms.ReportParameter>()
+       //       { 
+       //         new Microsoft.Reporting.WebForms.ReportParameter("P_MISPAR_ISHI",MisparIshi.ToString(),false) ,
+       //         new Microsoft.Reporting.WebForms.ReportParameter("P_STARTDATE", DateTime.Parse(chodesh).ToShortDateString(),false),
+       //         new Microsoft.Reporting.WebForms.ReportParameter("P_ENDDATE", DateTime.Parse(chodesh).AddMonths(1).AddDays(-1).ToShortDateString(),false)
+       //       });
+
+       //     ViewBag.ReportViewer = model.ReportViewer;
+       //     ViewBag.NameReport = "דו''ח נוכחות לעובד";
+       //     return View("~/Views/Report/ViewReport.cshtml");
+       // }
 
         //[MultipleButton(Name = "action", Argument = "Nochechut")]
         //[HttpPost]
@@ -117,83 +218,27 @@ namespace BsmWebApp.Controllers
         //    // return View();
         // }
 
-        private UsersInMitkanViewModel GetEmployeesInMitkan(int KodYechida, DateTime month, long bakasha_id)
-        {
-
-            //var manager = _container.Resolve<IBudgetManager>();
-            //var employees = manager.GetBudgetEmployees(KodYechida, month);
-            //UsersInMitkanViewModel vm = new UsersInMitkanViewModel();
-            //employees.ForEach(x => vm.Employees.Add(new UserInMitkanVM(x)));
-            //return vm;
-
-            var manager = _container.Resolve<IBudgetManager>();
-            var employees = manager.GetEmployeeDetails(KodYechida, month, bakasha_id);
-            UsersInMitkanViewModel vm = new UsersInMitkanViewModel();
-            vm.Employees = employees;
-            Session["EmployeesGrid"] = vm.Employees;
-           // employees.ForEach(x => vm.Employees.Add(new UserInMitkanVM(x)));
-            return vm;
-        }
+     
         //private List<MonthHolder> GetMonthsBackList(int kodParam)
         //{
         //    var manager = _container.Resolve<IBudgetManager>();
         //    return manager.GetMonthsBack(kodParam);
         //}
 
-        public ActionResult EmployeesInMitkanRead([DataSourceRequest]DataSourceRequest request, int KodYechida, DateTime month, long bakasha_id)
-        {
-            var employeesContainer = GetEmployeesInMitkan(KodYechida, month, bakasha_id);
-            return Json(employeesContainer.Employees.ToDataSourceResult(request));
-        }
-
-        public ActionResult EmployeesInMitkanUpdate([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<BudgetEmployeeGrid> employees)
-        {
-            employees.ToList().ForEach(employee => 
-            {
-                var val = employee.MichsaCur;
-            });
-            return Json(employees.ToDataSourceResult(request));
-        }
+      
  
 
-        private BudgetMainViewModel GetBudgetDetailForMitkan(int kodMitkan, DateTime dateTime, long bakasha_id)
-        {
+    
 
-            Budget mb = _container.Resolve<IBudgetManager>().GetBudget(kodMitkan, dateTime, bakasha_id);
-            BudgetMainViewModel vm = InitBudgetVm();
-            vm.MitkanBudgetDetail = mb;
-            vm.KodMitkan = kodMitkan;
-            vm.Month = dateTime;
-            vm.BakashaId = bakasha_id;
-            vm.IsMitkanBudgetDetailEmpty = false;
+        /*****************************************************************************/
 
-            return vm;
-        }
+        //public ActionResult CreateNochechutRdl(int ovedId)
+        //{
+        //    return RedirectToAction("Index");
+        //}
 
 
-        private BudgetMainViewModel InitBudgetVm()
-        {
-            
-            var months = GetMonthsBackList(6);
-            BudgetMainViewModel vm = new BudgetMainViewModel(months);
-            vm.MitkanBudgetDetail = new Budget();
-            vm.Month=DateTime.Parse(months[0].Id);
-             
 
-            IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
-            DataTable yechidot = Gmanager.GetYechidutForUser(vm.Month, GetYechidatOvedForEzNihuly());
-            if (yechidot.Rows.Count == 1)
-            {
-                vm.MitkanName = yechidot.Rows[0]["TeurYechida"].ToString();
-                vm.OnlyOneYechida = true; ;
-            }
-            return vm;
-        }
-
-        public ActionResult CreateNochechutRdl(int ovedId)
-        {
-            return RedirectToAction("Index");
-        }
 
         [HttpGet]
         public PartialViewResult DispalyChanges(int KodYechida, string chodesh) //int KodYechida,DateTime chodesh)

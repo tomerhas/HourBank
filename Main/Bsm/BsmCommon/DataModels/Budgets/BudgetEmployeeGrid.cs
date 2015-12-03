@@ -20,8 +20,11 @@ namespace BsmCommon.DataModels.Budgets
         public float NosafotPrev { get; set; }
         public float MichsaPrev { get; set; }
         public float NosafotCur { get; set; }
-        public float MichsaCur { get; set; }
+        public decimal MichsaCur { get; set; }
+        public decimal ShaotShebuzu { get; set; }
         public float NosafotNotUsed { get; set; }
-        public float Meafyen14 { get; set; }
+        public string Paar { get; set; }
+        public string ReadOnly { get; set; }
+       // public float Meafyen14 { get; set; }
     }
 }

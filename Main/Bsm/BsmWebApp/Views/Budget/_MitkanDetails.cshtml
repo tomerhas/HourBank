@@ -61,17 +61,21 @@
             <div class="row">
                 <div class="col-md-8" style="padding-top: 18px">
                     <label class="TextBold" style="margin-right: 20px;">תאריך:</label>
-                    @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, new { @onchange = "EnableButton();", @class = "ddl" })
-                    <input type="button" id="btnPrevMonth" value="חודש קודם" class="WhiteButton BgPrev GeneralText" />
-                    <input type="button" id="btnNextMonth" value="חודש הבא" class="WhiteButton BgNext GeneralText" />
+                    @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, new { @onchange = "EnableButton();", @class = "ddl", style="*width: 140px;height: 29px;" })
+                    <input type="button" id="btnPrevMonth" value="חודש קודם" class="WhiteButton BgPrev GeneralText" onclick="SetMonth(-1);"/>
+                    <input type="button" id="btnNextMonth" value="חודש הבא" class="WhiteButton BgNext GeneralText" disabled onclick="SetMonth(1);" />
                     <input type="submit" id="btnShow" value="הצג" name='action:Index' style="margin-right: 31px" class="PurpleButton DoubleArrow" />
                 </div>
 
                 <div class="col-md-4">
                     <div align="left" style="padding-left:20px">
-                        <label class="GeneralText" style="padding-top: 22px;">סגירת משכורת: יום חמישי 30/10/2015  </label>
-                        <label>עוד 3 ימים</label>
+                        <label class="GeneralText" style="padding-top:22px">תאריך אחרון לעדכון בנק: @Model.LastDateIdkunBankStr</label>
+                       @if (@Model.NumDays != "")
+ {
+                        <label style="padding-top:22px"> <img src="~/Content/Images/mafrid.png" /></label>                       
+                        <label class="PurpleTextLink" style="padding-top:22px" >@Model.NumDays</label>
                         <img class="imgRed"  src="~/Content/Images/warning.png" />
+                       }
                     </div>
                 </div>
             </div>
@@ -85,16 +89,16 @@
             <div class="bgGray" style="height: 64px;">
                 <div class="row" style="padding-top: 18px;">
                     <div class="col-md-5">
-                        <label class="TextBold" style="margin-right:20px;margin-bottom:0px">תקציב חודשי:</label>
+                        <label class="TextBold" style="margin-right:20px;margin-bottom:0px">  @Html.DisplayNameFor(model => model.MitkanBudgetDetail.BudgetVal):</label>
                         <input type="text" readonly  class="TextBoxRO GeneralText alertImg" value="@Model.MitkanBudgetDetail.BudgetVal" style="width: 111px;padding-right:7px"/>       
-                        <label class="TextBold" style="margin-right:20px;margin-bottom:0px">שעות שבוצעו:</label>
-                        <input type="text" readonly  class="TextBoxRO GeneralText alertImg" value="@Model.MitkanBudgetDetail.BudgetVal" style="width: 111px;padding-right:7px"/>           
+                        <label class="TextBold" style="margin-right:20px;margin-bottom:0px"> @Html.DisplayNameFor(model => model.MitkanBudgetDetail.Budget_Used):</label>
+                        <input type="text" readonly  class="TextBoxRO GeneralText" value="@Model.MitkanBudgetDetail.Budget_Used" style="width: 111px;padding-right:7px"/>           
                     </div>
                     <div class="col-md-7">
-                        <label class="TextBold" style="margin-right:20px;margin-bottom:0px">שעות שהוקצו:</label>
-                        <input type="text" readonly  class="TextBoxRO GeneralText alertImg" value="@Model.MitkanBudgetDetail.BudgetVal" style="width: 111px;padding-right:7px"/>       
-                        <label class="TextBold" style="margin-right:20px;margin-bottom:0px">שעות שנותרו להקצאה:</label>
-                        <input type="text" readonly  class="TextBoxRO GeneralText alertImg" value="@Model.MitkanBudgetDetail.BudgetVal" style="width: 111px;padding-right:7px"/>           
+                        <label class="TextBold" style="margin-right:20px;margin-bottom:0px"> @Html.DisplayNameFor(model => model.MitkanBudgetDetail.ShaotByMeafyen14):<label>
+                        <input type="text" readonly  class="TextBoxRO GeneralText" value="@Model.MitkanBudgetDetail.ShaotByMeafyen14" style="width: 111px;padding-right:7px"/>       
+                        <label class="TextBold" style="margin-right:20px;margin-bottom:0px"> @Html.DisplayNameFor(model => model.MitkanBudgetDetail.YitratTakzivToDivide):</label>
+                        <input type="text" readonly  class="TextBoxRO GeneralText" value="@Model.MitkanBudgetDetail.YitratTakzivToDivide" style="width: 111px;padding-right:7px"/>           
                     </div>
 
                 </div>
@@ -117,12 +121,76 @@
 <script type="text/javascript">
 
     function EnableButton() {
-        if ($('#MitkanName').val() != "")
-            $("#btnExec").removeAttr('disabled');
-        else
-            $("#btnExec").attr('disabled', 'disabled');
-        ;
+      //  var firstMonth = new Date( model.Months[0].Value);
+      //  var lastMonth = new Date( model.Months[model.Months.length-1].Value);
+        //var x= $("#SelectedMonth").options[0].css( 'color','red');
+        //alert( $("#SelectedMonth").options[0].text);
+        $("#SelectedMonth").css("background","#564057");
+        $("#SelectedMonth").css("color","white");
+        $("#SelectedMonth option").css("background","white");
+       $("#SelectedMonth option").css("color","black");
+       //("#SelectedMonth option:eq(0)").css("color","red");
+        var model = @Html.Raw(Json.Encode(Model));
+        var month =model.SelectedMonth;
+        var selectMonth = $('#SelectedMonth');
+        var selmont=selectMonth.val();
+
+        $("#btnNextMonth").removeAttr('disabled');
+        $("#btnPrevMonth").removeAttr('disabled');
+        if(selmont==model.Months[0].Value){
+            $("#btnNextMonth").attr('disabled', 'disabled');
+         //   $( "#btnNextMonth" ).addClass( "disabled" );
+        }
+        if(selmont==model.Months[model.Months.length-1].Value){
+            $("#btnPrevMonth").attr('disabled', 'disabled');
+        }
+
     }
+
+  
+
+    function SetMonth(val) { 
+        var model = @Html.Raw(Json.Encode(Model));
+        var month =model.SelectedMonth;
+
+        var selectMonth = $('#SelectedMonth');
+        var dateSplit=selectMonth.val().split("/");
+        var date= new Date(dateSplit[2],dateSplit[1]-1,dateSplit[0],'00','00','00');
+        date.setMonth(date.getMonth() + val);
+        var month= date.getMonth()+1;
+        var year= date.getFullYear();
+       // var monthS=selectMonth.val().split("/");
+      //  var month=(+monthS[1])+val;
+        if(month<10)
+            month ="0"+ month;
+
+        selectMonth.val("01/"+month+"/"+year)
+        EnableButton();
+       // "01/04/2015");
+       
+    }
+
+    //var url = "/Budget/DispalyChanges?KodYechida=" + kod + "&chodesh=" + month;
+
+    //$(function () {
+    //    $("#dialog").dialog(
+    //        {
+    //            autoOpen: false,
+    //            width: 400,
+    //            height: 450,
+    //            modal: true,
+    //            buttons: {
+    //                "Close": function () {
+    //                    $(this).dialog("close");
+    //                }
+    //            }
+    //        });
+    //    $.get(url, function (data) {
+    //        $("#dialog").html(data);
+    //    });
+    //    $('#dialog').dialog('open');
+    //});
+
 
     function ShowPopUp(kod, name, month) {
         var titel = " פירוט שעות הוספה/הפחתה למתקן ";
@@ -147,28 +215,4 @@
                 }
             });
     });
-
-
-    //var url = "/Budget/DispalyChanges?KodYechida=" + kod + "&chodesh=" + month;
-
-    //$(function () {
-    //    $("#dialog").dialog(
-    //        {
-    //            autoOpen: false,
-    //            width: 400,
-    //            height: 450,
-    //            modal: true,
-    //            buttons: {
-    //                "Close": function () {
-    //                    $(this).dialog("close");
-    //                }
-    //            }
-    //        });
-    //    $.get(url, function (data) {
-    //        $("#dialog").html(data);
-    //    });
-    //    $('#dialog').dialog('open');
-    //});
-
-
 </script>

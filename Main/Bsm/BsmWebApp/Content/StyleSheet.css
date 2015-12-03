@@ -7,7 +7,11 @@
 
 .clickable{
     cursor: pointer;
-    background:rgba(241, 161, 243, 0.12);
+    background:rgba(190, 168, 190, 0.5);
+    border-width:  1px;
+    border-color:  #895e8a;
+    border-style:  solid;
+
 }
 
 

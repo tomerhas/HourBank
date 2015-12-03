@@ -5,6 +5,7 @@ using Egged.Infrastructure.Menus.DataModels;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,13 +14,14 @@ namespace BsmWebApp.Controllers
 {
     public class HomeController : BaseController
     {
-     
+
         public HomeController(IUnityContainer container)
             : base(container)
         {
             SelectdMenu = MenuTypes.HomePage;
+            
 
-            SelectedMitkan = 88468;
+           // SelectedMitkan = 88468;
         }
         public ActionResult Index(string error="")
         {
@@ -32,6 +34,7 @@ namespace BsmWebApp.Controllers
                 vm.Error = error;
                 vm.Today = DateTime.Now;
                 vm.UserName = user.EmployeeFullName;
+               
             }
             else 
             {
@@ -40,6 +43,7 @@ namespace BsmWebApp.Controllers
             return View(vm);
         }
 
+     
         [MultipleButton(Name="action", Argument="Budget")]
         [HttpPost]
         public ActionResult Index(object a)

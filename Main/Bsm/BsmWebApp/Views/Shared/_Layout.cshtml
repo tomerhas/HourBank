@@ -31,7 +31,19 @@
     </div>
 
     <div >
-        <span class="col-md-8 text-left name">@MenuModel.Username </span>
+         @if (MenuModel.Yechidot.Count() == 1)
+          {
+             <span class="col-md-7 text-left name"> שם מוסך: @MenuModel.MitkanName.TeurYechida |</span>
+          }
+          else
+          {
+             <span class="col-md-7 text-left name">@Html.DropDownListFor(m =>  @MenuModel.MitkanName.KodYechida, @MenuModel.Yechidot , new { onchange = "ChangeCurrentMitkan(this.options[this.selectedIndex].value);", @class = "ddlMitkan" })  | </span>@* @*//new { @onchange = "EnableButton();", @class = "ddl" }*@
+               @*<span class="col-md-7 text-left name">@MenuModel.MitkanName.KodYechida  @Html.DropDownListFor(m =>  @MenuModel.MitkanName.KodYechida, @MenuModel.Yechidot, new { autopostback = "false" , onchange = "document.location.href = '/Budget/Index?mitkan=' + this.options[this.selectedIndex].value;", @class = "ddlMitkan" })  | </span>*@ @*//new { @onchange = "EnableButton();", @class = "ddl" }*@
+          }
+          
+         <span class="col-md-1 text-left name"> @MenuModel.Username </span>
+          
+        
     </div>
     <div class="bgGray">
           <div id="HeaderGray">
@@ -52,7 +64,8 @@
                </div>
                <div class="col-md-7">
                    <div align="left" style="padding-top: 14px;">
-                        <label class="GeneralText" >חישוב אחרון   </label>
+                        <label class="GeneralText" >חישוב אחרון של התקציב: </label>
+                       <label class="GeneralText" >@MenuModel.LastDateCalc</label>
                    </div>
                </div>
             </div>
@@ -69,6 +82,23 @@
   
          
     @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+
+       
+       // $(document).ready(function () {
+       //  //   $(".ddlMitkan option").css("background", "white");
+       //  //   $(".ddlMitkan option").css("color", "black");
+       //});
+
+        function ChangeCurrentMitkan(id) {
+            var url = "/Budget/ChangeMitkan?mitkan=" + id;
+            $.get(url, function (data) {
+                // do something if necessary
+            });
+        }
+        </script>
 </body>
 
+   
 </html>

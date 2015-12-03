@@ -41,18 +41,7 @@ namespace BsmBL.Managers
             }
         }
 
-        public long GetLastBakasha(DateTime Month)
-        {
-            string chodesh = Month.Date.Month.ToString().PadLeft(2, '0') + "/" + Month.Date.Year;
-            using (var context = new KdsEntities())
-            {
-
-                var sql = string.Format("select max(b.bakasha_id) from tb_bakashot b,tb_bakashot_params p where b.sug_bakasha=27 and b.bakasha_id=p.bakasha_id and p.erech='{0}'", chodesh);
-                var res = context.Database.SqlQuery<decimal>(sql).ToList();
-
-                return (long)res[0];
-            }
-        }
+        
         public DateTime GetZmanBakasha(long bakasha_id)
         {
             using (var context = new KdsEntities())
@@ -78,11 +67,78 @@ namespace BsmBL.Managers
             }
         }
 
-        public DataTable GetYechidutForUser(DateTime Month, int KodYechida, string PreFix="")
+      
+        ////////////////////////////////////
+
+        public string GetLastTaarichcalc(DateTime Month,int kodYechida)
+        {
+            string chodesh = "01/"+ Month.Date.Month.ToString().PadLeft(2, '0') + "/" + Month.Date.Year;
+            using (var context = new BsmEntities())
+            {
+
+                var sql = string.Format("select max(b.taarich_idkun) from tb_budget b where  to_char(b.chodesh,'dd/mm/yyyy')='{0}' and b.KOD_YECHIDA='{1}'", chodesh, kodYechida);
+                var res = context.Database.SqlQuery<DateTime>(sql).ToList();
+
+                return res[0].ToString();
+            }
+        }
+
+        public DateTime GetLastDateIdkunBank(DateTime Month)
+        {
+            string chodesh = "01/" + Month.Date.Month.ToString().PadLeft(2, '0') + "/" + Month.Date.Year;
+            using (var context = new KdsEntities())
+            {
+
+                var sql = string.Format("select max(taarich_close) from TB_CHISHUV_CLOSE");//where  to_char(taarich,'dd/mm/yyyy')='{0}' ", chodesh);
+                var res = context.Database.SqlQuery<DateTime>(sql).ToList();
+
+                return DateTime.Parse(res[0].ToString());
+            }
+        }
+
+        public List<Yechida> GetYechidutForUser(DateTime Month, int KodYechida, string PreFix = "")
         {
             var GeneralDal = _container.Resolve<IGeneralDal>();
-            return GeneralDal.GetYechidotForUser(Month, KodYechida, PreFix);
-             
+            var yechidot = GeneralDal.GetYechidotForUser(Month, KodYechida, PreFix);
+
+            List<Yechida> list = new List<Yechida>();
+            foreach (DataRow dr in yechidot.Rows)
+            {
+                Yechida item = new Yechida();
+                item.TeurYechida = dr["TeurYechida"].ToString();
+                item.KodYechida = int.Parse(dr["KodYechida"].ToString());
+                list.Add(item);
+            }
+
+            return list;
+        }
+
+        public long GetLastBakashaOfTeken(DateTime Month)
+        {
+            string chodesh = Month.Date.Month.ToString().PadLeft(2, '0') + "/" + Month.Date.Year;
+            using (var context = new KdsEntities())
+            {
+
+                var sql = string.Format("select max(b.bakasha_id) from tb_bakashot b,tb_bakashot_params p where b.sug_bakasha=27 and b.bakasha_id=p.bakasha_id and p.erech='{0}'", chodesh);
+                var res = context.Database.SqlQuery<decimal>(sql).ToList();
+
+                return (long)res[0];
+            }
+        }
+
+
+        public long GetLastBakashatChishuvPremia()
+        {
+        //    string chodesh = Month.Date.Month.ToString().PadLeft(2, '0') + "/" + Month.Date.Year;
+            using (var context = new KdsEntities())
+            {
+
+                var sql = string.Format("select max(b.bakasha_id) from tb_bakashot b");
+
+                var res = context.Database.SqlQuery<decimal>(sql).ToList();
+
+                return (long)res[0];
+            }
         }
     }
 }

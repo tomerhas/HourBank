@@ -18,7 +18,7 @@ namespace BsmWebApp.Controllers
 {
     public class ChangesController : BaseController
     {
-        public ChangesController(IUnityContainer container)
+        public ChangesController(IUnityContainer container,int SelectedMitkan)
             : base(container)
         {
             SelectdMenu = MenuTypes.HourChanges;

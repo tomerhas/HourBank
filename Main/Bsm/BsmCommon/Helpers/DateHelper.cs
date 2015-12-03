@@ -33,5 +33,21 @@ namespace BsmCommon.Helpers
 
             }
         }
+
+        public static string getDayHeb(DateTime taarich)
+        {
+            switch (taarich.Day)
+            {
+                case 1: return "ראשון'";
+                case 2: return "שני'";
+                case 3: return "שלישי";
+                case 4: return "רביעי'";
+                case 5: return "חמישי";
+                case 6: return "שישי";
+                case 7: return "שבת";
+                default: return "";
+
+            }
+        }
     }
 }

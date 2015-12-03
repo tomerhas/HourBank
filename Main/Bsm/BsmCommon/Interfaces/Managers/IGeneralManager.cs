@@ -13,8 +13,16 @@ namespace BsmCommon.Interfaces.Managers
     {
         List<Oved> GetOvdim(int[] PirteyOvedIds);
         List<TeurEzor> GetEzors();
-        long GetLastBakasha(DateTime Month);
+      
         DateTime GetZmanBakasha(long bakasha_id);
-        DataTable GetYechidutForUser(DateTime Month, int KodYechida,string PreFix="");
+      
+        /// <summary>
+        /// ////////////
+
+        string GetLastTaarichcalc(DateTime Month,int kodYechida);
+        DateTime GetLastDateIdkunBank(DateTime Month);
+        List<Yechida> GetYechidutForUser(DateTime Month, int KodYechida, string PreFix = "");
+        long GetLastBakashaOfTeken(DateTime Month);
+        long GetLastBakashatChishuvPremia();
     }
 }

@@ -37,6 +37,10 @@
     <Reference Include="EntityFramework">
       <HintPath>..\SharedLib\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Oracle.DataAccess, Version=4.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLib\Oracle.DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -70,6 +74,7 @@
     <Compile Include="DataModels\Reports\ReportParam.cs" />
     <Compile Include="DataModels\Yechida.cs" />
     <Compile Include="Enums\eFormat.cs" />
+    <Compile Include="Helpers\ArrayHelper.cs" />
     <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Interfaces\CachedItems\IUserInfoCachedItems.cs" />
     <Compile Include="Interfaces\Dal\IBudgetDal.cs" />
@@ -80,6 +85,8 @@
     <Compile Include="Interfaces\Managers\IGeneralManager.cs" />
     <Compile Include="Interfaces\Managers\ISecurityManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UDT\Coll_Budget_Employees_Michsa.cs" />
+    <Compile Include="UDT\Obj_Budget_Employees_Michsa.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\CacheInfra\CacheInfra.csproj">

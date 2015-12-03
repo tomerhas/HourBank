@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using BsmCommon.Interfaces.DAL;
+using BsmCommon.UDT;
 
 namespace BsmBL.Managers
 {
@@ -43,103 +44,107 @@ namespace BsmBL.Managers
 
         public Budget GetBudget(int KodYechida, DateTime Month, long bakasha_id)
         {
-            long  bakasha_id_prev=0;
+            long bakasha_premia = 0;
             Budget budget = null;
-            Budget budgetPrevMonth = null;
-            int ToAdd, ToSubtract, prevChanges=0;
-           // Budget budgetUsed = null;
 
-            IGeneralManager manager = _container.Resolve<IGeneralManager>();
-            bakasha_id_prev = manager.GetLastBakasha(Month.AddMonths(-1));
             using (var context = new BsmEntities())
             {
                 budget = context.Budgets.OrderByDescending(X => X.TaarichIdkun).FirstOrDefault(x => x.KodYechida == KodYechida && x.Month == Month && x.BakashaId == bakasha_id);
-                DateTime prevMonth = DateHelper.GetPreviosMonth(Month);
-                budgetPrevMonth = context.Budgets.OrderByDescending(X => X.TaarichIdkun).FirstOrDefault(x => x.KodYechida == KodYechida && x.Month == prevMonth && x.BakashaId == bakasha_id_prev);
-                if (budget != null)
-                { 
-                    budget.BudgetChanges = context.BudgetChanges.Where(x => x.KodYechida == KodYechida && x.Month == Month).ToList();
-
-                   // DateTime prevMonth = DateHelper.GetPreviosMonth(Month);
-                   // budgetUsed = context.Budgets.SingleOrDefault(x => x.KodYechida == KodYechida && x.Month == prevMonth);
-                }
-                if (budgetPrevMonth != null)
-                {
-                    budgetPrevMonth.BudgetChanges = context.BudgetChanges.Where(x => x.KodYechida == KodYechida && x.Month == prevMonth).ToList();
-                }
-            }
-
-            //הפחתה/הוספה ש''נ
-            if (budget != null && budget.BudgetChanges.Count > 0)
-            {
-                 ToAdd = budget.BudgetChanges.Where(x => x.Type == 1).Sum(x => x.Val);
-                 ToSubtract = budget.BudgetChanges.Where(x => x.Type == 2).Sum(x => x.Val);
-
-                budget.AddSubtractHours = ToAdd - ToSubtract;
-            }
-
-
-            if (budgetPrevMonth != null && budgetPrevMonth.BudgetChanges.Count > 0)
-            {
-                 ToAdd = budgetPrevMonth.BudgetChanges.Where(x => x.Type == 1).Sum(x => x.Val);
-                 ToSubtract = budgetPrevMonth.BudgetChanges.Where(x => x.Type == 2).Sum(x => x.Val);
-
-                 prevChanges =  ToAdd - ToSubtract;
-
-                  
-            }
-           
-
-
-            //סה''כ תקציב ש''נ
-            if (budget != null)
-            {
-                budget.RemainHoursLastMonth = (budgetPrevMonth.BudgetVal + prevChanges) - budgetPrevMonth.BudgetUsed;
-                int val = budget.BudgetVal + budget.AddSubtractHours + budget.RemainHoursLastMonth;
-                //if(budgetPrevMonth != null)
-                //    val -= budgetPrevMonth.BudgetUsed;
-                
-                budget.SachTakzivShaotNosafot = val;
 
                 var BudgetDal = _container.Resolve<IBudgetDal>();
-
-                budget.YitratTakzivToDivide = budget.SachTakzivShaotNosafot - BudgetDal.GetSumMeafyen14(KodYechida, Month, bakasha_id);
-                budget.HoursNotUsed = budget.SachTakzivShaotNosafot - BudgetDal.GetShaotnosafotMeshek(KodYechida, Month, bakasha_id);
+                budget.BudgetUsed = BudgetDal.GetShaotnosafotMeshek(KodYechida, Month);
+                budget.ShaotByMeafyen14 = GetSachMeafyen14(KodYechida, Month);
+                budget.YitratTakzivToDivide = budget.BudgetVal - budget.ShaotByMeafyen14;
             }
-            
-             
+
+
             return budget;
 
         }
 
       
 
-        private int GetSachMeafyen14(int KodYechida, DateTime Month, long bakasha_id)
-        {
-           // try
-            //{
-                var BudgetManager = _container.Resolve<IBudgetDal>();
-                int sum = BudgetManager.GetSumMeafyen14(KodYechida, Month, bakasha_id);
-                return sum;     
-                //using (var context = new BsmEntities())
-                //{
-                //    var parFromDate = new OracleParameter("p_mitkan", OracleDbType.Int32, KodYechida, ParameterDirection.Input);
-                //    var parToDate = new OracleParameter("p_date", OracleDbType.Date, Month, ParameterDirection.Input);
-                //    var parYechida = new OracleParameter("p_bakasha_id", OracleDbType.Int64, bakasha_id, ParameterDirection.Input);
-                //    //   var result = new OracleParameter("p_cur", OracleDbType.RefCursor, ParameterDirection.Output);
+        //public Budget GetBudget(int KodYechida, DateTime Month, long bakasha_id)
+        //{
+        //    long  bakasha_id_prev=0;
+        //    Budget budget = null;
+        //    Budget budgetPrevMonth = null;
+        //    int ToAdd, ToSubtract, prevChanges=0;
+        //   // Budget budgetUsed = null;
 
-                //    int sum = (context.Database.SqlQuery<int>("PKG_BUDGET.fun_get_sum_meafyen14 @p_mitkan, @p_date, @p_bakasha_id", KodYechida, Month, bakasha_id).ToList())[0];
-                   
-                //  //  int sum = (context.Database.SqlQuery<int>("begin PKG_BUDGET.fun_get_sum_meafyen14(:p_mitkan,:p_date,:p_bakasha_id); end;", KodYechida, Month, bakasha_id).ToList())[0];
-                //    return sum;
-                //}
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw ex;
-            //}
+        //    IGeneralManager manager = _container.Resolve<IGeneralManager>();
+        //    bakasha_id_prev = manager.GetLastBakasha(Month.AddMonths(-1));
+        //    using (var context = new BsmEntities())
+        //    {
+        //        budget = context.Budgets.OrderByDescending(X => X.TaarichIdkun).FirstOrDefault(x => x.KodYechida == KodYechida && x.Month == Month && x.BakashaId == bakasha_id);
+        //        DateTime prevMonth = DateHelper.GetPreviosMonth(Month);
+        //        budgetPrevMonth = context.Budgets.OrderByDescending(X => X.TaarichIdkun).FirstOrDefault(x => x.KodYechida == KodYechida && x.Month == prevMonth && x.BakashaId == bakasha_id_prev);
+        //        if (budget != null)
+        //        { 
+        //            budget.BudgetChanges = context.BudgetChanges.Where(x => x.KodYechida == KodYechida && x.Month == Month).ToList();
+
+        //           // DateTime prevMonth = DateHelper.GetPreviosMonth(Month);
+        //           // budgetUsed = context.Budgets.SingleOrDefault(x => x.KodYechida == KodYechida && x.Month == prevMonth);
+        //        }
+        //        if (budgetPrevMonth != null)
+        //        {
+        //            budgetPrevMonth.BudgetChanges = context.BudgetChanges.Where(x => x.KodYechida == KodYechida && x.Month == prevMonth).ToList();
+        //        }
+        //    }
+
+        //    //הפחתה/הוספה ש''נ
+        //    if (budget != null && budget.BudgetChanges.Count > 0)
+        //    {
+        //         ToAdd = budget.BudgetChanges.Where(x => x.Type == 1).Sum(x => x.Val);
+        //         ToSubtract = budget.BudgetChanges.Where(x => x.Type == 2).Sum(x => x.Val);
+
+        //        budget.AddSubtractHours = ToAdd - ToSubtract;
+        //    }
+
+
+        //    if (budgetPrevMonth != null && budgetPrevMonth.BudgetChanges.Count > 0)
+        //    {
+        //         ToAdd = budgetPrevMonth.BudgetChanges.Where(x => x.Type == 1).Sum(x => x.Val);
+        //         ToSubtract = budgetPrevMonth.BudgetChanges.Where(x => x.Type == 2).Sum(x => x.Val);
+
+        //         prevChanges =  ToAdd - ToSubtract;
+
+                  
+        //    }
            
+
+
+        //    //סה''כ תקציב ש''נ
+        //    if (budget != null)
+        //    {
+        //        budget.RemainHoursLastMonth = (budgetPrevMonth.BudgetVal + prevChanges) - budgetPrevMonth.BudgetUsed;
+        //        int val = budget.BudgetVal + budget.AddSubtractHours + budget.RemainHoursLastMonth;
+        //        //if(budgetPrevMonth != null)
+        //        //    val -= budgetPrevMonth.BudgetUsed;
+                
+        //        budget.SachTakzivShaotNosafot = val;
+
+        //        var BudgetDal = _container.Resolve<IBudgetDal>();
+
+        //        budget.YitratTakzivToDivide = budget.SachTakzivShaotNosafot - BudgetDal.GetSumMeafyen14(KodYechida, Month, bakasha_id);
+        //        budget.HoursNotUsed = budget.SachTakzivShaotNosafot - BudgetDal.GetShaotnosafotMeshek(KodYechida, Month, bakasha_id);
+        //    }
+            
+             
+        //    return budget;
+
+        //}
+
+      
+
+        private int GetSachMeafyen14(int KodYechida, DateTime Month)
+        {  
+                var BudgetManager = _container.Resolve<IBudgetDal>();
+                int sum = BudgetManager.GetSumMeafyen14(KodYechida, Month);
+                return sum;     
         }
+
+
         public List<BudgetEmployee> GetBudgetEmployees(int KodYechida, DateTime Month)
         {
             IGeneralManager manager = _container.Resolve<IGeneralManager>();
@@ -312,10 +317,10 @@ namespace BsmBL.Managers
 
       
 
-        public List<BudgetEmployeeGrid> GetEmployeeDetails(int KodYechida, DateTime Month, long bakasha_id)
+        public List<BudgetEmployeeGrid> GetEmployeeDetails(int KodYechida, DateTime Month)
         {
             List<BudgetEmployeeGrid> list = new List<BudgetEmployeeGrid>();
-             var dt = _container.Resolve<IBudgetDal>().GetEmployeeDatails(KodYechida, Month, bakasha_id);
+             var dt = _container.Resolve<IBudgetDal>().GetEmployeeDatails(KodYechida, Month);
              foreach (DataRow dr in dt.Rows)
              {
                  list.Add(CreateBudgetEmployeeFromDataRow(dr));
@@ -335,16 +340,33 @@ namespace BsmBL.Managers
             budgetEmployee.TeurGil = row["TEUR_KOD_GIL"].ToString();
             budgetEmployee.MichsaYomit = float.Parse(row["Michsa_Yomit"].ToString());
             budgetEmployee.NosafotPrev = float.Parse(row["Nosafot_Prev"].ToString());
-            budgetEmployee.MichsaPrev = float.Parse(row["Michsa_Prev"].ToString());
-            budgetEmployee.NosafotCur = float.Parse(row["Nosafot_Cur"].ToString());
-            budgetEmployee.MichsaCur = float.Parse(row["Michsa_Cur"].ToString());
-            budgetEmployee.NosafotNotUsed = float.Parse(row["Nosafot_Not_Used"].ToString());
-            budgetEmployee.Meafyen14 = float.Parse(row["Meafyen14"].ToString());
+           // budgetEmployee.MichsaPrev = float.Parse(row["Michsa_Prev"].ToString());
+            budgetEmployee.MichsaCur = decimal.Parse(row["Michsa_Cur"].ToString());
+         //   budgetEmployee.NosafotCur = float.Parse(row["Nosafot_Cur"].ToString());
+         
+            budgetEmployee.ShaotShebuzu = decimal.Parse(row["ShaotShebuzu"].ToString());
+            var paar = budgetEmployee.ShaotShebuzu - budgetEmployee.MichsaCur;
+            if (paar < 0)
+                budgetEmployee.Paar = string.Concat(paar * (-1), "-");
+            else budgetEmployee.Paar = paar.ToString();
+
+            var mutaam =row["mutaam"].ToString();
+            if(budgetEmployee.AlTikni =="כן"  || mutaam=="1" || mutaam=="3" || mutaam=="5"||mutaam=="7")
+                budgetEmployee.ReadOnly ="true";
+            else budgetEmployee.ReadOnly = "false";
+        //    budgetEmployee.NosafotNotUsed = float.Parse(row["Nosafot_Not_Used"].ToString());
+          //  budgetEmployee.Meafyen14 = float.Parse(row["Meafyen14"].ToString());
             return budgetEmployee;
+        }
+
+        public void SaveEmployeeMichsot(COLL_BUDGET_EMPLOYEES_MICHSA ocollMichsot)
+        {
+            var BudgetDal = _container.Resolve<IBudgetDal>();
+            BudgetDal.SaveEmployeeMichsot(ocollMichsot);
         }
     }
 
-
+   
    
     //empDetails = context.PirteyOvdim.Where(x => x.YechidaIrgunit == KodYechida &&
     //                (
