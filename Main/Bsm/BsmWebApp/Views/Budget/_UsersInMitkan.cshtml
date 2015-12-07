@@ -1,12 +1,21 @@
 ﻿@model BsmWebApp.ViewModels.Budgets.BudgetMainViewModel
 
+<style>
+    /*Required in order to remove the margin from the autocomplete*/
+     .k-animation-container {
+        padding-left:0px !important;
+        margin-left:0px !important;
+    }
+
+</style>
+
  <script>
      $(document).ready(function () {
          $("#MisparIshi").kendoAutoComplete({
              placeholder: "הקלד מ.א/שם עובד...",
              // dataTextField: "SiteName",
-            // dataTextField: "MisparIshi",
-            // dataValueField: "MisparIshi",
+             // dataTextField: "MisparIshi",
+             // dataValueField: "MisparIshi",
              filter: "startswith",
              minLength: 1,
              maxLength:5,
@@ -61,88 +70,90 @@
 
 
 
-        </script>
-@using(Html.BeginForm())
-    { 
-   
-    if (Model.UsersInMitkan.Employees.Count >0)
+ </script>
+@using (Html.BeginForm())
+{
+
+    if (Model.UsersInMitkan.Employees.Count > 0)
     {
-    @*<hr class="styled" />*@
-    @*<div>
+@*<hr class="styled" />*@
+@*<div>
         <input type="button" value="שמור" onclick="CheckHaveChanges()" />
     </div>*@
 
-   <div class="bgGray" style="height: 64px;">
-            <div  class="row" style="padding-top: 18px">
-                 <div class="col-md-4"   > 
-                     <label style="width:20px;float:right"></label>
-                     <input id="MisparIshi" style="width: 250px;" class = "styleTBSearch GeneralText TextBoxRO" />
-                     <input class="SearchBG" onclick="findDataItem();"  type="button"/> 
-                 @*    <input type="text"  id="txtSearch" class="TextBoxRO GeneralText styleTBSearch" value=""  />*@
-       @*            @Html.TextBoxFor(m=>m.MisparIshi, new { @Value = "" , Style="margin-right:20px;" , @onblur = "CheakValid(this);", data_val_number="אנא הזן מספרים בלבד",required="false" ,@class = "styleTBSearch GeneralText TextBoxRO"})    *@
+    <div class="bgGray" style="height: 64px;">
+        <div class="row" style="padding-top: 18px">
+            <div class="col-md-4">
+                <label style="width: 20px; float: right"></label>
+                <span style="clear:both">
+                    <input id="MisparIshi" style="width: 250px" class="styleTBSearch GeneralText TextBoxRO" />
+                </span>
+                <input class="SearchBG" onclick="findDataItem();" type="button" />
+                @*    <input type="text"  id="txtSearch" class="TextBoxRO GeneralText styleTBSearch" value=""  />*@
+                @*            @Html.TextBoxFor(m=>m.MisparIshi, new { @Value = "" , Style="margin-right:20px;" , @onblur = "CheakValid(this);", data_val_number="אנא הזן מספרים בלבד",required="false" ,@class = "styleTBSearch GeneralText TextBoxRO"})    *@
                 @*   @Html.TextBoxFor(m=>m.MisparIshi, new { @Value = "" , Style="margin-right:20px;" ,data_val_number="אנא הזן מספרים בלבד",required="false" ,@class = "styleTBSearch GeneralText TextBoxRO"}) 
-               *@    
+               *@
 
-                           
-                    @*  <input class="CheackBoxBG" type="checkbox" style="margin-right:65px;"/> 
+
+                @*  <input class="CheackBoxBG" type="checkbox" style="margin-right:65px;"/> 
                       <label  class="GeneralText">הצג חריגים בלבד</label>*@
-                 </div>
- 
-                   <div class="col-md-2"  >
-                     
-                        <a> 
-                               <div id="divCal" style="text-align:right;width:200px;text-align:left" class="pointer">
-                                   <label class="PurpleTextBoldLink pointer" style="padding-top:5px" >הקצאה אוטומטית</label>
-                               </div>
-                          </a>
-                   
-                  @*  <a class="PurpleTextBoldLink" ><img  src="~/Content/Images/calender.png" style="margin-right:150px"   />
+            </div>
+
+            <div class="col-md-2">
+
+                <a href="#" onclick="DisplayAllocatedHoursOptions()">
+                    <div id="divCal" style="text-align: right; width: 200px; text-align: left" class="pointer">
+                        <label class="PurpleTextBoldLink pointer" style="padding-top: 5px">הקצאה אוטומטית</label>
+                    </div>
+                </a>
+
+                @*  <a class="PurpleTextBoldLink" ><img  src="~/Content/Images/calender.png" style="margin-right:150px"   />
                         הקצאה אוטומטית</a> *@
-                 </div>
-                    <div class="col-md-2"  >
-                         <a>  
-                               <div id="divIpus" style="text-align:right;width:80px;text-align:left" onclick="ModifyGrid('ipus');" class="pointer">
-                                   <label class="PurpleTextBoldLink pointer" style="padding-top:5px" >איפוס</label>
-                               </div>
-                          </a>
-               
+            </div>
+            <div class="col-md-2">
+                <a>
+                    <div id="divIpus" style="text-align: right; width: 80px; text-align: left" onclick="ModifyGrid('ipus');" class="pointer">
+                        <label class="PurpleTextBoldLink pointer" style="padding-top: 5px">איפוס</label>
+                    </div>
+                </a>
 
-                      @*  <a class="PurpleTextBoldLink"   > <img  src="~/Content/Images/refresh.png" style="margin-right:28px" />
+
+                @*  <a class="PurpleTextBoldLink"   > <img  src="~/Content/Images/refresh.png" style="margin-right:28px" />
                                איפוס</a>*@
-                      @*<label class="PurpleTextBoldLink"   >איפוס</label>*@
-                 </div>
+                @*<label class="PurpleTextBoldLink"   >איפוס</label>*@
+            </div>
 
-                <div class="col-md-4" align="left"  style="padding-left:30px"  >
-                       <input type="button" id="btnUpdate" value="עדכן מכסות"  style="width:124px;margin-left:10px" class="PurpleButton DoubleArrow k-grid-save-changes" /> 
-                       <a class="PurpleTextBoldLink pointer k-grid-cancel-changes k-cancel" href="#" onclick="ModifyGrid('cancel');">בטל שינויים</a>
-                 </div>
+            <div class="col-md-4" align="left" style="padding-left: 30px">
+                <input type="button" id="btnUpdate" value="עדכן מכסות" style="width: 124px; margin-left: 10px" class="PurpleButton DoubleArrow k-grid-save-changes" />
+                <a class="PurpleTextBoldLink pointer k-grid-cancel-changes k-cancel" href="#" onclick="ModifyGrid('cancel');">בטל שינויים</a>
             </div>
         </div>
-    <div class="bgGray" >
-          <div  class="BgFirstTitleGrid"  >
-                 <div class="col-md-7 divFirstHeader"  style="padding-top:5px" >
-                     <label class="TextBold"    >נתוני עובד</label>
-                 </div>
-                
-                 <div class="col-md-5 divFirstHeader" style="padding-left:1px;border-right:1px solid white;padding-top:5px"  >
-                    <label class="TextBold"    > נתוני הקצאה לחודש נוכחי</label>
-                 </div>
-              </div>
+    </div>
+    <div class="bgGray">
+        <div class="BgFirstTitleGrid">
+            <div class="col-md-7 divFirstHeader" style="padding-top: 5px">
+                <label class="TextBold">נתוני עובד</label>
+            </div>
+
+            <div class="col-md-5 divFirstHeader" style="padding-left: 1px; border-right: 1px solid white; padding-top: 5px">
+                <label class="TextBold">נתוני הקצאה לחודש נוכחי</label>
+            </div>
+        </div>
     </div>
     
     <div class="bgGray">
 
 
         @{
-            //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
+        //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
         //Html.Kendo().Grid(Model.UsersInMitkan.Employees)
         Html.Kendo().Grid<BsmCommon.DataModels.Budgets.BudgetEmployeeGrid>()
            .Name("EmployeesList").Columns(columns =>
            {
-             //  columns.Bound(o => o.MisparIshi).ClientTemplate("#=GetImage(data.MisparIshi)#").HtmlAttributes(new { style = "text-align: center; width: 30%; min-width: 60px;" });
+               //  columns.Bound(o => o.MisparIshi).ClientTemplate("#=GetImage(data.MisparIshi)#").HtmlAttributes(new { style = "text-align: center; width: 30%; min-width: 60px;" });
 
 
-             //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  value='ff'   onclick='OpenKds();'   />").Width(80);
+               //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  value='ff'   onclick='OpenKds();'   />").Width(80);
                columns.Template(o => o.MisparIshi).ClientTemplate("<img src='../../Content/Images/pai.png' onclick='OpenKds(#= MisparIshi #);' />"); //http://kds/Modules/Ovdim/NochechutMerukezet.aspx
                columns.Bound(o => o.MisparIshi).Title("מספר אישי");
                columns.Bound(o => o.FullName).Title("שם עובד");
@@ -180,7 +191,7 @@
                //   columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='submit'  style='float: right;'  value='הפק דוח' name='action:Nochechut' />").Width(80);
                //    columns.Bound(o => o.Meafyen14).Hidden();
 
-                  @* columns.Template(o=> @Html.ActionLink("הפק דו''ח","CreateNochechutRdl",new{ovedId=o.MisparIshi})).Width(100);
+@* columns.Template(o=> @Html.ActionLink("הפק דו''ח","CreateNochechutRdl",new{ovedId=o.MisparIshi})).Width(100);
                    columns.Template(o=>{
                                     return string.Format("<a href='#' onclick='ShowPopUp({0});'>פתח</a>",o.MisparIshi);
                                     }).Width(100);*@
@@ -222,13 +233,13 @@
                         model.Field(employee => employee.NosafotPrev).Editable(false);
                         model.Field(employee => employee.NosafotCur).Editable(false);
                         model.Field(employee => employee.ShaotShebuzu).Editable(false);
-                      //  model.Field(employee => employee.MichsaCur).Editable(DateTime.Now < Model.LastDateIdkunBank ? true : false);
+                        //  model.Field(employee => employee.MichsaCur).Editable(DateTime.Now < Model.LastDateIdkunBank ? true : false);
                         model.Field(employee => employee.Paar).Editable(false);
                     })
                 .Read(read => read.Action("EmployeesInMitkanRead", "Budget", new { KodYechida = Model.KodMitkan, month = Model.Month }))  // Action method invoked when the grid needs data
                     //.Create(create => create.Action("Products_Create", "Home")) // Action method invoked when the user saves a new data item
                 .Update(update => update.Action("EmployeesInMitkanUpdate", "Budget", new { month = Model.Month })) //"additionalInfo"))  // Action method invoked when the user saves an updated data item
-             //   .Events(events => events.RequestEnd("onGridRequestEnd"))
+            //   .Events(events => events.RequestEnd("onGridRequestEnd"))
             //.Destroy(destroy => destroy.Action("Products_Destroy", "Home")) // Action method invoked when the user removes a data item
 
                 // .Update(update => update
@@ -247,30 +258,36 @@
            
         
         }
- 
-  
-    </div>
-    <div id="dialog-confirm" ></div>
 
+
+    </div>
+    <div id="dialog-confirm"></div>
+    <div id="dialog-allocated"></div>
     
     }
 
-    }
+
+}
 
 
- <div id="dialogNoch" title="Basic dialog" >
-
+<div id="dialogNoch" title="Basic dialog">
 </div>
 
-<script type="text/javascript" >
+<script type="text/javascript">
+    var displayMessage = @Model.ShouldDisplayMessage;
+    $(document).ready(function(){
+        if(displayMessage==1){
+            alert("Need to display message")
+        }
+    });
 
     function OpenKds(misparishi)
     {
-      //  alert('ggg');
+        //  alert('ggg');
         var model = @Html.Raw(Json.Encode(Model));
         var month =model.SelectedMonth;
         window.open("http://kdstest/Modules/Ovdim/NochechutMerukezet.aspx?mispar_ishi=" + misparishi +"&chodesh="+month);
-   //     alert("ff");
+        //     alert("ff");
     }
 
 
@@ -330,7 +347,7 @@
                 break;   
         }
            
-       //alert(title);
+        //alert(title);
         // Define the Dialog and its properties.
         $("#dialog-confirm").dialog({    
             resizable: false,
@@ -373,12 +390,12 @@
 
 
 
-  // $(".k-grid-cancel-changes").click(function(e) { xx();});
+    // $(".k-grid-cancel-changes").click(function(e) { xx();});
     var ShowdSave=true;
     //var ShowCancel=true;
     function CheakValid(e)
     {
-      //  var x=this;
+        //  var x=this;
         ShowdSave=true;
 
     }
@@ -436,7 +453,7 @@
                     return false;
                 }else return true;
             }
-       }
+        }
     }
    
     function onDataBound(arg) {
@@ -456,30 +473,51 @@
         });
     }
 
-   /* function CheakValid(obj) {
-        //  debugger;
-        if (obj.value != '') {
-            if (IsNumeric(obj.value) == false) {
-                $("#btnExecSearch").attr('disabled', 'disabled');
-                // $("#btnExecSearch").prop("disabled", true);             
-                //  alert("מספר אישי לא חוקי");
-                $('#MisparIshi').focus();
-            }
-            else {
-                SetNameOved(obj);
-                //$("#btnExecSearch").prop("disabled", false);
-                $("#btnExecSearch").removeAttr('disabled');
-            }
-        }
-    }*/
+    $(function(){
+        $("#dialog-allocated").dialog({
+            autoOpen: false, width: 400, height:450,modal:true
+        });
+    });
 
-   /************************************************************/
+    function DisplayAllocatedHoursOptions()
+    {
+        var url= "Budget/GetAllocatedHoursType";
+        $("#dialog-allocated").html("")
+        .dialog("option","title","הקצאת שעות")
+        .load(url,function(){
+            $("#dialog-allocated").dialog("open");
+        });
+
+    }
+
+    function dispalyResult(val)
+    {
+        alert(val);
+    }
+    /* function CheakValid(obj) {
+         //  debugger;
+         if (obj.value != '') {
+             if (IsNumeric(obj.value) == false) {
+                 $("#btnExecSearch").attr('disabled', 'disabled');
+                 // $("#btnExecSearch").prop("disabled", true);             
+                 //  alert("מספר אישי לא חוקי");
+                 $('#MisparIshi').focus();
+             }
+             else {
+                 SetNameOved(obj);
+                 //$("#btnExecSearch").prop("disabled", false);
+                 $("#btnExecSearch").removeAttr('disabled');
+             }
+         }
+     }*/
+
+    /************************************************************/
     
     function ShowReportNochechut(misparIshi) {
-     //   alert(kod);
+        //   alert(kod);
         var titel = " דו''ח נוכחות ";
-       // titel = titel + name + " לחודש " + " \n ";
-       // titel = titel + month;
+        // titel = titel + name + " לחודש " + " \n ";
+        // titel = titel + month;
         //$("#dialogNoch").html("")
         //    .dialog("option", "title", titel)
         //    .load('/Budget/GetReportNochechut?MisparIshi=' + kod + "&chodesh=" + month, function () { $("#dialogNoch").dialog("open"); });
@@ -543,53 +581,53 @@
 
    
 
-        //function SetMisparIshi(obj) {
-        //    if (obj.value != '') {
-        //        $.ajax({
-        //            type: "POST",
-        //            url: "/Budget/GetOvedIdByName",
-        //            contentType: "application/json; charset=utf-8",
-        //            data: "{sName:'" + obj.value + "'}",
-        //            dataType: "json",
-        //            async: false,
-        //            success: function (response) {
+    //function SetMisparIshi(obj) {
+    //    if (obj.value != '') {
+    //        $.ajax({
+    //            type: "POST",
+    //            url: "/Budget/GetOvedIdByName",
+    //            contentType: "application/json; charset=utf-8",
+    //            data: "{sName:'" + obj.value + "'}",
+    //            dataType: "json",
+    //            async: false,
+    //            success: function (response) {
 
-        //                if (response != '')
-        //                    $('#MisparIshi').val(response);
-        //                else {
-        //                    $('#OvedName').focus();
-        //                    alert('שם זה לא קיים למתקן זה');
-        //                }
-        //            },
-        //            error: function (XMLHttpRequest, textStatus, errorThrown) {
-        //                alert("תקלה:" + errorThrown);
-        //            }
-        //        });
-        //    }
-        //}
+    //                if (response != '')
+    //                    $('#MisparIshi').val(response);
+    //                else {
+    //                    $('#OvedName').focus();
+    //                    alert('שם זה לא קיים למתקן זה');
+    //                }
+    //            },
+    //            error: function (XMLHttpRequest, textStatus, errorThrown) {
+    //                alert("תקלה:" + errorThrown);
+    //            }
+    //        });
+    //    }
+    //}
 
-        //function SetNameOved(obj) {
+    //function SetNameOved(obj) {
 
-        //    $.ajax({
-        //        type: "POST",
-        //        url: "/Budget/GetOvedNameById",
-        //        contentType: "application/json; charset=utf-8",
-        //        data: "{id:'" + obj.value + "'}",
-        //        dataType: "json",
-        //        async: false,
-        //        success: function (response) {
-        //            if (response != '')
-        //                $('#OvedName').val(response);
-        //            else {
-        //                $('#MisparIshi').focus();
-        //                alert('מספר אישי זה לא קיים למתקן זה');
-        //            }
-        //        },
-        //        error: function (XMLHttpRequest, textStatus, errorThrown) {
-        //            alert("תקלה:" + errorThrown);
-        //        }
-        //    });
-        //}
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "/Budget/GetOvedNameById",
+    //        contentType: "application/json; charset=utf-8",
+    //        data: "{id:'" + obj.value + "'}",
+    //        dataType: "json",
+    //        async: false,
+    //        success: function (response) {
+    //            if (response != '')
+    //                $('#OvedName').val(response);
+    //            else {
+    //                $('#MisparIshi').focus();
+    //                alert('מספר אישי זה לא קיים למתקן זה');
+    //            }
+    //        },
+    //        error: function (XMLHttpRequest, textStatus, errorThrown) {
+    //            alert("תקלה:" + errorThrown);
+    //        }
+    //    });
+    //}
 
 
      
@@ -607,27 +645,27 @@
 
 
 
-        //function ShowPopUp(misparIshi) {
-        //    //  $("#dialog").dialog();
-        //    $("#dialog").html("")
-        //        .dialog("option", "title", "הפחתות והוספות")
-        //        .load('/Budget/DispalyChanges?ovedId=' + misparIshi,
-        //      function () { $("#dialog").dialog("open"); });
+    //function ShowPopUp(misparIshi) {
+    //    //  $("#dialog").dialog();
+    //    $("#dialog").html("")
+    //        .dialog("option", "title", "הפחתות והוספות")
+    //        .load('/Budget/DispalyChanges?ovedId=' + misparIshi,
+    //      function () { $("#dialog").dialog("open"); });
 
-        //}
+    //}
 
-        //$(function ()
-        //{
-        //    $("#dialog").dialog(
-        //        {
-        //            autoOpen: false, width: 400, height: 450, model: true,
-        //            buttons: {
-        //                "Close": function () {
-        //                    $(this).dialog("close");
-        //                }
-        //            }
-        //        });
-        //});
+    //$(function ()
+    //{
+    //    $("#dialog").dialog(
+    //        {
+    //            autoOpen: false, width: 400, height: 450, model: true,
+    //            buttons: {
+    //                "Close": function () {
+    //                    $(this).dialog("close");
+    //                }
+    //            }
+    //        });
+    //});
 
        
 </script>

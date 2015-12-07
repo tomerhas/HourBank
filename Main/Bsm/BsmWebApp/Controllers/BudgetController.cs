@@ -71,6 +71,14 @@ namespace BsmWebApp.Controllers
                 vmResult.KodMitkan = curMitkan;
                 vmResult.Month = month;
                 vmResult.UsersInMitkan = GetEmployeesInMitkan(curMitkan, month);
+                if (vmResult.UsersInMitkan != null && vmResult.UsersInMitkan.Employees.Count > 0)
+                {
+                    vmResult.ShouldDisplayMessage = 0;
+                }
+                else 
+                {
+                    vmResult.ShouldDisplayMessage = 1;
+                }
                 //vmResult.ReportVM = GetReportDetails();
                 return View(vmResult);
             }
@@ -182,6 +190,10 @@ namespace BsmWebApp.Controllers
             return vm;
         }
 
+        public ActionResult GetAllocatedHoursType()
+        {
+            return PartialView("_AutomaticAllocating", null);
+        }
        //[HttpGet]
        // public ActionResult GetReportNochechut(int MisparIshi, string chodesh) //int KodYechida,DateTime chodesh)
        // {

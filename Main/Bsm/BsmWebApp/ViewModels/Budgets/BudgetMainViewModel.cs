@@ -20,6 +20,7 @@ namespace BsmWebApp.ViewModels.Budgets
         //    KodList.Add(new KodListItem() { ProductID = 2, ProductName = "prod1" });
         //    KodList.Add(new KodListItem() { ProductID = 3, ProductName = "prod2" });
         //    KodList.Add(new KodListItem() { ProductID = 4, ProductName = "prod3" });
+            ShouldDisplayMessage = 0;
         }
 
         public BudgetMainViewModel(List<MonthHolder> months) : this()
@@ -57,6 +58,8 @@ namespace BsmWebApp.ViewModels.Budgets
         public int MisparIshi { get; set; }
         public string OvedName { get; set; }
       //  public List<KodListItem> KodList { get; set; }
+
+        public int ShouldDisplayMessage { get; set; }
     }
 
 
