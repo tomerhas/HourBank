@@ -166,20 +166,24 @@
         color: white;
         font-size: 13px;
         font-weight: 700;
-        text-align: right;    
+        text-align: right;  
+        background: url("Images/arrow_white.png") no-repeat left; 
+        background-position-x: 8px;
+         
 }
 .ddlMitkan option {
         background: white;
         width:170px;
         font-family: Arial;
         color: black;
-        font-size: 13px;
-        font-weight: 700;
+        font-size:  13px;
+        font-weight:  700;
         text-align: right;    
 }
 select:focus > option:hover {
     background: #f0e1f0 !important;
 }
+
 
 select {
     /*width: 140px;*/
@@ -526,16 +530,6 @@ hr {
 }
 
 
-
-
-
-
-
-
-
-
-
-
 .BgFirstTitleGrid {
     background-color:  rgba(137, 94, 138, 0.5);
     height:  38px;
@@ -558,15 +552,20 @@ hr {
 box-shadow:  0px 0px 6.86px 0.14px #a7a9af;
 }
 
-
+.editCell {
+    border-style:solid !important;
+    border-width:1px !important;
+    border-color: #895e8a !important;
+    background: url("Images/pen_line.png") no-repeat left ;
+    background-position-x: 8px;
+}
 
 .RowGrid2 {
      border-style:solid;
     border-width:1px;
     border-color: #e2e5ed;
     background-color:  rgba(231, 231, 231, 231);
-  
-}
+ }
 /*td {
     font-family:  Arial;
     color:  #585858;
@@ -669,6 +668,14 @@ line-height:  30.2px;
 
 }
 
+.ui-dialog .ui-dialog-content {
+    position: relative;
+    border: 0;
+    padding-top:25px;
+    background: none;
+    overflow: auto;
+}
+
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
      float:left;
 }
@@ -676,6 +683,12 @@ line-height:  30.2px;
     color:#895e8a;
 }
 
+.ui-dialog .ui-dialog-title {
+    font-size: 80% !important;
+    direction: rtl;
+    margin-right: 20px !important;
+    float: none;
+}
 /*.ui-state-hover, .ui-widget-content .ui-state-hover {*/
 .ui-state-hover,
 .ui-widget-content .ui-state-hover,

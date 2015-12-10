@@ -195,6 +195,7 @@
     <Content Include="Content\Images\alert hover.png" />
     <Content Include="Content\Images\alert press.png" />
     <Content Include="Content\Images\alert.png" />
+    <Content Include="Content\Images\arrow_white.png" />
     <Content Include="Content\Images\arrow_copy_16.png" />
     <Content Include="Content\Images\arrow_next_disabled.png" />
     <Content Include="Content\Images\arrow_prev.png" />
@@ -211,6 +212,7 @@
     <Content Include="Content\Images\mafrid.png" />
     <Content Include="Content\Images\opening-btn.png" />
     <Content Include="Content\Images\pai.png" />
+    <Content Include="Content\Images\pen_line.png" />
     <Content Include="Content\Images\Rectangle 42.png" />
     <Content Include="Content\Images\refresh.png" />
     <Content Include="Content\Images\refresh_h.png" />
