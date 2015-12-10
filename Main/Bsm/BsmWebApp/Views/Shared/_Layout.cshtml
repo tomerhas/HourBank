@@ -101,19 +101,21 @@
 
         function AlertMessagePosition(x,y,title,msg, height, width) {
 
+           // $("#dialog-message").dialog({ position: [ "70px", "20px"] });
+
             $("#dialog-message").html(msg);
             $("#dialog-message").dialog({
                 resizable: false,
                 modal: true,
                 title: title,
                 height: height,
-                //position: [30, 100],
+               // position: [30, 100],
                // position: ["left", 1000],
 
                 // position: { my: position.top, at: position.left },
                 focus: function (event, ui) { document.activeElement.blur(); }
             });
-           // $('.ui-dialog').css("top", (y + 20) + "px");
+            $('.ui-dialog').css("top", (y + 20) + "px");
             //$('.ui-dialog').css("left", x + "px");
           //  $('.ui-dialog').css("top", (y+20) + "px");
           //  $('.ui-dialog').css("left", x + "px");

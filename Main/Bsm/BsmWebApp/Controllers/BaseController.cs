@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -118,14 +119,14 @@ namespace BsmWebApp.Controllers
                      if (ConfigurationSettings.AppSettings["DebugModeUserName"] == "true")
                          userName = ConfigurationSettings.AppSettings["DebugUserName"];
                      else userName = HttpContext.User.Identity.Name;
-
                     var cache = _container.Resolve<IUserInfoCachedItems>();
                     UserInfo uf = cache.Get(userName);
+                
                     if (uf == null)
                     {
                         try
                         {
-                            var userInfo = _container.Resolve<ISecurityManager>().GetUserInfo(userName);   
+                            var userInfo = _container.Resolve<ISecurityManager>().GetUserInfo(userName);
                             cache.Add(userName, userInfo);
                             return userInfo;
                         }

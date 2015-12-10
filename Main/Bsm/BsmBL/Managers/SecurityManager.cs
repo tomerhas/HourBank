@@ -10,6 +10,7 @@ using System.Data.Entity;
 using BsmCommon.Interfaces.Managers;
 using BsmCommon.DataModels;
 using Microsoft.Practices.Unity;
+using System.Diagnostics;
 
 namespace BsmBL.Managers
 {
@@ -26,15 +27,16 @@ namespace BsmBL.Managers
         {
             int EmpNum = 0, Isuk = 0, YechidaIrgunit = 0, KodYechida=0;
             //הבא את נתוני המשתמש מתוך active directory
+         
             var exchangeSrv = new ExchangeInfoServiceSoapClient();
             UserInfo uf = new UserInfo();
             uf.EmployeeNumber = exchangeSrv.getEmpNumByUserName(UserName);
             uf.EmployeeFullName = exchangeSrv.getEmpFullName(UserName);
             uf.UserName = UserName;
-
             int.TryParse(uf.EmployeeNumber, out EmpNum);
             if (EmpNum > 0)
             {
+             
                 using (var context = new KdsEntities())//עומדים לעבוד מול הטבלאות של kds Entiti
                 {
                   var PirteyOved =  context.PirteyOvdim.SingleOrDefault(x => x.MisparIshi == EmpNum && DateTime.Now >= x.TaarichMe && DateTime.Now <= x.TaarichAd);
@@ -46,7 +48,7 @@ namespace BsmBL.Managers
                      
                   }
                 }
-
+               
                 if (Isuk > 0)
                 {
                     using (var context = new BsmEntities())
@@ -64,15 +66,18 @@ namespace BsmBL.Managers
                             uf.Screens = Screens;
                         }
                     }
-
                     if (uf.HarshaatOved.KodYechidaIchus > 0)
                         KodYechida = uf.HarshaatOved.KodYechidaIchus;
                     else KodYechida = uf.HarshaatOved.KodYechida;
-
+                   
                     uf.Yechidot = GetYechidotToUser(KodYechida);
+                    EventLog.WriteEntry("kds", "after  GetYechidotToUser");
                     if (uf.Yechidot.Count > 0)
+                    {
+                        EventLog.WriteEntry("kds", "uf.Yechidot.Count > 0");
                         uf.CurYechida = uf.Yechidot[0];
-                    
+                    }
+                    EventLog.WriteEntry("kds", "end");
                 }
 
             }

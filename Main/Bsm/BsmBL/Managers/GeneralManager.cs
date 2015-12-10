@@ -7,6 +7,7 @@ using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -99,8 +100,8 @@ namespace BsmBL.Managers
         public List<Yechida> GetYechidutForUser(DateTime Month, int KodYechida, string PreFix = "")
         {
             var GeneralDal = _container.Resolve<IGeneralDal>();
-            var yechidot = GeneralDal.GetYechidotForUser(Month, KodYechida, PreFix);
 
+            var yechidot = GeneralDal.GetYechidotForUser(Month, KodYechida, PreFix);
             List<Yechida> list = new List<Yechida>();
             foreach (DataRow dr in yechidot.Rows)
             {
@@ -109,7 +110,6 @@ namespace BsmBL.Managers
                 item.KodYechida = int.Parse(dr["KodYechida"].ToString());
                 list.Add(item);
             }
-
             return list;
         }
 
