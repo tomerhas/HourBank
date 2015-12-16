@@ -74,7 +74,7 @@
  {
                         <label style="padding-top:22px"> <img src="~/Content/Images/mafrid.png" /></label>                       
                         <label class="PurpleTextLink" style="padding-top:22px" >@Model.NumDays</label>
-                        <img class="imgRed" onclick="ShowMassegeDays(this)"  src="~/Content/Images/warning.png" />
+                        <img id="imgRed" class="imgRed" src="~/Content/Images/warning.png" /> //onclick="ShowMassegeDays(this)"  
                        }
                     </div>
                 </div>
@@ -120,20 +120,16 @@
 
 <script type="text/javascript">
 
-    function ShowMassegeDays(val)
-    {
-        AlertMessagePosition(val.x,val.y,"שים לב","אם תאריך אחרון לעדכון הוא יום עבודה (אינו שבת, חג וכו')",150,300);
-    }
+    $(document).ready(function (e) {
+
+        $('#imgRed').click(function (e) { 
+            AlertMessagePosition(e.pageX,e.pageY,"שים לב","אם תאריך אחרון לעדכון הוא יום עבודה (אינו שבת, חג וכו')",150,300);
+        });
+
+    })
+
+   
     function EnableButton() {
-      //  var firstMonth = new Date( model.Months[0].Value);
-      //  var lastMonth = new Date( model.Months[model.Months.length-1].Value);
-        //var x= $("#SelectedMonth").options[0].css( 'color','red');
-        //alert( $("#SelectedMonth").options[0].text);
-    //    $("#SelectedMonth").css("background","#564057");
-      //  $("#SelectedMonth").css("color","white");
-     //   $("#SelectedMonth option").css("background","white");
-      // $("#SelectedMonth option").css("color","black");
-       //("#SelectedMonth option:eq(0)").css("color","red");
         var model = @Html.Raw(Json.Encode(Model));
         var month =model.SelectedMonth;
         var selectMonth = $('#SelectedMonth');

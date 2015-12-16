@@ -71,7 +71,7 @@
             </div>
     </div>
          <div>
-             <div id="dialog-message"></div>
+             <div name="dialogP" id="dialog-message"></div>
                 @RenderBody()
                
               @*  <footer>
@@ -99,28 +99,29 @@
             });
         }
 
-        function AlertMessagePosition(x,y,title,msg, height, width) {
-
-           // $("#dialog-message").dialog({ position: [ "70px", "20px"] });
-
+        function AlertMessagePosition(x, y, title, msg, height, width) {
+        
             $("#dialog-message").html(msg);
             $("#dialog-message").dialog({
                 resizable: false,
                 modal: true,
                 title: title,
                 height: height,
-               // position: [30, 100],
+               // position: { my: 'top', at: 'top+700' },
+              //  position: [ x+'px', y+'px' ],
+             //   position: [30, 100],
                // position: ["left", 1000],
 
                 // position: { my: position.top, at: position.left },
                 focus: function (event, ui) { document.activeElement.blur(); }
             });
-            $('.ui-dialog').css("top", (y + 20) + "px");
-            //$('.ui-dialog').css("left", x + "px");
-          //  $('.ui-dialog').css("top", (y+20) + "px");
-          //  $('.ui-dialog').css("left", x + "px");
-        }
+            
+            $("#dialog-message").parent().css('top', y);// "'"+ (y + 20) +"px'");
+            $("#dialog-message").parent().css('left',x);// "'"+x+"px'");
 
+         //   $("#dialog-message").parent().css({ top: 200, left: 200 });
+        }
+        
         function AlertMessage(msg, height, width) {
             $('.ui-dialog').css("clear",  "both"); 
             $("#dialog-message").html(msg);

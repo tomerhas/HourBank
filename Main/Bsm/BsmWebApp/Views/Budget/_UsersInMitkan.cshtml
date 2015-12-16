@@ -374,12 +374,18 @@
                         case "ipus":
                             var grid = $("#EmployeesList").data("kendoGrid");
                             var data = grid.dataSource.data();
-                            $.each(data, function (i, row) {
-                                var dt = row;
-                                dt.MichsaCur = 0;
-                                dt.dirty = true;
-                                grid._modelChange({ field: "MichsaCur", model: dt });
-                            });
+                            
+                                $.each(data, function (i, row) {
+                                    var dt = row;
+                                    if(dt.ReadOnly == "false" &&  dt.MichsaCur != 0 )
+                                    {
+                                        dt.MichsaCur = 0;
+                                        dt.dirty = true;
+                                        grid._modelChange({ field: "MichsaCur", model: dt });
+                                    }
+                                });
+                            
+                                SimunEdit();
                             break;
                         case "cancel":
                             var grid = $("#EmployeesList").data("kendoGrid");
@@ -393,7 +399,7 @@
                 }
             }
         });
-
+      
     }
     $(".k-grid-save-changes").click(function(e) { return CheckHaveChanges(e);  });
 
@@ -476,23 +482,13 @@
             var dt = grid.dataItem($(this));
             if (dt.dirty == true) {
                 grid._modelChange({ field: "MichsaCur", model: dt });
-           //     $(this).find("td#tdName")[0].className="editCell";
             }
             if(dt.ReadOnly == "true")
-            {
-                // this.childNodes[9].disabled = true;
+            {        
                 $(this).find('td.CellEditGrid').prop( "disabled", true ).css( 'color','#bbbbbb');
-            }
-           /* if(dt.Paar.indexOf('-')>-1)
-            {
-                $(this).find('td.CellEditGrid').css( 'color','red');
-            }*/
+            }      
         });
-      
-        //$( "#MichsaCur" ).blur(function() {
-        //    alert( "Handler for .blur() called." );
-        //});
-       // $('#MichsaCur').focus().select();
+        SimunEdit();
     }
 
     $(function(){
@@ -518,10 +514,66 @@
     {
         $("#dialog-allocated").dialog('close');
       
-       // var x= e.closest('td').find("input");
-       // var a=  $(this).find('input.text-box');// e.find('input.TextBox');
-     //   $(this).select();
+        switch (val)
+        {
+            case "1":
+                CopyMichsotLastMonth();
+                break;
+            case "2":
+                alert(val);
+                break;  
+            case "3":
+                CopyMichsotFromShaotShebuzu();
+                break;  
+        }  
+        SimunEdit();
     }
+    function CopyMichsotLastMonth(){
+        var grid = $("#EmployeesList").data("kendoGrid");
+        var data = grid.dataSource.data();
+        $.each(data, function (i, row) {
+            var dt = row;
+            if(dt.ReadOnly == "false" &&  dt.MichsaCur != dt.NosafotPrev)
+            {
+                dt.MichsaCur = dt.NosafotPrev;
+                dt.dirty = true;
+                grid._modelChange({ field: "MichsaCur", model: dt });
+            }
+        });
+    }
+    function CopyMichsotFromShaotShebuzu(){
+        var grid = $("#EmployeesList").data("kendoGrid");
+        var data = grid.dataSource.data();
+        $.each(data, function (i, row) {
+            var dt = row;
+            if(dt.ReadOnly == "false" &&  dt.MichsaCur != dt.ShaotShebuzu)
+            {
+                dt.MichsaCur = dt.ShaotShebuzu;
+                dt.dirty = true;
+                grid._modelChange({ field: "MichsaCur", model: dt });
+            }
+        });
+    }
+
+    function SimunEdit()
+    {
+        var grid = $("#EmployeesList").data("kendoGrid");
+        var data = grid.dataSource.data();
+        $.each(data, function (i, row) {
+            var dt = row;
+            if(dt.dirty == true)
+            {
+              //  row.find("td#tdName")
+             //   $(this).find("td#tdName")[0].className="editCell";
+                grid.table.find("tr[data-uid='" + row.uid + "']").find("td#tdName").addClass("editCell");  //.addClass("highlighted-row");
+
+            }
+        });
+        
+    }
+
+
+
     /* function CheakValid(obj) {
          //  debugger;
          if (obj.value != '') {
@@ -586,16 +638,7 @@
 
   
 
-    function CopyMichsotLastMonth(){
-        var grid = $("#EmployeesList").data("kendoGrid");
-        var data = grid.dataSource.data();
-        $.each(data, function (i, row) {
-            var dt = row;
-            dt.MichsaCur = dt.Meafyen14;
-            dt.dirty = true;
-            grid._modelChange({ field: "MichsaCur", model: dt });
-        });
-    }
+   
     function GetColumnIndex(columnName) {
         var grid = $("#EmployeesList").data("kendoGrid");
         var columns = grid.columns;
