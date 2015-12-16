@@ -4,6 +4,7 @@ using DalOraInfra.DAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -82,8 +83,9 @@ namespace BsmBL.DAL
                  oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 //  oDal.ExecuteSP(cfunGetSumMeafyen14, ref dt);
 
+                 EventLog.WriteEntry("kds", "start Time "+  DateTime.Now.ToString());
                  oDal.ExecuteSP(cProGetEmployeesDetailsForMitkan, ref dt);
-
+                 EventLog.WriteEntry("kds", "end Time " + DateTime.Now.ToString());
                 return dt;
               //  return int.Parse(oDal.GetValParam("p_result").ToString());
 

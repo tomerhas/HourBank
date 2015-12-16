@@ -75,7 +75,7 @@ namespace BsmWebApp.Controllers
                 {
                     vmResult.ShouldDisplayMessage = 0;
                 }
-                else 
+                else
                 {
                     vmResult.ShouldDisplayMessage = 1;
                 }
@@ -150,8 +150,10 @@ namespace BsmWebApp.Controllers
 
         public ActionResult EmployeesInMitkanRead([DataSourceRequest]DataSourceRequest request, int KodYechida, DateTime month)
         {
-            var employeesContainer = GetEmployeesInMitkan(KodYechida, month);
-            return Json(employeesContainer.Employees.ToDataSourceResult(request));
+            List<BudgetEmployeeGrid> employees = (List<BudgetEmployeeGrid>)(Session["EmployeesGrid"]);
+            return Json(employees.ToDataSourceResult(request));
+           // var employeesContainer = GetEmployeesInMitkan(KodYechida, month);
+           // return Json(employeesContainer.Employees.ToDataSourceResult(request));
         }
 
         public ActionResult EmployeesInMitkanUpdate([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<BudgetEmployeeGrid> employees,DateTime month)
