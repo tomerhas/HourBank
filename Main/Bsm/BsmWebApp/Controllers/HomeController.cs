@@ -1,4 +1,5 @@
 ﻿using BsmBL.DAL;
+using BsmCommon.DataModels;
 using BsmWebApp.ViewModels.Home;
 using Egged.Infrastructure.Attribute;
 using Egged.Infrastructure.Menus.DataModels;
@@ -34,7 +35,11 @@ namespace BsmWebApp.Controllers
                 vm.Error = error;
                 vm.Today = DateTime.Now;
                 vm.UserName = user.EmployeeFullName;
-               
+                GeneralObject obj = new GeneralObject();
+                obj.CurYechida = user.Yechidot[0];
+                obj.CurMonth = DateTime.Parse("01/" + DateTime.Now.ToString("MM/yyyy"));
+                Session["mitkan"] = obj;
+
             }
             else 
             {

@@ -90,7 +90,7 @@ namespace BsmBL.Managers
             using (var context = new KdsEntities())
             {
 
-                var sql = string.Format("select max(taarich_close) from TB_CHISHUV_CLOSE");//where  to_char(taarich,'dd/mm/yyyy')='{0}' ", chodesh);
+                var sql = string.Format("select max(taarich_close) from TB_CHISHUV_CLOSE where  to_char(taarich,'dd/mm/yyyy')='{0}' ", chodesh);
                 var res = context.Database.SqlQuery<DateTime>(sql).ToList();
 
                 return DateTime.Parse(res[0].ToString());
@@ -119,7 +119,7 @@ namespace BsmBL.Managers
             using (var context = new KdsEntities())
             {
 
-                var sql = string.Format("select max(b.bakasha_id) from tb_bakashot b,tb_bakashot_params p where b.sug_bakasha=27 and b.bakasha_id=p.bakasha_id and p.erech='{0}'", chodesh);
+                var sql = string.Format("select max(b.bakasha_id) from tb_bakashot b,tb_bakashot_params p where b.sug_bakasha=27 and b.status=2 and b.bakasha_id=p.bakasha_id and p.erech='{0}'", chodesh);
                 var res = context.Database.SqlQuery<decimal>(sql).ToList();
 
                 return (long)res[0];

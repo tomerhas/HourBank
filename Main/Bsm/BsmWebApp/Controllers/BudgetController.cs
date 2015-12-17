@@ -45,19 +45,28 @@ namespace BsmWebApp.Controllers
         }
         public void ChangeMitkan(int mitkan)
         {
-          //  var x= mitkan;
-            //if (this.Request.QueryString["mitkan"] != null)
-            //{
             Yechida yechida = CurrentUser.Yechidot.SingleOrDefault(y => y.KodYechida == mitkan);
-            CurrentUser.CurYechida = yechida;
-            //}
+            GeneralObject obj = (GeneralObject)Session["mitkan"];
+            obj.CurYechida = yechida; ;
+            Session["mitkan"] =obj;
+         //**   CurrentUser.CurYechida = yechida;
+         
         }
+        public void ChangeMonth(string month)
+        {
+            GeneralObject obj = (GeneralObject)Session["mitkan"];
+            obj.CurMonth =  DateTime.Parse(month);
+            Session["mitkan"] =obj;
+         //**   CurrentUser.CurYechida = yechida;
+          
+        }
+        
       //[MultipleButton(Name = "action", Argument = "Index")]
         [HttpPost]
         public ActionResult Index(BudgetMainViewModel vm)
         {
             DateTime month = DateTime.Parse(vm.SelectedMonth);
-            var curMitkan=CurrentUser.CurYechida.KodYechida;
+            var curMitkan = ((GeneralObject)Session["mitkan"]).CurYechida.KodYechida;//**CurrentUser.CurYechida.KodYechida;
             var manager = _container.Resolve<IBudgetManager>();
             if (curMitkan > 0)
             {
@@ -82,19 +91,6 @@ namespace BsmWebApp.Controllers
                 //vmResult.ReportVM = GetReportDetails();
                 return View(vmResult);
             }
-            //var pirteyMitkan = manager.GetYechidaByName(vm.MitkanName);
-            //if (pirteyMitkan != null)
-            //{
-            //    IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
-            //    long bakasha_id = Gmanager.GetLastBakasha(month);           
-            //    BudgetMainViewModel vmResult = GetBudgetDetailForMitkan(pirteyMitkan.KodYechida, month, bakasha_id);
-            //    if (bakasha_id != null)
-            //        vmResult.LastBakashaDate = Gmanager.GetZmanBakasha(bakasha_id);
-            //    vmResult.MitkanName = vm.MitkanName;
-            //    vmResult.SelectedMonth = vm.SelectedMonth;
-            //    vmResult.UsersInMitkan = GetEmployeesInMitkan(pirteyMitkan.KodYechida, month,bakasha_id);
-            //    //vmResult.ReportVM = GetReportDetails();
-            //    return View(vmResult); 
             else
             {
                 BudgetMainViewModel view = InitBudgetVm();
@@ -113,10 +109,10 @@ namespace BsmWebApp.Controllers
             vm.Month = DateTime.Parse(months[0].Id);
 
             IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
-            vm.LastDateIdkunBank = Gmanager.GetLastDateIdkunBank(vm.Month);
-            vm.LastDateIdkunBankStr = string.Concat("יום ", DateHelper.getDayHeb(vm.LastDateIdkunBank), " ,", vm.LastDateIdkunBank.ToShortDateString());
+            vm.LastDateIdkunBank = Gmanager.GetLastDateIdkunBank(((GeneralObject)Session["mitkan"]).CurMonth);
+            vm.LastDateIdkunBankStr = string.Concat("יום ", DateHelper.getDayHeb(vm.LastDateIdkunBank.AddDays(-1)), " ,", vm.LastDateIdkunBank.AddDays(-1).ToShortDateString());
 
-            TimeSpan span = vm.LastDateIdkunBank - DateTime.Now;
+            TimeSpan span = vm.LastDateIdkunBank - (DateTime.Now.AddDays(-1));
             int numDays = span.Days;
             vm.NumDays = "";
             if (numDays > 0)

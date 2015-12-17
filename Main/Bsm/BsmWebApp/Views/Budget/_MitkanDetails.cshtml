@@ -61,7 +61,7 @@
             <div class="row">
                 <div class="col-md-8" style="padding-top: 18px">
                     <label class="TextBold" style="margin-right: 20px;">תאריך:</label>
-                    @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, new { @onchange = "EnableButton();", @class = "ddl", style="*width: 140px;height: 29px;" })
+                    @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, new { @onchange = "EnableButton();ChangeCurrentMonth(this.options[this.selectedIndex].value);", @class = "ddl", style="*width: 140px;height: 29px;" })
                     <input type="button" id="btnPrevMonth" value="חודש קודם" class="WhiteButton BgPrev GeneralText" onclick="SetMonth(-1);"/>
                     <input type="button" id="btnNextMonth" value="חודש הבא" class="WhiteButton BgNext GeneralText" disabled onclick="SetMonth(1);" />
                     <input type="submit" id="btnShow" value="הצג" name='action:Index' style="margin-right: 31px" class="PurpleButton DoubleArrow" />
@@ -125,10 +125,16 @@
         $('#imgRed').click(function (e) { 
             AlertMessagePosition(e.pageX,e.pageY,"שים לב","אם תאריך אחרון לעדכון הוא יום עבודה (אינו שבת, חג וכו')",150,300);
         });
-
+        EnableButton();
     })
 
-   
+    function ChangeCurrentMonth(month) {
+        var url = "/Budget/ChangeMonth?month=" + month;
+        $.get(url, function (data) {
+            // do something if necessary
+        });
+    }
+
     function EnableButton() {
         var model = @Html.Raw(Json.Encode(Model));
         var month =model.SelectedMonth;
@@ -139,7 +145,7 @@
         $("#btnPrevMonth").removeAttr('disabled');
         if(selmont==model.Months[0].Value){
             $("#btnNextMonth").attr('disabled', 'disabled');
-         //   $( "#btnNextMonth" ).addClass( "disabled" );
+            //   $( "#btnNextMonth" ).addClass( "disabled" );
         }
         if(selmont==model.Months[model.Months.length-1].Value){
             $("#btnPrevMonth").attr('disabled', 'disabled');
@@ -166,6 +172,7 @@
 
         selectMonth.val("01/"+month+"/"+year)
         EnableButton();
+        ChangeCurrentMonth("01/"+month+"/"+year);
        // "01/04/2015");
        
     }

@@ -75,7 +75,7 @@ namespace BsmBL.Managers
                     if (uf.Yechidot.Count > 0)
                     {
                         EventLog.WriteEntry("kds", "uf.Yechidot.Count > 0");
-                        uf.CurYechida = uf.Yechidot[0];
+                        //uf.CurYechida = uf.Yechidot[0];         
                     }
                     EventLog.WriteEntry("kds", "end");
                 }

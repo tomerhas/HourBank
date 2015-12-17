@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using BsmCommon.Interfaces.DAL;
 using BsmCommon.UDT;
+using System.Diagnostics;
 
 namespace BsmBL.Managers
 {
@@ -321,10 +322,12 @@ namespace BsmBL.Managers
         {
             List<BudgetEmployeeGrid> list = new List<BudgetEmployeeGrid>();
              var dt = _container.Resolve<IBudgetDal>().GetEmployeeDatails(KodYechida, Month);
-             foreach (DataRow dr in dt.Rows)
+             EventLog.WriteEntry("kds", "start GetEmployeeDetails " + DateTime.Now.ToString());
+            foreach (DataRow dr in dt.Rows)
              {
                  list.Add(CreateBudgetEmployeeFromDataRow(dr));
              }
+            EventLog.WriteEntry("kds", "end GetEmployeeDetails " + DateTime.Now.ToString());
              return list;
         }
 

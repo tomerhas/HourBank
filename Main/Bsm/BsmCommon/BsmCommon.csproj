@@ -62,6 +62,7 @@
     <Compile Include="DataModels\Employees\Oved.cs" />
     <Compile Include="DataModels\Employees\PirteyOved.cs" />
     <Compile Include="DataModels\Ezor.cs" />
+    <Compile Include="DataModels\GeneralObject.cs" />
     <Compile Include="DataModels\MonthHolder.cs" />
     <Compile Include="DataModels\Parameter.cs" />
     <Compile Include="DataModels\Profiles\Harshaa.cs" />
