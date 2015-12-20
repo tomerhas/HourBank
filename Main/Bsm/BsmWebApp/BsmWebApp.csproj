@@ -195,6 +195,7 @@
     <Content Include="Content\Images\alert hover.png" />
     <Content Include="Content\Images\alert press.png" />
     <Content Include="Content\Images\alert.png" />
+    <Content Include="Content\Images\arrow_next.png" />
     <Content Include="Content\Images\arrow_prev_disabled.png" />
     <Content Include="Content\Images\arrow_disabled.png" />
     <Content Include="Content\Images\arrow_white.png" />

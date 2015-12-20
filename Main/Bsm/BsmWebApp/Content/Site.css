@@ -258,7 +258,7 @@ select {
      background-position-x: 8px;
 }*/
 .BgNext {
-    background: url("Images/arrow_next_disabled.png") no-repeat left #ffffff;
+    background: url("Images/arrow_next.png") no-repeat left #ffffff;
     background-position-x: 10px;
     background-position-y: 8px;
     text-align: right;

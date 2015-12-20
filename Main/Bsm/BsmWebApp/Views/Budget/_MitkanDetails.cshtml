@@ -130,10 +130,18 @@
     })
 
     function ChangeCurrentMonth(month) {
-        var url = "/Budget/ChangeMonth?month=" + month;
-        $.get(url, function (data) {
-            // do something if necessary
-        });
+        jQuery.ajax({
+            url: '/Budget/ChangeMonth?month='+ month,
+             type: 'POST',
+             contentType: 'application/json',
+           //  data: JSON.stringify({ data: data2 }),
+             success: function (result) { }
+        });  
+
+        //var url = "/Budget/ChangeMonth?month=" + month;
+        //$.get(url, function (data) {
+        //    // do something if necessary
+        //});
     }
 
     function EnableButton() {

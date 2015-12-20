@@ -39,6 +39,7 @@
           else
           {
              <span class="col-md-7 text-left name">@Html.DropDownListFor(m =>  @MenuModel.MitkanName.KodYechida, @MenuModel.Yechidot , new { onchange = "ChangeCurrentMitkan(this.options[this.selectedIndex].value);", @class = "ddlMitkan" })  | </span>@* @*//new { @onchange = "EnableButton();", @class = "ddl" }*@
+                                                
                @*<span class="col-md-7 text-left name">@MenuModel.MitkanName.KodYechida  @Html.DropDownListFor(m =>  @MenuModel.MitkanName.KodYechida, @MenuModel.Yechidot, new { autopostback = "false" , onchange = "document.location.href = '/Budget/Index?mitkan=' + this.options[this.selectedIndex].value;", @class = "ddlMitkan" })  | </span>*@ @*//new { @onchange = "EnableButton();", @class = "ddl" }*@
           }
           
@@ -94,10 +95,21 @@
        //});
 
         function ChangeCurrentMitkan(id) {
-            var url = "/Budget/ChangeMitkan?mitkan=" + id;
-            $.get(url, function (data) {
-                // do something if necessary
+            
+            jQuery.ajax({
+                url: "/Budget/ChangeMitkan?mitkan=" + id,
+                type: 'POST',
+                contentType: 'application/json',
+                //  data: JSON.stringify({ data: data2 }),
+                success: function (result) { }
             });
+
+            //var url = "/Budget/ChangeMitkan?mitkan=" + id;
+           
+            //$.get(url, function (data) {
+            //    alert(url);
+            //    // do something if necessary
+            //});
         }
 
         function AlertMessagePosition(x, y, title, msg, height, width) {
