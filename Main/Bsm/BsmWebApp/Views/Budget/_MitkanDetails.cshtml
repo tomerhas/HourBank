@@ -70,12 +70,13 @@
                 <div class="col-md-4">
                     <div align="left" style="padding-left:20px">
                         <label class="GeneralText" style="padding-top:22px">תאריך אחרון לעדכון בנק: @Model.LastDateIdkunBankStr</label>
+                      
                        @if (@Model.NumDays != "")
- {
-                        <label style="padding-top:22px"> <img src="~/Content/Images/mafrid.png" /></label>                       
-                        <label class="PurpleTextLink" style="padding-top:22px" >@Model.NumDays</label>
-                        <img id="imgRed" class="imgRed" src="~/Content/Images/warning.png" /> //onclick="ShowMassegeDays(this)"  
-                       }
+                       {
+                            <label style="padding-top:22px"> <img src="~/Content/Images/mafrid.png" /></label>                       
+                            <label class="PurpleTextLink" style="padding-top:22px" >@Model.NumDays</label>
+                            <img id="imgRed" class="imgRed" src="~/Content/Images/warning.png" /> //onclick="ShowMassegeDays(this)"  
+                        }
                     </div>
                 </div>
             </div>

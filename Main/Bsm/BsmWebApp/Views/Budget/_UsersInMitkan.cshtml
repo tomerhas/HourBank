@@ -73,9 +73,9 @@
  </script>
 @using (Html.BeginForm())
 {
-      
 
-  if (Model.UsersInMitkan.Employees.Count > 0)
+
+    if (Model.IsMitkanBudgetDetailEmpty == false && Model.UsersInMitkan.Employees.Count > 0)
     {
 @*<hr class="styled" />*@
 @*<div>

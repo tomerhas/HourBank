@@ -77,10 +77,12 @@ namespace BsmBL.Managers
             using (var context = new BsmEntities())
             {
 
-                var sql = string.Format("select max(b.taarich_idkun) from tb_budget b where  to_char(b.chodesh,'dd/mm/yyyy')='{0}' and b.KOD_YECHIDA='{1}'", chodesh, kodYechida);
-                var res = context.Database.SqlQuery<DateTime>(sql).ToList();
+                var sql = string.Format("select to_char(max(b.taarich_idkun),'dd/mm/yyyy HH24:mi') from tb_budget b where  to_char(b.chodesh,'dd/mm/yyyy')='{0}' and b.KOD_YECHIDA='{1}'", chodesh, kodYechida);
+                var res = context.Database.SqlQuery<string>(sql).ToList();
 
-                return res[0].ToString();
+                if (res[0] != null)
+                    return res[0].ToString();
+                return "";
             }
         }
 
@@ -90,10 +92,12 @@ namespace BsmBL.Managers
             using (var context = new KdsEntities())
             {
 
-                var sql = string.Format("select max(taarich_close) from TB_CHISHUV_CLOSE where  to_char(taarich,'dd/mm/yyyy')='{0}' ", chodesh);
-                var res = context.Database.SqlQuery<DateTime>(sql).ToList();
+                var sql = string.Format("select to_char(max(taarich_close)) from TB_CHISHUV_CLOSE where  to_char(taarich,'dd/mm/yyyy')='{0}' ", chodesh);
+                var res = context.Database.SqlQuery<string>(sql).ToList();
 
-                return DateTime.Parse(res[0].ToString());
+                if (res[0] != null)
+                    return DateTime.Parse(res[0].ToString());
+                else return DateTime.MinValue;
             }
         }
 

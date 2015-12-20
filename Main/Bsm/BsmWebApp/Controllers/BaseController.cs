@@ -53,7 +53,7 @@ namespace BsmWebApp.Controllers
             LayoutViewModel lvm = new LayoutViewModel(menus);
             lvm.Username = CurrentUser.EmployeeFullName;
            // lvm.MitkanName = CurrentUser.CurYechida.TeurYechida;
-            lvm.MitkanName =( (GeneralObject)Session["mitkan"]).CurYechida;//** CurrentUser.CurYechida;
+            lvm.MitkanName =( (GeneralObject)Session["GeneralDetails"]).CurYechida;//** CurrentUser.CurYechida;
        //     lvm.NumYechidot = CurrentUser.Yechidot.Count;
             lvm.Yechidot = new SelectList(CurrentUser.Yechidot, "KodYechida", "TeurYechida", lvm.MitkanName.KodYechida); ;
             lvm.LastDateCalc = GatLastTaarichOfCalc();
@@ -62,12 +62,16 @@ namespace BsmWebApp.Controllers
 
         private string GatLastTaarichOfCalc()
         {
-            GeneralObject obG = ((GeneralObject)Session["mitkan"]);
+            GeneralObject obG = ((GeneralObject)Session["GeneralDetails"]);
             IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
             string taarich = Gmanager.GetLastTaarichcalc(obG.CurMonth, obG.CurYechida.KodYechida);//CurrentUser.CurYechida.KodYechida);
-            var date = taarich.Split(' ')[0];
-            var shaa = taarich.Split(' ')[1].Split(':');
-            return shaa[0] + ":" + shaa[1] + "," + date;
+            if (taarich != "")
+            {
+                var date = taarich.Split(' ')[0];
+                var shaa = taarich.Split(' ')[1].Split(':');
+                return shaa[0] + ":" + shaa[1] + "," + date;
+            }
+            return "";
         }
        
         public List<MonthHolder> GetMonthsBackList(int kodParam)

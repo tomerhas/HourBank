@@ -38,7 +38,7 @@ namespace BsmWebApp.Controllers
                 GeneralObject obj = new GeneralObject();
                 obj.CurYechida = user.Yechidot[0];
                 obj.CurMonth = DateTime.Parse("01/" + DateTime.Now.ToString("MM/yyyy"));
-                Session["mitkan"] = obj;
+                Session["GeneralDetails"] = obj;
 
             }
             else 

@@ -43,19 +43,21 @@ namespace BsmBL.Managers
             return list;
         }
 
-        public Budget GetBudget(int KodYechida, DateTime Month, long bakasha_id)
+        public Budget GetBudget(int KodYechida, DateTime Month)
         {
             long bakasha_premia = 0;
             Budget budget = null;
 
             using (var context = new BsmEntities())
             {
-                budget = context.Budgets.OrderByDescending(X => X.TaarichIdkun).FirstOrDefault(x => x.KodYechida == KodYechida && x.Month == Month && x.BakashaId == bakasha_id);
-
-                var BudgetDal = _container.Resolve<IBudgetDal>();
-                budget.BudgetUsed = BudgetDal.GetShaotnosafotMeshek(KodYechida, Month);
-                budget.ShaotByMeafyen14 = GetSachMeafyen14(KodYechida, Month);
-                budget.YitratTakzivToDivide = budget.BudgetVal - budget.ShaotByMeafyen14;
+                budget = context.Budgets.OrderByDescending(X => X.TaarichIdkun).FirstOrDefault(x => x.KodYechida == KodYechida && x.Month == Month);
+                if (budget != null)
+                {
+                    var BudgetDal = _container.Resolve<IBudgetDal>();
+                    budget.BudgetUsed = BudgetDal.GetShaotnosafotMeshek(KodYechida, Month);
+                    budget.ShaotByMeafyen14 = GetSachMeafyen14(KodYechida, Month);
+                    budget.YitratTakzivToDivide = budget.BudgetVal - budget.ShaotByMeafyen14;
+                }
             }
 
 
