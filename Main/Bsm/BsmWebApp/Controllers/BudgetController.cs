@@ -48,6 +48,7 @@ namespace BsmWebApp.Controllers
       //   [SessionExpireFilter]
         public ActionResult ChangeMitkan(int mitkan)
         {
+            ModelState.Clear();
             Yechida yechida = CurrentUser.Yechidot.SingleOrDefault(y => y.KodYechida == mitkan);
             GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
             obj.CurYechida = yechida; ;
