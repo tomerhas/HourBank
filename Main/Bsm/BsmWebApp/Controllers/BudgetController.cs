@@ -21,6 +21,7 @@ using System.Configuration;
 using Egged.Infrastructure.Menus.DataModels;
 using BsmCommon.Helpers;
 using BsmCommon.UDT;
+using BsmWebApp.Infrastructure;
 
 namespace BsmWebApp.Controllers
 {
@@ -31,6 +32,7 @@ namespace BsmWebApp.Controllers
         {
             SelectdMenu = MenuTypes.MamagementHourExtenstions;
         }
+      //  [SessionExpireFilter]
         [PageAuthorize("Budget")]
         public ActionResult Index()
         {
@@ -43,15 +45,17 @@ namespace BsmWebApp.Controllers
             BudgetMainViewModel vm = InitBudgetVm();
             return View(vm);
         }
-        public void ChangeMitkan(int mitkan)
+      //   [SessionExpireFilter]
+        public ActionResult ChangeMitkan(int mitkan)
         {
             Yechida yechida = CurrentUser.Yechidot.SingleOrDefault(y => y.KodYechida == mitkan);
             GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
             obj.CurYechida = yechida; ;
             Session["GeneralDetails"] =obj;
          //**   CurrentUser.CurYechida = yechida;
-         
+            return View();
         }
+       //  [SessionExpireFilter]
         public void ChangeMonth(string month)
         {
             GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
@@ -61,10 +65,12 @@ namespace BsmWebApp.Controllers
           
         }
         
-      //[MultipleButton(Name = "action", Argument = "Index")]
+      //[MultipleButton(Name = "action", Argument = "Index")] 
+      //   [SessionExpireFilter]
         [HttpPost]
         public ActionResult Index(BudgetMainViewModel vm)
         {
+          //  ProgressHub.SendMessage("initializing and preparing");
             DateTime month = DateTime.Parse(vm.SelectedMonth);
             var curMitkan = ((GeneralObject)Session["GeneralDetails"]).CurYechida.KodYechida;//**CurrentUser.CurYechida.KodYechida;
             var manager = _container.Resolve<IBudgetManager>();
@@ -88,6 +94,7 @@ namespace BsmWebApp.Controllers
                 {
                     vmResult.ShouldDisplayMessage = 1;
                 }
+               
                 //vmResult.ReportVM = GetReportDetails();
                 return View(vmResult);
             }
@@ -98,7 +105,6 @@ namespace BsmWebApp.Controllers
                 return View(view);
             }
         }
-
 
         private BudgetMainViewModel InitBudgetVm()
         {

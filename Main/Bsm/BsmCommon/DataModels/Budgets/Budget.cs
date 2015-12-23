@@ -23,7 +23,7 @@ namespace BsmCommon.DataModels.Budgets
 
         [Display(Name = "תקציב חודשי")]
         [Column("BUDGET")]
-        public int BudgetVal{ get; set; }
+        public decimal BudgetVal{ get; set; }
 
        [Display(Name = "שעות שבוצעו")]
         [Column("BUDGET_USED")]
@@ -48,7 +48,7 @@ namespace BsmCommon.DataModels.Budgets
 
         [Display(Name = "שעות שנותרו להקצאה")]
         [NotMapped]
-        public int YitratTakzivToDivide { get; set; }
+        public decimal YitratTakzivToDivide { get; set; }
 
         [Column("TAARICH_IDKUN")]
         public DateTime TaarichIdkun { get; set; }

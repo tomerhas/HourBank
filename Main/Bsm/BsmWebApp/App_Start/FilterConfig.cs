@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using BsmWebApp.Infrastructure.Security;
+using System.Web;
 using System.Web.Mvc;
 
 namespace BsmWebApp
@@ -8,6 +9,7 @@ namespace BsmWebApp
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new SessionExpireFilterAttribute());
         }
     }
 }

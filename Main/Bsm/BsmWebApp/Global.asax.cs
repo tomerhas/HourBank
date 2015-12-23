@@ -1,4 +1,5 @@
-﻿using BsmWebApp.Infrastructure;
+﻿using BsmWebApp.Controllers;
+using BsmWebApp.Infrastructure;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using System;
@@ -38,5 +39,7 @@ namespace BsmWebApp
             UnityServiceLocator sl = new UnityServiceLocator(container);
             ServiceLocator.SetLocatorProvider(() => sl);
         }
+
+       
     }
 }

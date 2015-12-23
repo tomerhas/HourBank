@@ -36,10 +36,10 @@ namespace BsmCommon.Helpers
 
         public static string getDayHeb(DateTime taarich)
         {
-            switch (taarich.Day)
+            switch (taarich.DayOfWeek.GetHashCode()+1)
             {
-                case 1: return "ראשון'";
-                case 2: return "שני'";
+                case 1: return "ראשון";
+                case 2: return "שני";
                 case 3: return "שלישי";
                 case 4: return "רביעי";
                 case 5: return "חמישי";

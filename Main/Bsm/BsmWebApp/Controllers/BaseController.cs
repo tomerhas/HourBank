@@ -16,9 +16,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
+
+
 
 namespace BsmWebApp.Controllers
 {
+   // [SessionExpireFilter]
   //  [PageAuthorizeAttribute]
     public class BaseController : Controller
     {
@@ -33,12 +37,22 @@ namespace BsmWebApp.Controllers
             //_SelectedMitkan = SelectedMitkan;
         }
 
+          
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             base.OnActionExecuted(filterContext);
-            SetMenus();
+
+           // if (filterContext.HttpContext.Session["GeneralDetails"] == null)
+           //  filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "Session_End" }));
+
+
+            if (filterContext.HttpContext.Session["GeneralDetails"] != null)
+            {
+                SetMenus();
+            }
         }
 
+     
         public void SetMenus()
         {
             var menus = _container.Resolve<IMenusManager>().GetMenusForRole();
@@ -53,13 +67,27 @@ namespace BsmWebApp.Controllers
             LayoutViewModel lvm = new LayoutViewModel(menus);
             lvm.Username = CurrentUser.EmployeeFullName;
            // lvm.MitkanName = CurrentUser.CurYechida.TeurYechida;
-            lvm.MitkanName =( (GeneralObject)Session["GeneralDetails"]).CurYechida;//** CurrentUser.CurYechida;
+
+            lvm.MitkanName =  ((GeneralObject)Session["GeneralDetails"]).CurYechida;//** CurrentUser.CurYechida;
        //     lvm.NumYechidot = CurrentUser.Yechidot.Count;
             lvm.Yechidot = new SelectList(CurrentUser.Yechidot, "KodYechida", "TeurYechida", lvm.MitkanName.KodYechida); ;
             lvm.LastDateCalc = GatLastTaarichOfCalc();
             ViewBag.LayoutViewModel = lvm;
         }
 
+        //public ActionResult GetGeneralSession()
+        //{
+        //    return RedirectToAction("Index", "Home", "זמן התחברות הסתיים");
+        //    //Session["GeneralDetails"] = null;
+        //    //if (Session["GeneralDetails"] == null)
+        //    //{
+
+        //    //    return RedirectToAction("Index", "Home", "זמן התחברות הסתיים");
+        //    //    return null;
+        //    //}
+        //    //else
+        //    //    return ((GeneralObject)Session["GeneralDetails"]);
+        //}
         private string GatLastTaarichOfCalc()
         {
             GeneralObject obG = ((GeneralObject)Session["GeneralDetails"]);
@@ -151,6 +179,7 @@ namespace BsmWebApp.Controllers
                     return null;
                 }
             }
+           
         } 
 	}
 }

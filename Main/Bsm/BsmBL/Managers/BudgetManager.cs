@@ -354,9 +354,11 @@ namespace BsmBL.Managers
             if (paar < 0)
                 budgetEmployee.Paar = string.Concat(paar * (-1), "-");
             else budgetEmployee.Paar = paar.ToString();
+           // budgetEmployee.CurYechida = int.Parse(row["cur_yechida"].ToString());
 
+            var exists_in_mitkan= row["exist_in_mitkan"].ToString();
             var mutaam =row["mutaam"].ToString();
-            if(budgetEmployee.AlTikni =="כן"  || mutaam=="1" || mutaam=="3" || mutaam=="5"||mutaam=="7")
+            if(budgetEmployee.AlTikni =="כן"  || mutaam=="1" || mutaam=="3" || mutaam=="5"||mutaam=="7" || exists_in_mitkan=="1")
                 budgetEmployee.ReadOnly ="true";
             else budgetEmployee.ReadOnly = "false";
         //    budgetEmployee.NosafotNotUsed = float.Parse(row["Nosafot_Not_Used"].ToString());

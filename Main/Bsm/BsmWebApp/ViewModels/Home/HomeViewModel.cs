@@ -10,6 +10,7 @@ namespace BsmWebApp.ViewModels.Home
         public DateTime Today { get; set; }
         public string UserName { get; set; }
         public string Error { get; set; }
+        public int SessionEnd { get; set; }
         public bool HasError 
         {
             get 

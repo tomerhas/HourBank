@@ -1,5 +1,6 @@
 ﻿using BsmBL.DAL;
 using BsmCommon.DataModels;
+using BsmWebApp.Infrastructure.Security;
 using BsmWebApp.ViewModels.Home;
 using Egged.Infrastructure.Attribute;
 using Egged.Infrastructure.Menus.DataModels;
@@ -24,15 +25,26 @@ namespace BsmWebApp.Controllers
 
            // SelectedMitkan = 88468;
         }
+     //    [SessionExpireFilter]
+      [DisableSession]
         public ActionResult Index(string error="")
         {
             
             //This is added to casuse the cache to filled in with user info 
             HomeViewModel vm = new HomeViewModel();
+     
             var user = CurrentUser;
             if (user != null)
             {
-                vm.Error = error;
+
+                if (error == "session end")
+                    ViewBag.SessionEnd = 1;
+                else
+                {
+                    ViewBag.SessionEnd = 0;
+                    vm.Error = error;
+                }
+              //  vm.SessionEnd = 0;
                 vm.Today = DateTime.Now;
                 vm.UserName = user.EmployeeFullName;
                 GeneralObject obj = new GeneralObject();
@@ -47,7 +59,25 @@ namespace BsmWebApp.Controllers
             }
             return View(vm);
         }
-
+      //  [HttpPost]
+              [DisableSession]
+        public ActionResult Session_End()
+        {
+        //    HomeViewModel vm = new HomeViewModel();
+            var user = CurrentUser;
+            if (user != null)
+            {
+         //       vm.SessionEnd = 1;
+           //     vm.Today = DateTime.Now;
+           //     vm.UserName = user.EmployeeFullName;
+                GeneralObject obj = new GeneralObject();
+                obj.CurYechida = user.Yechidot[0];
+                obj.CurMonth = DateTime.Parse("01/" + DateTime.Now.ToString("MM/yyyy"));
+                Session["GeneralDetails"] = obj;
+            }
+           return RedirectToAction("Index", "Home",new{error= "session end"});
+         //   return View(vm);
+        }
      
         [MultipleButton(Name="action", Argument="Budget")]
         [HttpPost]

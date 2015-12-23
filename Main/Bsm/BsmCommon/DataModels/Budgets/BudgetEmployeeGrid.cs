@@ -24,6 +24,7 @@ namespace BsmCommon.DataModels.Budgets
         public decimal ShaotShebuzu { get; set; }
         public float NosafotNotUsed { get; set; }
         public string Paar { get; set; }
+        public int CurYechida { get; set; }
         public string ReadOnly { get; set; }
        // public float Meafyen14 { get; set; }
     }

@@ -24,11 +24,32 @@
         {
             <div  class="col-md-7" style="font-size:14pt;font-weight:bolder;color:red;text-align: center; "  >@Model.Error</div>
         }
+        
+          
+     @if (ViewBag.SessionEnd == 1)
+     {
+            <text>
+                <script type="text/javascript"> alert('hh');</script>
+     
+            </text>
+           //  showMessege();
+        }
     <div class="col-md-3"></div>
     </div>
 </div>
 }
 
 <script type="text/javascript">
-        
+   
+    //function showMessege() {
+    //    AlertMessage("זמן התחברות הסתיים,הועברת לדף הבית", 150, 400);
+    //}
+@*    $(document).ready(function () {
+        var sessionEnd = @Model.SessionEnd;
+        if(sessionEnd==1){
+            // ModifyGrid("ipus");
+            AlertMessage("זמן התחברות הסתיים,הועברת לדף הבית",150,400);
+            // alert("Need to display message")
+     }
+   });*@
 </script>

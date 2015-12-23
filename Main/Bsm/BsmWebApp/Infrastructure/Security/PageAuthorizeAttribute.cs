@@ -41,5 +41,6 @@ namespace BsmWebApp.Infrastructure.Security
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "Index", error="אינך רשאי לצפות בדף זה, לקבלת הרשאות אנא פנה למנהל המערכת." }));
             }
         }
+  
     }
 }
