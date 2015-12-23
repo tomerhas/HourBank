@@ -44,7 +44,7 @@ namespace BsmCommon.DataModels.Budgets
 
         [Display(Name = "שעות שהוקצו")]
         [NotMapped]
-        public int ShaotByMeafyen14 { get; set; }
+        public decimal ShaotByMeafyen14 { get; set; }
 
         [Display(Name = "שעות שנותרו להקצאה")]
         [NotMapped]

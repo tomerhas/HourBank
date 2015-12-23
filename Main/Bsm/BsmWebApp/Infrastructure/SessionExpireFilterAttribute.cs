@@ -37,8 +37,22 @@ namespace  BsmWebApp.Infrastructure.Security
 
             if (filterContext.HttpContext.Session["GeneralDetails"] == null && (filterContext.ActionDescriptor).ActionName != "Session_End")
             {
-              
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "Session_End" }));
+
+                if (filterContext.HttpContext.Request.IsAjaxRequest())
+                {
+                    filterContext.Result = new JsonResult
+                    {
+                        Data = new
+                        {
+                            // put a message which sentto the client
+                            message = "Session Time out"
+                        },
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                    };
+                   
+                }
+                else
+                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "Session_End" }));
             }
 
         }

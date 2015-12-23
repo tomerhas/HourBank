@@ -19,14 +19,14 @@ namespace BsmBL.DAL
         private const string cProGetEmployeesDetailsForMitkan = "PKG_BUDGET.GetEmployeesDetailsForMitkan";
         private const string cProSaveEmployeeBudgets = "PKG_BUDGET.pro_save_employee_Michsot";
 
-        public int GetSumMeafyen14(int KodYechida, DateTime Month)
+        public decimal GetSumMeafyen14(int KodYechida, DateTime Month)
         {
             clDal oDal = new clDal();
             DataTable dt = new DataTable();
 
             try
-            {//מחזיר נתוני עובד: 
-                oDal.AddParameter("p_result", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+            {
+                oDal.AddParameter("p_result", ParameterType.ntOracleDecimal, null, ParameterDir.pdReturnValue);
                 oDal.AddParameter("p_mitkan", ParameterType.ntOracleInteger, KodYechida, ParameterDir.pdInput);
                 oDal.AddParameter("p_date",  ParameterType.ntOracleDate, Month, ParameterDir.pdInput);
              //   oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, BakashaId, ParameterDir.pdInput);
@@ -35,7 +35,7 @@ namespace BsmBL.DAL
 
                 oDal.ExecuteSP(cfunGetSumMeafyen14);
 
-                return oDal.GetValParam("p_result") != "null" ? int.Parse(oDal.GetValParam("p_result").ToString()) : 0;
+                return oDal.GetValParam("p_result") != "null" ? decimal.Parse(oDal.GetValParam("p_result").ToString()) : 0;
 
               //  return dt;
             }
@@ -52,7 +52,7 @@ namespace BsmBL.DAL
 
             try
             {//מחזיר נתוני עובד: 
-                oDal.AddParameter("p_result", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                oDal.AddParameter("p_result", ParameterType.ntOracleDecimal, null, ParameterDir.pdReturnValue);
                 oDal.AddParameter("p_mitkan", ParameterType.ntOracleInteger, KodYechida, ParameterDir.pdInput);
                 oDal.AddParameter("p_date", ParameterType.ntOracleDate, Month, ParameterDir.pdInput);
                 // oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);

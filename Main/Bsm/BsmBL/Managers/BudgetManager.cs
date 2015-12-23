@@ -138,12 +138,12 @@ namespace BsmBL.Managers
 
         //}
 
-      
 
-        private int GetSachMeafyen14(int KodYechida, DateTime Month)
+
+        private decimal GetSachMeafyen14(int KodYechida, DateTime Month)
         {  
                 var BudgetManager = _container.Resolve<IBudgetDal>();
-                int sum = BudgetManager.GetSumMeafyen14(KodYechida, Month);
+                decimal sum = BudgetManager.GetSumMeafyen14(KodYechida, Month);
                 return sum;     
         }
 
@@ -358,7 +358,7 @@ namespace BsmBL.Managers
 
             var exists_in_mitkan= row["exist_in_mitkan"].ToString();
             var mutaam =row["mutaam"].ToString();
-            if(budgetEmployee.AlTikni =="כן"  || mutaam=="1" || mutaam=="3" || mutaam=="5"||mutaam=="7" || exists_in_mitkan=="1")
+            if(budgetEmployee.AlTikni =="כן"  || mutaam=="1" || mutaam=="3" || mutaam=="5"||mutaam=="7" || exists_in_mitkan=="0")
                 budgetEmployee.ReadOnly ="true";
             else budgetEmployee.ReadOnly = "false";
         //    budgetEmployee.NosafotNotUsed = float.Parse(row["Nosafot_Not_Used"].ToString());

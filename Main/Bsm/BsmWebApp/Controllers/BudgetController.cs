@@ -32,46 +32,34 @@ namespace BsmWebApp.Controllers
         {
             SelectdMenu = MenuTypes.MamagementHourExtenstions;
         }
-      //  [SessionExpireFilter]
+
         [PageAuthorize("Budget")]
         public ActionResult Index()
         {
-            //if (this.Request.QueryString["GeneralDetails"] != null)
-            //{
-            //    var mitkan = int.Parse(this.Request.QueryString["GeneralDetails"]);
-            //    Yechida yechida = CurrentUser.Yechidot.SingleOrDefault(y => y.KodYechida == mitkan);
-            //    CurrentUser.CurYechida = yechida;
-            //}
             BudgetMainViewModel vm = InitBudgetVm();
             return View(vm);
         }
-      //   [SessionExpireFilter]
-        public ActionResult ChangeMitkan(int mitkan)
+
+        public void ChangeMitkan(int mitkan)
         {
-            ModelState.Clear();
             Yechida yechida = CurrentUser.Yechidot.SingleOrDefault(y => y.KodYechida == mitkan);
             GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
             obj.CurYechida = yechida; ;
             Session["GeneralDetails"] =obj;
-         //**   CurrentUser.CurYechida = yechida;
-            return View();
         }
-       //  [SessionExpireFilter]
+       
         public void ChangeMonth(string month)
         {
             GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
             obj.CurMonth =  DateTime.Parse(month);
             Session["GeneralDetails"] =obj;
-         //**   CurrentUser.CurYechida = yechida;
           
         }
         
-      //[MultipleButton(Name = "action", Argument = "Index")] 
-      //   [SessionExpireFilter]
+
         [HttpPost]
         public ActionResult Index(BudgetMainViewModel vm)
         {
-          //  ProgressHub.SendMessage("initializing and preparing");
             DateTime month = DateTime.Parse(vm.SelectedMonth);
             var curMitkan = ((GeneralObject)Session["GeneralDetails"]).CurYechida.KodYechida;//**CurrentUser.CurYechida.KodYechida;
             var manager = _container.Resolve<IBudgetManager>();
@@ -134,16 +122,7 @@ namespace BsmWebApp.Controllers
                 vm.LastDateIdkunBankStr = "";
                 vm.NumDays = "";
             }
-         
-            
 
-            //IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
-            //DataTable yechidot = Gmanager.GetYechidutForUser(vm.Month, GetYechidatOvedForEzNihuly());
-            //if (yechidot.Rows.Count == 1)
-            //{
-            //    vm.MitkanName = yechidot.Rows[0]["TeurYechida"].ToString();
-            //    vm.OnlyOneYechida = true; ;
-            //}
             return vm;
         }
 

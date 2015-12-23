@@ -140,13 +140,13 @@
              type: 'POST',
              contentType: 'application/json',
            //  data: JSON.stringify({ data: data2 }),
-             success: function (result) { }
+             success: function (result) {
+                 if(result.message == "Session Time out"){
+                     window.location.href = "/Home/Session_End";
+                 } 
+             }
         });  
 
-        //var url = "/Budget/ChangeMonth?month=" + month;
-        //$.get(url, function (data) {
-        //    // do something if necessary
-        //});
     }
 
     function EnableButton() {

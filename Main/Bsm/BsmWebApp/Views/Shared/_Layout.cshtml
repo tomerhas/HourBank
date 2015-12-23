@@ -37,23 +37,6 @@
     @{
         LayoutViewModel MenuModel = ViewBag.LayoutViewModel;
     }
-
-      @{        
-          Html.Kendo().ProgressBar()
-                  .Name("progressBar")
-                  .Min(0)
-                  .Max(10)
-                  .Type(ProgressBarType.Percent);
-                  //.Events(e =>
-                  //{
-                  //    e.Change("onChange");
-                  //    e.Complete("onComplete");
-                  //});
-       }
-        
-   
-
-
     <div class="col-md-4" style="padding-right:10px;padding-top:10px;">
       <div id="logo"> </div>
       <div id="GeneralTitle">מערכת ניהול שעות עבודה משק</div>
@@ -130,7 +113,11 @@
                 type: 'POST',
                 contentType: 'application/json',
                 //  data: JSON.stringify({ data: data2 }),
-                success: function (result) { }
+                success: function (result) {
+                    if (result.message == "Session Time out") {
+                        window.location.href = "/Home/Session_End";
+                    }
+                }
             });
 
             //var url = "/Budget/ChangeMitkan?mitkan=" + id;
