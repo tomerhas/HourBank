@@ -47,13 +47,14 @@ namespace BsmWebApp.Controllers
             obj.CurYechida = yechida; ;
             Session["GeneralDetails"] =obj;
         }
-       
+
+       // public ActionResult ChangeMonth(string month,string model) 
         public void ChangeMonth(string month)
         {
             GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
             obj.CurMonth =  DateTime.Parse(month);
             Session["GeneralDetails"] =obj;
-          
+           // return View();
         }
         
 
@@ -71,7 +72,7 @@ namespace BsmWebApp.Controllers
                 ////if (bakasha_id != null)
                 ////    vmResult.LastBakashaDate = Gmanager.GetZmanBakasha(bakasha_id);
                 ////vmResult.MitkanName = vm.MitkanName;
-                ////vmResult.SelectedMonth = vm.SelectedMonth;
+                vmResult.SelectedMonth = vm.SelectedMonth;
                 vmResult.KodMitkan = curMitkan;
                 vmResult.Month = month;
                 vmResult.UsersInMitkan = GetEmployeesInMitkan(curMitkan, month);

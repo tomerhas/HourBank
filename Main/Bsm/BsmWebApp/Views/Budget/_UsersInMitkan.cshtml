@@ -87,7 +87,7 @@
             <div class="col-md-4">
                 <label style="width: 20px; float: right"></label>
                 <span style="clear:both">
-                    <input id="MisparIshi" style="width: 250px" class="styleTBSearch GeneralText TextBoxRO" />
+                    <input id="MisparIshi" style="width: 250px" onkeydown="if (event.keyCode==13){ setTimeout(function(){ findDataItem();  }, 300); return false;} " class="styleTBSearch GeneralText TextBoxRO" />
                 </span>
                 <input class="SearchBG" onclick="findDataItem();" type="button" />
                 @*    <input type="text"  id="txtSearch" class="TextBoxRO GeneralText styleTBSearch" value=""  />*@
@@ -256,7 +256,8 @@
                       }
                       </text>
                       ))*/
-           .Render();   
+           .Render();
+   
         }
 
     </div>
@@ -335,7 +336,7 @@
         var row = $("#EmployeesList").find("tr:eq(" + targetIndex + ")")[0];
         theGrid.select(row);
         $("#EmployeesList").find("tr:eq(" + targetIndex + ")")[0].className = "clickable";
-
+        return false;
         // console.log('Found it at Page: ' + page + 'index: ' + targetIndex);
 
     }
