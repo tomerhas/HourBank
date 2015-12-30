@@ -276,7 +276,7 @@ namespace BsmWebApp.Controllers
                 var namelist = employees
                     .Where(x => x.FullName.ToString().StartsWith(startsWith))
                     .Select(x => x.FullName).ToList();
-
+                namelist.Sort();
 
                 return Json(namelist, JsonRequestBehavior.AllowGet);
             }
@@ -287,6 +287,7 @@ namespace BsmWebApp.Controllers
                     .Where(x => x.MisparIshi.ToString().StartsWith(startsWith))
                     .Select(x => x.MisparIshi).ToList();
 
+                listIds.Sort();
                 return Json(listIds, JsonRequestBehavior.AllowGet);
             }
         }

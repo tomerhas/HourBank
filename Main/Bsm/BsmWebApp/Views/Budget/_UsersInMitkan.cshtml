@@ -304,8 +304,10 @@
 
         var theGrid = $('#EmployeesList')
         var dataItem = $('#MisparIshi');
+        if(dataItem.val().trim() =="")
+            return;
+
         var ds = theGrid.dataSource;
-      
         var ds = $('#EmployeesList').data("kendoGrid").dataSource;//.data()[0].MisparIshi
 
         var view = kendo.data.Query.process(ds.data(), {

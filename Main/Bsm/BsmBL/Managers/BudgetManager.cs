@@ -356,9 +356,12 @@ namespace BsmBL.Managers
             else budgetEmployee.Paar = paar.ToString();
            // budgetEmployee.CurYechida = int.Parse(row["cur_yechida"].ToString());
 
+            var isuk_meshek = int.Parse(row["isuk_meshek"].ToString());
+            var budget_calc = int.Parse(row["BUDGET_CALC"].ToString()); 
+
             var exists_in_mitkan= row["exist_in_mitkan"].ToString();
             var mutaam =row["mutaam"].ToString();
-            if(budgetEmployee.AlTikni =="כן"  || mutaam=="1" || mutaam=="3" || mutaam=="5"||mutaam=="7" || exists_in_mitkan=="0")
+            if (budgetEmployee.AlTikni == "כן" || mutaam == "1" || mutaam == "3" || mutaam == "5" || mutaam == "7" || exists_in_mitkan == "0" || isuk_meshek == 0 || budget_calc==0)
                 budgetEmployee.ReadOnly ="true";
             else budgetEmployee.ReadOnly = "false";
         //    budgetEmployee.NosafotNotUsed = float.Parse(row["Nosafot_Not_Used"].ToString());
