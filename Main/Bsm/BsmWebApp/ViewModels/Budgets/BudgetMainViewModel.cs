@@ -16,6 +16,7 @@ namespace BsmWebApp.ViewModels.Budgets
             IsMitkanBudgetDetailEmpty = true;
             OnlyOneYechida = false;
             UsersInMitkan = new UsersInMitkanViewModel();
+            IsMonthToEdit = false;
         //    KodList = new List<KodListItem>();
         //    KodList.Add(new KodListItem() { ProductID = 2, ProductName = "prod1" });
         //    KodList.Add(new KodListItem() { ProductID = 3, ProductName = "prod2" });
@@ -43,6 +44,7 @@ namespace BsmWebApp.ViewModels.Budgets
         public bool IsMitkanBudgetDetailEmpty { get; set; }
         public int KodMitkan { get; set; }
         public DateTime Month { get; set; }
+        public bool IsMonthToEdit { get; set; }
         /// <summary>
         /// ///////////////////////////////////////
         /// </summary>

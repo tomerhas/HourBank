@@ -27,7 +27,7 @@ namespace BsmCommon.UDT
         
         private bool m_TAARICH_IDKUNIsNull;
         
-        private decimal m_MEADKEN;
+        private int m_MEADKEN;
         
         private bool m_MEADKENIsNull;
         
@@ -94,7 +94,7 @@ namespace BsmCommon.UDT
         }
         
         [OracleObjectMappingAttribute("MEADKEN")]
-        public decimal MEADKEN {
+        public int MEADKEN {
             get {
                 return this.m_MEADKEN;
             }
@@ -207,7 +207,7 @@ namespace BsmCommon.UDT
             }
             this.MEADKENIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "MEADKEN");
             if ((MEADKENIsNull == false)) {
-                this.MEADKEN = ((decimal)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "MEADKEN")));
+                this.MEADKEN = ((int)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "MEADKEN")));
             }
             
             this.CHODESHIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "CHODESH");

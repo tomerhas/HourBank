@@ -112,11 +112,15 @@ namespace BsmWebApp.Controllers
                 vm.LastDateIdkunBank = taarich;// Gmanager.GetLastDateIdkunBank(((GeneralObject)Session["GeneralDetails"]).CurMonth);
                 vm.LastDateIdkunBankStr = string.Concat("יום ", DateHelper.getDayHeb(vm.LastDateIdkunBank.AddDays(-1)), " ,", vm.LastDateIdkunBank.AddDays(-1).ToShortDateString());
 
+                if (DateTime.Now < vm.LastDateIdkunBank)
+                    vm.IsMonthToEdit = true;
                 TimeSpan span = vm.LastDateIdkunBank - (DateTime.Now.AddDays(-1));
                 int numDays = span.Days;
                 vm.NumDays = "";
-                if (numDays > 0)
+                if (numDays > 1)
                     vm.NumDays = string.Concat("עוד ", numDays, " ימים");
+                else if (numDays == 1)
+                    vm.NumDays ="היום";
             }
             else
             {
@@ -145,8 +149,10 @@ namespace BsmWebApp.Controllers
 
         public ActionResult EmployeesInMitkanRead([DataSourceRequest]DataSourceRequest request, int KodYechida, DateTime month)
         {
+         
             List<BudgetEmployeeGrid> employees = (List<BudgetEmployeeGrid>)(Session["EmployeesGrid"]);
-            return Json(employees.ToDataSourceResult(request));
+            List<BudgetEmployeeGrid> SortedEmployees = employees.OrderBy(o => o.MisparIshi).ToList();
+            return Json(SortedEmployees.ToDataSourceResult(request));
            // var employeesContainer = GetEmployeesInMitkan(KodYechida, month);
            // return Json(employeesContainer.Employees.ToDataSourceResult(request));
         }
@@ -160,9 +166,11 @@ namespace BsmWebApp.Controllers
                 objBudgetMichsa.MISPAR_ISHI = employee.MisparIshi;
                 objBudgetMichsa.CHODESH = month;
                 objBudgetMichsa.MICHSA = employee.MichsaCur;
-                objBudgetMichsa.MEADKEN = CurrentUser.UserId;
+                objBudgetMichsa.MEADKEN = !string.IsNullOrEmpty(CurrentUser.EmployeeNumber) ? int.Parse(CurrentUser.EmployeeNumber) : 0; ;
                 oCollBudgetMichsa.Add(objBudgetMichsa);
             });
+
+           
 
             var budget = _container.Resolve<IBudgetManager>();
             budget.SaveEmployeeMichsot(oCollBudgetMichsa);

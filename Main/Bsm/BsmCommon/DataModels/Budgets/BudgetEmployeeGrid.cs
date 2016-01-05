@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,8 @@ namespace BsmCommon.DataModels.Budgets
         public float NosafotPrev { get; set; }
         public float MichsaPrev { get; set; }
         public float NosafotCur { get; set; }
+
+        [RegularExpression(@"^([0-9]{0,3})|([0-9]{0,3}\.([0-9]{1,2}))$", ErrorMessage = "יש להכניס ערך מספרי בפורמט 999.99")]
         public decimal MichsaCur { get; set; }
         public decimal ShaotShebuzu { get; set; }
         public float NosafotNotUsed { get; set; }
