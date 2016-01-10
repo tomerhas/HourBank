@@ -350,10 +350,16 @@ namespace BsmBL.Managers
          //   budgetEmployee.NosafotCur = float.Parse(row["Nosafot_Cur"].ToString());
          
             budgetEmployee.ShaotShebuzu = decimal.Parse(row["ShaotShebuzu"].ToString());
-            var paar = budgetEmployee.ShaotShebuzu - budgetEmployee.MichsaCur;
+            var paar =budgetEmployee.ShaotShebuzu - budgetEmployee.MichsaCur;
+
             if (paar < 0)
                 budgetEmployee.Paar = string.Concat(paar * (-1), "-");
-            else budgetEmployee.Paar = paar.ToString();
+            else
+            {
+                if (paar == 0)
+                    budgetEmployee.Paar = "0";
+                else budgetEmployee.Paar = paar.ToString();
+            }
            // budgetEmployee.CurYechida = int.Parse(row["cur_yechida"].ToString());
 
             var isuk_meshek = int.Parse(row["isuk_meshek"].ToString());

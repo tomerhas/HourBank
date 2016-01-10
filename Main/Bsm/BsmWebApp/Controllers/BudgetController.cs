@@ -159,22 +159,32 @@ namespace BsmWebApp.Controllers
 
         public ActionResult EmployeesInMitkanUpdate([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<BudgetEmployeeGrid> employees,DateTime month)
         {
-            COLL_BUDGET_EMPLOYEES_MICHSA oCollBudgetMichsa = new COLL_BUDGET_EMPLOYEES_MICHSA();
-            employees.ToList().ForEach(employee =>
+            try
             {
-                OBJ_BUDGET_EMPLOYEES_MICHSA objBudgetMichsa = new OBJ_BUDGET_EMPLOYEES_MICHSA();
-                objBudgetMichsa.MISPAR_ISHI = employee.MisparIshi;
-                objBudgetMichsa.CHODESH = month;
-                objBudgetMichsa.MICHSA = employee.MichsaCur;
-                objBudgetMichsa.MEADKEN = !string.IsNullOrEmpty(CurrentUser.EmployeeNumber) ? int.Parse(CurrentUser.EmployeeNumber) : 0; ;
-                oCollBudgetMichsa.Add(objBudgetMichsa);
-            });
+                COLL_BUDGET_EMPLOYEES_MICHSA oCollBudgetMichsa = new COLL_BUDGET_EMPLOYEES_MICHSA();
+                employees.ToList().ForEach(employee =>
+                {
+                    OBJ_BUDGET_EMPLOYEES_MICHSA objBudgetMichsa = new OBJ_BUDGET_EMPLOYEES_MICHSA();
+                    objBudgetMichsa.MISPAR_ISHI = employee.MisparIshi;
+                    objBudgetMichsa.CHODESH = month;
+                    objBudgetMichsa.MICHSA = employee.MichsaCur;
+                    objBudgetMichsa.MEADKEN = !string.IsNullOrEmpty(CurrentUser.EmployeeNumber) ? int.Parse(CurrentUser.EmployeeNumber) : 0; ;
+                    oCollBudgetMichsa.Add(objBudgetMichsa);
+                });
 
-           
 
-            var budget = _container.Resolve<IBudgetManager>();
-            budget.SaveEmployeeMichsot(oCollBudgetMichsa);
-            return Json(employees.ToDataSourceResult(request));
+
+                var budget = _container.Resolve<IBudgetManager>();
+                budget.SaveEmployeeMichsot(oCollBudgetMichsa);
+                return Json(employees.ToDataSourceResult(request));
+            }
+            catch(Exception ex)
+            {  
+                return this.Json(new DataSourceResult
+                { 
+                    Errors = ex.Message
+                });
+            }
         }
 
         private UsersInMitkanViewModel GetEmployeesInMitkan(int KodYechida, DateTime month)

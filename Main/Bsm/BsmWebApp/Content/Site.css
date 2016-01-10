@@ -392,6 +392,11 @@ background-color:  rgba(137, 94, 138, 0.2) !important;
     
 }
 
+.DisabledIpus {
+      background: url("Images/ipus_disable.png") no-repeat left  #e7e7e7 !important;
+      background-position-y: 4px;
+      background-position-x: 50px  !important;
+}
 
 #divCal {
       background: url("Images/calender.png") no-repeat left  #e7e7e7;
@@ -408,6 +413,11 @@ background-color:  rgba(137, 94, 138, 0.2) !important;
     
 }
 
+.DisabledCal {
+      background: url("Images/auto_disable.png") no-repeat left  #e7e7e7 !important;
+      margin-right:50px;
+      background-position-x: 130px  !important;
+}
 .PurpleTextLink {
    color:  #895e8a;
     font-size:  17.89px;
@@ -732,7 +742,26 @@ line-height:  30.2px;
     color:  #f0f0f0; 
 }
 
- 
+ .DisabledLink { 
+     color: rgba(137, 94, 138, 0.2); 
+     font-family:  Arial;
+     font-size:  17.89px;
+     font-weight:  700;
+     cursor: default; 
+     text-decoration: none; }
+
+ .k-dirty {
+    position: absolute;
+    width: 0;
+    height: 0;
+     border-style: solid; 
+     border-width: 0px !important; 
+     border-color: #f00 transparent transparent #f00; 
+    margin: -0.45em 0 0 -0.6em;
+    padding: 0;
+    overflow: hidden;
+    vertical-align: top;
+
 /*ui-state-focus,
 .ui-widget-content .ui-state-focus,
 .ui-widget-header .ui-state-focus {

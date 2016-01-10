@@ -16,8 +16,11 @@
     @Styles.Render("~/Content/kendo/css")
      @Styles.Render("~/Content/css")
    
+    <script src="@Url.Content("~/Scripts/jquery.mask.js")" type="text/javascript"></script>
+   @* <script src="@Url.Content("~/Scripts/jquery.maskedinput.js")" type="text/javascript"></script>*@
     <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
    <script> function AlertMessage(msg, height, width) {
      $('.ui-dialog').css("clear", "both");
      $("#dialog-message").html(msg);
