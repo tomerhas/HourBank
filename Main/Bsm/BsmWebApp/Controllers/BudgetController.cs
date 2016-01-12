@@ -157,7 +157,8 @@ namespace BsmWebApp.Controllers
            // return Json(employeesContainer.Employees.ToDataSourceResult(request));
         }
 
-        public ActionResult EmployeesInMitkanUpdate([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<BudgetEmployeeGrid> employees,DateTime month)
+        [HttpPost]
+        public ActionResult EmployeesInMitkanUpdate([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<BudgetEmployeeGrid> employees, DateTime month)
         {
             try
             {
@@ -170,12 +171,18 @@ namespace BsmWebApp.Controllers
                     objBudgetMichsa.MICHSA = employee.MichsaCur;
                     objBudgetMichsa.MEADKEN = !string.IsNullOrEmpty(CurrentUser.EmployeeNumber) ? int.Parse(CurrentUser.EmployeeNumber) : 0; ;
                     oCollBudgetMichsa.Add(objBudgetMichsa);
+                    employee.MichsaMakor = employee.MichsaCur;
                 });
 
 
 
                 var budget = _container.Resolve<IBudgetManager>();
                 budget.SaveEmployeeMichsot(oCollBudgetMichsa);
+                ViewBag.Message = JsonConvert.SerializeObject(new { Text = "Ok" });
+              //  Message = "ggg";
+              //  model.Messege = "fff";
+              //  var result = new[] { model }.ToDataSourceResult(request, ModelState);
+              //  return Json(model);
                 return Json(employees.ToDataSourceResult(request));
             }
             catch(Exception ex)

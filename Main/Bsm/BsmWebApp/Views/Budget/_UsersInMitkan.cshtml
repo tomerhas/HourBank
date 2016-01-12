@@ -73,10 +73,8 @@
  </script>
 @using (Html.BeginForm())
 {
-
-
-    if (Model.IsMitkanBudgetDetailEmpty == false && Model.UsersInMitkan.Employees.Count > 0)
-    {
+     if (Model.IsMitkanBudgetDetailEmpty == false && Model.UsersInMitkan.Employees.Count > 0)
+     {
 @*<hr class="styled" />*@
 @*<div>
         <input type="button" value="שמור" onclick="CheckHaveChanges()" />
@@ -102,8 +100,8 @@
 
             <div class="col-md-2">
 
-                <a href="#" onclick="DisplayAllocatedHoursOptions()">
-                    <div id="divCal" style="text-align: right; width: 200px; text-align: left" class="pointer">
+                <a id="AutoLink" href="#" onclick="DisplayAllocatedHoursOptions()">
+                    <div id="divCal" style="text-align: right; width: 200px; text-align: left" class="pointer divCal">
                         <label id="lblAuto" class="PurpleTextBoldLink pointer" style="padding-top: 5px">הקצאה אוטומטית</label>
                     </div>
                 </a>
@@ -112,7 +110,7 @@
             </div>
             <div class="col-md-2">
                 <a>
-                    <div id="divIpus" style="text-align: right; width: 80px; text-align: left" onclick="ModifyGrid('ipus');" class="pointer">
+                    <div id="divIpus" style="text-align: right; width: 80px; text-align: left" onclick="ModifyGrid('ipus');" class="pointer divIpus">
                         <label id="lblIpus" class="PurpleTextBoldLink pointer" style="padding-top: 5px">איפוס</label>
                     </div>
                 </a>
@@ -145,51 +143,51 @@
 
 
         @{
-        //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
-        //Html.Kendo().Grid(Model.UsersInMitkan.Employees)
-        Html.Kendo().Grid<BsmCommon.DataModels.Budgets.BudgetEmployeeGrid>()
-           .Name("EmployeesList").Columns(columns =>
-           {
-               //  columns.Bound(o => o.MisparIshi).ClientTemplate("#=GetImage(data.MisparIshi)#").HtmlAttributes(new { style = "text-align: center; width: 30%; min-width: 60px;" });
+         //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
+         //Html.Kendo().Grid(Model.UsersInMitkan.Employees)
+         Html.Kendo().Grid<BsmCommon.DataModels.Budgets.BudgetEmployeeGrid>()
+            .Name("EmployeesList").Columns(columns =>
+            {
+                //  columns.Bound(o => o.MisparIshi).ClientTemplate("#=GetImage(data.MisparIshi)#").HtmlAttributes(new { style = "text-align: center; width: 30%; min-width: 60px;" });
 
 
-               //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  value='ff'   onclick='OpenKds();'   />").Width(80);
-               columns.Template(o => o.MisparIshi).ClientTemplate("<img src='../../Content/Images/pai.png' onclick='OpenKds(#= MisparIshi #);' />").HtmlAttributes(new { @class = "pointer" });  //http://kds/Modules/Ovdim/NochechutMerukezet.aspx
-               columns.Bound(o => o.MisparIshi).Title("מספר אישי");
-               columns.Bound(o => o.FullName).Title("שם עובד").HtmlAttributes(new { @id = "tdName" });
-               columns.Bound(o => o.TeurIsuk).Title("עיסוק");
-               columns.Bound(o => o.AlTikni).Title("על תקני");
-               columns.Bound(o => o.TeurMutamut).Title("מותאם");
-               columns.Bound(o => o.TeurGil).Title("גיל");
-               columns.Bound(o => o.MichsaYomit).Title("מכסה יומית");
-               columns.Bound(o => o.NosafotPrev).Title("הקצאה לחודש קודם");
-               columns.Bound(o => o.MichsaCur).Title("הקצאת שעות").HtmlAttributes(new { onfocusin = "focusInput(this);", onchange = "CheakValid(this);", @class = "CellEditGrid" }).Width(80);
-               columns.Bound(o => o.ShaotShebuzu).Title("שעות שבוצעו");
-               columns.Bound(o => o.Paar).Title("פער").HtmlAttributes(new { @id = "tdPaar" });//.ClientTemplate("<div style='direction:ltr'>#= Paar #</div>");//.HtmlAttributes(new { style = " direction:ltr;" });
-               columns.Bound(o => o.ReadOnly).Hidden();
+                //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  value='ff'   onclick='OpenKds();'   />").Width(80);
+                columns.Template(o => o.MisparIshi).ClientTemplate("<img src='../../Content/Images/pai.png' onclick='OpenKds(#= MisparIshi #);' />").HtmlAttributes(new { @class = "pointer" });  //http://kds/Modules/Ovdim/NochechutMerukezet.aspx
+                columns.Bound(o => o.MisparIshi).Title("מספר אישי");
+                columns.Bound(o => o.FullName).Title("שם עובד").HtmlAttributes(new { @id = "tdName" });
+                columns.Bound(o => o.TeurIsuk).Title("עיסוק");
+                columns.Bound(o => o.AlTikni).Title("על תקני");
+                columns.Bound(o => o.TeurMutamut).Title("מותאם");
+                columns.Bound(o => o.TeurGil).Title("גיל");
+                columns.Bound(o => o.MichsaYomit).Title("מכסה יומית");
+                columns.Bound(o => o.NosafotPrev).Title("הקצאה לחודש קודם");
+                columns.Bound(o => o.MichsaCur).Title("הקצאת שעות").HtmlAttributes(new { onfocusin = "focusInput(this);", onchange = "CheakValid(this);", @class = "CellEditGrid" }).Width(80);
+                columns.Bound(o => o.ShaotShebuzu).Title("שעות שבוצעו");
+                columns.Bound(o => o.Paar).Title("פער").HtmlAttributes(new { @id = "tdPaar" });//.ClientTemplate("<div style='direction:ltr'>#= Paar #</div>");//.HtmlAttributes(new { style = " direction:ltr;" });
+                columns.Bound(o => o.ReadOnly).Hidden();
 
-               ////columns.Bound(o => o.MisparIshi).Title("מספר אישי").Title("ddd").Width(80);
-               ////columns.Bound(o => o.FullName).Title("שם עובד").Width(100);
-               ////columns.Bound(o => o.TeurIsuk).Title("עיסוק").Width(100);
-               ////columns.Bound(o => o.AlTikni).Title("על תקני").Width(50);
-               ////columns.Bound(o => o.TeurMutamut).Title("קוד מותאם").Width(80);
-               ////columns.Bound(o => o.TeurGil).Title("קוד גיל").Width(80);
-               ////columns.Bound(o => o.MichsaYomit).Title("מכסה יומית </br> (כולל הלבשה)").Width(80);
-               ////columns.Bound(o => o.NosafotPrev).Title(String.Format("{0:MM/yyyy}", Model.Month.AddMonths(-1)) + "</br>ש''נ שבוצעו").Width(80);
-               ////columns.Bound(o => o.MichsaPrev).Title(String.Format("{0:MM/yyyy}", Model.Month.AddMonths(-1)) + "</br> מאפיין ש''נ</br>תפקיד ").Width(80);
-               ////columns.Bound(o => o.NosafotCur).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br>ש''נ שבוצעו").Width(80);
-               ////columns.Bound(o => o.MichsaCur).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br> מאפיין ש''נ</br>תפקיד ").HtmlAttributes(new { onchange = "ShowDialogsSave();", style = "border: 8px double lightgray;" }).Width(30);
-               //////columns.Bound(o => o.MichsaCur).Title("מכסת ש''נ</br>  בחודש נוכחי").ClientTemplate("<input style='float: right;width:80px;' value='#=MichsaCur#'  name=''  />").Width(30);
-               ////columns.Bound(o => o.NosafotNotUsed).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br> ש''נ בלתי  </br> מנוצלות").Width(80);
+                ////columns.Bound(o => o.MisparIshi).Title("מספר אישי").Title("ddd").Width(80);
+                ////columns.Bound(o => o.FullName).Title("שם עובד").Width(100);
+                ////columns.Bound(o => o.TeurIsuk).Title("עיסוק").Width(100);
+                ////columns.Bound(o => o.AlTikni).Title("על תקני").Width(50);
+                ////columns.Bound(o => o.TeurMutamut).Title("קוד מותאם").Width(80);
+                ////columns.Bound(o => o.TeurGil).Title("קוד גיל").Width(80);
+                ////columns.Bound(o => o.MichsaYomit).Title("מכסה יומית </br> (כולל הלבשה)").Width(80);
+                ////columns.Bound(o => o.NosafotPrev).Title(String.Format("{0:MM/yyyy}", Model.Month.AddMonths(-1)) + "</br>ש''נ שבוצעו").Width(80);
+                ////columns.Bound(o => o.MichsaPrev).Title(String.Format("{0:MM/yyyy}", Model.Month.AddMonths(-1)) + "</br> מאפיין ש''נ</br>תפקיד ").Width(80);
+                ////columns.Bound(o => o.NosafotCur).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br>ש''נ שבוצעו").Width(80);
+                ////columns.Bound(o => o.MichsaCur).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br> מאפיין ש''נ</br>תפקיד ").HtmlAttributes(new { onchange = "ShowDialogsSave();", style = "border: 8px double lightgray;" }).Width(30);
+                //////columns.Bound(o => o.MichsaCur).Title("מכסת ש''נ</br>  בחודש נוכחי").ClientTemplate("<input style='float: right;width:80px;' value='#=MichsaCur#'  name=''  />").Width(30);
+                ////columns.Bound(o => o.NosafotNotUsed).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br> ש''נ בלתי  </br> מנוצלות").Width(80);
 
-               // columns.Bound(o => o.MisparIshi).Filterable(false).Width(125).ClientTemplate(Html.Kendo().NumericTextBox().Name("mp_sss").Min(0).HtmlAttributes(new { value = "#=o.MisparIshi#", style = "width: 100px;" }).ToClientTemplate().ToHtmlString());
-               // onclick="ShowPopUp('@Html.DisplayFor(model => model.KodMitkan)','@Html.DisplayFor(model => model.MitkanName)','@Html.ValueFor(model => model.Month, "{0:dd/MM/yyyy}")');
-               //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  style='float: right;'  value='הפק דוח' onclick='ShowReportNochechut(dataItem.MisparIshi, 4545)'  />").Width(80);
-               ////columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input style='float: right;' type='button' value= 'הפק דוח' onclick='ShowReportNochechut(#= MisparIshi #);'     />").Width(80);
+                // columns.Bound(o => o.MisparIshi).Filterable(false).Width(125).ClientTemplate(Html.Kendo().NumericTextBox().Name("mp_sss").Min(0).HtmlAttributes(new { value = "#=o.MisparIshi#", style = "width: 100px;" }).ToClientTemplate().ToHtmlString());
+                // onclick="ShowPopUp('@Html.DisplayFor(model => model.KodMitkan)','@Html.DisplayFor(model => model.MitkanName)','@Html.ValueFor(model => model.Month, "{0:dd/MM/yyyy}")');
+                //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  style='float: right;'  value='הפק דוח' onclick='ShowReportNochechut(dataItem.MisparIshi, 4545)'  />").Width(80);
+                ////columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input style='float: right;' type='button' value= 'הפק דוח' onclick='ShowReportNochechut(#= MisparIshi #);'     />").Width(80);
 
 
-               //   columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='submit'  style='float: right;'  value='הפק דוח' name='action:Nochechut' />").Width(80);
-               //    columns.Bound(o => o.Meafyen14).Hidden();
+                //   columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='submit'  style='float: right;'  value='הפק דוח' name='action:Nochechut' />").Width(80);
+                columns.Bound(o => o.MichsaMakor).HtmlAttributes(new { @id = "tdMakorVal" }).Hidden();
 
 @* columns.Template(o=> @Html.ActionLink("הפק דו''ח","CreateNochechutRdl",new{ovedId=o.MisparIshi})).Width(100);
                    columns.Template(o=>{
@@ -197,77 +195,84 @@
                                     }).Width(100);*@
 
 
-           })
-            .ToolBar(toolbar =>
-            {
-                toolbar.Custom().Text("עדכן מכסות").HtmlAttributes(new { @class = "k-grid-save-changes k-update" });
-                // toolbar.Custom().Text("עדכן מכסות").HtmlAttributes(new { @onclick = "CheckHaveChanges();", @class = "k-grid-save-changes k-update" });
-                toolbar.Custom().Text("בטל שינויים").HtmlAttributes(new { @class = "k-grid-cancel-changes k-cancel" });
             })
+             .ToolBar(toolbar =>
+             {
+                 toolbar.Custom().Text("עדכן מכסות").HtmlAttributes(new { @class = "k-grid-save-changes k-update" });
+                 // toolbar.Custom().Text("עדכן מכסות").HtmlAttributes(new { @onclick = "CheckHaveChanges();", @class = "k-grid-save-changes k-update" });
+                 toolbar.Custom().Text("בטל שינויים").HtmlAttributes(new { @class = "k-grid-cancel-changes k-cancel" });
+             })
 
-            .Editable(editable => editable.Mode(GridEditMode.InCell))
-            .Pageable()
-            .Sortable(c => c.AllowUnsort(false))
-
-
-
-           //.Filterable()
-            .Events(events => events.DataBound("onDataBound"))
-            //.Editable(editable => editable.Mode(GridEditMode.InCell)) // Use in-cell editing mode
-            .DataSource(dataSource =>
-                dataSource.Ajax()
-                    .PageSize(12)
-                    .ServerOperation(false)
-                    .Batch(true) // Enable batch updates
-                    .Model(model =>
-                    {
-                        model.Id(employee => employee.MisparIshi); // Specify the property which is the unique identifier of the model
+             .Editable(editable => editable.Mode(GridEditMode.InCell))
+             .Pageable()
+             .Sortable(c => c.AllowUnsort(false))
 
 
-                        model.Field(employee => employee.MisparIshi).Editable(false);
-                        model.Field(employee => employee.FullName).Editable(false);
-                        model.Field(employee => employee.TeurIsuk).Editable(false);
-                        model.Field(employee => employee.AlTikni).Editable(false);
-                        model.Field(employee => employee.TeurMutamut).Editable(false);
-                        model.Field(employee => employee.TeurGil).Editable(false);
-                        model.Field(employee => employee.MichsaYomit).Editable(false);
-                        model.Field(employee => employee.NosafotPrev).Editable(false);
-                        model.Field(employee => employee.NosafotCur).Editable(false);
-                        model.Field(employee => employee.ShaotShebuzu).Editable(false);
-                        model.Field(employee => employee.MichsaCur).Editable(DateTime.Now < Model.LastDateIdkunBank ? true : false);
-                        model.Field(employee => employee.Paar).Editable(false);
-                    })
-                    //  .Read(read => read.Action("EmployeesInMitkanRead", "Budget", new { UsersInMitkan = Model.UsersInMitkan })) 
-                .Read(read => read.Action("EmployeesInMitkanRead", "Budget", new { KodYechida = Model.KodMitkan, month = Model.Month }))  // Action method invoked when the grid needs data
-                    //.Create(create => create.Action("Products_Create", "Home")) // Action method invoked when the user saves a new data item
-                .Update(update => update.Action("EmployeesInMitkanUpdate", "Budget", new { month = Model.Month })) //"additionalInfo"))  // Action method invoked when the user saves an updated data item
-                .Events(events => events.Error("onError"))
 
-            //   .Events(events => events.RequestEnd("onGridRequestEnd"))
-            //.Destroy(destroy => destroy.Action("Products_Destroy", "Home")) // Action method invoked when the user removes a data item
+            //.Filterable()
+             .Events(events => events.DataBound("onDataBound"))
+             // .Events(events => events.Change("onChange").Remove("YourFunctionForAfterDelete")
+             //.Editable(editable => editable.Mode(GridEditMode.InCell)) // Use in-cell editing mode
+             .DataSource(dataSource =>
+                 dataSource.Ajax()
+                     .PageSize(12)
+                     .ServerOperation(false)
+                     .Batch(true) // Enable batch updates
+                     .Model(model =>
+                     {
+                         model.Id(employee => employee.MisparIshi); // Specify the property which is the unique identifier of the model
 
-                // .Update(update => update
-            // .Action("EmployeesInMitkanUpdate", "Budget"))  // Action invoked when the user saves an updated data item
-            // .Events(events => events.SaveChanges("CheckHaveChanges"))
-                )
-            /*  .Events(events => events.SaveChanges(
-                    @<text>
-                      function(e) {
-                      alert("jj");
-                    CheckHaveChanges();
-                      }
-                      </text>
-                      ))*/
-           .Render();
+                         model.Field(employee => employee.MisparIshi).Editable(false);
+                         model.Field(employee => employee.FullName).Editable(false);
+                         model.Field(employee => employee.TeurIsuk).Editable(false);
+                         model.Field(employee => employee.AlTikni).Editable(false);
+                         model.Field(employee => employee.TeurMutamut).Editable(false);
+                         model.Field(employee => employee.TeurGil).Editable(false);
+                         model.Field(employee => employee.MichsaYomit).Editable(false);
+                         model.Field(employee => employee.NosafotPrev).Editable(false);
+                         model.Field(employee => employee.NosafotCur).Editable(false);
+                         model.Field(employee => employee.ShaotShebuzu).Editable(false);
+                         model.Field(employee => employee.MichsaCur).Editable(DateTime.Now < Model.LastDateIdkunBank ? true : false);
+                         model.Field(employee => employee.Paar).Editable(false);
+                     })
+                     //  .Read(read => read.Action("EmployeesInMitkanRead", "Budget", new { UsersInMitkan = Model.UsersInMitkan })) 
+                 .Read(read => read.Action("EmployeesInMitkanRead", "Budget", new { KodYechida = Model.KodMitkan, month = Model.Month }))  // Action method invoked when the grid needs data
+                     //.Create(create => create.Action("Products_Create", "Home")) // Action method invoked when the user saves a new data item
+                 .Update(update => update.Action("EmployeesInMitkanUpdate", "Budget", new { month = Model.Month})) //"additionalInfo"))  // Action method invoked when the user saves an updated data item
+
+                 .Events(events =>
+                 {
+                     events.Error("onError");
+                     events.RequestEnd("force_update");
+                 })
+                 // .Events(events => events.Error("onError"))
+
+             //   .Events(events => events.RequestEnd("onGridRequestEnd"))
+             //.Destroy(destroy => destroy.Action("Products_Destroy", "Home")) // Action method invoked when the user removes a data item
+
+                 // .Update(update => update
+             // .Action("EmployeesInMitkanUpdate", "Budget"))  // Action invoked when the user saves an updated data item
+             // .Events(events => events.SaveChanges("CheckHaveChanges"))
+                 )
+             /*  .Events(events => events.SaveChanges(
+                     @<text>
+                       function(e) {
+                       alert("jj");
+                     CheckHaveChanges();
+                       }
+                       </text>
+                       ))*/
+            .Render();
    
         }
 
     </div>
+    
     <div id="dialog-confirm"></div>
   
     <div id="dialog-allocated"></div>
     
-    }
+     }
 
 
 }
@@ -279,10 +284,25 @@
 <script type="text/javascript">
 
     function focusInput(val){
-        $(val).find('input').select();
+
+        setTimeout(function () {
+            $(val).find('input').select();   
+        }, 100);
+
         $(val).find('input').prop('maxLength', 6);
         $(val).find('input').mask('099.99',{  placeholder: ""});
 
+    }
+
+    
+    function CheckNumber(obj){
+        var val=  $(obj).find('input').val();
+        var tav=  val.substring(val.length);
+   
+        if(IsNumeric(tav) == true || val=='.')
+            return;
+        else $(obj).find('input').val().replace(tav,'');
+        
     }
     var displayMessage = @Model.ShouldDisplayMessage;
     var CanUpdate = true;
@@ -307,12 +327,15 @@
         $("#cancel").removeClass();
         $("#cancel").contents().unwrap().wrap("<span class='DisabledLink'></span>");
 
-        $("#divIpus").attr("disabled", "disabled");
+        //  $("#divIpus").attr("disabled", "disabled");
+        $("#AutoLink").css({cursor:"default"});
         $("#lblIpus").removeClass();
         $("#lblIpus").addClass("DisabledLink");
         $("#lblAuto").removeClass();
         $("#lblAuto").addClass("DisabledLink");
+        $("#divIpus").removeClass();
         $("#divIpus").addClass("DisabledIpus");
+        $("#divCal").removeClass();
         $("#divCal").addClass("DisabledCal");
     }
     function OpenKds(misparishi)
@@ -454,23 +477,29 @@
     {
         //  var x=this;
         ShowdSave=true;
-        ($(e.parentNode).find("td#tdName"))[0].className="editCell";
-        ($(e.parentNode).find("span")).removeClass("k-dirty");
-        if (!IsDecimal(e.firstChild.value))
-        { //PurpleButton 
-            //$( "#btnNextMonth" ).addClass( "DisabledExec" );
+        var erechMakor = $(e.parentNode).find("td#tdMakorVal")[0].outerText;
+        var newVal= e.firstChild.value;
+
+        if(erechMakor.trim() != newVal.trim())
+        {
+            ($(e.parentNode).find("td#tdName"))[0].className="editCell";
+            ($(e.parentNode).find("span")).removeClass("k-dirty");
+            if (!IsDecimal(e.firstChild.value))
+            { //PurpleButton 
+                //$( "#btnNextMonth" ).addClass( "DisabledExec" );
      
-            $(e.parentNode).find("input#MichsaCur").attr("data-val-number","יש להכניס ערך מספרי בפורמט 999.99");//.replace('number', '55555555');
-            //   $( "#btnUpdate" ).removeClass( "PurpleButton" );
-            $( "#btnUpdate" ).addClass( "DisabledExec" );
-            $("#btnUpdate").attr('disabled', 'disabled');
+                $(e.parentNode).find("input#MichsaCur").attr("data-val-number","יש להכניס ערך מספרי בפורמט 999.99");//.replace('number', '55555555');
+                //   $( "#btnUpdate" ).removeClass( "PurpleButton" );
+                $( "#btnUpdate" ).addClass( "DisabledExec" );
+                $("#btnUpdate").attr('disabled', 'disabled');
            
-        } else { 
-            $("#btnUpdate").attr('disabled', '');
-            $("#btnUpdate").removeAttr('disabled');
-            $( "#btnUpdate" ).removeClass( "DisabledExec" );
+            } else { 
+                $("#btnUpdate").attr('disabled', '');
+                $("#btnUpdate").removeAttr('disabled');
+                $( "#btnUpdate" ).removeClass( "DisabledExec" );
+            }
+            // e.parentNode.cells[2].className="editCell";
         }
-       // e.parentNode.cells[2].className="editCell";
 
     }
 
@@ -560,6 +589,11 @@
             var dt = grid.dataItem($(this));
             if (dt.dirty == true) {
                 grid._modelChange({ field: "MichsaCur", model: dt });
+            }
+            if(dt.Paar.toString().indexOf("-")>-1)
+            {
+                var val = dt.Paar.toString().split("-");
+                $(this).find('td#tdPaar')[0].innerHTML = val[1]+  "-" ;
             }
             if(dt.ReadOnly == "true" || !(CanUpdate))
             {        
@@ -667,7 +701,20 @@
         AlertMessage(e.errors,150,400);
     }
 
+    function force_update()
+    {
+      //  var model = @Html.Raw(Json.Encode(Model));
+        var c = '@ViewBag.Message';
+        var x= @Html.Raw(Json.Encode(ViewBag.Message));
+       // alert(set(@Html.Raw(Json.Encode(ViewBag.Message))));
    
+   //     alert(x);
+    }
+   
+    function set(value) {
+        return value;
+    }
+
     /* function CheakValid(obj) {
          //  debugger;
          if (obj.value != '') {

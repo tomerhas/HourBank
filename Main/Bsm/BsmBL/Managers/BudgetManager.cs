@@ -347,18 +347,20 @@ namespace BsmBL.Managers
             budgetEmployee.NosafotPrev = float.Parse(row["Nosafot_Prev"].ToString());
            // budgetEmployee.MichsaPrev = float.Parse(row["Michsa_Prev"].ToString());
             budgetEmployee.MichsaCur = decimal.Parse(row["Michsa_Cur"].ToString());
+            budgetEmployee.MichsaMakor = budgetEmployee.MichsaCur;
          //   budgetEmployee.NosafotCur = float.Parse(row["Nosafot_Cur"].ToString());
          
             budgetEmployee.ShaotShebuzu = decimal.Parse(row["ShaotShebuzu"].ToString());
             var paar =budgetEmployee.ShaotShebuzu - budgetEmployee.MichsaCur;
 
             if (paar < 0)
-                budgetEmployee.Paar = string.Concat(paar * (-1), "-");
+                 budgetEmployee.Paar = paar;// string.Concat(paar * (-1), "-");
+               // budgetEmployee.Paar =
             else
             {
                 if (paar == 0)
-                    budgetEmployee.Paar = "0";
-                else budgetEmployee.Paar = paar.ToString();
+                    budgetEmployee.Paar = 0;// "0";
+                else budgetEmployee.Paar = paar;// paar.ToString();
             }
            // budgetEmployee.CurYechida = int.Parse(row["cur_yechida"].ToString());
 

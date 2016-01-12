@@ -172,7 +172,7 @@
             },
             caretPos: function (originalCaretPos, oldLength, newLength, maskDif) {
                 var translation = jMask.translation[mask.charAt(Math.min(originalCaretPos - 1, mask.length - 1))];
-
+            
                 return !translation ? p.caretPos(originalCaretPos + 1, oldLength, newLength, maskDif)
                                     : Math.min(originalCaretPos + newLength - oldLength - maskDif, newLength);
             },
@@ -190,6 +190,11 @@
                         maskDif = p.getMCharsBeforeCount(newValL - 1) - p.getMCharsBeforeCount(currValL - 1);
 
                     if (newVal !== currVal) {
+                        
+                        var lsatnew = newVal.substring(newVal.length-1);
+                        var lsatcur = currVal.substring(newVal.length-1);
+                        if (lsatnew == "." && lsatcur != "." && IsNumeric(lsatcur) == false)
+                            newVal= newVal.replace(".","");
                         p.val(newVal);
                     }
 

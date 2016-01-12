@@ -22,11 +22,14 @@ namespace BsmCommon.DataModels.Budgets
         public float MichsaPrev { get; set; }
         public float NosafotCur { get; set; }
 
-        [RegularExpression(@"^([0-9]{0,3})|([0-9]{0,3}\.([0-9]{1,2}))$", ErrorMessage = "יש להכניס ערך מספרי בפורמט 999.99")]
+      //  [RegularExpression(@"^([0-9]{0,3})|([0-9]{0,3}\.([0-9]{1,2}))$", ErrorMessage = "יש להכניס ערך מספרי בפורמט 999.99")]
         public decimal MichsaCur { get; set; }
+
+        public decimal MichsaMakor { get; set; }
         public decimal ShaotShebuzu { get; set; }
         public float NosafotNotUsed { get; set; }
-        public string Paar { get; set; }
+    //    public string Paar { get; set; }
+        public decimal Paar { get; set; }
         public int CurYechida { get; set; }
         public string ReadOnly { get; set; }
        // public float Meafyen14 { get; set; }

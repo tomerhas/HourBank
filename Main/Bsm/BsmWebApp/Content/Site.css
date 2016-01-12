@@ -378,45 +378,44 @@ background-color:  rgba(137, 94, 138, 0.2) !important;
 }
 
 
-#divIpus {
-      background: url("Images/refresh.png") no-repeat left  #e7e7e7;
+.divIpus {
+      background: url("Images/refresh.png") no-repeat   #e7e7e7;
       background-position-y: 4px;
       background-position-x: 50px;
 }
-#divIpus:hover {
+.divIpus:hover {
     
 
-     background: url("Images/refresh_h.png") no-repeat left #e7e7e7;
+     background: url("Images/refresh_h.png") no-repeat  #e7e7e7;
      background-position-y: 4px;
       background-position-x: 50px;
     
 }
 
 .DisabledIpus {
-      background: url("Images/ipus_disable.png") no-repeat left  #e7e7e7 !important;
+      background: url("Images/ipus_disable.png") no-repeat   #e7e7e7;
       background-position-y: 4px;
-      background-position-x: 50px  !important;
+      background-position-x: 50px;
 }
 
-#divCal {
-      background: url("Images/calender.png") no-repeat left  #e7e7e7;
-
+.divCal {
+      background: url("Images/calender.png") no-repeat   #e7e7e7;
       background-position-x: 130px;
       margin-right:50px;
 }
-#divCal:hover {
+.divCal:hover {
     
 
-     background: url("Images/calender_h.png") no-repeat left #e7e7e7;
+     background: url("Images/calender_h.png") no-repeat  #e7e7e7;
        background-position-x: 130px;
       margin-right:50px;
     
 }
 
 .DisabledCal {
-      background: url("Images/auto_disable.png") no-repeat left  #e7e7e7 !important;
+      background: url("Images/auto_disable.png") no-repeat  #e7e7e7 ;
       margin-right:50px;
-      background-position-x: 130px  !important;
+      background-position-x: 130px;
 }
 .PurpleTextLink {
    color:  #895e8a;
