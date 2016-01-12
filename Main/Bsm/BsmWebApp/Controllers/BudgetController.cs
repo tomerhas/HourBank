@@ -179,18 +179,16 @@ namespace BsmWebApp.Controllers
                 var budget = _container.Resolve<IBudgetManager>();
                 budget.SaveEmployeeMichsot(oCollBudgetMichsa);
                 ViewBag.Message = JsonConvert.SerializeObject(new { Text = "Ok" });
-              //  Message = "ggg";
-              //  model.Messege = "fff";
-              //  var result = new[] { model }.ToDataSourceResult(request, ModelState);
-              //  return Json(model);
-                return Json(employees.ToDataSourceResult(request));
+   
+            //    return Json(employees.ToDataSourceResult(request));
+
+                ModelState.AddModelError(string.Empty, "הנתונים נשמרו בהצלחה");
+                return Json(employees.ToDataSourceResult(request, ModelState), JsonRequestBehavior.AllowGet);
             }
             catch(Exception ex)
-            {  
-                return this.Json(new DataSourceResult
-                { 
-                    Errors = ex.Message
-                });
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return Json(employees.ToDataSourceResult(request, ModelState), JsonRequestBehavior.AllowGet);
             }
         }
 

@@ -243,7 +243,6 @@
                  .Events(events =>
                  {
                      events.Error("onError");
-                     events.RequestEnd("force_update");
                  })
                  // .Events(events => events.Error("onError"))
 
@@ -697,23 +696,20 @@
     }
 
 
-    function onError(e, status) {
-        AlertMessage(e.errors,150,400);
+    function onError(e) {
+        if (e.errors) {
+            var message="";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            AlertMessage(message,150,400);
+        }
     }
 
-    function force_update()
-    {
-      //  var model = @Html.Raw(Json.Encode(Model));
-        var c = '@ViewBag.Message';
-        var x= @Html.Raw(Json.Encode(ViewBag.Message));
-       // alert(set(@Html.Raw(Json.Encode(ViewBag.Message))));
-   
-   //     alert(x);
-    }
-   
-    function set(value) {
-        return value;
-    }
 
     /* function CheakValid(obj) {
          //  debugger;
