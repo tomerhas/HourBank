@@ -182,13 +182,25 @@ namespace BsmWebApp.Controllers
    
             //    return Json(employees.ToDataSourceResult(request));
 
+              //  BudgetMainViewModel vmResult = new BudgetMainViewModel();
+              //  vmResult.SelectedMonth = month.ToShortDateString();
+
+               // RedirectToAction("Index", new { vm = vmResult });
+              //  return Index(vmResult);
+              //  return RedirectToAction("Index", "Budget", new { vm = vmResult });
+               // return null;
                 ModelState.AddModelError(string.Empty, "הנתונים נשמרו בהצלחה");
-                return Json(employees.ToDataSourceResult(request, ModelState), JsonRequestBehavior.AllowGet);
-            }
+               return Json(employees.ToDataSourceResult(request, ModelState), JsonRequestBehavior.AllowGet);
+                 }
             catch(Exception ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
                 return Json(employees.ToDataSourceResult(request, ModelState), JsonRequestBehavior.AllowGet);
+  
+                //return this.Json(new DataSourceResult
+                //{ 
+                //    Errors = ex.Message
+                //});
             }
         }
 

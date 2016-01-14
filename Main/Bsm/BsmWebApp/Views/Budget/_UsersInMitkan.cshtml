@@ -122,7 +122,7 @@
             </div>
 
             <div class="col-md-4" align="left" style="padding-left: 30px">
-                <input type="button" id="btnUpdate" value="עדכן מכסות" style="width: 124px; margin-left: 10px" class="PurpleButton DoubleArrow k-grid-save-changes" />
+                <input type="button" id="btnUpdate" value="עדכן מכסות" style="width: 124px; margin-left: 10px"  class="PurpleButton DoubleArrow k-grid-save-changes" />
                 <a id="cancel" class="PurpleTextBoldLink pointer k-grid-cancel-changes k-cancel" href="#" onclick="ModifyGrid('cancel');">בטל שינויים</a>
             </div>
         </div>
@@ -138,7 +138,7 @@
             </div>
         </div>
     </div>
-    
+ 
     <div class="bgGray">
 
 
@@ -238,7 +238,7 @@
                      //  .Read(read => read.Action("EmployeesInMitkanRead", "Budget", new { UsersInMitkan = Model.UsersInMitkan })) 
                  .Read(read => read.Action("EmployeesInMitkanRead", "Budget", new { KodYechida = Model.KodMitkan, month = Model.Month }))  // Action method invoked when the grid needs data
                      //.Create(create => create.Action("Products_Create", "Home")) // Action method invoked when the user saves a new data item
-                 .Update(update => update.Action("EmployeesInMitkanUpdate", "Budget", new { month = Model.Month})) //"additionalInfo"))  // Action method invoked when the user saves an updated data item
+                 .Update(update => update.Action("EmployeesInMitkanUpdate", "Budget", new { month = Model.Month })) //"additionalInfo"))  // Action method invoked when the user saves an updated data item
 
                  .Events(events =>
                  {
@@ -276,11 +276,24 @@
 
 }
 
-
+   <div  id="dialog-grid"></div>
 <div id="dialogNoch" title="Basic dialog">
 </div>
 
 <script type="text/javascript">
+    @*   function GetDataModel()
+    {
+        
+        var modelView =  @Html.Raw(Json.Encode(Model));
+   
+       // var val= JSON.Encode(Model);
+        var viewModel = JSON.stringify(modelView); //jQuery.parseJSON(modelView);//  ko.toJSON(modelView); //modelView.ToJson();
+       
+        return {
+            model : viewModel
+        }
+    }*@
+
 
     function focusInput(val){
 
@@ -554,11 +567,13 @@
                         title: " עידכון מכסות ",
                         height: 200,
                         width: 400,
-                        focus: function( event, ui ) {document.activeElement.blur();},
+                        focus: function( event, ui ) {
+                            document.activeElement.blur();},
                         buttons: {
                             "כן": function () {
                                 $(this).dialog('close');
                                 ShowdSave= false;
+                              //  showProgress();
                                 $(".k-grid-save-changes").click();
                                 
                                 var pager = grid.pager;
@@ -697,6 +712,7 @@
 
 
     function onError(e) {
+     //   hideProgress();
         if (e.errors) {
             var message="";
             $.each(e.errors, function (key, value) {
@@ -706,11 +722,39 @@
                     });
                 }
             });
-            AlertMessage(message,150,400);
+            
+            if(message.indexOf('הצלחה')>-1)
+            {
+             //   $("#hidMessage").val(message);
+                AlertMessageGrid(message,200,500);
+               // $("#btnShow").click();
+                //setTimeout(function () {
+                //    $("#btnShow").click();
+                //}, 200);
+            }
+            else 
+                AlertMessage(message,150,400);
         }
     }
 
 
+    function AlertMessageGrid(msg, height, width) {
+        $('.ui-dialog').css("clear", "both");
+        $("#dialog-grid").html(msg);
+        $("#dialog-grid").dialog({
+            resizable: false,
+            modal: true,
+            title: "הודעה",
+            height: height,
+            focus: function (event, ui) { document.activeElement.blur(); },
+            buttons: {
+                "אישור": function () {
+                    $(this).dialog("close");
+                    $("#btnShow").click();
+                }
+            }
+        });
+    }
     /* function CheakValid(obj) {
          //  debugger;
          if (obj.value != '') {

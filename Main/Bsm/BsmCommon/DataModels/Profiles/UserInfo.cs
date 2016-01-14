@@ -15,6 +15,7 @@ namespace BsmCommon.DataModels.Profiles
         public Harshaa HarshaatOved { get; set; }
         public List<Masach> Screens  { get; set; }
         public List<Yechida> Yechidot { get; set; }
+        public bool MursheBankShaot { get; set; }
        // public Yechida CurYechida { get; set; }
        // public List<ProfilesMasachim> ProfilesMasachim { get; set; }
 

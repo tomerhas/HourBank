@@ -66,7 +66,7 @@
                     @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, new { @onchange = "EnableButton();ChangeCurrentMonth(this.options[this.selectedIndex].value);", @class = "ddl", style="*width: 140px;height: 29px;" })
                     <input type="button" id="btnPrevMonth" value="חודש קודם" class="WhiteButton BgPrev GeneralText" onclick="SetMonth(-1);"/>
                     <input type="button" id="btnNextMonth" value="חודש הבא" class="WhiteButton BgNext GeneralText" disabled onclick="SetMonth(1);" />
-                    <input type="submit" id="btnShow" value="הצג" onclick="showProgress()" name='action:Index' style="margin-right: 31px" class="PurpleButton DoubleArrow" />
+                    <input type="submit" id="btnShow" value="הצג" onclick="showProgress();" name='action:Index' style="margin-right: 31px" class="PurpleButton DoubleArrow" />
                 </div>
 
                 <div class="col-md-4">
@@ -133,7 +133,7 @@
 
     });
 
-
+  
     function ChangeCurrentMonth(month) {
      //   var model = @Html.Raw(Json.Encode(Model));
       //  model.SelectedMonth =month;

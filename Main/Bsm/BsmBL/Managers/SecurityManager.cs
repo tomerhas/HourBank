@@ -33,6 +33,7 @@ namespace BsmBL.Managers
             uf.EmployeeNumber = exchangeSrv.getEmpNumByUserName(UserName);
             uf.EmployeeFullName = exchangeSrv.getEmpFullName(UserName);
             uf.UserName = UserName;
+            uf.MursheBankShaot = KayemetHarshaaForBankShaot(exchangeSrv, UserName);
             int.TryParse(uf.EmployeeNumber, out EmpNum);
             if (EmpNum > 0)
             {
@@ -93,6 +94,16 @@ namespace BsmBL.Managers
             //הבא את ההרשאות בהתאם לפרופילים של המשתמש
           //  uf.ProfilesMasachim = GetHarshaotForProfile(profiles);
             return uf;
+        }
+
+        private bool KayemetHarshaaForBankShaot(ExchangeInfoServiceSoapClient exchangeSrv, string UserName)
+        {
+            string[] userGroups = exchangeSrv.getUserPropertyByUserName(UserName, "MemberOf").Split("|".ToCharArray());
+            foreach (string group in userGroups)
+                if (group == "HourBank")
+                    return true;
+
+           return false;
         }
 
 

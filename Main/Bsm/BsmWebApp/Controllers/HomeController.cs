@@ -37,20 +37,29 @@ namespace BsmWebApp.Controllers
             if (user != null)
             {
 
-                if (error == "session end")
-                    ViewBag.SessionEnd = 1;
+                if (user.MursheBankShaot)
+                {
+                    if (error == "session end")
+                        ViewBag.SessionEnd = 1;
+                    else
+                    {
+                        ViewBag.SessionEnd = 0;
+                        vm.Error = error;
+                    }
+                    //  vm.SessionEnd = 0;
+                    vm.Today = DateTime.Now;
+                    vm.UserName = user.EmployeeFullName;
+                    GeneralObject obj = new GeneralObject();
+                    obj.CurYechida = user.Yechidot[0];
+                    obj.CurMonth = DateTime.Parse("01/" + DateTime.Now.ToString("MM/yyyy"));
+                    Session["GeneralDetails"] = obj;
+                }
                 else
                 {
-                    ViewBag.SessionEnd = 0;
-                    vm.Error = error;
+                    ViewBag.ErrorMessege = ".אינך מורשה להיכנס למערכת. לקבלת הרשאות אנא פנה למנהל מערכת";
+                    return View("Error");
+                //    return RedirectToAction("Index", "Error", new { error = " .אינך מורשה לצפות בדף זה. לקבלת הרשאות אנא פנה למנהל מערכת" });
                 }
-              //  vm.SessionEnd = 0;
-                vm.Today = DateTime.Now;
-                vm.UserName = user.EmployeeFullName;
-                GeneralObject obj = new GeneralObject();
-                obj.CurYechida = user.Yechidot[0];
-                obj.CurMonth = DateTime.Parse("01/" + DateTime.Now.ToString("MM/yyyy"));
-                Session["GeneralDetails"] = obj;
 
             }
             else 
