@@ -710,7 +710,14 @@ line-height:  30.2px;
 }
 
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
-     float:left;
+    float: left;
+}
+.ui-dialog .ui-dialog-buttonpane {
+    text-align: left !important;
+    border-width: 1px 0 0 0 !important;
+    background-image: none !important;
+    margin-top: 0px !important;
+    padding: 0 0 0 0 !important;
 }
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
     color:#895e8a;

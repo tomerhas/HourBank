@@ -321,7 +321,7 @@
     $(document).ready(function(){
         if(displayMessage==1){
            // ModifyGrid("ipus");
-            AlertMessage("לא נמצאו נתונים ליחידה והחודש הנבחר",150,400);
+            AlertMessage("לא נמצאו נתונים ליחידה והחודש הנבחר",170,330);
            // alert("Need to display message")
         }
         var model = @Html.Raw(Json.Encode(Model));
@@ -387,7 +387,7 @@
         }
 
         if (index === -1) {
-            AlertMessage("מ.א/\שם  זה לא קיים למתקן זה",150,400);
+            AlertMessage("מ.א/\שם  זה לא קיים למתקן זה",150,300);
          //   alert('מספר אישי זה לא קיים למתקן זה');
             return;
         }
@@ -550,7 +550,7 @@
             var model = @Html.Raw(Json.Encode(Model));
             if(sum>+(model.MitkanBudgetDetail.BudgetVal))
             {
-                AlertMessage("לא ניתן לבצע שמירה: סה''כ המכסות שעודכנו גדול מתקציב השעות הנוספות",150,400);
+                AlertMessage("לא ניתן לבצע שמירה: סה''כ המכסות שעודכנו גדול מתקציב השעות הנוספות",180,400);
              //   alert("לא ניתן לבצע שמירה: סה''כ המכסות שעודכנו גדול מתקציב השעות הנוספות");
             }
             else
@@ -726,7 +726,7 @@
             if(message.indexOf('הצלחה')>-1)
             {
              //   $("#hidMessage").val(message);
-                AlertMessageGrid(message,200,500);
+                AlertMessageGrid(message,170,300);
                // $("#btnShow").click();
                 //setTimeout(function () {
                 //    $("#btnShow").click();
