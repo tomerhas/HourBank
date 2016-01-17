@@ -26,7 +26,7 @@ namespace BsmWebApp.Controllers
            // SelectedMitkan = 88468;
         }
      //    [SessionExpireFilter]
-      [DisableSession]
+    //  [DisableSession]
         public ActionResult Index(string error="")
         {
             
@@ -69,7 +69,7 @@ namespace BsmWebApp.Controllers
             return View(vm);
         }
       //  [HttpPost]
-              [DisableSession]
+            //  [DisableSession]
         public ActionResult Session_End()
         {
         //    HomeViewModel vm = new HomeViewModel();

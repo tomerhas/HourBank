@@ -140,8 +140,23 @@ namespace BsmWebApp.Controllers
         }
       /// <summary>
       /// ////////////////////////////////////////////////////////////////
-      /// </summary>
-      
+      /// </summary> 
+        public void RecommenceSession()
+        {
+            //    HomeViewModel vm = new HomeViewModel();
+            var user = CurrentUser;
+            if (user != null)
+            {
+               
+                GeneralObject obj = Session["GeneralDetails"] as GeneralObject;
+                obj.CurYechida = obj.CurYechida;// user.Yechidot[0];
+                obj.CurMonth = obj.CurMonth;// DateTime.Parse("01/" + DateTime.Now.ToString("MM/yyyy"));
+                Session["GeneralDetails"] = obj;
+            }
+          //  return RedirectToAction("Index", "Home", new { error = "session end" });
+            //   return View(vm);
+        }
+
         public UserInfo CurrentUser
         {
             get 

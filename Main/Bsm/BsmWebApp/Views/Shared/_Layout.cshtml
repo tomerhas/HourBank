@@ -103,6 +103,11 @@
    @*   // }*@
          <div>
              <div name="dialogP" id="dialog-message"></div>
+             <div name="dialogS" id="dialog-session"></div>
+              <label hidden id="LblSessionTime"> @Session.Timeout</label>
+              <label hidden id="LblSessionTimeWarnning"> @System.Configuration.ConfigurationManager.AppSettings["SessionWarning"]</label>
+             
+          @*    <label class="TimeWarninigSession" style="margin-right:20px;margin-bottom:0px">  @Html.DisplayNameFor(model => model.MitkanBudgetDetail.BudgetVal):</label>*@
                 @RenderBody()
                
               @*  <footer>
@@ -125,13 +130,13 @@
             jQuery.ajax({
                 url: "/Budget/ChangeMitkan?mitkan=" + id,
                 type: 'POST',
-                contentType: 'application/json',
+                contentType: 'application/json'/*,
                 //  data: JSON.stringify({ data: data2 }),
                 success: function (result) {
                     if (result.message == "Session Time out") {
                         window.location.href = "/Home/Session_End";
                     }
-                }
+                }*/
             });
 
             //var url = "/Budget/ChangeMitkan?mitkan=" + id;
@@ -180,7 +185,128 @@
          //   $("#dialog-message").parent().css({ top: 200, left: 200 });
         }
         
+        /**************************************************************************************************************************************************/
        
+        var sessionTimeoutWarning = $("#LblSessionTimeWarnning")[0].innerText;
+        var sessionTimeout = $("#LblSessionTime")[0].innerText;
+        var timeOnPageLoad = new Date();
+        var sessionWarningTimer = null;
+        var redirectToWelcomePageTimer = null;
+        //For warning
+        var sessionWarningTimer = setTimeout('SessionWarning()', 
+				parseInt(sessionTimeoutWarning) * 60 * 1000);
+        //To redirect to the welcome page
+        var redirectToWelcomePageTimer = setTimeout('RedirectToWelcomePage()',
+					parseInt(sessionTimeout) * 60 * 1000);
+
+        //Session Warning
+        function SessionWarning() {
+            //minutes left for expiry
+            var minutesForExpiry =  (parseInt(sessionTimeout) - 
+					parseInt(sessionTimeoutWarning));
+            var message = "זמן ההתחברות עומד להסתיים בעוד  " + 
+		minutesForExpiry + " דקות. ברצונך לחדש את זמן ההתחברות?";
+
+            //Confirm the user if he wants to extend the session
+
+    //        $("#dialog-message").dialog("close");
+
+            $("#dialog-session").html(message);
+            $("#dialog-session").dialog({
+                resizable: false,
+                modal: true,
+                title: "הודעה",
+              //  height: height,
+                width: 400, 
+                focus: function (event, ui) { document.activeElement.blur(); },
+                buttons: {
+                    "אישור": function () {
+                        $(this).dialog("close");
+                        jQuery.ajax({
+                            url: '/Budget/RecommenceSession',
+                            type: 'POST',
+                            contentType: 'application/json'//,
+                            //   success: function (result) {
+                            //    if (result.message == "Session Time out") {
+                            //         window.location.href = "/Home/Session_End";
+                            //     }
+                            //   }
+                        });
+                        //Clear the RedirectToWelcomePage method
+                        if (redirectToWelcomePageTimer != null) {
+                            clearTimeout(redirectToWelcomePageTimer);
+                        }
+                        //reset the time on page load
+                        timeOnPageLoad = new Date();
+                        sessionWarningTimer = setTimeout('SessionWarning()',
+                                parseInt(sessionTimeoutWarning) * 60 * 1000);
+                        //To redirect to the welcome page
+                        redirectToWelcomePageTimer = setTimeout
+                                ('RedirectToWelcomePage()', parseInt(sessionTimeout) * 60 * 1000);
+                    },
+                    "יציאה": function () {
+                        $(this).dialog("close");
+                    }
+                }
+
+            });
+
+            //var answer = confirm(message);
+
+            ////if yes, extend the session.
+            //if(answer)
+            //{
+            //   // var img = new Image(1, 1);
+            //   // img.src = 'KeepAlive.cshtml?date=' + escape(new Date());
+            //    jQuery.ajax({
+            //        url: '/Budget/RecommenceSession',
+            //        type: 'POST',
+            //        contentType: 'application/json'//,
+            //     //   success: function (result) {
+            //        //    if (result.message == "Session Time out") {
+            //       //         window.location.href = "/Home/Session_End";
+            //       //     }
+            //     //   }
+            //    });
+            //    //Clear the RedirectToWelcomePage method
+            //    if (redirectToWelcomePageTimer != null) {
+            //        clearTimeout(redirectToWelcomePageTimer);
+            //    }
+            //    //reset the time on page load
+            //    timeOnPageLoad =  new Date();
+            //    sessionWarningTimer = setTimeout('SessionWarning()', 
+			//	        parseInt(sessionTimeoutWarning) * 60 * 1000);
+            //    //To redirect to the welcome page
+            //    redirectToWelcomePageTimer = setTimeout
+		    //            ('RedirectToWelcomePage()',parseInt(sessionTimeout) * 60 * 1000);
+            //}
+
+            //*************************
+            //Even after clicking ok(extending session) or cancel button, 
+            //if the session time is over. Then exit the session.
+            var currentTime = new Date();
+            //time for expiry
+            var timeForExpiry = timeOnPageLoad.setMinutes(timeOnPageLoad.getMinutes() + 
+				parseInt(sessionTimeout)); 
+
+            //Current time is greater than the expiry time
+            if(Date.parse(currentTime) > timeForExpiry)
+            {
+               
+                AlertMessage("זמן התחברות הסתיים,תועבר לדף הבית", 170, 400);
+                window.location.href = "/Home/Session_End";
+             //   window.location = "../Welcome.aspx";
+            }
+            //**************************
+        }
+
+        //Session timeout
+        function RedirectToWelcomePage() {
+            AlertMessage("זמן התחברות הסתיים,תועבר לדף הבית", 170, 400);
+           window.location.href = "/Home/Session_End";
+          //  window.location = "../Welcome.aspx";
+        }
+
         </script>
 </body>
 

@@ -141,13 +141,13 @@
         jQuery.ajax({
             url: '/Budget/ChangeMonth?month='+ month,
              type: 'POST',
-             contentType: 'application/json',
+             contentType: 'application/json'/*,
              //data: JSON.stringify({ model: model }),
              success: function (result) {
                  if(result.message == "Session Time out"){
                      window.location.href = "/Home/Session_End";
                  } 
-             }
+             }*/
         });  
 
     }
