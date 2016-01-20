@@ -377,10 +377,10 @@ namespace BsmBL.Managers
             return budgetEmployee;
         }
 
-        public void SaveEmployeeMichsot(COLL_BUDGET_EMPLOYEES_MICHSA ocollMichsot)
+        public int SaveEmployeeMichsot(int KodYechida, int userId, COLL_BUDGET_EMPLOYEES_MICHSA ocollMichsot)
         {
             var BudgetDal = _container.Resolve<IBudgetDal>();
-            BudgetDal.SaveEmployeeMichsot(ocollMichsot);
+            return BudgetDal.SaveEmployeeMichsot(KodYechida, userId,ocollMichsot);
         }
     }
 

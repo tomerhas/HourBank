@@ -302,6 +302,7 @@ hr {
 }
 
 
+
 .PurpleButton:active {
     background-color: #59315a;
     text-decoration:none
@@ -358,7 +359,11 @@ background-color:  rgba(137, 94, 138, 0.2) !important;
     font-weight:  700;
 }
 
-
+.PurpleTextBoldLink:focus {
+    outline-style:none !important;
+    text-decoration: none !important; 
+     color:  #895e8a;
+}
 
 .PurpleTextBoldLink:hover {
   color:  #6e486f;
@@ -470,6 +475,13 @@ background-color:  rgba(137, 94, 138, 0.2) !important;
     background-position-y: 6px;
     
 }
+
+/*a:focus {
+   
+    outline-style:none !important;
+    text-decoration: none !important; 
+
+}*/
 
 
 .alertImg:disabled {

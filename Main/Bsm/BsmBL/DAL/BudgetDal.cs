@@ -17,7 +17,7 @@ namespace BsmBL.DAL
         private const string cfunGetSumMeafyen14 = "PKG_BUDGET.fun_get_sum_meafyen14";
         private const string cfunGgetShaotNosafotMeshek = "PKG_BUDGET.fun_get_shaot_nosafot_meshek";
         private const string cProGetEmployeesDetailsForMitkan = "PKG_BUDGET.GetEmployeesDetailsForMitkan";
-        private const string cProSaveEmployeeBudgets = "PKG_BUDGET.pro_save_employee_Michsot";
+        private const string cFunSaveEmployeeBudgets = "PKG_BUDGET.fun_save_employee_Michsot";
 
         public decimal GetSumMeafyen14(int KodYechida, DateTime Month)
         {
@@ -97,14 +97,18 @@ namespace BsmBL.DAL
             }
         }
 
-        public void SaveEmployeeMichsot(COLL_BUDGET_EMPLOYEES_MICHSA ocollMichsot)
+        public int SaveEmployeeMichsot(int KodYechida, int userId, COLL_BUDGET_EMPLOYEES_MICHSA ocollMichsot)
         {
             clDal oDal = new clDal();
             try
             {
+                oDal.AddParameter("p_code", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                oDal.AddParameter("p_kod_yechida", ParameterType.ntOracleInteger, KodYechida, ParameterDir.pdInput);
+                oDal.AddParameter("p_user_id", ParameterType.ntOracleInteger, userId, ParameterDir.pdInput);           
                 oDal.AddParameter("p_coll_employe_michsa", ParameterType.ntOracleArray, ocollMichsot, ParameterDir.pdInput, "COLL_BUDGET_EMPLOYEES_MICHSA");
 
-                oDal.ExecuteSP(cProSaveEmployeeBudgets);
+                oDal.ExecuteSP(cFunSaveEmployeeBudgets);
+                return int.Parse(oDal.GetValParam("p_code").ToString());
             }
             catch (Exception ex)
             {

@@ -22,6 +22,7 @@ using Egged.Infrastructure.Menus.DataModels;
 using BsmCommon.Helpers;
 using BsmCommon.UDT;
 using BsmWebApp.Infrastructure;
+using BsmCommon.Enums;
 
 namespace BsmWebApp.Controllers
 {
@@ -111,8 +112,8 @@ namespace BsmWebApp.Controllers
             {
                 vm.LastDateIdkunBank = taarich;// Gmanager.GetLastDateIdkunBank(((GeneralObject)Session["GeneralDetails"]).CurMonth);
                 vm.LastDateIdkunBankStr = string.Concat("יום ", DateHelper.getDayHeb(vm.LastDateIdkunBank.AddDays(-1)), " ,", vm.LastDateIdkunBank.AddDays(-1).ToShortDateString());
-
-                if (DateTime.Now < vm.LastDateIdkunBank)
+          
+                if (DateTime.Now < vm.LastDateIdkunBank && CurrentUser.GetSugPeilutHatshaa("Budget") == eSugPeiluHarshaa.Update)
                     vm.IsMonthToEdit = true;
                 TimeSpan span = vm.LastDateIdkunBank - (DateTime.Now.AddDays(-1));
                 int numDays = span.Days;
@@ -158,10 +159,13 @@ namespace BsmWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult EmployeesInMitkanUpdate([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<BudgetEmployeeGrid> employees, DateTime month)
+        public ActionResult EmployeesInMitkanUpdate([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<BudgetEmployeeGrid> employees ,int KodYechida, DateTime month)
         {
+            int meadken;
             try
             {
+                meadken = !string.IsNullOrEmpty(CurrentUser.EmployeeNumber) ? int.Parse(CurrentUser.EmployeeNumber) : 0; 
+
                 COLL_BUDGET_EMPLOYEES_MICHSA oCollBudgetMichsa = new COLL_BUDGET_EMPLOYEES_MICHSA();
                 employees.ToList().ForEach(employee =>
                 {
@@ -169,7 +173,7 @@ namespace BsmWebApp.Controllers
                     objBudgetMichsa.MISPAR_ISHI = employee.MisparIshi;
                     objBudgetMichsa.CHODESH = month;
                     objBudgetMichsa.MICHSA = employee.MichsaCur;
-                    objBudgetMichsa.MEADKEN = !string.IsNullOrEmpty(CurrentUser.EmployeeNumber) ? int.Parse(CurrentUser.EmployeeNumber) : 0; ;
+                    objBudgetMichsa.MEADKEN = meadken;
                     oCollBudgetMichsa.Add(objBudgetMichsa);
                     employee.MichsaMakor = employee.MichsaCur;
                 });
@@ -177,24 +181,16 @@ namespace BsmWebApp.Controllers
 
 
                 var budget = _container.Resolve<IBudgetManager>();
-                budget.SaveEmployeeMichsot(oCollBudgetMichsa);
-                ViewBag.Message = JsonConvert.SerializeObject(new { Text = "Ok" });
-   
-            //    return Json(employees.ToDataSourceResult(request));
-
-              //  BudgetMainViewModel vmResult = new BudgetMainViewModel();
-              //  vmResult.SelectedMonth = month.ToShortDateString();
-
-               // RedirectToAction("Index", new { vm = vmResult });
-              //  return Index(vmResult);
-              //  return RedirectToAction("Index", "Budget", new { vm = vmResult });
-               // return null;
-                ModelState.AddModelError(string.Empty, "הנתונים נשמרו בהצלחה");
+                var code = budget.SaveEmployeeMichsot(KodYechida, meadken, oCollBudgetMichsa);
+                 if(code == 1)
+                     ModelState.AddModelError(string.Empty, "ארעה שגיאה בשמירת נתונים, אנא פנה למנהל מערכת");
+                 else ModelState.AddModelError(string.Empty, "הנתונים נשמרו בהצלחה");
                return Json(employees.ToDataSourceResult(request, ModelState), JsonRequestBehavior.AllowGet);
                  }
             catch(Exception ex)
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
+
+                ModelState.AddModelError(string.Empty, "ארעה שגיאה בשמירת נתונים, אנא פנה למנהל מערכת");
                 return Json(employees.ToDataSourceResult(request, ModelState), JsonRequestBehavior.AllowGet);
   
                 //return this.Json(new DataSourceResult

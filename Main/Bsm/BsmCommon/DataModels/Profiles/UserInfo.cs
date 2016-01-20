@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BsmCommon.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,15 @@ namespace BsmCommon.DataModels.Profiles
 
             return (permitted.Count() > 0);
          //   return true;
+        }
+
+        public eSugPeiluHarshaa GetSugPeilutHatshaa(string masachName)
+        {
+            var masach = Screens.SingleOrDefault(x => x.MasachName.Trim().ToLower() == masachName.Trim().ToLower());
+
+            return (eSugPeiluHarshaa)masach.Harshaot[0].SugPeilut;
+            //return (permitted.Count() > 0);
+            //   return true;
         }
     }
 }

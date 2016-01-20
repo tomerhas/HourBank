@@ -24,6 +24,6 @@ namespace BsmCommon.Interfaces.Managers
         string GetOvedNameById(string query);
         Yechida GetYechidaByName(string TeurYechida);
         List<BudgetEmployeeGrid> GetEmployeeDetails(int KodYechida, DateTime Month);
-        void SaveEmployeeMichsot(COLL_BUDGET_EMPLOYEES_MICHSA ocollMichsot);
+        int SaveEmployeeMichsot(int KodYechida,int userId,COLL_BUDGET_EMPLOYEES_MICHSA ocollMichsot);
     }
 }

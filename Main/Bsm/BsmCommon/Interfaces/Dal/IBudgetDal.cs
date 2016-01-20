@@ -8,6 +8,6 @@ namespace BsmCommon.Interfaces.DAL
         decimal GetSumMeafyen14(int KodYechida, DateTime Month);
         decimal GetShaotnosafotMeshek(int KodYechida, DateTime Month);
         DataTable GetEmployeeDatails(int KodYechida, DateTime Month);
-        void SaveEmployeeMichsot(COLL_BUDGET_EMPLOYEES_MICHSA ocollMichsot);
+        int SaveEmployeeMichsot(int KodYechida, int userId, COLL_BUDGET_EMPLOYEES_MICHSA ocollMichsot);
     }
 }
