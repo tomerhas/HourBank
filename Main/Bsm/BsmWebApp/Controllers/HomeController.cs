@@ -64,7 +64,9 @@ namespace BsmWebApp.Controllers
             }
             else 
             {
-                vm.Error = "User not recognized"; 
+               // vm.Error = "User not recognized";
+                ViewBag.ErrorMessege = ".ארעה שגיאה במערכת. אנא פנה למנהל מערכת";
+                return View("Error");
             }
             return View(vm);
         }
