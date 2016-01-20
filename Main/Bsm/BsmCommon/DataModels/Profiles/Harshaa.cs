@@ -21,7 +21,7 @@ namespace BsmCommon.DataModels.Profiles
         public int SugHarshaa { get; set; }
 
         [Column("KOD_YECHIDA_ICHUS")]
-        public int KodYechidaIchus { get; set; }
+        public int? KodYechidaIchus { get; set; }
         	
        
     }

@@ -675,6 +675,9 @@
                 dt.dirty = true;
                 grid._modelChange({ field: "MichsaCur", model: dt });
             }
+            else{
+                dt.dirty = false;
+            }
         });
     }
     function CopyMichsotFromShaotShebuzu(){
@@ -687,6 +690,8 @@
                 dt.MichsaCur = dt.ShaotShebuzu;
                 dt.dirty = true;
                 grid._modelChange({ field: "MichsaCur", model: dt });
+            } else{
+                dt.dirty = false;
             }
         });
     }

@@ -67,8 +67,9 @@ namespace BsmBL.Managers
                             uf.Screens = Screens;
                         }
                     }
-                    if (uf.HarshaatOved.KodYechidaIchus > 0)
-                        KodYechida = uf.HarshaatOved.KodYechidaIchus;
+                 //   KodYechida =( uf.HarshaatOved.KodYechidaIchus.HasValue && uf.HarshaatOved.KodYechidaIchus > 0)?
+                    if (uf.HarshaatOved.KodYechidaIchus.HasValue &&  uf.HarshaatOved.KodYechidaIchus.Value > 0)
+                        KodYechida = uf.HarshaatOved.KodYechidaIchus.Value;
                     else KodYechida = uf.HarshaatOved.KodYechida;
                    
                     uf.Yechidot = GetYechidotToUser(KodYechida);
