@@ -4,6 +4,7 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +17,11 @@ namespace BsmWebApp
     {
         protected void Application_Start()
         {
+            foreach (System.Collections.DictionaryEntry entry in HttpContext.Current.Cache)
+            {
+                EventLog.WriteEntry("kds", "Application_Start");
+                HttpContext.Current.Cache.Remove((string)entry.Key);
+            }
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

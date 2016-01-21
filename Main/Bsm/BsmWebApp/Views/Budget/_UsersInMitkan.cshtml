@@ -672,12 +672,18 @@
             if(dt.ReadOnly == "false" &&  dt.MichsaCur != dt.NosafotPrev)
             {
                 dt.MichsaCur = dt.NosafotPrev;
-                dt.dirty = true;
                 grid._modelChange({ field: "MichsaCur", model: dt });
+               
+                if(dt.MichsaMakor != dt.NosafotPrev)
+                {
+                    dt.dirty = true;
+                }
+                else{
+                    dt.dirty = false;
+                }
+                
             }
-            else{
-                dt.dirty = false;
-            }
+            
         });
     }
     function CopyMichsotFromShaotShebuzu(){
@@ -688,11 +694,16 @@
             if(dt.ReadOnly == "false" &&  dt.MichsaCur != dt.ShaotShebuzu)
             {
                 dt.MichsaCur = dt.ShaotShebuzu;
-                dt.dirty = true;
                 grid._modelChange({ field: "MichsaCur", model: dt });
-            } else{
-                dt.dirty = false;
-            }
+                
+                if(dt.MichsaMakor != dt.ShaotShebuzu)
+                {
+                    dt.dirty = true;
+                }
+                else{
+                    dt.dirty = false;
+                }
+            } 
         });
     }
 

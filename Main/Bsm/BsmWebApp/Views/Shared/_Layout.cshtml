@@ -244,8 +244,9 @@
                         redirectToWelcomePageTimer = setTimeout
                                 ('RedirectToWelcomePage()', parseInt(sessionTimeout) * 60 * 1000);
                     },
-                    "יציאה": function () {
+                    "לדף הבית": function () {
                         $(this).dialog("close");
+                        window.location.href = "/Home/Session_End";
                     }
                 }
 
