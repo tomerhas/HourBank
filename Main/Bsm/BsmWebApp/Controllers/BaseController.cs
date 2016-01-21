@@ -169,7 +169,7 @@ namespace BsmWebApp.Controllers
                      else userName = HttpContext.User.Identity.Name;
                     var cache = _container.Resolve<IUserInfoCachedItems>();
                     UserInfo uf = cache.Get(userName);
-                    EventLog.WriteEntry("kds", "before  uf==null");
+                   // EventLog.WriteEntry("kds", "before  uf==null");
                     if (uf == null)
                     {
                         EventLog.WriteEntry("kds", "after  uf==null");

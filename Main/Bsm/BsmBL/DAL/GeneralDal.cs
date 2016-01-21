@@ -31,7 +31,6 @@ namespace BsmBL.DAL
             }
             catch (Exception ex)
             {
-                EventLog.WriteEntry("kds",ex.Message);
                 throw ex;
             }
         }

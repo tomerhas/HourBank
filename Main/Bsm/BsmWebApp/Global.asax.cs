@@ -1,9 +1,12 @@
-﻿using BsmWebApp.Controllers;
+﻿using BsmCommon.DataModels.Profiles;
+using BsmCommon.Interfaces.CachedItems;
+using BsmWebApp.Controllers;
 using BsmWebApp.Infrastructure;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -46,6 +49,20 @@ namespace BsmWebApp
             ServiceLocator.SetLocatorProvider(() => sl);
         }
 
-       
-    }
+        protected void Session_Start(object sender, EventArgs e)
+        {
+            string userName;
+             if (ConfigurationSettings.AppSettings["DebugModeUserName"] == "true")
+                userName = ConfigurationSettings.AppSettings["DebugUserName"];
+             else userName = HttpContext.Current.User.Identity.Name;
+        
+            var cache = ServiceLocator.Current.GetInstance<IUserInfoCachedItems>();
+            UserInfo uf = cache.Get(userName);
+            if (uf != null)
+                cache.Remove(userName);
+           // EventLog.WriteEntry("kds", "Session_start");
+        }
+     }
+        
+    
 }

@@ -324,12 +324,12 @@ namespace BsmBL.Managers
         {
             List<BudgetEmployeeGrid> list = new List<BudgetEmployeeGrid>();
              var dt = _container.Resolve<IBudgetDal>().GetEmployeeDatails(KodYechida, Month);
-             EventLog.WriteEntry("kds", "start GetEmployeeDetails " + DateTime.Now.ToString());
+   
             foreach (DataRow dr in dt.Rows)
              {
                  list.Add(CreateBudgetEmployeeFromDataRow(dr));
              }
-            EventLog.WriteEntry("kds", "end GetEmployeeDetails " + DateTime.Now.ToString());
+    
              return list;
         }
 

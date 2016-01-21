@@ -73,13 +73,13 @@ namespace BsmBL.Managers
                     else KodYechida = uf.HarshaatOved.KodYechida;
                    
                     uf.Yechidot = GetYechidotToUser(KodYechida);
-                    EventLog.WriteEntry("kds", "after  GetYechidotToUser");
-                    if (uf.Yechidot.Count > 0)
-                    {
-                        EventLog.WriteEntry("kds", "uf.Yechidot.Count > 0");
-                        //uf.CurYechida = uf.Yechidot[0];         
-                    }
-                    EventLog.WriteEntry("kds", "end");
+                    //EventLog.WriteEntry("kds", "after  GetYechidotToUser");
+                    //if (uf.Yechidot.Count > 0)
+                    //{
+                    //    EventLog.WriteEntry("kds", "uf.Yechidot.Count > 0");
+                    //    //uf.CurYechida = uf.Yechidot[0];         
+                    //}
+                    //EventLog.WriteEntry("kds", "end");
                 }
 
             }

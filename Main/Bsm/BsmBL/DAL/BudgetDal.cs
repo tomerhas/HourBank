@@ -83,9 +83,7 @@ namespace BsmBL.DAL
                  oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 //  oDal.ExecuteSP(cfunGetSumMeafyen14, ref dt);
 
-                 EventLog.WriteEntry("kds", "start Time "+  DateTime.Now.ToString());
                  oDal.ExecuteSP(cProGetEmployeesDetailsForMitkan, ref dt);
-                 EventLog.WriteEntry("kds", "end Time " + DateTime.Now.ToString());
                 return dt;
               //  return int.Parse(oDal.GetValParam("p_result").ToString());
 
