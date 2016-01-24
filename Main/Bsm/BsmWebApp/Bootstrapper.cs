@@ -46,8 +46,8 @@ namespace BsmWebApp
             manager.AddMenu(menuItem);
             menuItem = new SingleMenu() { LinkText = "ניהול תקציב", ControllerName = "Budget", ActionName = "Index", MenuType = MenuTypes.MamagementHourExtenstions, ImagSrc = "calculatorImg" };
             manager.AddMenu(menuItem);
-            //menuItem = new SingleMenu() { LinkText = "הפחתה/הוספה שעות נוספות", ControllerName = "Changes", ActionName = "Index", MenuType = MenuTypes.HourChanges, ImagSrc = "~/Content/Images/home.png" };
-            //manager.AddMenu(menuItem);
+            menuItem = new SingleMenu() { LinkText = "ניוד תקציב", ControllerName = "Changes", ActionName = "Index", MenuType = MenuTypes.HourChanges, ImagSrc = "calculatorImg" };
+            manager.AddMenu(menuItem);
             
            
         }

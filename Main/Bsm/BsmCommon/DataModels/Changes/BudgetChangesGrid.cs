@@ -9,13 +9,12 @@ namespace BsmCommon.DataModels.Changes
 {
     public class BudgetChangesGrid
     {
-        public int Masad { get; set; }
-        public int KodYechida { get; set; }
-        public float Budget { get; set; }
-        public float LastMonthYitra { get; set; }
-        public float Diffrence { get; set; }
+      //  public int Masad { get; set; }
+        public int Mitkan { get; set; }
         public float Takziv { get; set; }
+        public float Yitra { get; set; }
+        public float Miztaber { get; set; }
         public string Reason { get; set; }
-
+      
     }
 }

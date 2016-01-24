@@ -1,0 +1,176 @@
+﻿@model  BsmWebApp.ViewModels.Changes.ChangesMainViewModel
+<style>
+    /*Required in order to remove the margin from the autocomplete
+     .k-animation-container {
+        padding-left:0px !important;
+        margin-left:0px !important;
+    }*/
+
+</style>
+
+ <script>
+     $(document).ready(function () {
+         $("#KodMitkan").kendoAutoComplete({
+             placeholder: "הקלד שם מתקן...",
+             // dataTextField: "SiteName",
+             // dataTextField: "MisparIshi",
+             // dataValueField: "MisparIshi",
+             filter: "startswith",
+             minLength: 1,
+             maxLength:5,
+             dataSource: {
+                 type: "json",
+                 serverFiltering: true,
+                 serverPaging: true,
+                 pageSize: 20,
+                 transport: {
+                     read:
+                         {
+                             url: "Changes/GetMitkanStartWith" @* ?kod=@Model.KodMitkan&tarrich=@Model.Month"*@
+                         }, //read
+                     parameterMap: function () {// send value of autocomplete as the "startsWith" parameter
+                         return {
+                             startsWith: $("#KodMitkan").data("kendoAutoComplete").value()
+                         };
+                     }
+                 } //transport
+             } //datasource
+         }); //kendoAutoComplete
+     }); //DocumentReady
+
+
+ </script>
+@using (Html.BeginForm())
+{
+
+
+    <div class="bgGray" style="height: 64px;">
+        <div class="row" style="padding-top: 18px">
+            <div class="col-md-4">
+                <label style="width: 20px; float: right"></label>
+                <span style="clear:both">
+                    <input id="KodMitkan" style="width: 250px" onfocus="this.select();" onkeydown="if (event.keyCode==13){ setTimeout(function(){ findDataItem();  }, 300); return false;} " class="styleTBSearch GeneralText TextBoxRO" />
+                </span>
+                <input class="SearchBG" onclick="findDataItem();" type="button" />
+
+                @*  <input class="CheackBoxBG" type="checkbox" style="margin-right:65px;"/> 
+                      <label  class="GeneralText">הצג חריגים בלבד</label>*@
+            </div>
+
+            <div class="col-md-2">
+
+                <a id="NiyudLink" href="#" > @*onclick="DisplayAllocatedHoursOptions()">*@
+                    <div id="divNiyud" style="text-align: right; width: 200px; text-align: left" class="pointer divCal">
+                        <label id="lblNiyud" class="PurpleTextBoldLink pointer" style="padding-top: 5px">ניוד תקציב</label>
+                    </div>
+                </a>
+      
+            </div>
+            <div class="col-md-2">
+                  <a id="AddLink" href="#" > @*onclick="DisplayAllocatedHoursOptions()">*@
+                    <div id="divAdd" style="text-align: right; width: 200px; text-align: left" class="pointer divCal">
+                        <label id="lblAdd" class="PurpleTextBoldLink pointer" style="padding-top: 5px">הוספת תקציב</label>
+                    </div>
+                </a>
+
+            </div>
+
+           <div class="col-md-2">
+                  <a id="sSubtractLink" href="#" > @*onclick="DisplayAllocatedHoursOptions()">*@
+                    <div id="divSubtract" style="text-align: right; width: 200px; text-align: left" class="pointer divCal">
+                        <label id="lblSubtract" class="PurpleTextBoldLink pointer" style="padding-top: 5px">גריעת תקציב</label>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    
+     <div class="bgGray">
+ 
+
+      @{
+            //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
+            //Html.Kendo().Grid(Model.UsersInMitkan.Employees)
+            Html.Kendo().Grid<BsmCommon.DataModels.Changes.BudgetChangesGrid>()
+               .Name("ChangesList").Columns(columns =>
+               {
+
+                   columns.Bound(o => o.Mitkan).Title("שם מתקן");
+                   columns.Bound(o => o.Takziv).Title("תקציב שעות נוספות");
+                   columns.Bound(o => o.Yitra).Title("יתרת תקציב מחודש שעבר");
+                   columns.Bound(o => o.Miztaber).Title("שעות ניוד/מבצע");
+                   columns.Bound(o => o.Reason).Title("הנמקה/מבצע");
+
+               })
+              //  .Editable(editable => editable.Mode(GridEditMode.InCell))
+               .Pageable()
+               .Sortable(c => c.AllowUnsort(false))
+                .DataSource(dataSource =>
+                    dataSource.Ajax()
+                        .PageSize(10)
+                        .ServerOperation(false)
+                        .Batch(true) // Enable batch updates
+                        //.Model(model =>
+                        //{
+                        //    model.Field(change => change.Mitkan).Editable(false);
+                        //    model.Field(change => change.Takziv).Editable(false);
+                        //    model.Field(change => change.Yitra).Editable(false);
+                        //    model.Field(change => change.miztaber).Editable(false);
+                        //    model.Field(change => change.Reason).Editable(false);
+                        //})
+                .Read(read => read.Action("ChangesMitkanRead", "Changes"))  // Action method invoked when the grid needs data
+                ////.Create(create => create.Action("ChangesShaotNosafotCreate", "Changes")) // Action method invoked when the user saves a new data item
+                ////.Update(update => update.Action("ChangesShaotNosafotUpdate", "Changes"))  // Action method invoked when the user saves an updated data item
+                //.Destroy(destroy => destroy.Action("Products_Destroy", "Home")) // Action method invoked when the user removes a data item
+                )
+               .Render();
+
+         }
+     </div>
+}
+
+<script type="text/javascript">
+   
+    function findDataItem() {
+
+        var theGrid = $('#ChangesList')
+        var dataItem = $('#KodMitkan');
+        if (dataItem.val().trim() == "")
+            return;
+
+        var ds = theGrid.dataSource;
+        var ds = $('#ChangesList').data("kendoGrid").dataSource;//.data()[0].MisparIshi
+
+        var view = kendo.data.Query.process(ds.data(), {
+            filter: ds.filter(),
+            sort: ds.sort()
+        }).data;
+
+        var index = -1;
+        for (var x = 0; x < view.length; x++) {
+            if (view[x].Mitkan == dataItem.val()) { //dataItem.Id) {
+                index = x;
+                break;
+            }
+        }
+
+        if (index === -1) {
+            AlertMessage("מתקן לא קיים", 150, 300);
+            return;
+        }
+
+        var page = Math.floor(index / ds.pageSize());
+        var targetIndex = index - (page * ds.pageSize()) + 1;   
+        ds.page(++page);
+        var row = $("#ChangesList").find("tr:eq(" + targetIndex + ")")[0];
+        theGrid.select(row);
+        $("#ChangesList").find("tr:eq(" + targetIndex + ")")[0].className = "clickable";
+        return false;
+
+    }
+    function onDataBound() {
+    }
+
+</script>

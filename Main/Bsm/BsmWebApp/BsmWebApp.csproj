@@ -1059,9 +1059,11 @@
     <Content Include="Views\Budget\_UsersInMitkan.cshtml" />
     <Content Include="Views\Budget\_DisplayChangesPopUp.cshtml" />
     <Content Include="Scripts\jquery-2.1.3.min.map" />
-    <Content Include="Views\Changes\Index.cshtml" />
+    <Content Include="Views\Changes\Index2.cshtml" />
     <Content Include="Views\Report\ViewReport.cshtml" />
     <Content Include="Views\Budget\_AutomaticAllocating.cshtml" />
+    <Content Include="Views\Changes\Index.cshtml" />
+    <Content Include="Views\Changes\_Changes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BsmBL\BsmBL.csproj">

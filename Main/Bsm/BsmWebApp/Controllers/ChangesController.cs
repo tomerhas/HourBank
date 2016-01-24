@@ -18,7 +18,7 @@ namespace BsmWebApp.Controllers
 {
     public class ChangesController : BaseController
     {
-        public ChangesController(IUnityContainer container,int SelectedMitkan)
+        public ChangesController(IUnityContainer container)
             : base(container)
         {
             SelectdMenu = MenuTypes.HourChanges;
@@ -26,19 +26,27 @@ namespace BsmWebApp.Controllers
         [PageAuthorize("Changes")]
         public ActionResult Index()
         {
-            ChangesMainViewModel vm = InitChangesVm();
+            
+            ChangesMainViewModel vmResult = InitChangesVm();
+            GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
+            vmResult.Changes = ChangesShaotNosafot(1, obj.CurYechida.KodYechida, obj.CurMonth);
+            Session["ChangesGrid"] = vmResult.Changes;
+            return View(vmResult);
+
+          //**  ChangesMainViewModel vm = InitChangesVm();
          
-            return View(vm);
+          //**  return View(vm);
         }
 
         private ChangesMainViewModel InitChangesVm()
         {
-            var months = GetMonthsBackList(6);
-            ChangesMainViewModel vm = new ChangesMainViewModel(months);
-            List<TeurEzor> ezors = GetEzorList();
-            vm.Ezors = new SelectList(ezors, "KOD_EZOR", "TEUR_EZOR");
-           // vm.MitkanBudgetDetail = new Budget();
-            return vm;
+           // var months = GetMonthsBackList(6);
+            ChangesMainViewModel vm = new ChangesMainViewModel();
+           // List<TeurEzor> ezors = GetEzorList();
+           // vm.Ezors = new SelectList(ezors, "KOD_EZOR", "TEUR_EZOR");
+           //// vm.MitkanBudgetDetail = new Budget();
+           // return vm;
+            return new ChangesMainViewModel();
         }
 
 
@@ -47,22 +55,22 @@ namespace BsmWebApp.Controllers
         {
             
             ChangesMainViewModel vmResult = InitChangesVm();
-            vmResult.KodEzor = vm.SelectedEzor != null ? int.Parse(vm.SelectedEzor) : 0;
-            vmResult.SelectedEzor = vm.SelectedEzor;
+            //vmResult.KodEzor = vm.SelectedEzor != null ? int.Parse(vm.SelectedEzor) : 0;
+            //vmResult.SelectedEzor = vm.SelectedEzor;
 
-            var manager = _container.Resolve<IBudgetManager>();
-            if (vm.MitkanName != null)
-            {
-                var pirteyMitkan = manager.GetYechidaByName(vm.MitkanName);
-                if (pirteyMitkan != null)
-                    vmResult.KodMitkan = pirteyMitkan.KodYechida;
-            }
-            vmResult.MitkanName = vm.MitkanName;
-            vmResult.SelectedMonth = vm.SelectedMonth;
-            vmResult.Month = DateTime.Parse(vm.SelectedMonth);
-
-            vmResult.Changes = ChangesShaotNosafot(vmResult.KodEzor, vmResult.KodMitkan, vmResult.Month);
-          
+            //var manager = _container.Resolve<IBudgetManager>();
+            //if (vm.MitkanName != null)
+            //{
+            //    var pirteyMitkan = manager.GetYechidaByName(vm.MitkanName);
+            //    if (pirteyMitkan != null)
+            //        vmResult.KodMitkan = pirteyMitkan.KodYechida;
+            //}
+            //vmResult.MitkanName = vm.MitkanName;
+            //vmResult.SelectedMonth = vm.SelectedMonth;
+            //vmResult.Month = DateTime.Parse(vm.SelectedMonth);
+            GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
+            vmResult.Changes = ChangesShaotNosafot(1, obj.CurYechida.KodYechida, obj.CurMonth);
+            Session["ChangesGrid"] = vmResult.Changes;
             return View(vmResult);
         }
 
@@ -72,31 +80,54 @@ namespace BsmWebApp.Controllers
            var Changes = ManagerChange.GetChangesShaotNosafot(KodEzor,  KodMitkan,  Month);
            return Changes;
         }
-        public ActionResult ChangesShaotNosafotRead([DataSourceRequest]DataSourceRequest request, int KodEzor, int KodYechida, DateTime month)
+
+        public ActionResult ChangesMitkanRead([DataSourceRequest]DataSourceRequest request)
         {
-            var Changes = ChangesShaotNosafot(KodEzor, KodYechida, month);
-            return Json(Changes.ToDataSourceResult(request));
+
+            List<BudgetChangesGrid> changes = (List<BudgetChangesGrid>)(Session["ChangesGrid"]);
+           // List<BudgetEmployeeGrid> SortedEmployees = employees.OrderBy(o => o.MisparIshi).ToList();
+            return Json(changes.ToDataSourceResult(request));
+            // var employeesContainer = GetEmployeesInMitkan(KodYechida, month);
+            // return Json(employeesContainer.Employees.ToDataSourceResult(request));
         }
 
-        public ActionResult ChangesShaotNosafotCreate([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<BudgetChangesGrid> changes)
+        public JsonResult GetMitkanStartWith(string startsWith) //, int kod, DateTime tarrich)
         {
-            //   var Changes = ChangesShaotNosafot(KodEzor, KodYechida, month);
+            List<BudgetChangesGrid> employees = (List<BudgetChangesGrid>)(Session["ChangesGrid"]);
+           
+            var listMitkan = employees
+                .Where(x => x.Mitkan.ToString().StartsWith(startsWith))
+                .Select(x => x.Mitkan).ToList();
 
-            return Json(changes.ToDataSourceResult(request, ModelState, ch => new BudgetChangesGrid
-            {
-                Masad=2,
-                Reason="fff"             
-            }));
+            listMitkan.Sort();
+            return Json(listMitkan, JsonRequestBehavior.AllowGet);
         }
         
-        public ActionResult ChangesShaotNosafotUpdate([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<BudgetChangesGrid> changes)
-        {
-            changes.ToList().ForEach(change =>
-            {
-                var val = change.Reason;
-            });
-            return Json(changes.ToDataSourceResult(request));
-        }
+        //public ActionResult ChangesShaotNosafotRead([DataSourceRequest]DataSourceRequest request, int KodEzor, int KodYechida, DateTime month)
+        //{
+        //    var Changes = ChangesShaotNosafot(KodEzor, KodYechida, month);
+        //    return Json(Changes.ToDataSourceResult(request));
+        //}
+
+        //public ActionResult ChangesShaotNosafotCreate([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<BudgetChangesGrid> changes)
+        //{
+        //    //   var Changes = ChangesShaotNosafot(KodEzor, KodYechida, month);
+
+        //    return Json(changes.ToDataSourceResult(request, ModelState, ch => new BudgetChangesGrid
+        //    {
+        //        Masad=2,
+        //        Reason="fff"             
+        //    }));
+        //}
+        
+        //public ActionResult ChangesShaotNosafotUpdate([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<BudgetChangesGrid> changes)
+        //{
+        //    changes.ToList().ForEach(change =>
+        //    {
+        //        var val = change.Reason;
+        //    });
+        //    return Json(changes.ToDataSourceResult(request));
+        //}
  
     }
    

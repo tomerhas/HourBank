@@ -75,12 +75,11 @@ namespace BsmBL.Managers
         private BudgetChangesGrid CreateBudgetEmployeeFromDataRow(DataRow row)
         {
             BudgetChangesGrid budgetChange = new BudgetChangesGrid();
-            budgetChange.Masad = int.Parse(row["MASAD"].ToString());
-            budgetChange.KodYechida = int.Parse(row["KOD_YECHIDA"].ToString());
-            budgetChange.Budget = float.Parse(row["budget"].ToString());
-            budgetChange.LastMonthYitra = float.Parse(row["LastMonthYitra"].ToString());
-            budgetChange.Diffrence = float.Parse(row["DIFFERENCE"].ToString());
-            budgetChange.Takziv = float.Parse(row["takziv"].ToString());
+           // budgetChange.Masad = int.Parse(row["MASAD"].ToString());
+            budgetChange.Mitkan = int.Parse(row["Mitkan"].ToString());
+            budgetChange.Takziv = float.Parse(row["Takziv"].ToString());
+            budgetChange.Yitra = float.Parse(row["Yitra"].ToString());
+            budgetChange.Miztaber = float.Parse(row["Miztaber"].ToString());
             budgetChange.Reason = row["REASON"].ToString();
 
             return budgetChange;

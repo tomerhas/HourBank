@@ -166,20 +166,7 @@
                 columns.Bound(o => o.Paar).Title("פער").HtmlAttributes(new { @id = "tdPaar" });//.ClientTemplate("<div style='direction:ltr'>#= Paar #</div>");//.HtmlAttributes(new { style = " direction:ltr;" });
                 columns.Bound(o => o.ReadOnly).Hidden();
 
-                ////columns.Bound(o => o.MisparIshi).Title("מספר אישי").Title("ddd").Width(80);
-                ////columns.Bound(o => o.FullName).Title("שם עובד").Width(100);
-                ////columns.Bound(o => o.TeurIsuk).Title("עיסוק").Width(100);
-                ////columns.Bound(o => o.AlTikni).Title("על תקני").Width(50);
-                ////columns.Bound(o => o.TeurMutamut).Title("קוד מותאם").Width(80);
-                ////columns.Bound(o => o.TeurGil).Title("קוד גיל").Width(80);
-                ////columns.Bound(o => o.MichsaYomit).Title("מכסה יומית </br> (כולל הלבשה)").Width(80);
-                ////columns.Bound(o => o.NosafotPrev).Title(String.Format("{0:MM/yyyy}", Model.Month.AddMonths(-1)) + "</br>ש''נ שבוצעו").Width(80);
-                ////columns.Bound(o => o.MichsaPrev).Title(String.Format("{0:MM/yyyy}", Model.Month.AddMonths(-1)) + "</br> מאפיין ש''נ</br>תפקיד ").Width(80);
-                ////columns.Bound(o => o.NosafotCur).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br>ש''נ שבוצעו").Width(80);
-                ////columns.Bound(o => o.MichsaCur).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br> מאפיין ש''נ</br>תפקיד ").HtmlAttributes(new { onchange = "ShowDialogsSave();", style = "border: 8px double lightgray;" }).Width(30);
-                //////columns.Bound(o => o.MichsaCur).Title("מכסת ש''נ</br>  בחודש נוכחי").ClientTemplate("<input style='float: right;width:80px;' value='#=MichsaCur#'  name=''  />").Width(30);
-                ////columns.Bound(o => o.NosafotNotUsed).Title(String.Format("{0:MM/yyyy}", Model.Month) + "</br> ש''נ בלתי  </br> מנוצלות").Width(80);
-
+         
                 // columns.Bound(o => o.MisparIshi).Filterable(false).Width(125).ClientTemplate(Html.Kendo().NumericTextBox().Name("mp_sss").Min(0).HtmlAttributes(new { value = "#=o.MisparIshi#", style = "width: 100px;" }).ToClientTemplate().ToHtmlString());
                 // onclick="ShowPopUp('@Html.DisplayFor(model => model.KodMitkan)','@Html.DisplayFor(model => model.MitkanName)','@Html.ValueFor(model => model.Month, "{0:dd/MM/yyyy}")');
                 //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  style='float: right;'  value='הפק דוח' onclick='ShowReportNochechut(dataItem.MisparIshi, 4545)'  />").Width(80);
