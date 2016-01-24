@@ -12,10 +12,16 @@ namespace BsmWebApp.ViewModels.Changes
     {
         public ChangesMainViewModel()
         {
+            IsMonthToEdit = false;
             Changes = new List<BudgetChangesGrid>();
+            Filter = new FilterModel();
+            ShouldDisplayMessage = 0;
         }
         public List<BudgetChangesGrid> Changes { get; set; }
-
+        public FilterModel Filter { get; set; }
+        public bool IsMonthToEdit { get; set; }
+        public int ShouldDisplayMessage { get; set; }
+        public string Page { get; set; }
         //public ChangesMainViewModel(List<MonthHolder> months)
         //    : this()
         //{

@@ -46,6 +46,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -62,6 +66,7 @@
     <Compile Include="DataModels\Employees\Oved.cs" />
     <Compile Include="DataModels\Employees\PirteyOved.cs" />
     <Compile Include="DataModels\Ezor.cs" />
+    <Compile Include="DataModels\FilterModel.cs" />
     <Compile Include="DataModels\GeneralObject.cs" />
     <Compile Include="DataModels\MonthHolder.cs" />
     <Compile Include="DataModels\Parameter.cs" />

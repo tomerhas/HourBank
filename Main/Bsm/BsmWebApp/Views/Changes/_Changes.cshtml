@@ -43,7 +43,8 @@
 @using (Html.BeginForm())
 {
 
-
+    if (Model.Changes.Count > 0)
+     {
     <div class="bgGray" style="height: 64px;">
         <div class="row" style="padding-top: 18px">
             <div class="col-md-4">
@@ -130,9 +131,27 @@
          }
      </div>
 }
+}
 
 <script type="text/javascript">
    
+    var displayMessage = @Model.ShouldDisplayMessage;
+   // var CanUpdate = true;
+    $(document).ready(function(){
+        if(displayMessage==1){
+            // ModifyGrid("ipus");
+            AlertMessage("לא נמצאו נתונים ליחידה והחודש הנבחר",170,330);
+            // alert("Need to display message")
+        }
+       @* var model = @Html.Raw(Json.Encode(Model));
+        CanUpdate = model.IsMonthToEdit;
+       
+        if(!CanUpdate)
+            DisableElements();*@
+
+     });
+
+
     function findDataItem() {
 
         var theGrid = $('#ChangesList')

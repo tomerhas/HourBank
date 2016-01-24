@@ -41,23 +41,7 @@ namespace BsmWebApp.Controllers
             return View(vm);
         }
 
-        public void ChangeMitkan(int mitkan)
-        {
-            Yechida yechida = CurrentUser.Yechidot.SingleOrDefault(y => y.KodYechida == mitkan);
-            GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
-            obj.CurYechida = yechida; ;
-            Session["GeneralDetails"] =obj;
-        }
-
-       // public ActionResult ChangeMonth(string month,string model) 
-        public void ChangeMonth(string month)
-        {
-            GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
-            obj.CurMonth =  DateTime.Parse(month);
-            Session["GeneralDetails"] =obj;
-           // return View();
-        }
-        
+       
 
         [HttpPost]
         public ActionResult Index(BudgetMainViewModel vm)

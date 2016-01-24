@@ -1064,6 +1064,7 @@
     <Content Include="Views\Budget\_AutomaticAllocating.cshtml" />
     <Content Include="Views\Changes\Index.cshtml" />
     <Content Include="Views\Changes\_Changes.cshtml" />
+    <Content Include="Views\Shared\_Filter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BsmBL\BsmBL.csproj">

@@ -12,6 +12,8 @@ using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
 using BsmWebApp.Infrastructure.Security;
 using Egged.Infrastructure.Menus.DataModels;
+using BsmWebApp.ViewModels;
+using BsmCommon.Enums;
 
 
 namespace BsmWebApp.Controllers
@@ -26,11 +28,11 @@ namespace BsmWebApp.Controllers
         [PageAuthorize("Changes")]
         public ActionResult Index()
         {
-            
-            ChangesMainViewModel vmResult = InitChangesVm();
-            GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
-            vmResult.Changes = ChangesShaotNosafot(1, obj.CurYechida.KodYechida, obj.CurMonth);
-            Session["ChangesGrid"] = vmResult.Changes;
+
+            ChangesMainViewModel vmResult = new ChangesMainViewModel();// InitChangesVm();
+        
+            vmResult.Filter = GetFilter();
+            vmResult.Page = "Changes";
             return View(vmResult);
 
           //**  ChangesMainViewModel vm = InitChangesVm();
@@ -38,39 +40,42 @@ namespace BsmWebApp.Controllers
           //**  return View(vm);
         }
 
-        private ChangesMainViewModel InitChangesVm()
-        {
-           // var months = GetMonthsBackList(6);
-            ChangesMainViewModel vm = new ChangesMainViewModel();
-           // List<TeurEzor> ezors = GetEzorList();
-           // vm.Ezors = new SelectList(ezors, "KOD_EZOR", "TEUR_EZOR");
-           //// vm.MitkanBudgetDetail = new Budget();
-           // return vm;
-            return new ChangesMainViewModel();
-        }
+        //private ChangesMainViewModel InitChangesVm()
+        //{
+        //   // var months = GetMonthsBackList(6);
+        //    ChangesMainViewModel vm = new ChangesMainViewModel();
+        //   // List<TeurEzor> ezors = GetEzorList();
+        //   // vm.Ezors = new SelectList(ezors, "KOD_EZOR", "TEUR_EZOR");
+        //   //// vm.MitkanBudgetDetail = new Budget();
+        //   // return vm;
+        //    return new ChangesMainViewModel();
+        //}
 
 
         [HttpPost]
-        public ActionResult Index(ChangesMainViewModel vm)
+        public ActionResult Index(FilterModel vm)
         {
-            
-            ChangesMainViewModel vmResult = InitChangesVm();
-            //vmResult.KodEzor = vm.SelectedEzor != null ? int.Parse(vm.SelectedEzor) : 0;
-            //vmResult.SelectedEzor = vm.SelectedEzor;
 
-            //var manager = _container.Resolve<IBudgetManager>();
-            //if (vm.MitkanName != null)
-            //{
-            //    var pirteyMitkan = manager.GetYechidaByName(vm.MitkanName);
-            //    if (pirteyMitkan != null)
-            //        vmResult.KodMitkan = pirteyMitkan.KodYechida;
-            //}
-            //vmResult.MitkanName = vm.MitkanName;
-            //vmResult.SelectedMonth = vm.SelectedMonth;
-            //vmResult.Month = DateTime.Parse(vm.SelectedMonth);
+            ChangesMainViewModel vmResult = new ChangesMainViewModel();  //InitChangesVm();
+
             GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
             vmResult.Changes = ChangesShaotNosafot(1, obj.CurYechida.KodYechida, obj.CurMonth);
             Session["ChangesGrid"] = vmResult.Changes;
+            vmResult.Filter = GetFilter();
+            vmResult.Filter.SelectedMonth = vm.SelectedMonth ;
+
+            if (CurrentUser.GetSugPeilutHatshaa("Changes") == eSugPeiluHarshaa.Update)
+                vmResult.IsMonthToEdit = true;
+
+            if (vmResult.Changes != null && vmResult.Changes.Count > 0)
+            {
+                vmResult.ShouldDisplayMessage = 0;
+            }
+            else
+            {
+                vmResult.ShouldDisplayMessage = 1;
+            }
+
             return View(vmResult);
         }
 

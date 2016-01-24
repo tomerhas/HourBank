@@ -1,6 +1,7 @@
 ﻿using BsmBL.Managers;
 using BsmCommon.DataModels;
 using BsmCommon.DataModels.Profiles;
+using BsmCommon.Helpers;
 using BsmCommon.Interfaces.CachedItems;
 using BsmCommon.Interfaces.Managers;
 using BsmWebApp.Infrastructure.Security;
@@ -111,14 +112,29 @@ namespace BsmWebApp.Controllers
         }
 
 
-
-
         public List<TeurEzor> GetEzorList()
         {
             var manager = _container.Resolve<IGeneralManager>();
             return manager.GetEzors();
         }
 
+        public void ChangeMitkan(int mitkan)
+        {
+            Yechida yechida = CurrentUser.Yechidot.SingleOrDefault(y => y.KodYechida == mitkan);
+            GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
+            obj.CurYechida = yechida; ;
+            Session["GeneralDetails"] = obj;
+        }
+
+        // public ActionResult ChangeMonth(string month,string model) 
+        public void ChangeMonth(string month)
+        {
+            GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
+            obj.CurMonth = DateTime.Parse(month);
+            Session["GeneralDetails"] = obj;
+            // return View();
+        }
+        
         public JsonResult GetMitkanStartsWith(string taarich, string startsWith)
         {
 
@@ -137,6 +153,44 @@ namespace BsmWebApp.Controllers
 
             //return Json(namelist, JsonRequestBehavior.AllowGet);
             return Json(yechidot, JsonRequestBehavior.AllowGet);
+        }
+
+        public FilterModel GetFilter()
+        {
+            FilterModel vm = new FilterModel();
+
+            var months = GetMonthsBackList(6);
+            vm.Months = new SelectList(months, "Id", "Val");
+            vm.SelectedMonth = months[0].Id;
+            //FilterViewModel vm = new FilterViewModel(months);
+            //vm.Month = DateTime.Parse(months[0].Id);
+
+            IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
+
+            var taarich = Gmanager.GetLastDateIdkunBank(((GeneralObject)Session["GeneralDetails"]).CurMonth);
+            if (taarich != DateTime.MinValue)
+            {
+                vm.LastDateIdkunBank = taarich;// Gmanager.GetLastDateIdkunBank(((GeneralObject)Session["GeneralDetails"]).CurMonth);
+                vm.LastDateIdkunBankStr = string.Concat("יום ", DateHelper.getDayHeb(vm.LastDateIdkunBank.AddDays(-1)), " ,", vm.LastDateIdkunBank.AddDays(-1).ToShortDateString());
+
+                //if (DateTime.Now <LastDateIdkunBank && CurrentUser.GetSugPeilutHatshaa("Budget") == eSugPeiluHarshaa.Update)
+                //    vm.IsMonthToEdit = true;
+                TimeSpan span = vm.LastDateIdkunBank - (DateTime.Now.AddDays(-1));
+                int numDays = span.Days;
+                vm.NumDays = "";
+                if (numDays > 1)
+                    vm.NumDays = string.Concat("עוד ", numDays, " ימים");
+                else if (numDays == 1)
+                    vm.NumDays = "היום";
+            }
+            else
+            {
+                vm.LastDateIdkunBankStr = "";
+                vm.NumDays = "";
+            }
+
+            return vm;
+
         }
       /// <summary>
       /// ////////////////////////////////////////////////////////////////
