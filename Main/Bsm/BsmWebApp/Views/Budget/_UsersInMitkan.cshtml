@@ -219,7 +219,7 @@
                          model.Field(employee => employee.NosafotPrev).Editable(false);
                          model.Field(employee => employee.NosafotCur).Editable(false);
                          model.Field(employee => employee.ShaotShebuzu).Editable(false);
-                         model.Field(employee => employee.MichsaCur).Editable(DateTime.Now < Model.LastDateIdkunBank ? true : false);
+                         model.Field(employee => employee.MichsaCur).Editable(DateTime.Now < Model.Filter.LastDateIdkunBank ? true : false);
                          model.Field(employee => employee.Paar).Editable(false);
                      })
                      //  .Read(read => read.Action("EmployeesInMitkanRead", "Budget", new { UsersInMitkan = Model.UsersInMitkan })) 

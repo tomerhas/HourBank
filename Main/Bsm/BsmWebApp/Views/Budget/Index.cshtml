@@ -1,5 +1,10 @@
 ﻿@model BsmWebApp.ViewModels.Budgets.BudgetMainViewModel
 
+
+@{ 
+    Html.RenderPartial("_Filter", Model.Filter); 
+ }
+
 @{ 
    Html.RenderPartial("_MitkanDetails", Model); 
  }

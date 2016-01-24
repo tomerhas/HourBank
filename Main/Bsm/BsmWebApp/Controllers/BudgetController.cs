@@ -38,13 +38,14 @@ namespace BsmWebApp.Controllers
         public ActionResult Index()
         {
             BudgetMainViewModel vm = InitBudgetVm();
+           
             return View(vm);
         }
 
        
 
         [HttpPost]
-        public ActionResult Index(BudgetMainViewModel vm)
+        public ActionResult Index(FilterModel vm)
         {
             DateTime month = DateTime.Parse(vm.SelectedMonth);
             var curMitkan = ((GeneralObject)Session["GeneralDetails"]).CurYechida.KodYechida;//**CurrentUser.CurYechida.KodYechida;
@@ -57,10 +58,12 @@ namespace BsmWebApp.Controllers
                 ////if (bakasha_id != null)
                 ////    vmResult.LastBakashaDate = Gmanager.GetZmanBakasha(bakasha_id);
                 ////vmResult.MitkanName = vm.MitkanName;
-                vmResult.SelectedMonth = vm.SelectedMonth;
+                vmResult.Filter.SelectedMonth = vm.SelectedMonth;
                 vmResult.KodMitkan = curMitkan;
                 vmResult.Month = month;
                 vmResult.UsersInMitkan = GetEmployeesInMitkan(curMitkan, month);
+                if (DateTime.Now < vmResult.Filter.LastDateIdkunBank && CurrentUser.GetSugPeilutHatshaa("Budget") == eSugPeiluHarshaa.Update)
+                    vmResult.IsMonthToEdit = true;
                 if (vmResult.MitkanBudgetDetail !=null && vmResult.UsersInMitkan != null && vmResult.UsersInMitkan.Employees.Count > 0)
                 {
                     vmResult.ShouldDisplayMessage = 0;
@@ -85,33 +88,35 @@ namespace BsmWebApp.Controllers
         {
 
             var months = GetMonthsBackList(6);
-            BudgetMainViewModel vm = new BudgetMainViewModel(months);
+            BudgetMainViewModel vm = new BudgetMainViewModel();
             vm.MitkanBudgetDetail = new Budget();
-            vm.Month = DateTime.Parse(months[0].Id);
+           // vm.Month = DateTime.Parse(months[0].Id);
 
-            IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
+            vm.Filter = GetFilter();
+            vm.Month =  DateTime.Parse(vm.Filter.SelectedMonth);
+            ////IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
 
-            var taarich = Gmanager.GetLastDateIdkunBank(((GeneralObject)Session["GeneralDetails"]).CurMonth);
-            if (taarich != DateTime.MinValue)
-            {
-                vm.LastDateIdkunBank = taarich;// Gmanager.GetLastDateIdkunBank(((GeneralObject)Session["GeneralDetails"]).CurMonth);
-                vm.LastDateIdkunBankStr = string.Concat("יום ", DateHelper.getDayHeb(vm.LastDateIdkunBank.AddDays(-1)), " ,", vm.LastDateIdkunBank.AddDays(-1).ToShortDateString());
-          
-                if (DateTime.Now < vm.LastDateIdkunBank && CurrentUser.GetSugPeilutHatshaa("Budget") == eSugPeiluHarshaa.Update)
-                    vm.IsMonthToEdit = true;
-                TimeSpan span = vm.LastDateIdkunBank - (DateTime.Now.AddDays(-1));
-                int numDays = span.Days;
-                vm.NumDays = "";
-                if (numDays > 1)
-                    vm.NumDays = string.Concat("עוד ", numDays, " ימים");
-                else if (numDays == 1)
-                    vm.NumDays ="היום";
-            }
-            else
-            {
-                vm.LastDateIdkunBankStr = "";
-                vm.NumDays = "";
-            }
+            ////var taarich = Gmanager.GetLastDateIdkunBank(((GeneralObject)Session["GeneralDetails"]).CurMonth);
+            ////if (taarich != DateTime.MinValue)
+            ////{
+            ////    vm.LastDateIdkunBank = taarich;// Gmanager.GetLastDateIdkunBank(((GeneralObject)Session["GeneralDetails"]).CurMonth);
+            ////    vm.LastDateIdkunBankStr = string.Concat("יום ", DateHelper.getDayHeb(vm.LastDateIdkunBank.AddDays(-1)), " ,", vm.LastDateIdkunBank.AddDays(-1).ToShortDateString());
+
+            ////    if (DateTime.Now < vm.LastDateIdkunBank && CurrentUser.GetSugPeilutHatshaa("Budget") == eSugPeiluHarshaa.Update)
+            ////        vm.IsMonthToEdit = true;
+            ////    TimeSpan span = vm.LastDateIdkunBank - (DateTime.Now.AddDays(-1));
+            ////    int numDays = span.Days;
+            ////    vm.NumDays = "";
+            ////    if (numDays > 1)
+            ////        vm.NumDays = string.Concat("עוד ", numDays, " ימים");
+            ////    else if (numDays == 1)
+            ////        vm.NumDays = "היום";
+            ////}
+            ////else
+            ////{
+            ////    vm.LastDateIdkunBankStr = "";
+            ////    vm.NumDays = "";
+            ////}
 
             return vm;
         }

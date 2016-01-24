@@ -23,24 +23,26 @@ namespace BsmWebApp.ViewModels.Budgets
         //    KodList.Add(new KodListItem() { ProductID = 3, ProductName = "prod2" });
         //    KodList.Add(new KodListItem() { ProductID = 4, ProductName = "prod3" });
             ShouldDisplayMessage = 0;
+            Filter = new FilterModel();
         }
 
-        public BudgetMainViewModel(List<MonthHolder> months) : this()
-        {
-            FillMonths(months);
-        }
+       //// public BudgetMainViewModel(List<MonthHolder> months) : this()
+        ////{
+        ////    FillMonths(months);
+        ////}
 
-        public void FillMonths(List<MonthHolder> months)
-        {
+        ////public void FillMonths(List<MonthHolder> months)
+        ////{
          
-            Months = new SelectList(months, "Id", "Val");
-            SelectedMonth =months[0].Id;
-        }
-        public SelectList Months { get; set; }
-        public string SelectedMonth { get; set; }
-        public string LastDateIdkunBankStr { get; set; }
-        public DateTime LastDateIdkunBank { get; set; }
-        public string NumDays { get; set; }
+        ////    Months = new SelectList(months, "Id", "Val");
+        ////    SelectedMonth =months[0].Id;
+        ////}
+        public FilterModel Filter { get; set; }
+        ////public SelectList Months { get; set; }
+        ////public string SelectedMonth { get; set; }
+        ////public string LastDateIdkunBankStr { get; set; }
+        ////public DateTime LastDateIdkunBank { get; set; }
+        ////public string NumDays { get; set; }
         public Budget MitkanBudgetDetail { get; set; }
         public bool IsMitkanBudgetDetailEmpty { get; set; }
         public int KodMitkan { get; set; }
