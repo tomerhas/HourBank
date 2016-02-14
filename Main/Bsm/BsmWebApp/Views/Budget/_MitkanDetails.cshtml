@@ -66,7 +66,12 @@
                 <div class="row" style="padding-top: 18px;">
                     <div class="col-md-5">
                         <label class="TextBold" style="margin-right:20px;margin-bottom:0px">  @Html.DisplayNameFor(model => model.MitkanBudgetDetail.BudgetVal):</label>
-                        <input type="text"  disabled  class="TextBoxRO GeneralText alertImg" value="@Model.MitkanBudgetDetail.BudgetVal" style="width: 111px;padding-right:7px"/>       
+                      @*  <label  class="TextBoxRO GeneralText"> @Html.DisplayFor(model => model.MitkanBudgetDetail.BudgetVal)
+                            <input class="alertImg" onclick="btnclick();"  type="button" />
+                        </label>
+                         *@
+                        <input type="text"  disabled  class="TextBoxRO GeneralText" value="@Model.MitkanBudgetDetail.BudgetVal" style="width: 76px;padding-right:7px;border:none;  margin-left: -5px;"/> 
+                       <input class="alertImg pointer" onclick="ShowBudgetInformation();"  type="text" /> 
                         <label class="TextBold" style="margin-right:20px;margin-bottom:0px"> @Html.DisplayNameFor(model => model.MitkanBudgetDetail.Budget_Used):</label>
                         <input type="text"  disabled class="TextBoxRO GeneralText" value="@Model.MitkanBudgetDetail.Budget_Used" style="width: 111px;padding-right:7px"/>           
                     </div>
@@ -88,7 +93,7 @@
 
 </div>
 
-
+<div id="dialog-info"></div>
 <div id="dialog" title="Basic dialog" style="overflow: hidden;">
 </div>
 
@@ -115,7 +120,25 @@
     //    });
     //    $('#dialog').dialog('open');
     //});
-
+    $(function () {
+        $("#dialog-info").dialog({
+            autoOpen: false, width: 600, height: 305, modal: true,
+            buttons: {
+                "סגור": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+    function ShowBudgetInformation() {
+        var url = "Budget/GetInformationBudget";
+        $("#dialog-info").html("")
+        .dialog("option", "title", "מידע נוסף")
+        .load(url, function () {
+            $("#dialog-info").dialog("open");
+        });
+      
+    }
 
     function ShowPopUp(kod, name, month) {
         var titel = " פירוט שעות הוספה/הפחתה למתקן ";

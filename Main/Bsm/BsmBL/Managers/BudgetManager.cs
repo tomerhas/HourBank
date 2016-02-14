@@ -43,14 +43,14 @@ namespace BsmBL.Managers
             return list;
         }
 
-        public Budget GetBudget(int KodYechida, DateTime Month)
+        public Budget GetBudgetDetails(int KodYechida, DateTime Month)
         {
-            long bakasha_premia = 0;
+        
             Budget budget = null;
 
             using (var context = new BsmEntities())
             {
-                budget = context.Budgets.OrderByDescending(X => X.TaarichIdkun).FirstOrDefault(x => x.KodYechida == KodYechida && x.Month == Month);
+                budget =GetBudget( KodYechida , Month);
                 if (budget != null)
                 {
                     var BudgetDal = _container.Resolve<IBudgetDal>();
@@ -65,6 +65,17 @@ namespace BsmBL.Managers
 
         }
 
+        public Budget GetBudget(int KodYechida, DateTime Month)
+        {
+            Budget budget = null;
+
+            using (var context = new BsmEntities())
+            {
+                budget = context.Budgets.OrderByDescending(X => X.TaarichIdkun).FirstOrDefault(x => x.KodYechida == KodYechida && x.Month == Month);
+              
+            }
+            return budget;
+        }
       
 
         //public Budget GetBudget(int KodYechida, DateTime Month, long bakasha_id)

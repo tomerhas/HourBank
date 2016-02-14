@@ -125,7 +125,7 @@ namespace BsmWebApp.Controllers
         private BudgetMainViewModel GetBudgetDetailForMitkan(int kodMitkan, DateTime dateTime)
         {
 
-            Budget mb = _container.Resolve<IBudgetManager>().GetBudget(kodMitkan, dateTime);
+            Budget mb = _container.Resolve<IBudgetManager>().GetBudgetDetails(kodMitkan, dateTime);
             BudgetMainViewModel vm = InitBudgetVm();
             vm.MitkanBudgetDetail = mb;
             //vm.KodMitkan = kodMitkan;
@@ -211,6 +211,23 @@ namespace BsmWebApp.Controllers
         {
             return PartialView("_AutomaticAllocating", null);
         }
+
+        public ActionResult GetInformationBudget()
+        {
+            BudgetChangesVM vm = new BudgetChangesVM();
+            var manager = _container.Resolve<IChangesManager>();
+            List<BudgetChangeVM> list = new List<BudgetChangeVM>();
+            var curMitkan = ((GeneralObject)Session["GeneralDetails"]);
+            int KodYechida = curMitkan.CurYechida.KodYechida;
+            DateTime chodesh=curMitkan.CurMonth;
+            
+            vm.Budget = _container.Resolve<IBudgetManager>().GetBudget(KodYechida, chodesh);
+            var changes = manager.GetBudgetChanges(KodYechida, chodesh);
+            changes.ForEach(x => list.Add(new BudgetChangeVM(x)));
+            vm.BudgetChanges= list.OrderBy(c => c.BudgetChange.TaarichIdkun).ToList();
+            var sd = vm.BudgetChanges[0].BudgetChange.TaarichIdkun.ToString().Split(' ')[0];
+            return PartialView("_BudgetInformation", vm);
+        }
        //[HttpGet]
        // public ActionResult GetReportNochechut(int MisparIshi, string chodesh) //int KodYechida,DateTime chodesh)
        // {
@@ -277,8 +294,8 @@ namespace BsmWebApp.Controllers
             var changes = manager.GetBudgetChanges(KodYechida,DateTime.Parse(chodesh));
 
             BudgetChangesVM vm = new BudgetChangesVM();
-            vm.kod_mitkan = KodYechida;
-            vm.month = DateTime.Parse(chodesh);
+          //  vm.kod_mitkan = KodYechida;
+          //  vm.month = DateTime.Parse(chodesh);
             changes.ForEach(x => vm.BudgetChanges.Add(new BudgetChangeVM(x)));
             //יוצרים פה  viewmodelמודל ומעבירים אותו
               

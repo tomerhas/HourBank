@@ -1,0 +1,110 @@
+﻿@model BsmWebApp.ViewModels.Budgets.BudgetChangesVM
+
+<style>
+
+     .linkstyle {
+        width: 100px;
+        outline: none;
+        border:none;
+        background-color:white;
+        text-decoration: underline;
+        text-align:left;
+        padding-left:5px;
+    }
+    .linkstyleDisabled {
+        color: lightgray;
+    }
+
+</style>
+
+ @using(Html.BeginForm())
+ {
+     
+  <div class="row" style="padding-top: 18px">
+    <div class="col-md-4">
+        <label class="TextBold"> שעות נוספות <br />תקציב בסיסי: </label>
+    </div>
+    <div class="col-md-4">
+        <label class="TextBold"> יתרת תקציב<br /> מחודש קודם: </label>
+    </div>
+      <div class="col-md-4">
+         <label class="TextBold"> שינוי אחרון: </label><br />
+          <label class="TextBold" style=" font-weight: 400;font-size: 14px;">נכון לתאריך 
+            @if (Model.BudgetChanges.Count > 0)
+            {  
+              
+                @Html.DisplayFor(model => model.BudgetChanges[(Model.BudgetChanges.Count-1)].BudgetChange.TaarichIdkun.ToString().Split(' ')[0])   
+            }
+          </label>
+    </div>
+  </div>
+
+<div class="row" style="padding-top: 18px">
+    <div class="col-md-4">
+          <label  class="TextBoxRO GeneralText"  style="width: 100px;border:none;background-color:white">
+               @Html.DisplayFor(model => model.Budget.BudgetVal)
+          </label> 
+    </div>
+      <div class="col-md-4">
+          <label  class="TextBoxRO GeneralText"  style="width: 100px;border:none;background-color:white">
+               @Html.DisplayFor(model => model.Budget.BudgetVal)
+          </label> 
+    </div>
+     <div class="col-md-4">
+          <label  class="TextBoxRO GeneralText"  style="width: 70px;border:none;background-color:white;margin-left:-5px;float:right">
+            @if (Model.BudgetChanges.Count > 0)
+            {  
+                 @Html.DisplayFor(model => model.BudgetChanges[(Model.BudgetChanges.Count-1)].BudgetChange.ValToDisplay)
+            }
+          </label> 
+         @if (Model.BudgetChanges.Count > 0)
+         {  
+          <input class="pointer TextBoxRO linkstyle" onclick="ShowChanges();" value="הצג שינויים"  type="text" />
+         } 
+         else
+         {
+           <input class="TextBoxRO linkstyle linkstyleDisabled" disabled value="הצג שינויים"  type="text" />@*
+          <label  class="TextBoxRO linkstyle linkstyleDisabled"   >הצג שינויים</label>*@
+         } 
+    </div>
+  </div>
+     
+     <div id="Dialog-Box">
+          <div class="t-rtl">
+            @{
+                //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
+                Html.Kendo().Grid(Model.BudgetChanges)
+                   .Name("BudgetChangesList").Columns(columns =>
+                   {
+                       columns.Bound(o => o.BudgetChange.TaarichIdkun).Title("<center><strong>תאריך</strong></center>").Format("{0:dd/MM/yyyy}").Width(50);               
+                       columns.Bound(o => o.BudgetChange.MeadkenName).Title("<center><strong>מעדכן</strong></center>").Width(50);
+                       columns.Bound(o => o.BudgetChange.ValToDisplay).Title("<center><strong>הפחתה/הוספה</strong></center>").Width(50);//.HtmlAttributes(new { style = " direction:ltr;" });
+                       columns.Bound(o => o.BudgetChange.Reason).Title("<center><strong>הנמקה</strong></center>").Width(50);
+
+
+                   })
+                   .Render();
+            }
+        </div>
+    </div>
+ }
+  
+
+<script>
+    function ShowChanges() {
+         $('#Dialog-Box').dialog('open');     
+    }
+
+    $('#Dialog-Box').dialog({
+        autoOpen: false,        
+        width: 700,
+        modal: false,
+        buttons: {
+            "סגור": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+
+</script>

@@ -36,6 +36,8 @@ namespace BsmCommon.DataModels.Budgets
         public DateTime TaarichIdkun { get; set; }
 
         [NotMapped]
+        public string ValToDisplay { get; set; }
+        [NotMapped]
         public string MeadkenName { get; set; }
        
         			

@@ -341,8 +341,8 @@
     {
         //  alert('ggg');
         var model = @Html.Raw(Json.Encode(Model));
-        var month =model.SelectedMonth;
-        window.open("http://kdstest/Modules/Ovdim/NochechutMerukezet.aspx?mispar_ishi=" + misparishi +"&chodesh="+month);
+        var month =model.Filter.SelectedMonth;
+        window.open("http://kdstest/Modules/Ovdim/NochechutMerukezet.aspx?mispar_ishi=" + misparishi +"&chodesh="+month,"location=no,addressbar=no");
         //     alert("ff");
     }
 

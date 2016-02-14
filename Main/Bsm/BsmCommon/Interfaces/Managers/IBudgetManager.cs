@@ -14,6 +14,7 @@ namespace BsmCommon.Interfaces.Managers
     public interface IBudgetManager
     {
         List<MonthHolder> GetMonthsBack(int amountOfMonths);
+        Budget GetBudgetDetails(int KodYechida, DateTime Month);
         Budget GetBudget(int KodYechida, DateTime Month);
 
         List<BudgetEmployee> GetBudgetEmployees(int KodYechida, DateTime Month);
