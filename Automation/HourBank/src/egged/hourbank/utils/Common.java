@@ -19,7 +19,7 @@ public class Common {
 	private static WebElement element;
 	
 	 
-	 public static WebElement Wait_For_Element_Visibile(final WebDriver driver, final int timeoutSeconds,String snameId) {
+	 public static WebElement Wait_For_Element_Visibile(final WebDriver driver, final int timeoutSeconds,String snameId, String sclassName) {
 		    FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
 		    		
 		            .withTimeout(timeoutSeconds, TimeUnit.SECONDS)
@@ -28,9 +28,22 @@ public class Common {
 		            
 		    return wait.until(new Function<WebDriver, WebElement>() {
 		        public WebElement apply(WebDriver webDriver) {
+		        	
+		        	
+		        	
+		        	if (snameId!=null)
+		        	{
 		        	WebDriverWait wait = new WebDriverWait(driver,50);
 		        	wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id(snameId))));
-		        	element = driver.findElement(By.id(snameId));
+		        	element = driver.findElement(By.id(snameId));}
+		        	
+		        	else {
+		        	
+		        		
+		        		WebDriverWait wait = new WebDriverWait(driver,50);
+			        	wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.className(sclassName))));
+			        	element = driver.findElement(By.id(snameId));}
+		        	
 		        	System.out.println("Trying to find element " + element.toString()); 
 		            return element;
 		        }

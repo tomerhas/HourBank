@@ -50,16 +50,57 @@ public class Budget {
 	 
 	 
 	 
-	 public static WebElement accsept (WebDriver driver) {                                    
+	 public static WebElement btnSaveMichsaYes (WebDriver driver) {                                    
 			
 			
 			
-			element=driver.findElement(By.className("ui-button-text"));
+			element=driver.findElement(By.id("btnYesSave"));
 			
 			return element;
 		
 		}
 	 
+	 
+	 
+	 
+	 
+	 public static WebElement btnSaveMichsaNo (WebDriver driver) {                                    
+			
+			
+			
+			element=driver.findElement(By.id("btnNoSave"));
+			
+			return element;
+		
+		}
+	 
+	 
+	 
+	 
+	 
+	 public static WebElement btnAccept (WebDriver driver) {                                    
+			
+			
+			
+			element=driver.findElement(By.id("okbtn"));
+			
+			return element;
+		
+		}
+	 
+	 
+	 
+	 
+	 
+	 public static WebElement btnAcceptSuccess (WebDriver driver) {                                    
+			
+			
+			
+			element=driver.findElement(By.id("btnGridOk"));
+			
+			return element;
+		
+		}
 	 
 	 
 	
@@ -75,7 +116,7 @@ public class Budget {
 	
 
 	 
-	 public static WebElement updatMichsaUpdate1 (WebDriver driver) {                                    
+	 public static WebElement updateMichsa1 (WebDriver driver) {                                    
 			
 			
 			
