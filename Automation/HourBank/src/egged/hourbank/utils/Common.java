@@ -50,6 +50,25 @@ public class Common {
 		    });
 		}
 	
+	 
+	 
+	 
+	 public static WebElement Wait_For_Element_Stalenes( WebDriver driver,String snameId ,String  sclassname  ) {
+		   
+		            if  (snameId!=null) 
+		            		{		
+		        	WebDriverWait wait = new WebDriverWait(driver,120);
+		        	wait.until(ExpectedConditions.stalenessOf((driver.findElement(By.id(snameId)))));} 
+		        	
+		            else 
+		            	
+		            {
+		            	WebDriverWait wait1 = new WebDriverWait(driver,120);
+		        	wait1.until(ExpectedConditions.stalenessOf((driver.findElement(By.className(sclassname)))));}
+		            	
+		        	
+		            return element;
+		        }
 	
 	
 	
