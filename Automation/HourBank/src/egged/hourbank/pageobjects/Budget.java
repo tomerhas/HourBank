@@ -104,6 +104,41 @@ public class Budget {
 	 
 	 
 	
+	 public static WebElement clickMichsa0 (WebDriver driver) {                                    
+			
+			
+			
+			element=driver.findElement(By.id("tdMichsa0"));
+			
+			return element;
+		
+		}
+	
+
+	 
+	 public static WebElement updateMichsa (WebDriver driver) {                                    
+			
+			
+			
+			element=driver.findElement(By.id("MichsaCur"));
+			
+			return element;
+		
+		}
+	
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	 public static WebElement clickMichsa1 (WebDriver driver) {                                    
 			
 			
@@ -115,16 +150,7 @@ public class Budget {
 		}
 	
 
-	 
-	 public static WebElement updateMichsa1 (WebDriver driver) {                                    
-			
-			
-			
-			element=driver.findElement(By.id("MichsaCur"));
-			
-			return element;
-		
-		}
+	
 	
 	 
 	 
