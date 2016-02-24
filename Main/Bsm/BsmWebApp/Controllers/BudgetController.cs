@@ -225,7 +225,7 @@ namespace BsmWebApp.Controllers
             var changes = manager.GetBudgetChanges(KodYechida, chodesh);
             changes.ForEach(x => list.Add(new BudgetChangeVM(x)));
             vm.BudgetChanges= list.OrderBy(c => c.BudgetChange.TaarichIdkun).ToList();
-            var sd = vm.BudgetChanges[0].BudgetChange.TaarichIdkun.ToString().Split(' ')[0];
+           // var sd = vm.BudgetChanges[0].BudgetChange.TaarichIdkun.ToString().Split(' ')[0];
             return PartialView("_BudgetInformation", vm);
         }
        //[HttpGet]

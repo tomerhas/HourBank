@@ -34,13 +34,17 @@
                 width: width,
                 focus: function (event, ui) { document.activeElement.blur(); },
                 buttons: {
-                    "אישור": function () {
-                        $(this).dialog("close");
-
-                    }
+                    "אישור": {
+                        text: "אישור",
+                        id: "okbtn",
+                        click: function(){
+                            $(this).dialog("close");
+                        }   
+                    } 
                 }
             });
 
+            $("#dialog-message").parent("div").attr("id", "dlgMsg");
         }</script>
 
 </head>
@@ -182,6 +186,9 @@
             $("#dialog-message").parent().css('top', y);// "'"+ (y + 20) +"px'");
             $("#dialog-message").parent().css('left', x);// "'"+x+"px'");
 
+            $("#dialog-message").parent("div").attr("id", "dlgMsg");
+
+           // $("#dialog-message").closest('.ui-dialog').attr("id", "dlg111");
             //   $("#dialog-message").parent().css({ top: 200, left: 200 });
         }
 
@@ -253,7 +260,7 @@
                 }
 
             });
-
+            $("#dialog-session").parent("div").attr("id", "dlgSes");
             //var answer = confirm(message);
 
             ////if yes, extend the session.
