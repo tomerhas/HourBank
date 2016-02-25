@@ -1,0 +1,17 @@
+<suite  name="HourBank">
+
+    <test name="Budget">
+    
+	
+
+		<classes>
+
+	        <class name="egged.hourbank.automationframework.UpdateMichsa" />
+		  
+            
+		</classes>
+		
+		  </test>
+		  
+		  
+		  </suite>
