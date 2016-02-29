@@ -15,7 +15,7 @@ public class Budget {
 	 
 	 
 	 
-	 public static WebElement btnShow (WebDriver driver) {                                    
+	/* public static WebElement btnShow (WebDriver driver) {                                    
 			
 			
 			
@@ -23,11 +23,17 @@ public class Budget {
 			
 			return element;
 		
-		}
+		}*/
 	
 	 
 	 
-	 public static WebElement mitkanName (WebDriver driver) {                                    
+	 
+	 
+	 @FindBy(how=How.ID,using="btnShow")
+	 
+	 public  WebElement btnShow;
+	 
+	/* public static WebElement mitkanName (WebDriver driver) {                                    
 			
 			
 			
@@ -35,7 +41,16 @@ public class Budget {
 			
 			return element;
 		
-		}
+		}*/
+	 
+	 
+	 
+	 
+	 
+	 
+	 @FindBy(how=How.ID,using="MenuModel_MitkanName_KodYechida")
+	 
+	 public  WebElement mitkanName;
 	
 	
 	 
@@ -51,6 +66,41 @@ public class Budget {
 		}
 	 
 	 
+ @FindBy(how=How.ID,using="cancel")
+	 
+	 public  WebElement btnUnDo;
+	 
+	 
+	 
+	 
+	 
+	 
+	 @FindBy(how=How.ID,using="btnYes")
+	 
+	 public  WebElement btnUnDoYes;
+	 
+	 
+    @FindBy(how=How.ID,using="btnNo")
+	 
+	 public  WebElement btnUnDoNo;
+	 
+	 
+    @FindBy(how=How.ID,using="btnYesSave")
+	 
+  	 public  WebElement btnSaveMichsaYes;
+	 
+	 
+    @FindBy(how=How.ID,using="btnNoSave")
+	 
+  	 public  WebElement btnSaveMichsaNo;
+    
+    
+    
+    
+    
+    
+    
+    /*
 	 
 	 public static WebElement btnSaveMichsaYes (WebDriver driver) {                                    
 			
@@ -74,7 +124,7 @@ public class Budget {
 			
 			return element;
 		
-		}
+		}*/
 	 
 	 
 	 
@@ -105,22 +155,13 @@ public class Budget {
 		}
 	 
 	 
-	
-	 public static WebElement clickMichsa0 (WebDriver driver) {                                    
-			
-			
-			
-			element=driver.findElement(By.id("tdMichsa0"));
-			
-			return element;
-		
-		}
+
 	
 	 
 	 
 
 	 
-	 public static WebElement updateMichsa (WebDriver driver) {                                    
+	/* public static WebElement typeMichsa (WebDriver driver) {                                    
 			
 			
 			
@@ -128,23 +169,19 @@ public class Budget {
 			
 			return element;
 		
-		}
+		}*/
+	 
+	 
+	 
+	 @FindBy(how=How.ID,using="MichsaCur")
+	 
+	 public WebElement typeMichsa;
 	
 	 
 
 	 
 	 
-	 
-	 
-	 public static WebElement clickMichsa1 (WebDriver driver) {                                    
-			
-			
-			
-			element=driver.findElement(By.id("tdMichsa1"));
-			
-			return element;
-		
-		}
+
 	 
 	 
 	 
