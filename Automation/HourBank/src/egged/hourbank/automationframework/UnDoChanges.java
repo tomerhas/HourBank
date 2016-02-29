@@ -67,8 +67,9 @@ public class UnDoChanges extends Base {
 						"עדכון זה יגרום לביטול השעות שעדכנת כעת, האם לבטל שינויים?");
 				budget.btnUnDoNo.click();
 				eltd.click();
-				System.out.println(budget.typeMichsa.getText());     
-				
+				System.out.println(eltd.getText());
+				System.out.println(budget.typeMichsa.getAttribute("value"));     
+				    
 				
 				
 				
