@@ -20,43 +20,29 @@ public class UnDoChanges extends Base {
 	public WebDriver driver;
 
 	@Test
-  
-  
-  
-  
-  public void f() {
-	  
-	  
-	  String nametd;
-	  boolean  flag=true;
-	  int i=0;
-	  
-	  
-	  
-	  Main main = PageFactory.initElements(driver,Main.class);
-	  Budget budget =  PageFactory.initElements(driver,Budget.class);
-	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	  main.lnkBudget.click();
-	  Select droplist = new Select(budget.mitkanName);
-      droplist.selectByVisibleText("הנהלת מוסך נתניה");
-      budget.btnShow.click();
-      
-      
-      
-      
-      
-      
-      
-	  while (flag)   {
-		  
-		  nametd="tdMichsa"+i;		  
-		  WebElement eltd=Budget.clickMichsa(driver,nametd);
-		  if  (eltd.getAttribute("class").equals("CellEditGrid")==true)
-			   
-		  {
-	  
-	  
-			  flag = false;
+	public void f() {
+
+		String nametd;
+		boolean flag = true;
+		int i = 0;
+
+		Main main = PageFactory.initElements(driver, Main.class);
+		Budget budget = PageFactory.initElements(driver, Budget.class);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		main.lnkBudget.click();
+		Select droplist = new Select(budget.mitkanName);
+		droplist.selectByVisibleText("הנהלת מוסך נתניה");
+		budget.btnShow.click();
+
+		while (flag) {
+
+			nametd = "tdMichsa" + i;
+			WebElement eltd = Budget.clickMichsa(driver, nametd);
+			if (eltd.getAttribute("class").equals("CellEditGrid") == true)
+
+			{
+
+				flag = false;
 				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 				eltd.click();
 				budget.typeMichsa.sendKeys("46.5");
@@ -66,30 +52,21 @@ public class UnDoChanges extends Base {
 				Assert.assertEquals(element1.getText(),
 						"עדכון זה יגרום לביטול השעות שעדכנת כעת, האם לבטל שינויים?");
 				budget.btnUnDoNo.click();
-				eltd.click();
-				System.out.println(eltd.getText());
-				System.out.println(budget.typeMichsa.getAttribute("value"));     
-				    
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-		  }
+				WebElement element2 = driver.findElement(By
+						.id("dialog-confirm"));
+				budget.btnUnDo.click();
+				Assert.assertEquals(element2.getText(),
+						"עדכון זה יגרום לביטול השעות שעדכנת כעת, האם לבטל שינויים?");
+				budget.btnUnDoYes.click();
+				eltd = Budget.clickMichsa(driver, nametd);
+				Assert.assertEquals(eltd.getText(), "0");
+
+			}
 			i++;
 
-	  
-	  }
-	  
-	  
-	  
-  }
+		}
+
+	}
 
 	@BeforeMethod
 	public void beforeMethod() {

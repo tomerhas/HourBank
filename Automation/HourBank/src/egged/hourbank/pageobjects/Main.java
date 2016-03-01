@@ -7,42 +7,15 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
 public class Main {
-	
-	 //private static WebElement element;
-	
-	
-	// final WebDriver driver;
-	 
-	 @FindBy(how=How.LINK_TEXT,using="ניהול תקציב")
-	 
-	 public WebElement lnkBudget;
-	 
 
-	 
-	 
-	 
-/*	 public Main(WebDriver driver) {
-		 this.driver=driver;
-	 }*/
-	 
-	 
-	 
-	 
-	 
-	 
-	 
+	// final WebDriver driver;
+
+	@FindBy(how = How.LINK_TEXT, using = "ניהול תקציב")
+	public WebElement lnkBudget;
+
 	
-	/*public static WebElement lnkBudget(WebDriver driver) {                                    
-	
-	
-	
-		element=driver.findElement(By.linkText("ניהול תקציב"));
-		
-		return element;
-	
-	}*/
-	
-	
-	
+	 //public Main(WebDriver driver) { 
+	 //this.driver=driver; }
+	 
 
 }

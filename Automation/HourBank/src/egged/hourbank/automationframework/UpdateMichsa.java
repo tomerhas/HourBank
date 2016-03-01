@@ -35,36 +35,20 @@ public class UpdateMichsa extends Base {
 		Select droplist = new Select(budget.mitkanName);
 		droplist.selectByVisibleText("הנהלת מוסך נתניה");
 		budget.btnShow.click();
-		Budget.btnUpdate(driver).click();
+		budget.btnUpdate.click();
 		WebElement element = driver.findElement(By.id("dialog-message"));
 		System.out.println(element.getText());
 		Assert.assertEquals(element.getText(), "לא בוצע שינוי במסך");
-		Budget.btnAccept(driver).click();
+		budget.btnAccept.click();
 		// Assert.assertTrue(Budget.clickMichsa1(driver).getAttribute("class").equals("CellEditGrid")==true);
 		// System.out.println(Budget.clickMichsa1(driver).getAttribute("class").equals("CellEditGrid"));
-
-		/*
-		 * Budget.clickMichsa1(driver).click();
-		 * Budget.typeMichsa.sendKeys("30");
-		 * Budget.btnUpdate(driver).click(); WebElement
-		 * element2=driver.findElement(By.id("dialog-confirm"));
-		 * Assert.assertEquals(element2.getText(),
-		 * "עדכון זה יגרום לעדכון שעות נוספות לעובדים, האם לעדכן?");
-		 * Budget.btnSaveMichsaYes(driver).click(); WebElement
-		 * element3=driver.findElement(By.id("dialog-grid"));
-		 * System.out.println(element3.getText());
-		 * Assert.assertEquals(element3.getText(),"הנתונים נשמרו בהצלחה");
-		 * Budget.btnAcceptSuccess(driver).click();
-		 * Budget.btnShow(driver).click(); Budget.clickMichsa1(driver).click();
-		 * Budget.typeMichsa.sendKeys("99999");
-		 */
 
 		while (flag) {
 
 			nametd = "tdMichsa" + i;
-			// WebElement eltd=budget.
+
 			WebElement eltd = Budget.clickMichsa(driver, nametd);
-			// eltd.click();
+
 			if (eltd.getAttribute("class").equals("CellEditGrid") == true)
 
 			{
@@ -73,7 +57,7 @@ public class UpdateMichsa extends Base {
 				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 				eltd.click();
 				budget.typeMichsa.sendKeys("30");
-				Budget.btnUpdate(driver).click();
+				budget.btnUpdate.click();
 				WebElement element1 = driver.findElement(By
 						.id("dialog-confirm"));
 				Assert.assertEquals(element1.getText(),
@@ -82,7 +66,7 @@ public class UpdateMichsa extends Base {
 				eltd.click();
 				System.out.println(eltd);
 				budget.typeMichsa.sendKeys("30");
-				Budget.btnUpdate(driver).click();
+				budget.btnUpdate.click();
 				WebElement element2 = driver.findElement(By
 						.id("dialog-confirm"));
 				Assert.assertEquals(element2.getText(),
@@ -91,42 +75,37 @@ public class UpdateMichsa extends Base {
 				WebElement element3 = driver.findElement(By.id("dialog-grid"));
 				System.out.println(element3.getText());
 				Assert.assertEquals(element3.getText(), "הנתונים נשמרו בהצלחה");
-				Budget.btnAcceptSuccess(driver).click();
+				budget.btnAcceptSuccess.click();
 				budget.btnShow.click();
 				System.out.println(eltd);
-				// WebDriverWait wait = new WebDriverWait(driver,120);
-				// wait.until(ExpectedConditions.stalenessOf((eltd)));
-				// WebDriverWait wait1 = new WebDriverWait(driver,50);
-				// wait1.until(ExpectedConditions.visibilityOf(eltd));
-				// WebDriverWait wait = new WebDriverWait(driver,20);
-				// wait.until(ExpectedConditions.visibilityOfElementLocated((eltd)));
 				eltd = Budget.clickMichsa(driver, nametd);
+
 				eltd.click();
-				// Budget.clickMichsa1(driver).click();
 				budget.typeMichsa.sendKeys("99999");
-				Budget.btnUpdate(driver).click();
+				budget.btnUpdate.click();
 				WebElement element4 = driver.findElement(By
 						.id("dialog-message"));
 				System.out.println(element4.getText());
 				Assert.assertEquals(element4.getText(),
 						"לא ניתן לבצע שמירה: סה''כ המכסות שעודכנו גדול מתקציב השעות הנוספות");
-				Budget.btnAccept(driver).click();
+				budget.btnAccept.click();
+
 				eltd.click();
 				budget.typeMichsa.sendKeys("201");
-				Budget.btnUpdate(driver).click();
+				budget.btnUpdate.click();
 				budget.btnSaveMichsaYes.click();
 				WebElement element5 = driver.findElement(By
 						.id("dialog-message"));
 				System.out.println(element5.getText());
 				Assert.assertEquals(element5.getText(),
 						"ארעה שגיאה בשמירת נתונים, אנא פנה למנהל מערכת");
-				Budget.btnAccept(driver).click();
+				budget.btnAccept.click();
 				eltd = Budget.clickMichsa(driver, nametd);
 				eltd.click();
 				budget.typeMichsa.sendKeys("0");
-				Budget.btnUpdate(driver).click();
+				budget.btnUpdate.click();
 				budget.btnSaveMichsaYes.click();
-				Budget.btnAcceptSuccess(driver).click();
+				budget.btnAcceptSuccess.click();
 
 			}
 
