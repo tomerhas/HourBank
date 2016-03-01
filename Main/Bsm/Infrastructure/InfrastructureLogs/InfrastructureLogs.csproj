@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C9B59C0B-A7C3-433A-9C5C-C11EB2E8EA7F}</ProjectGuid>
+    <ProjectGuid>{E679DFB2-FF85-4ACF-B63F-65567DBFCA4F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DalOraInfra</RootNamespace>
-    <AssemblyName>DalOraInfra</AssemblyName>
+    <RootNamespace>InfrastructureLogs</RootNamespace>
+    <AssemblyName>InfrastructureLogs</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
@@ -37,21 +37,15 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\SharedLib\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\SharedLib\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLib\Microsoft.Practices.Unity.dll</HintPath>
-    </Reference>
-    <Reference Include="Oracle.DataAccess, Version=4.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLib\Oracle.DataAccess.dll</HintPath>
-    </Reference>
-    <Reference Include="Oracle.ManagedDataAccess">
-      <HintPath>..\packages\odp.net.managed.121.1.2\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    <Reference Include="log4net">
+      <HintPath>..\..\SharedLib\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -60,31 +54,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAL\clDal.cs" />
-    <Compile Include="Interfaces\ICachedDictionary.cs" />
-    <Compile Include="Interfaces\ICacheManager.cs" />
+    <Compile Include="DataModels\Category.cs" />
+    <Compile Include="Interfaces\ILogger.cs" />
+    <Compile Include="DataModels\LogItem.cs" />
+    <Compile Include="Interfaces\IDbLogger.cs" />
+    <Compile Include="Interfaces\ILogEntity.cs" />
+    <Compile Include="Interfaces\ILogManager.cs" />
+    <Compile Include="Interfaces\ILogService.cs" />
+    <Compile Include="Loggers\DbLogger.cs" />
+    <Compile Include="Loggers\Log4NetLogger.cs" />
+    <Compile Include="Managers\LogManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Proxies\LogProxy.cs" />
+    <Compile Include="Services\LogService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\jquery-1.4.4-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.4.4.js" />
-    <Content Include="Scripts\jquery-1.4.4.min.js" />
-    <Content Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Egged.Infrastructure\Egged.Infrastructure.csproj">
-      <Project>{a414c1f8-0c57-4ecf-a356-2f23b257e9a1}</Project>
-      <Name>Egged.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Infrastructure\InfrastructureLogs\InfrastructureLogs.csproj">
-      <Project>{e679dfb2-ff85-4acf-b63f-65567dbfca4f}</Project>
-      <Name>InfrastructureLogs</Name>
-    </ProjectReference>
+    <Folder Include="Enums\" />
+    <Folder Include="LogAdapters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

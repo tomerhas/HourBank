@@ -10,11 +10,14 @@ using CacheInfra.Interfaces;
 using Egged.Infrastructure.Menus.DataModels;
 using Egged.Infrastructure.Menus.Interfaces;
 using Egged.Infrastructure.Menus.Managers;
+using InfrastructureLogs.Logs.Interfaces;
+using InfrastructureLogs.Logs.Loggers;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 
 namespace BsmWebApp
 {
@@ -22,6 +25,9 @@ namespace BsmWebApp
     {
         public void InitContainer(IUnityContainer container)
         {
+            var configFilePath = HostingEnvironment.MapPath("~/bin/log4net.config");
+            container.RegisterInstance<ILogger>(new Log4NetLogger("WebServer", configFilePath));
+
             container.RegisterType<IBudgetManager, BudgetManager>();
             container.RegisterType<ISecurityManager,SecurityManager>();
             container.RegisterType<IGeneralManager,GeneralManager>();

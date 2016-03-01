@@ -1,5 +1,6 @@
 ﻿using BsmCommon.Interfaces.Dal;
 using DalOraInfra.DAL;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,12 +14,18 @@ namespace BsmBL.DAL
     public class GeneralDal : IGeneralDal
     {
         private const string cProGetYechidotForUser = "PKG_BUDGET.getYechidotToUser";
+        private IUnityContainer _container;
+
+        public GeneralDal(IUnityContainer container)
+        {
+            _container = container;
+        }
 
         public DataTable GetYechidotForUser(DateTime Month, int KodYechida,string PreFix="")
         {
             try
             {//מחזיר נתוני עובד: 
-                clDal oDal = new clDal();
+                clDal oDal = _container.Resolve<clDal>();
                 DataTable dt = new DataTable();
           
                 oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, Month, ParameterDir.pdInput);
@@ -26,7 +33,7 @@ namespace BsmBL.DAL
                 oDal.AddParameter("p_PreFix", ParameterType.ntOracleVarchar, PreFix, ParameterDir.pdInput);  
                 oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 //  oDal.ExecuteSP(cfunGetSumMeafyen14, ref dt);
-                oDal.ExecuteSP(cProGetYechidotForUser, ref dt);
+                oDal.ExecuteSP(cProGetYechidotForUser, dt);
                 return dt;
             }
             catch (Exception ex)

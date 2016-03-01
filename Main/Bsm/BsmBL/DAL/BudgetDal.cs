@@ -1,6 +1,7 @@
 ﻿using BsmCommon.Interfaces.DAL;
 using BsmCommon.UDT;
 using DalOraInfra.DAL;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,10 +19,16 @@ namespace BsmBL.DAL
         private const string cfunGgetShaotNosafotMeshek = "PKG_BUDGET.fun_get_shaot_nosafot_meshek";
         private const string cProGetEmployeesDetailsForMitkan = "PKG_BUDGET.GetEmployeesDetailsForMitkan";
         private const string cFunSaveEmployeeBudgets = "PKG_BUDGET.fun_save_employee_Michsot";
+        private IUnityContainer _container;
+
+        public BudgetDal(IUnityContainer container)
+        {
+            _container = container;
+        }
 
         public decimal GetSumMeafyen14(int KodYechida, DateTime Month)
         {
-            clDal oDal = new clDal();
+            clDal oDal = _container.Resolve<clDal>();
             DataTable dt = new DataTable();
 
             try
@@ -47,7 +54,7 @@ namespace BsmBL.DAL
 
         public decimal GetShaotnosafotMeshek(int KodYechida, DateTime Month)
         {
-            clDal oDal = new clDal();
+            clDal oDal = _container.Resolve<clDal>();
             DataTable dt = new DataTable();
 
             try
@@ -72,7 +79,7 @@ namespace BsmBL.DAL
 
         public DataTable GetEmployeeDatails(int KodYechida, DateTime Month)
         {
-            clDal oDal = new clDal();
+            clDal oDal = _container.Resolve<clDal>();
             DataTable dt = new DataTable();
 
             try
@@ -83,7 +90,7 @@ namespace BsmBL.DAL
                  oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 //  oDal.ExecuteSP(cfunGetSumMeafyen14, ref dt);
 
-                 oDal.ExecuteSP(cProGetEmployeesDetailsForMitkan, ref dt);
+                 oDal.ExecuteSP(cProGetEmployeesDetailsForMitkan, dt);
                 return dt;
               //  return int.Parse(oDal.GetValParam("p_result").ToString());
 
@@ -97,7 +104,7 @@ namespace BsmBL.DAL
 
         public int SaveEmployeeMichsot(int KodYechida, int userId, COLL_BUDGET_EMPLOYEES_MICHSA ocollMichsot)
         {
-            clDal oDal = new clDal();
+            clDal oDal = _container.Resolve<clDal>();
             try
             {
                 oDal.AddParameter("p_code", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);

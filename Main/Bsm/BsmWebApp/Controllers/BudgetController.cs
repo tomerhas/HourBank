@@ -23,6 +23,9 @@ using BsmCommon.Helpers;
 using BsmCommon.UDT;
 using BsmWebApp.Infrastructure;
 using BsmCommon.Enums;
+using InfrastructureLogs.Logs.Interfaces;
+using InfrastructureLogs.Logs.DataModels;
+using Egged.Infrastructure.Helpers;
 
 namespace BsmWebApp.Controllers
 {
@@ -52,16 +55,22 @@ namespace BsmWebApp.Controllers
             var manager = _container.Resolve<IBudgetManager>();
             if (curMitkan > 0)
             {
+                double totalMsToExecute = 0;
                  IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
                // long bakasha_id = Gmanager.GetLastBakashaOfTeken(month);
-                BudgetMainViewModel vmResult = GetBudgetDetailForMitkan(curMitkan, month);
+                 BudgetMainViewModel vmResult = null;
+                 totalMsToExecute = StopwatchHelper.TimedAction<BudgetMainViewModel>(() => GetBudgetDetailForMitkan(curMitkan, month), out vmResult);
+                 _container.Resolve<ILogger>().Log(string.Format("BudgetController.Index: Total ms to GetBudgetDetailForMitkan is {0}", totalMsToExecute), Category.Info);
                 ////if (bakasha_id != null)
                 ////    vmResult.LastBakashaDate = Gmanager.GetZmanBakasha(bakasha_id);
                 ////vmResult.MitkanName = vm.MitkanName;
                 vmResult.Filter.SelectedMonth = vm.SelectedMonth;
                 vmResult.KodMitkan = curMitkan;
                 vmResult.Month = month;
-                vmResult.UsersInMitkan = GetEmployeesInMitkan(curMitkan, month);
+                UsersInMitkanViewModel res = null;
+                totalMsToExecute = StopwatchHelper.TimedAction<UsersInMitkanViewModel>(()=> GetEmployeesInMitkan(curMitkan, month),out res);
+                _container.Resolve<ILogger>().Log(string.Format("BudgetController.Index: Total ms to GetEmployeesInMitkan is {0}",totalMsToExecute), Category.Info);
+                vmResult.UsersInMitkan = res;
                 if (DateTime.Now < vmResult.Filter.LastDateIdkunBank && CurrentUser.GetSugPeilutHatshaa("Budget") == eSugPeiluHarshaa.Update)
                     vmResult.IsMonthToEdit = true;
                 if (vmResult.MitkanBudgetDetail !=null && vmResult.UsersInMitkan != null && vmResult.UsersInMitkan.Employees.Count > 0)

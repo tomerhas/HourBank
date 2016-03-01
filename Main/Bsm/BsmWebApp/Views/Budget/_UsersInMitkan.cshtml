@@ -650,7 +650,10 @@
         var trs = grid.tbody.find('tr');
         var num=0;
         trs.each(function () {
-            $(this).find('td.CellEditGrid').prop("id","tdMichsa"+num++);
+          
+            $(this).find('td.CellEditGrid').prop("id","tdMichsa"+num);
+            $(this).find('td.tdGridDisabled').prop("id","tdMichsa"+num);
+            num++;
         });
     }
 

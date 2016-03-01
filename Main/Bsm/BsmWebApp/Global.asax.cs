@@ -2,6 +2,8 @@
 using BsmCommon.Interfaces.CachedItems;
 using BsmWebApp.Controllers;
 using BsmWebApp.Infrastructure;
+using InfrastructureLogs.Logs.DataModels;
+using InfrastructureLogs.Logs.Interfaces;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using System;
@@ -33,6 +35,8 @@ namespace BsmWebApp
             IUnityContainer container = new UnityContainer();
             Bootstrapper boot = new Bootstrapper();
             boot.InitContainer(container);
+
+            container.Resolve<ILogger>().Log("bootstrap initialize containers", Category.Info);
 
             UnityDependencyResolver resolver = new UnityDependencyResolver(container);
             DependencyResolver.SetResolver(resolver);

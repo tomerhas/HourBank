@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute\MultipleButtonAttribute.cs" />
+    <Compile Include="Helpers\StopwatchHelper.cs" />
     <Compile Include="Menus\DataModels\SingleMenu.cs" />
     <Compile Include="Menus\Interfaces\IMenusManager.cs" />
     <Compile Include="Menus\Managers\MenusManager.cs" />

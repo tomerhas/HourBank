@@ -470,6 +470,9 @@
     <Content Include="Content\kendo\images\kendoui.ttf" />
     <Content Include="Content\kendo\images\kendoui.woff" />
     <Content Include="Scripts\GeneralFunctions.js" />
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\Profile.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />
@@ -1083,6 +1086,10 @@
     <ProjectReference Include="..\Infrastructure\CacheInfra\CacheInfra.csproj">
       <Project>{d6968b94-1a4f-4f26-8095-5297af0e0e83}</Project>
       <Name>CacheInfra</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\InfrastructureLogs\InfrastructureLogs.csproj">
+      <Project>{e679dfb2-ff85-4acf-b63f-65567dbfca4f}</Project>
+      <Name>InfrastructureLogs</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
