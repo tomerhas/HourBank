@@ -36,12 +36,12 @@ namespace BsmWebApp
             Bootstrapper boot = new Bootstrapper();
             boot.InitContainer(container);
 
-            container.Resolve<ILogger>().Log("bootstrap initialize containers", Category.Info);
+            
 
             UnityDependencyResolver resolver = new UnityDependencyResolver(container);
             DependencyResolver.SetResolver(resolver);
-
             InitServiceLocator(container);
+            container.Resolve<ILogger>().Log("bootstrap initialize containers", Category.Info);
 
             boot.SetMenus(container);
             DataAnnotationsModelValidatorProvider.AddImplicitRequiredAttributeForValueTypes = false;

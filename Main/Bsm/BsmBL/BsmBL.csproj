@@ -73,6 +73,7 @@
     <Compile Include="Managers\BudgetManager.cs" />
     <Compile Include="Managers\ChangesManager.cs" />
     <Compile Include="Managers\GeneralManager.cs" />
+    <Compile Include="Managers\LogManager.cs" />
     <Compile Include="Managers\Reports\ReportManager.cs" />
     <Compile Include="Managers\SecurityManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -100,6 +101,10 @@
     <ProjectReference Include="..\DalOraInfra\DalOraInfra.csproj">
       <Project>{c9b59c0b-a7c3-433a-9c5c-c11eb2e8ea7f}</Project>
       <Name>DalOraInfra</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\InfrastructureLogs\InfrastructureLogs.csproj">
+      <Project>{e679dfb2-ff85-4acf-b63f-65567dbfca4f}</Project>
+      <Name>InfrastructureLogs</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

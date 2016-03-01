@@ -46,6 +46,14 @@
     <Reference Include="log4net">
       <HintPath>..\..\SharedLib\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SharedLib\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SharedLib\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -64,16 +72,21 @@
     <Compile Include="Interfaces\ILogEntity.cs" />
     <Compile Include="Interfaces\ILogManager.cs" />
     <Compile Include="Interfaces\ILogService.cs" />
+    <Compile Include="LogAdapters\Log4net\BaseDBLog4NetLogger.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LogAdapters\Log4net\DBLog4NetLoggerServer.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Loggers\DbLogger.cs" />
     <Compile Include="Loggers\Log4NetLogger.cs" />
-    <Compile Include="Managers\LogManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxies\LogProxy.cs" />
     <Compile Include="Services\LogService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enums\" />
-    <Folder Include="LogAdapters\" />
+    <Folder Include="Managers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

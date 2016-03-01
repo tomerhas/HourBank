@@ -36,6 +36,8 @@ namespace BsmWebApp
             container.RegisterType<IBudgetDal, BudgetDal>();
             container.RegisterType<IChangesDal, ChangesDal>();
             container.RegisterType<IGeneralDal, GeneralDal>();
+            container.RegisterType<IDbLogger, DbLogger>();
+            container.RegisterType<ILogManager, LogManager>();
 
             container.RegisterInstance<IUserInfoCachedItems>(container.Resolve<UserInfoCachedItems>());
             container.RegisterInstance<IMenusManager>(new MenusManager());

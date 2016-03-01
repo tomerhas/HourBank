@@ -2,6 +2,7 @@
 using BsmCommon.DataModels.Budgets;
 using BsmCommon.DataModels.Employees;
 using BsmCommon.DataModels.Profiles;
+using InfrastructureLogs.Logs.DataModels;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace BsmBL.DAL
         public DbSet<Harshaa> HarshaotOvdim { get; set; }
         public DbSet<Masach> Mashacim { get; set; }
         public DbSet<HarshaatMasach> HarshaatMasach { get; set; }
+        public DbSet<LogItem> Logs { get; set; }
      
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -40,6 +42,7 @@ namespace BsmBL.DAL
             modelBuilder.Entity<Harshaa>().ToTable("TB_HARSHAA", schemaName);
             modelBuilder.Entity<Masach>().ToTable("TB_MASACH", schemaName);
             modelBuilder.Entity<HarshaatMasach>().ToTable("TB_HARSHAOT_MASACH", schemaName);
+            modelBuilder.Entity<LogItem>().ToTable("TB_LOG", schemaName);
         }
     }
 }

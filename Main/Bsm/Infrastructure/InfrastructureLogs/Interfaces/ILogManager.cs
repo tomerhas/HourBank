@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace InfrastructureLogs.Logs.Interfaces
 {
-    //public interface ILogManager : IGenericProvider<LogItem>
-    //{
-    //}
+    public interface ILogManager
+    {
+        void AddItem(LogItem logItem);
+    }
 }
