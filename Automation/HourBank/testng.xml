@@ -7,7 +7,7 @@
 		<classes>
 
 	        <class name="egged.hourbank.automationframework.UpdateMichsa" />
-		  
+		    <class name="egged.hourbank.automationframework.UnDoChanges" />
             
 		</classes>
 		

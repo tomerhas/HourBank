@@ -1,14 +1,14 @@
 package egged.hourbank.pageobjects;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
-public class Budget {
+public  class Budget {
 
 	private static WebElement element;
+	//final WebDriver driver;
 
 	@FindBy(how = How.ID, using = "btnShow")
 	public WebElement btnShow;
@@ -18,15 +18,18 @@ public class Budget {
 
 	@FindBy(how = How.ID, using = "btnUpdate")
 	public WebElement btnUpdate;
+	
+	@FindBy(how = How.ID, using = "lblIpus")
+	public WebElement lblReset;
 
 	@FindBy(how = How.ID, using = "cancel")
 	public WebElement btnUnDo;
 
 	@FindBy(how = How.ID, using = "btnYes")
-	public WebElement btnUnDoYes;
+	public WebElement btnYes;
 
 	@FindBy(how = How.ID, using = "btnNo")
-	public WebElement btnUnDoNo;
+	public WebElement btnNo;
 
 	@FindBy(how = How.ID, using = "btnYesSave")
 	public WebElement btnSaveMichsaYes;
@@ -51,4 +54,11 @@ public class Budget {
 
 	}
 
+	
+	// public Budget(WebDriver driver) { 
+	// this.driver=driver; }
+	
+	
+	
+	
 }

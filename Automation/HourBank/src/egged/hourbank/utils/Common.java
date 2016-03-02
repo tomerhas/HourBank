@@ -7,15 +7,25 @@ import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.google.common.base.Function;
 
-public class Common {
+import egged.hourbank.pageobjects.Budget;
+import egged.hourbank.pageobjects.Main;
+
+public   class Common {
 
 	private static WebElement element;
+	public WebDriver driver;
+	
+	
+	Main main = PageFactory.initElements(driver, Main.class);
+	Budget budget = PageFactory.initElements(driver, Budget.class);
 
 	public static WebElement Wait_For_Element_Visibile(final WebDriver driver,
 			final int timeoutSeconds, String snameId, String sclassName) {
@@ -70,5 +80,27 @@ public class Common {
 
 		return element;
 	}
+	
+	
+	
+	
+	public  void enterBudget ()    {
+		
+		
+		main.lnkBudget.click();
+		Select droplist = new Select(budget.mitkanName);
+		droplist.selectByVisibleText("הנהלת מוסך נתניה");
+		budget.btnShow.click();
+		
+	}
+  	
+	
+
+	
+
+	
+	
+	
+	
 
 }
