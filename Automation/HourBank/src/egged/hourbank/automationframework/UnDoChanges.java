@@ -14,7 +14,6 @@ import org.testng.annotations.Test;
 import egged.hourbank.pageobjects.Budget;
 import egged.hourbank.pageobjects.Main;
 import egged.hourbank.utils.Base;
-import egged.hourbank.utils.Common;
 
 public class UnDoChanges extends Base {
 
@@ -29,14 +28,8 @@ public class UnDoChanges extends Base {
 
 		Main main = PageFactory.initElements(driver, Main.class);
 		Budget budget = PageFactory.initElements(driver, Budget.class);
-		//Common common = PageFactory.initElements(driver, Common.class);
+		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		
-		//common.enterBudget();
-		//Common a=new Common();
-		//a.enterBudget(driver);
-		
-		
 		
 		main.lnkBudget.click();
 		Select droplist = new Select(budget.mitkanName);
@@ -60,17 +53,20 @@ public class UnDoChanges extends Base {
 						.id("dialog-confirm"));
 				Assert.assertEquals(element1.getText(),
 						"עדכון זה יגרום לביטול השעות שעדכנת כעת, האם לבטל שינויים?");
+				
 				budget.btnNo.click();
 				WebElement element2 = driver.findElement(By
 						.id("dialog-confirm"));
 				budget.btnUnDo.click();
 				Assert.assertEquals(element2.getText(),
 						"עדכון זה יגרום לביטול השעות שעדכנת כעת, האם לבטל שינויים?");
+				
 				budget.btnYes.click();
 				eltd = Budget.clickMichsa(driver, nametd);
 				Assert.assertEquals(eltd.getText(), "0");
 
 			}
+			
 			i++;
 
 		}

@@ -8,6 +8,7 @@
 
 	        <class name="egged.hourbank.automationframework.UpdateMichsa" />
 		    <class name="egged.hourbank.automationframework.UnDoChanges" />
+            <class name="egged.hourbank.automationframework.ResetMichsa" />
             
 		</classes>
 		

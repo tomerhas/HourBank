@@ -45,6 +45,11 @@ public  class Budget {
 
 	@FindBy(how = How.ID, using = "MichsaCur")
 	public WebElement typeMichsa;
+	
+	@FindBy(how = How.CLASS_NAME, using = "pointer")
+	public WebElement lnkKds;
+	
+	
 
 	public static WebElement clickMichsa(WebDriver driver, String nametd) {
 
