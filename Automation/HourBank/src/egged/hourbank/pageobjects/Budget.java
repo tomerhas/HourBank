@@ -46,8 +46,12 @@ public  class Budget {
 	@FindBy(how = How.ID, using = "MichsaCur")
 	public WebElement typeMichsa;
 	
-	@FindBy(how = How.CLASS_NAME, using = "pointer")
+	@FindBy(how = How.ID, using = "tdKds0")
 	public WebElement lnkKds;
+	
+	@FindBy(how = How.ID, using = "ctl00_upHeader")
+	public WebElement KdsHeader;
+	
 	
 	
 
