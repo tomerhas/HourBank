@@ -5,15 +5,12 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import egged.hourbank.pageobjects.Budget;
-import egged.hourbank.pageobjects.Main;
 import egged.hourbank.utils.Base;
 
 
@@ -29,15 +26,13 @@ public class UnDoChanges extends Base {
 		boolean flag = true;
 		int i = 0;
 
-		Main main = PageFactory.initElements(driver, Main.class);
-		Budget budget = PageFactory.initElements(driver, Budget.class);
+		
+		
 		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
-		main.lnkBudget.click();
-		Select droplist = new Select(budget.mitkanName);
-		droplist.selectByVisibleText("הנהלת מוסך נתניה");
-		budget.btnShow.click();
+		
+		enterBudget();
 
 		while (flag) {
 
@@ -80,6 +75,7 @@ public class UnDoChanges extends Base {
 	public void beforeMethod() {
 
 		driver = getDriver();
+		initBudget();
 	}
 
 }

@@ -11,6 +11,7 @@
             <class name="egged.hourbank.automationframework.ResetMichsa" />
             <class name="egged.hourbank.automationframework.LinkToKds" /> 
             
+            
 		</classes>
 		
 		  </test>
