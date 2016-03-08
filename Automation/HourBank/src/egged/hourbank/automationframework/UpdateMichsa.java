@@ -9,17 +9,22 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
 import egged.hourbank.pageobjects.Budget;
 import egged.hourbank.pageobjects.Main;
 import egged.hourbank.utils.Base;
 
+
+
+@Listeners ({egged.hourbank.listener.TestListener.class})
 public class UpdateMichsa extends Base {
 
 	public WebDriver driver;
 
 	@Test
-	public void f() {
+	public void updateMichsa() {
 
 		String nametd = "";
 		int num = 0;
