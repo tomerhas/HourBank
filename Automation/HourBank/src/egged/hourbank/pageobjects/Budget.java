@@ -52,6 +52,28 @@ public  class Budget {
 	@FindBy(how = How.ID, using = "ctl00_upHeader")
 	public WebElement KdsHeader;
 	
+	@FindBy(how = How.ID, using = "lblAuto")
+	public WebElement lblAutoAllocation;
+	
+	@FindBy(how = How.ID, using = "btnAuto")
+	public WebElement btnAutoAllocation;
+	
+	@FindBy(how = How.ID, using = "rbTichnunPrev")
+	public WebElement radioPrevPlan;
+	
+	@FindBy(how = How.ID, using = "rbBizuaPrev")
+	public WebElement radioPrevActual;
+	
+	@FindBy(how = How.ID, using = "rbTichnunCur")
+	public WebElement radioCurActual;
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 

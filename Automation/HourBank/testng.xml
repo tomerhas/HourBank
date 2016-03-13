@@ -10,7 +10,7 @@
 		    <class name="egged.hourbank.automationframework.UnDoChanges" />
             <class name="egged.hourbank.automationframework.ResetMichsa" />
             <class name="egged.hourbank.automationframework.LinkToKds" /> 
-            
+            <class name="egged.hourbank.automationframework.AutoAllocation" /> 
             
 		</classes>
 		

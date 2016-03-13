@@ -9,7 +9,6 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
 import egged.hourbank.pageobjects.Budget;
 import egged.hourbank.utils.Base;
 
@@ -91,7 +90,6 @@ public class UpdateMichsa extends Base {
 		Assert.assertEquals(element1.getText(),
 				"עדכון זה יגרום לעדכון שעות נוספות לעובדים, האם לעדכן?");
 		budget.btnSaveMichsaNo.click();
-		
 		eltd.click();
 		System.out.println(eltd);
 		budget.typeMichsa.sendKeys("30");
@@ -103,7 +101,7 @@ public class UpdateMichsa extends Base {
 		
 		WebElement element3 = driver.findElement(By.id("dialog-grid"));
 		System.out.println(element3.getText());
-		Assert.assertEquals(element3.getText(), "הנתונים נשמרו בהצלחה");
+		Assert.assertEquals(element3.getText(),"הנתונים נשמרו בהצלחה");
 		budget.btnAcceptSuccess.click();
 		
 		eltd = Budget.clickMichsa(driver, nametd);
