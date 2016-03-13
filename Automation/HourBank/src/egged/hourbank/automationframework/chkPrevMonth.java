@@ -1,12 +1,15 @@
 package egged.hourbank.automationframework;
 
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 
-public class chkPrevMonth {
+import egged.hourbank.utils.Base;
+
+public class chkPrevMonth extends Base {
 	
 	
-	
+	public WebDriver driver;
 	
 	
 	
@@ -36,6 +39,9 @@ public class chkPrevMonth {
   
   @BeforeMethod
   public void beforeMethod() {
+	  
+		driver = getDriver();
+		initBudget();
 	  
 	  
   }

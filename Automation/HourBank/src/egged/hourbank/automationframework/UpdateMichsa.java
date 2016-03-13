@@ -101,6 +101,7 @@ public class UpdateMichsa extends Base {
 		
 		WebElement element3 = driver.findElement(By.id("dialog-grid"));
 		System.out.println(element3.getText());
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		Assert.assertEquals(element3.getText(),"הנתונים נשמרו בהצלחה");
 		budget.btnAcceptSuccess.click();
 		eltd = Budget.clickMichsa(driver, nametd);
