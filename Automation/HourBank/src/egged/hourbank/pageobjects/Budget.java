@@ -67,6 +67,8 @@ public  class Budget {
 	@FindBy(how = How.ID, using = "rbTichnunCur")
 	public WebElement radioCurActual;
 	
+	@FindBy(how = How.CLASS_NAME, using = "PurpleTextLink")
+	public WebElement daysLeft;
 	
 	
 	
@@ -77,9 +79,9 @@ public  class Budget {
 	
 	
 
-	public static WebElement clickMichsa(WebDriver driver, String nametd) {
+	public static WebElement clickMichsa(WebDriver driver, String elname) {
 
-		element = driver.findElement(By.id(nametd));
+		element = driver.findElement(By.id(elname));
 
 		return element;
 

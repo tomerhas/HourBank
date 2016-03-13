@@ -40,7 +40,7 @@ public class UpdateMichsa extends Base {
 		System.out.println(element.getText());
 		Assert.assertEquals(element.getText(), "לא בוצע שינוי במסך");
 		budget.btnAccept.click();
-	
+		
 
 		while (num < 2) {
 
@@ -90,9 +90,9 @@ public class UpdateMichsa extends Base {
 		Assert.assertEquals(element1.getText(),
 				"עדכון זה יגרום לעדכון שעות נוספות לעובדים, האם לעדכן?");
 		budget.btnSaveMichsaNo.click();
-		eltd.click();
-		System.out.println(eltd);
-		budget.typeMichsa.sendKeys("30");
+		//eltd.click();
+		//System.out.println(eltd);
+		//budget.typeMichsa.sendKeys("30");
 		budget.btnUpdate.click();
 		WebElement element2 = driver.findElement(By.id("dialog-confirm"));
 		Assert.assertEquals(element2.getText(),
@@ -103,7 +103,6 @@ public class UpdateMichsa extends Base {
 		System.out.println(element3.getText());
 		Assert.assertEquals(element3.getText(),"הנתונים נשמרו בהצלחה");
 		budget.btnAcceptSuccess.click();
-		
 		eltd = Budget.clickMichsa(driver, nametd);
 		eltd.click();
 		budget.typeMichsa.sendKeys("201");

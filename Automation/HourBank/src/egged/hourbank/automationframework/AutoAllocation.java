@@ -54,16 +54,16 @@ public class AutoAllocation extends Base {
 			
 			nametd = "tdMichsa" + i;
 			eltd = Budget.clickMichsa(driver,nametd);
-			plantdname =  "tdShaotUsed0" + i;
-			plantd = Budget.clickMichsa(driver,nametd);
+			plantdname =  "tdPrevMonth" + i;
+			plantd = Budget.clickMichsa(driver,plantdname);
 			if (eltd.getAttribute("class").equals("CellEditGrid") == true)
 				
 				
 				
 			{
 			
-				System.out.println(eltd.getText());
-				System.out.println(plantd.getText());
+				System.out.println(eltd.getText()+"הקצאת שעות");
+				System.out.println(plantd.getText()+"הקצאה לחודש קודם");
 				Assert.assertEquals(eltd.getText(), plantd.getText());
 			
 		}
@@ -107,8 +107,8 @@ public class AutoAllocation extends Base {
 			
 			nametd = "tdMichsa" + i;
 			eltd = Budget.clickMichsa(driver,nametd);
-			actualtdname =  "tdPrevMonth" + i;
-			actualtd = Budget.clickMichsa(driver,nametd);
+			actualtdname =  "tdShaotUsed" + i;
+			actualtd = Budget.clickMichsa(driver,actualtdname);
 			if (eltd.getAttribute("class").equals("CellEditGrid") == true)
 				
 				
