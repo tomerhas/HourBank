@@ -51,14 +51,13 @@ public class UnDoChanges extends Base {
 						.id("dialog-confirm"));
 				Assert.assertEquals(element1.getText(),
 						"עדכון זה יגרום לביטול השעות שעדכנת כעת, האם לבטל שינויים?");
-				
 				budget.btnNo.click();
+				Assert.assertEquals(eltd.getText(), "46.5");
+				budget.btnUnDo.click();
 				WebElement element2 = driver.findElement(By
 						.id("dialog-confirm"));
-				budget.btnUnDo.click();
 				Assert.assertEquals(element2.getText(),
 						"עדכון זה יגרום לביטול השעות שעדכנת כעת, האם לבטל שינויים?");
-				
 				budget.btnYes.click();
 				eltd = Budget.clickMichsa(driver, nametd);
 				Assert.assertEquals(eltd.getText(), "0");

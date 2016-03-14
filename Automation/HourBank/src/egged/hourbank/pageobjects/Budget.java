@@ -21,9 +21,15 @@ public  class Budget {
 	
 	@FindBy(how = How.ID, using = "lblIpus")
 	public WebElement lblReset;
+	
+	@FindBy(how = How.CLASS_NAME, using = "DisabledIpus")
+	public WebElement lblResetDisabled;
 
 	@FindBy(how = How.ID, using = "cancel")
 	public WebElement btnUnDo;
+	
+	@FindBy(how = How.CLASS_NAME, using = "DisabledLink")
+	public WebElement btnUnDoDisabled;
 
 	@FindBy(how = How.ID, using = "btnYes")
 	public WebElement btnYes;
@@ -58,6 +64,9 @@ public  class Budget {
 	@FindBy(how = How.ID, using = "btnAuto")
 	public WebElement btnAutoAllocation;
 	
+	@FindBy(how = How.CLASS_NAME, using = "DisabledCal")
+	public WebElement lblAutoAllocationDisabled;
+	
 	@FindBy(how = How.ID, using = "rbTichnunPrev")
 	public WebElement radioPrevPlan;
 	
@@ -69,6 +78,12 @@ public  class Budget {
 	
 	@FindBy(how = How.CLASS_NAME, using = "PurpleTextLink")
 	public WebElement daysLeft;
+	
+	@FindBy(how = How.ID, using = "btnPrevMonth")
+	public WebElement btnPrevMonth;
+	
+	@FindBy(how = How.ID, using = "btnNextMonth")
+	public WebElement btnNextMonth;
 	
 	
 	
