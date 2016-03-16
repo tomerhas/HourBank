@@ -85,6 +85,31 @@ public  class Budget {
 	@FindBy(how = How.ID, using = "btnNextMonth")
 	public WebElement btnNextMonth;
 	
+	@FindBy(how = How.ID, using = "SelectedMonth")
+	public WebElement listDate;
+	
+	@FindBy(how = How.ID, using = "MisparIshi")
+	public WebElement searchAutoComplete;
+	
+	@FindBy(how = How.CLASS_NAME, using = "SearchBG")
+	public WebElement btnAutoComplete;
+	
+	@FindBy(how = How.ID, using = "MisparIshi-list")
+	public WebElement listAutoComplete;
+	
+	@FindBy(how = How.ID, using = "k-item")
+	public WebElement itemMisparIshi;
+	
+	@FindBy(how = How.ID, using = "MisparIshi_option_selected")
+	public WebElement itemMisparIshiSelected;
+	
+	@FindBy(how = How.CLASS_NAME, using = "clickable")
+	public WebElement highlightTr ;
+	
+	
+	
+	
+	
 	
 	
 	

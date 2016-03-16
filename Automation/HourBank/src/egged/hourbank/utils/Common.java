@@ -4,7 +4,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.NoSuchWindowException;
@@ -15,9 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import com.google.common.base.Function;
-
 import egged.hourbank.pageobjects.Budget;
 import egged.hourbank.pageobjects.Main;
 
@@ -154,8 +151,7 @@ public   class Common   {
 	
 	
 	
-	Main main = PageFactory.initElements(driver, Main.class);
-	Budget budget = PageFactory.initElements(driver, Budget.class);
+
 
 	public static WebElement Wait_For_Element_Visibile(final WebDriver driver,
 			final int timeoutSeconds, String snameId, String sclassName) {
@@ -210,6 +206,11 @@ public   class Common   {
 
 		return element;
 	}
+	
+	
+	
+	
+	
 	
 	
 	

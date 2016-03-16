@@ -79,6 +79,7 @@ public   void enterBudget ()    {
 	droplist.selectByVisibleText("הנהלת מוסך נתניה");
 	budget.btnShow.click();
 	
+	
 }
 
 

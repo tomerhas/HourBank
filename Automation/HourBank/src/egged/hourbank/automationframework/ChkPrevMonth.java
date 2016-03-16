@@ -6,8 +6,9 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
-
+import java.util.Calendar;
 import egged.hourbank.utils.Base;
+
 
 @Listeners({ egged.hourbank.listener.TestListener.class })
 public class ChkPrevMonth extends Base {
@@ -19,7 +20,20 @@ public class ChkPrevMonth extends Base {
 	public void chkPrevMonth() {
 
 		enterBudget();
+		 
+		
+	
+		Calendar now = Calendar.getInstance();
+		String sysdate = "0" + (now.get(Calendar.MONTH) + 1) + "/"
+				+ now.get(Calendar.YEAR);
+		String date = budget.listDate.getAttribute("value");
+		Assert.assertEquals(date.substring(3, 10),sysdate);
+		
+		Assert.assertFalse(budget.btnNextMonth.isEnabled(),
+				"btnNextMonth is enabled");
 		budget.btnPrevMonth.click();
+		Assert.assertTrue(budget.btnNextMonth.isEnabled(),
+				"btnNextMonth is disabled");
 		budget.btnShow.click();
 
 		try {

@@ -5,10 +5,14 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
 import egged.hourbank.pageobjects.Budget;
 import egged.hourbank.utils.Base;
 
@@ -90,9 +94,6 @@ public class UpdateMichsa extends Base {
 		Assert.assertEquals(element1.getText(),
 				"עדכון זה יגרום לעדכון שעות נוספות לעובדים, האם לעדכן?");
 		budget.btnSaveMichsaNo.click();
-		//eltd.click();
-		//System.out.println(eltd);
-		//budget.typeMichsa.sendKeys("30");
 		budget.btnUpdate.click();
 		WebElement element2 = driver.findElement(By.id("dialog-confirm"));
 		Assert.assertEquals(element2.getText(),
@@ -100,8 +101,24 @@ public class UpdateMichsa extends Base {
 		budget.btnSaveMichsaYes.click();
 		
 		WebElement element3 = driver.findElement(By.id("dialog-grid"));
-		System.out.println(element3.getText());
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		Wait<WebDriver> wait = new WebDriverWait(driver, 10);
+
+		// Wait for search to complete
+
+		wait.until(new ExpectedCondition<Boolean>() {
+
+			public Boolean apply(WebDriver webDriver) {
+
+				System.out.println("Searching...");
+
+				return element3 != null;
+
+			}
+
+		});
+		
+        System.out.println(element3.getText());
 		Assert.assertEquals(element3.getText(),"הנתונים נשמרו בהצלחה");
 		budget.btnAcceptSuccess.click();
 		eltd = Budget.clickMichsa(driver, nametd);
