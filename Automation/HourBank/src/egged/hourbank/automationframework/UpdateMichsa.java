@@ -98,28 +98,47 @@ public class UpdateMichsa extends Base {
 		WebElement element2 = driver.findElement(By.id("dialog-confirm"));
 		Assert.assertEquals(element2.getText(),
 				"עדכון זה יגרום לעדכון שעות נוספות לעובדים, האם לעדכן?");
+		
 		budget.btnSaveMichsaYes.click();
+		
+		
 		
 		WebElement element3 = driver.findElement(By.id("dialog-grid"));
 		
-		Wait<WebDriver> wait = new WebDriverWait(driver, 10);
+        //System.out.println(element3.getText());
+        try {
+        	
+        	System.out.println(element3+"try");
+        	Assert.assertEquals(element3.getText(),"הנתונים נשמרו בהצלחה");
+        	
+        	
+        }
+        
+        catch (java.lang.AssertionError e)  {
+        	
+    		Wait<WebDriver> wait = new WebDriverWait(driver, 10);
 
-		// Wait for search to complete
+    		// Wait for search to complete
 
-		wait.until(new ExpectedCondition<Boolean>() {
+    		wait.until(new ExpectedCondition<Boolean>() {
 
-			public Boolean apply(WebDriver webDriver) {
+    			public Boolean apply(WebDriver webDriver) {
 
-				System.out.println("Searching...");
+    				System.out.println("Searching...");
+                    System.out.println(element3.getText()+"catch");
+    				return element3.getText()!= null;
+    				
+    				
+    			}
 
-				return element3 != null;
-
-			}
-
-		});
+    	
+             });
+    		
+    		
+    		Assert.assertEquals(element3.getText(),"הנתונים נשמרו בהצלחה");
+    		
+        }
 		
-        System.out.println(element3.getText());
-		Assert.assertEquals(element3.getText(),"הנתונים נשמרו בהצלחה");
 		budget.btnAcceptSuccess.click();
 		eltd = Budget.clickMichsa(driver, nametd);
 		eltd.click();
