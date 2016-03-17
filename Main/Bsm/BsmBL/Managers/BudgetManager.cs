@@ -350,37 +350,41 @@ namespace BsmBL.Managers
             budgetEmployee.Masad = int.Parse(row["MASAD"].ToString());
             budgetEmployee.MisparIshi = int.Parse(row["mispar_ishi"].ToString());
             budgetEmployee.FullName = row["Full_Name"].ToString();
-            budgetEmployee.TeurIsuk =row["Teur_Isuk"].ToString();
+            budgetEmployee.TeurIsuk = row["Teur_Isuk"].ToString();
             budgetEmployee.AlTikni = row["Al_Tikni"].ToString();
-            budgetEmployee.TeurMutamut =row["Teur_Mutamut"].ToString();
+            budgetEmployee.TeurMutamut = row["Teur_Mutamut"].ToString();
             budgetEmployee.TeurGil = row["TEUR_KOD_GIL"].ToString();
             budgetEmployee.MichsaYomit = float.Parse(row["Michsa_Yomit"].ToString());
             budgetEmployee.NosafotPrev = float.Parse(row["Nosafot_Prev"].ToString());
-           // budgetEmployee.MichsaPrev = float.Parse(row["Michsa_Prev"].ToString());
+            // budgetEmployee.MichsaPrev = float.Parse(row["Michsa_Prev"].ToString());
             budgetEmployee.MichsaCur = decimal.Parse(row["Michsa_Cur"].ToString());
             budgetEmployee.MichsaMakor = budgetEmployee.MichsaCur;
-         //   budgetEmployee.NosafotCur = float.Parse(row["Nosafot_Cur"].ToString());
-         
+            //   budgetEmployee.NosafotCur = float.Parse(row["Nosafot_Cur"].ToString());
+
             budgetEmployee.ShaotShebuzu = decimal.Parse(row["ShaotShebuzu"].ToString());
-            var paar =budgetEmployee.ShaotShebuzu - budgetEmployee.MichsaCur;
+            var paar = budgetEmployee.ShaotShebuzu - budgetEmployee.MichsaCur;
 
             if (paar < 0)
-                 budgetEmployee.Paar = paar;// string.Concat(paar * (-1), "-");
-               // budgetEmployee.Paar =
+                budgetEmployee.Paar = paar;// string.Concat(paar * (-1), "-");
+                                           // budgetEmployee.Paar =
             else
             {
                 if (paar == 0)
                     budgetEmployee.Paar = 0;// "0";
                 else budgetEmployee.Paar = paar;// paar.ToString();
             }
-           // budgetEmployee.CurYechida = int.Parse(row["cur_yechida"].ToString());
+            // budgetEmployee.CurYechida = int.Parse(row["cur_yechida"].ToString());
 
             var isuk_meshek = int.Parse(row["isuk_meshek"].ToString());
-            var budget_calc = int.Parse(row["BUDGET_CALC"].ToString()); 
+            var budget_calc = int.Parse(row["BUDGET_CALC"].ToString());
 
-            var exists_in_mitkan= row["exist_in_mitkan"].ToString();
-            var mutaam =row["mutaam"].ToString();
-            if (budgetEmployee.AlTikni == "כן" || mutaam == "1" || mutaam == "3" || mutaam == "5" || mutaam == "7" || exists_in_mitkan == "0" || isuk_meshek == 0 || budget_calc==0)
+            var exists_in_mitkan = row["exist_in_mitkan"].ToString();
+            var mutaam = row["mutaam"].ToString();
+            if (budgetEmployee.MisparIshi == 29152)
+            {
+                var x = budgetEmployee.MisparIshi;
+            }
+                if (budgetEmployee.AlTikni == "כן" || mutaam == "1" || mutaam == "3" || mutaam == "5" || mutaam == "7" || exists_in_mitkan == "0" || isuk_meshek == 0 || budget_calc==0)
                 budgetEmployee.ReadOnly ="true";
             else budgetEmployee.ReadOnly = "false";
         //    budgetEmployee.NosafotNotUsed = float.Parse(row["Nosafot_Not_Used"].ToString());

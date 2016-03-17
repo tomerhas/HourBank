@@ -206,6 +206,21 @@
         var redirectToWelcomePageTimer = setTimeout('RedirectToWelcomePage()',
 					parseInt(sessionTimeout) * 60 * 1000);
 
+        function clearTimeOutsessionWarning() {
+            if (sessionWarningTimer != null) {
+                clearTimeout(sessionWarningTimer);
+            }
+            if (redirectToWelcomePageTimer != null) {
+                clearTimeout(redirectToWelcomePageTimer);
+            }
+            //reset the time on page load
+            timeOnPageLoad = new Date();
+            sessionWarningTimer = setTimeout('SessionWarning()',
+                    parseInt(sessionTimeoutWarning) * 60 * 1000);
+            //To redirect to the welcome page
+            redirectToWelcomePageTimer = setTimeout
+                    ('RedirectToWelcomePage()', parseInt(sessionTimeout) * 60 * 1000);
+        }
         //Session Warning
         function SessionWarning() {
             //minutes left for expiry

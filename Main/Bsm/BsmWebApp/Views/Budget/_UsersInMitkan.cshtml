@@ -98,15 +98,13 @@
                       <label  class="GeneralText">הצג חריגים בלבד</label>*@
             </div>
 
+          
             <div class="col-md-2">
-
-                <a id="AutoLink" href="#" onclick="DisplayAllocatedHoursOptions()">
-                    <div id="divCal" style="text-align: right; width: 200px; text-align: left" class="pointer divCal">
+                <a>
+                    <div id="divCal" style="width: 165px;text-align: right;  text-align: left" class="pointer divCal"  onclick="DisplayAllocatedHoursOptions()">
                         <label id="lblAuto" class="PurpleTextBoldLink pointer" style="padding-top: 5px">הקצאה אוטומטית</label>
                     </div>
                 </a>
-                @*  <a class="PurpleTextBoldLink" ><img  src="~/Content/Images/calender.png" style="margin-right:150px"   />
-                        הקצאה אוטומטית</a> *@
             </div>
             <div class="col-md-2">
                 <a>
@@ -114,11 +112,6 @@
                         <label id="lblIpus" class="PurpleTextBoldLink pointer" style="padding-top: 5px">איפוס</label>
                     </div>
                 </a>
-
-
-                @*  <a class="PurpleTextBoldLink"   > <img  src="~/Content/Images/refresh.png" style="margin-right:28px" />
-                               איפוס</a>*@
-                @*<label class="PurpleTextBoldLink"   >איפוס</label>*@
             </div>
 
             <div class="col-md-4" align="left" style="padding-left: 30px">
@@ -140,40 +133,40 @@
     </div>
  
     <div class="bgGray">
-
+    
         @{
-               //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
-               //Html.Kendo().Grid(Model.UsersInMitkan.Employees)
-               Html.Kendo().Grid<BsmCommon.DataModels.Budgets.BudgetEmployeeGrid>()
-                  .Name("EmployeesList").Columns(columns =>
-                  {
-                      //  columns.Bound(o => o.MisparIshi).ClientTemplate("#=GetImage(data.MisparIshi)#").HtmlAttributes(new { style = "text-align: center; width: 30%; min-width: 60px;" });
+            //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
+            //Html.Kendo().Grid(Model.UsersInMitkan.Employees)
+            Html.Kendo().Grid<BsmCommon.DataModels.Budgets.BudgetEmployeeGrid>()
+               .Name("EmployeesList").Columns(columns =>
+               {
+               //  columns.Bound(o => o.MisparIshi).ClientTemplate("#=GetImage(data.MisparIshi)#").HtmlAttributes(new { style = "text-align: center; width: 30%; min-width: 60px;" });
 
 
-                      //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  value='ff'   onclick='OpenKds();'   />").Width(80);
-                      columns.Template(o => o.MisparIshi).ClientTemplate("<img src='../../Content/Images/pai.png' onclick='OpenKds(#= MisparIshi #);' />").HtmlAttributes(new { @class = "pointer" });  //http://kds/Modules/Ovdim/NochechutMerukezet.aspx
-                      columns.Bound(o => o.MisparIshi).Title("מספר אישי");
-                      columns.Bound(o => o.FullName).Title("שם עובד").HtmlAttributes(new { @id = "tdName" });
-                      columns.Bound(o => o.TeurIsuk).Title("עיסוק");
-                      columns.Bound(o => o.AlTikni).Title("על תקני");
-                      columns.Bound(o => o.TeurMutamut).Title("מותאם");
-                      columns.Bound(o => o.TeurGil).Title("גיל");
-                      columns.Bound(o => o.MichsaYomit).Title("מכסה יומית");
-                      columns.Bound(o => o.NosafotPrev).Title("הקצאה לחודש קודם");
-                      columns.Bound(o => o.MichsaCur).Title("הקצאת שעות").HtmlAttributes(new {   onfocusin = "focusInput(this);", onchange = "CheakValid(this);", @class = "CellEditGrid" }).Width(80);
-                      columns.Bound(o => o.ShaotShebuzu).Title("שעות שבוצעו");
-                      columns.Bound(o => o.Paar).Title("פער").HtmlAttributes(new { @id = "tdPaar" });//.ClientTemplate("<div style='direction:ltr'>#= Paar #</div>");//.HtmlAttributes(new { style = " direction:ltr;" });
-                      columns.Bound(o => o.ReadOnly).Hidden();
+               //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  value='ff'   onclick='OpenKds();'   />").Width(80);
+               columns.Template(o => o.MisparIshi).ClientTemplate("<img src='../../Content/Images/pai.png' onclick='OpenKds(#= MisparIshi #);' />").HtmlAttributes(new { @class = "pointer" , @id = ("tdKds#= Masad #") });  //http://kds/Modules/Ovdim/NochechutMerukezet.aspx
+               columns.Bound(o => o.MisparIshi).Title("מספר אישי");
+               columns.Bound(o => o.FullName).Title("שם עובד").HtmlAttributes(new { @id = "tdName" });
+               columns.Bound(o => o.TeurIsuk).Title("עיסוק");
+               columns.Bound(o => o.AlTikni).Title("על תקני");
+               columns.Bound(o => o.TeurMutamut).Title("מותאם");
+               columns.Bound(o => o.TeurGil).Title("גיל");
+               columns.Bound(o => o.MichsaYomit).Title("מכסה יומית");
+               columns.Bound(o => o.NosafotPrev).Title("הקצאה לחודש קודם").HtmlAttributes(new { @id = ("tdPrevMonth#= Masad #") });
+               columns.Bound(o => o.MichsaCur).Title("הקצאת שעות").HtmlAttributes(new { @id = ("tdMichsa#= Masad #") ,  onfocusin = "focusInput(this);", onchange = "CheakValid(this);", @class = "CellEditGrid" }).Width(80);
+               columns.Bound(o => o.ShaotShebuzu).Title("שעות שבוצעו").HtmlAttributes(new { @id = ("tdShaotUsed#= Masad #") });
+               columns.Bound(o => o.Paar).Title("פער").HtmlAttributes(new { @id = ("tdPaar") });//.ClientTemplate("<div style='direction:ltr'>#= Paar #</div>");//.HtmlAttributes(new { style = " direction:ltr;" });
+               columns.Bound(o => o.ReadOnly).Hidden();
 
 
-                      // columns.Bound(o => o.MisparIshi).Filterable(false).Width(125).ClientTemplate(Html.Kendo().NumericTextBox().Name("mp_sss").Min(0).HtmlAttributes(new { value = "#=o.MisparIshi#", style = "width: 100px;" }).ToClientTemplate().ToHtmlString());
-                      // onclick="ShowPopUp('@Html.DisplayFor(model => model.KodMitkan)','@Html.DisplayFor(model => model.MitkanName)','@Html.ValueFor(model => model.Month, "{0:dd/MM/yyyy}")');
-                      //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  style='float: right;'  value='הפק דוח' onclick='ShowReportNochechut(dataItem.MisparIshi, 4545)'  />").Width(80);
-                      ////columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input style='float: right;' type='button' value= 'הפק דוח' onclick='ShowReportNochechut(#= MisparIshi #);'     />").Width(80);
+               // columns.Bound(o => o.MisparIshi).Filterable(false).Width(125).ClientTemplate(Html.Kendo().NumericTextBox().Name("mp_sss").Min(0).HtmlAttributes(new { value = "#=o.MisparIshi#", style = "width: 100px;" }).ToClientTemplate().ToHtmlString());
+               // onclick="ShowPopUp('@Html.DisplayFor(model => model.KodMitkan)','@Html.DisplayFor(model => model.MitkanName)','@Html.ValueFor(model => model.Month, "{0:dd/MM/yyyy}")');
+               //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  style='float: right;'  value='הפק דוח' onclick='ShowReportNochechut(dataItem.MisparIshi, 4545)'  />").Width(80);
+               ////columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input style='float: right;' type='button' value= 'הפק דוח' onclick='ShowReportNochechut(#= MisparIshi #);'     />").Width(80);
 
 
-                      //   columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='submit'  style='float: right;'  value='הפק דוח' name='action:Nochechut' />").Width(80);
-                      columns.Bound(o => o.MichsaMakor).HtmlAttributes(new { @id = "tdMakorVal" }).Hidden();
+               //   columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='submit'  style='float: right;'  value='הפק דוח' name='action:Nochechut' />").Width(80);
+               columns.Bound(o => o.MichsaMakor).HtmlAttributes(new { @id = "tdMakorVal" }).Hidden();
 
 @* columns.Template(o=> @Html.ActionLink("הפק דו''ח","CreateNochechutRdl",new{ovedId=o.MisparIshi})).Width(100);
                    columns.Template(o=>{
@@ -345,7 +338,7 @@
         $("#cancel").contents().unwrap().wrap("<span class='DisabledLink'></span>");
 
         //  $("#divIpus").attr("disabled", "disabled");
-        $("#AutoLink").css({cursor:"default"});
+       // $("#AutoLink").css({cursor:"default"});
         $("#lblIpus").removeClass();
         $("#lblIpus").addClass("DisabledLink");
         $("#lblAuto").removeClass();
@@ -368,7 +361,7 @@
     function findDataItem() {
         //get grid datasource
         //  debugger;
-
+        clearTimeOutsessionWarning();
         var theGrid = $('#EmployeesList')
         var dataItem = $('#MisparIshi');
         if(dataItem.val().trim() =="")
@@ -465,6 +458,7 @@
                             });
                             
                             SimunEdit();
+                          //  AddIdToTds();
                             break;
                         case "cancel":
                             var grid = $("#EmployeesList").data("kendoGrid");
@@ -637,7 +631,7 @@
         });
      
         SimunEdit();
-        AddIdToTds();
+     //   AddIdToTds();
     //    $("#EmployeesList").data("kendoGrid").dataSource.page(1);
       
        // $("input[name='MichsaCur']").prop('maxLength', 6);
@@ -787,7 +781,7 @@
             }
             else {
                 AlertMessage(message,200,400);
-                AddIdToTds();
+          //      AddIdToTds();
             }
         }
     }

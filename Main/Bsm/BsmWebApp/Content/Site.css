@@ -452,23 +452,23 @@ background-color:  rgba(137, 94, 138, 0.2) !important;
 
 .alertImg {
     background: url("Images/alert.png") no-repeat left #f3f3f3;
-    background-position-x: 10px;
-    background-position-y: 6px;
+    background-position-x: 7px;
+    background-position-y: 4px;
     padding-left: 20px;
 
     border:none;
     outline: none;
     background-color: #f3f3f3;
-    width:  35px;
-    height:  29px;
+    width:  30px;
+    height:  25px;
 }
 
 .alertImg:hover {
     
 
      background: url("Images/alert hover.png") no-repeat left #f3f3f3;
-     background-position-x: 10px;
-    background-position-y: 6px;
+     background-position-x: 7px;
+    background-position-y: 4px;
     
 }
 
@@ -476,8 +476,8 @@ background-color:  rgba(137, 94, 138, 0.2) !important;
     
 
     background: url("Images/alert press.png") no-repeat left #f3f3f3;
-    background-position-x: 10px;
-    background-position-y: 6px;
+    background-position-x: 7px;
+    background-position-y: 4px;
 }
 
 /*a:focus {

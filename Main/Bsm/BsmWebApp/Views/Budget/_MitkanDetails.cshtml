@@ -66,14 +66,14 @@
                 <div class="row" style="padding-top: 18px;">
                     <div class="col-md-5">
                         <label class="TextBold" style="margin-right:20px;margin-bottom:0px">  @Html.DisplayNameFor(model => model.MitkanBudgetDetail.BudgetVal):</label>
-                      @*  <label  class="TextBoxRO GeneralText"> @Html.DisplayFor(model => model.MitkanBudgetDetail.BudgetVal)
+                        @*<label  class="TextBoxRO GeneralText"> @Html.DisplayFor(model => model.MitkanBudgetDetail.BudgetVal)
                             <input class="alertImg" onclick="btnclick();"  type="button" />
-                        </label>
-                         *@
-                        <input type="text"  disabled  class="TextBoxRO GeneralText" value="@Model.MitkanBudgetDetail.BudgetVal" style="width: 76px;padding-right:7px;border:none;  margin-left: -5px;"/> 
-                       <input class="alertImg pointer" onclick="ShowBudgetInformation();"  type="text" /> 
+                        </label>*@
+                         
+                        <input type="text"  disabled  class="TextBoxRO GeneralText" value="@Model.MitkanBudgetDetail.BudgetVal" style="width: 115px;padding-right:7px;border:none;  margin-left: -35px;"/> 
+                       <input class="alertImg pointer" onclick="this.blur();ShowBudgetInformation();"  style="position: relative" type="text" /> 
                         <label class="TextBold" style="margin-right:20px;margin-bottom:0px"> @Html.DisplayNameFor(model => model.MitkanBudgetDetail.Budget_Used):</label>
-                        <input type="text"  disabled class="TextBoxRO GeneralText" value="@Model.MitkanBudgetDetail.Budget_Used" style="width: 111px;padding-right:7px"/>           
+                        <input type="text" id="btnBudgetUsed"  disabled class="TextBoxRO GeneralText" value="@Model.MitkanBudgetDetail.Budget_Used" style="width: 111px;padding-right:7px"/>           
                     </div>
                     <div class="col-md-7">
                         <label class="TextBold" style="margin-right:20px;margin-bottom:0px"> @Html.DisplayNameFor(model => model.MitkanBudgetDetail.ShaotByMeafyen14):</label>
