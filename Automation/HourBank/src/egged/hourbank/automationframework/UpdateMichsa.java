@@ -15,6 +15,7 @@ import org.testng.annotations.Test;
 
 import egged.hourbank.pageobjects.Budget;
 import egged.hourbank.utils.Base;
+import egged.hourbank.utils.Common;
 
 
 
@@ -109,12 +110,16 @@ public class UpdateMichsa extends Base {
         try {
         	
         	System.out.println(element3+"try");
+        	//System.out.println(element3.getText()+"try");
+        	Common.Wait_For_Element_Visibile(driver, 60, "dialog-grid", null);
+        	element3.click();
+        	System.out.println(element3.getText()+"try");
         	Assert.assertEquals(element3.getText(),"הנתונים נשמרו בהצלחה");
         	
         	
         }
         
-        catch (java.lang.AssertionError e)  {
+        catch (AssertionError e)  {
         	
     		Wait<WebDriver> wait = new WebDriverWait(driver, 10);
 
@@ -126,7 +131,8 @@ public class UpdateMichsa extends Base {
 
     				System.out.println("Searching...");
                     System.out.println(element3.getText()+"catch");
-    				return element3.getText()!= null;
+                    //System.out.println(return element3.getText()!="");
+    				return element3.getText()!="";
     				
     				
     			}

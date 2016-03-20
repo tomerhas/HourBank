@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 
 import egged.hourbank.pageobjects.Budget;
 import egged.hourbank.utils.Base;
+import egged.hourbank.utils.Common;
 
 
 @Listeners ({egged.hourbank.listener.TestListener.class})
@@ -49,6 +50,8 @@ public class UnDoChanges extends Base {
 				budget.btnUnDo.click();
 				WebElement element1 = driver.findElement(By
 						.id("dialog-confirm"));
+				
+				Common.Wait_For_Element_Visibile(driver, 60, "dialog-confirm", null);
 				Assert.assertEquals(element1.getText(),
 						"עדכון זה יגרום לביטול השעות שעדכנת כעת, האם לבטל שינויים?");
 				budget.btnNo.click();
