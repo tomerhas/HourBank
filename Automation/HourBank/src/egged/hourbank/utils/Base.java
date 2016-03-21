@@ -46,7 +46,6 @@ public  void createDriver() {
 	System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
 	 driver = new InternetExplorerDriver();
 	  driver.navigate().to("http://bsm");
-	  
 	  main = PageFactory.initElements(driver, Main.class);
 }
 	
