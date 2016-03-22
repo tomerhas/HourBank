@@ -1,5 +1,7 @@
 package egged.hourbank.automationframework;
 
+import java.nio.charset.Charset;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -8,6 +10,9 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
+
+import com.google.common.base.Charsets;
+
 import egged.hourbank.utils.Base;
 
 @Listeners({ egged.hourbank.listener.TestListener.class })
@@ -15,18 +20,29 @@ public class ChkAutoComplete extends Base {
 
 	public WebDriver driver;
 	boolean flag = true;
-	int i =1;
+	int i;
+	int j;
 
-	@Test
-	public void chkAutoComplete() throws InterruptedException {
+	
+	
+	
+	@Test(priority=0)  
+	
 
+	
+	public void chkAutoCompleteShem() throws InterruptedException {
+		
+		
+		String[]ArrayShem={"א","ב","ג"};
+		String lettter=ArrayShem[i];
+	
 		enterBudget();
 		
 		System.out.println(budget.listAutoComplete.getAttribute("style"));
 		
-		while (flag) {
+		while (flag&&i<=ArrayShem.length) {
 
-			budget.searchAutoComplete.sendKeys(String.valueOf(i));
+			budget.searchAutoComplete.sendKeys(String.valueOf(lettter));
 
 			Thread.sleep(300);
 			
@@ -56,6 +72,84 @@ public class ChkAutoComplete extends Base {
 			i++;
 
 		}
+	
+		
+		
+		
+		budget.btnAutoComplete.click();
+		
+	    WebElement element1=driver.findElement(By.xpath("//tr[@class='clickable']//td[@id='tdName']"));
+	    System.out.println(element1.getText());
+	    Assert.assertEquals(budget.searchAutoComplete.getAttribute("value"),element1.getText());
+		
+		budget.searchAutoComplete.clear();
+		budget.searchAutoComplete.sendKeys("אאאא");
+		budget.btnAutoComplete.click();
+		WebElement element = driver.findElement(By.id("dialog-message"));
+		Assert.assertEquals(element.getText(),"מ.א/שם זה לא קיים למתקן זה");
+		budget.btnAccept.click();
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Test (priority=1) 
+	public void chkAutoCompleteMispar() throws InterruptedException {
+
+		enterBudget();
+		
+		System.out.println(budget.listAutoComplete.getAttribute("style"));
+		flag=true;
+		while (flag) {
+
+			budget.searchAutoComplete.sendKeys(String.valueOf(j));
+
+			Thread.sleep(300);
+			
+
+			String style = budget.listAutoComplete.getAttribute("style");
+
+			System.out.println(budget.listAutoComplete.getAttribute("style"));
+
+			if (style.contains("block"))
+
+			{
+
+				flag = false;
+				budget.searchAutoComplete.sendKeys(Keys.ARROW_DOWN);
+				budget.itemMisparIshiSelected.click();
+				System.out.println(budget.searchAutoComplete.getAttribute("value"));
+				
+				
+
+			}
+
+			else {
+
+				budget.searchAutoComplete.clear();
+
+			}
+			j++;
+
+		}
 		
 		
 		
@@ -68,6 +162,7 @@ public class ChkAutoComplete extends Base {
 		WebElement element = driver.findElement(By.id("dialog-message"));
 		Assert.assertEquals(element.getText(),"מ.א/שם זה לא קיים למתקן זה");
 		budget.btnAccept.click();
+		
 		
 		
 		
