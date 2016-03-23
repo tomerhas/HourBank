@@ -24,7 +24,6 @@ public class ChkAutoComplete extends Base {
 	
 	@Test(priority=0)  
 	
-
 	
 	public void chkAutoCompleteShem() throws InterruptedException {
 		
@@ -34,7 +33,7 @@ public class ChkAutoComplete extends Base {
 	
 		enterBudget();
 		
-		String [] ArrayShem={"ä","å","æ"};
+		String [] ArrayShem={"à","á","â","ã","ä","å","æ","ç","è ","é","ë","ì","î" };
 		i=0;
 		
 		

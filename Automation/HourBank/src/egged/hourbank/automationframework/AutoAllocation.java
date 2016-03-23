@@ -70,11 +70,7 @@ public class AutoAllocation extends Base {
 			
 		}
 		
-	//	WebElement element = driver.findElement(By.id("tdPrevMonth4"));
-	//	System.out.println(element.getText());
-		
-	//	WebElement element1 = driver.findElement(By.id("tdMichsa4"));
-		//System.out.println(element1.getText());
+
 	
 
 	  
@@ -123,11 +119,7 @@ public class AutoAllocation extends Base {
 			
 		}
 		
-	//	WebElement element = driver.findElement(By.id("tdPrevMonth4"));
-	//	System.out.println(element.getText());
-		
-	//	WebElement element1 = driver.findElement(By.id("tdMichsa4"));
-		//System.out.println(element1.getText());
+	
 	
 
 	  
