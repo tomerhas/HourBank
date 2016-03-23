@@ -1,7 +1,5 @@
 package egged.hourbank.automationframework;
 
-import java.nio.charset.Charset;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -10,8 +8,6 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
-
-import com.google.common.base.Charsets;
 
 import egged.hourbank.utils.Base;
 
@@ -32,16 +28,21 @@ public class ChkAutoComplete extends Base {
 	
 	public void chkAutoCompleteShem() throws InterruptedException {
 		
+	
 		
-		String[]ArrayShem={"à","á","â"};
-		String lettter=ArrayShem[i];
+		
 	
 		enterBudget();
+		
+		String [] ArrayShem={"ä","å","æ"};
+		i=0;
+		
 		
 		System.out.println(budget.listAutoComplete.getAttribute("style"));
 		
 		while (flag&&i<=ArrayShem.length) {
-
+			
+			String lettter= ArrayShem[i];
 			budget.searchAutoComplete.sendKeys(String.valueOf(lettter));
 
 			Thread.sleep(300);
@@ -118,6 +119,7 @@ public class ChkAutoComplete extends Base {
 		
 		System.out.println(budget.listAutoComplete.getAttribute("style"));
 		flag=true;
+		j=1;
 		while (flag) {
 
 			budget.searchAutoComplete.sendKeys(String.valueOf(j));
