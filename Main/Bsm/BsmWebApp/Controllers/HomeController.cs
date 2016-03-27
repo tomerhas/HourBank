@@ -1,5 +1,7 @@
 ﻿using BsmBL.DAL;
 using BsmCommon.DataModels;
+using BsmCommon.DataModels.Profiles;
+using BsmCommon.Interfaces.CachedItems;
 using BsmWebApp.Infrastructure.Security;
 using BsmWebApp.ViewModels.Home;
 using Egged.Infrastructure.Attribute;
@@ -32,7 +34,11 @@ namespace BsmWebApp.Controllers
             
             //This is added to casuse the cache to filled in with user info 
             HomeViewModel vm = new HomeViewModel();
-     
+            //var userName = HttpContext.User.Identity.Name;
+            //var cache = _container.Resolve<IUserInfoCachedItems>();
+            //UserInfo uf = cache.Get(userName);
+            //if (uf == null && error != "")
+            //    error = "";
             var user = CurrentUser;
             if (user != null)
             {

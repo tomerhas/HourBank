@@ -11,6 +11,8 @@ using BsmCommon.Interfaces.Managers;
 using BsmCommon.DataModels;
 using Microsoft.Practices.Unity;
 using System.Diagnostics;
+using InfrastructureLogs.Logs.DataModels;
+using InfrastructureLogs.Logs.Interfaces;
 
 namespace BsmBL.Managers
 {
@@ -27,9 +29,10 @@ namespace BsmBL.Managers
         {
             int EmpNum = 0, Isuk = 0, YechidaIrgunit = 0, KodYechida=0;
             //הבא את נתוני המשתמש מתוך active directory
-         
+            EventLog.WriteEntry("kds", "before ExchangeInfoServiceSoapClient");
             var exchangeSrv = new ExchangeInfoServiceSoapClient();
             UserInfo uf = new UserInfo();
+            
             uf.EmployeeNumber = exchangeSrv.getEmpNumByUserName(UserName);
             uf.EmployeeFullName = exchangeSrv.getEmpFullName(UserName);
             uf.UserName = UserName;
@@ -37,19 +40,18 @@ namespace BsmBL.Managers
             int.TryParse(uf.EmployeeNumber, out EmpNum);
             if (EmpNum > 0)
             {
-             
                 using (var context = new KdsEntities())//עומדים לעבוד מול הטבלאות של kds Entiti
                 {
-                  var PirteyOved =  context.PirteyOvdim.SingleOrDefault(x => x.MisparIshi == EmpNum && DateTime.Now >= x.TaarichMe && DateTime.Now <= x.TaarichAd);
-                  if (PirteyOved != null)
-                  {
-                      Isuk = PirteyOved.Isuk.HasValue? PirteyOved.Isuk.Value:0;
-                      YechidaIrgunit = PirteyOved.YechidaIrgunit.HasValue ? PirteyOved.YechidaIrgunit.Value : 0;
-
-                     
-                  }
+                   
+                    var PirteyOved = context.PirteyOvdim.SingleOrDefault(x => x.MisparIshi == EmpNum && DateTime.Now >= x.TaarichMe && DateTime.Now <= x.TaarichAd);
+                    
+                    if (PirteyOved != null)
+                    {
+                        Isuk = PirteyOved.Isuk.HasValue? PirteyOved.Isuk.Value:0;
+                        YechidaIrgunit = PirteyOved.YechidaIrgunit.HasValue ? PirteyOved.YechidaIrgunit.Value : 0;
+                    }
                 }
-               
+             
                 if (Isuk > 0)
                 {
                     using (var context = new BsmEntities())
@@ -84,16 +86,15 @@ namespace BsmBL.Managers
 
             }
 
-          
-           
+
             //הבא את הקבוצות אליהם המשתמש שייך ב AD
-           // var groups = GetUserADGroups(exchangeSrv, UserName);
+            // var groups = GetUserADGroups(exchangeSrv, UserName);
 
             //הבא את הפרופילים השייכים למשתמש מהטבלה - DB  
-           // var profiles = GetProfilesByGroup(groups);
+            // var profiles = GetProfilesByGroup(groups);
 
             //הבא את ההרשאות בהתאם לפרופילים של המשתמש
-          //  uf.ProfilesMasachim = GetHarshaotForProfile(profiles);
+            //  uf.ProfilesMasachim = GetHarshaotForProfile(profiles);
             return uf;
         }
 

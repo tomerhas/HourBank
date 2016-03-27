@@ -31,6 +31,7 @@ namespace BsmWebApp.Infrastructure.Security
              else userName = HttpContext.Current.User.Identity.Name;
 
              var uf = cache.Get(userName);
+             
             if(uf != null && uf.IsPermittedForMasach(_pageName))
             {
                 return;
