@@ -101,11 +101,11 @@ namespace BsmBL.Managers
             }
         }
 
-        public List<Yechida> GetYechidutForUser(DateTime Month, int KodYechida, string PreFix = "")
+        public List<Yechida> GetYechidutForUser(DateTime Month, int isuk, int YechidaIrgunitOved, string PreFix = "")
         {
             var GeneralDal = _container.Resolve<IGeneralDal>();
 
-            var yechidot = GeneralDal.GetYechidotForUser(Month, KodYechida, PreFix);
+            var yechidot = GeneralDal.GetYechidotForUser(Month, isuk, YechidaIrgunitOved, PreFix);
             List<Yechida> list = new List<Yechida>();
             foreach (DataRow dr in yechidot.Rows)
             {

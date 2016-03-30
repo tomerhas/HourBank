@@ -9,6 +9,6 @@ namespace BsmCommon.Interfaces.Dal
 {
     public interface IGeneralDal
     {
-        DataTable GetYechidotForUser(DateTime Month, int KodYechida, string PreFix="");
+        DataTable GetYechidotForUser(DateTime Month, int isuk, int YechidaIrgunitOved, string PreFix="");
     }
 }

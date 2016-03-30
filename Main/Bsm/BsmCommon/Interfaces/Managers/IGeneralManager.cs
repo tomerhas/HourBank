@@ -21,7 +21,7 @@ namespace BsmCommon.Interfaces.Managers
 
         string GetLastTaarichcalc(DateTime Month,int kodYechida);
         DateTime GetLastDateIdkunBank(DateTime Month);
-        List<Yechida> GetYechidutForUser(DateTime Month, int KodYechida, string PreFix = "");
+        List<Yechida> GetYechidutForUser(DateTime Month, int isuk, int YechidaIrgunitOved, string PreFix = "");
         long GetLastBakashaOfTeken(DateTime Month);
         long GetLastBakashatChishuvPremia();
     }

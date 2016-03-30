@@ -250,11 +250,11 @@
   
     <div id="dialog-allocated"></div>
     
-     }
+        }
 
 
-}
-
+    }
+<label hidden id="KdsPath">@System.Configuration.ConfigurationManager.AppSettings["KdsPathPage"]</label>
    <div  id="dialog-grid"></div>
 <div id="dialogNoch" title="Basic dialog">
 </div>
@@ -351,9 +351,13 @@
     function OpenKds(misparishi)
     {
         //  alert('ggg');
+        var KdsPath = $("#KdsPath")[0].innerText;
         var model = @Html.Raw(Json.Encode(Model));
         var month =model.Filter.SelectedMonth;
-        window.open("http://kdstest/Modules/Ovdim/NochechutMerukezet.aspx?mispar_ishi=" + misparishi +"&chodesh="+month,"location=no,addressbar=no");
+        KdsPath = KdsPath+"?mispar_ishi="+ misparishi +"&chodesh="+month;
+     //   alert(KdsPath);
+        window.open(KdsPath,"location=no,addressbar=no");
+     //   window.open("http://kdstest/Modules/Ovdim/NochechutMerukezet.aspx?mispar_ishi=" + misparishi +"&chodesh="+month,"location=no,addressbar=no");
         //     alert("ff");
     }
 
@@ -398,7 +402,7 @@
         var row = $("#EmployeesList").find("tr:eq(" + targetIndex + ")")[0];
         theGrid.select(row);
         $("#EmployeesList").find("tr:eq(" + targetIndex + ")")[0].className = "clickable";
-        return false;
+     //   return true;
         // console.log('Found it at Page: ' + page + 'index: ' + targetIndex);
 
     }
