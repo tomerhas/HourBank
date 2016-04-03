@@ -28,6 +28,7 @@ public class AutoAllocation extends Base {
 	String nametd;
 	String actualtdname;
 	String plantdname;
+	int t;
 	
 	
 	
