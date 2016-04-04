@@ -50,6 +50,7 @@ namespace BsmWebApp.Controllers
         [HttpPost]
         public ActionResult Index(FilterModel vm)
         {
+            var x = 0;
             DateTime month = DateTime.Parse(vm.SelectedMonth);
             var curMitkan = ((GeneralObject)Session["GeneralDetails"]).CurYechida.KodYechida;//**CurrentUser.CurYechida.KodYechida;
             var manager = _container.Resolve<IBudgetManager>();
