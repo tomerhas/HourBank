@@ -29,80 +29,92 @@ namespace BsmBL.Managers
         {
             int EmpNum = 0, Isuk = 0,YechidaIrgunitOved = 0; ;
             //הבא את נתוני המשתמש מתוך active directory
-            EventLog.WriteEntry("kds", "before ExchangeInfoServiceSoapClient");
+           
             var exchangeSrv = new ExchangeInfoServiceSoapClient();
             UserInfo uf = new UserInfo();
-            
-            uf.EmployeeNumber = exchangeSrv.getEmpNumByUserName(UserName);
-            uf.EmployeeFullName = exchangeSrv.getEmpFullName(UserName);
-            uf.UserName = UserName;
-            uf.MursheBankShaot = KayemetHarshaaForBankShaot(exchangeSrv, UserName);
-            int.TryParse(uf.EmployeeNumber, out EmpNum);
-            if (EmpNum > 0)
+            try
             {
-                using (var context = new KdsEntities())//עומדים לעבוד מול הטבלאות של kds Entiti
-                {
-                   
-                    var PirteyOved = context.PirteyOvdim.SingleOrDefault(x => x.MisparIshi == EmpNum && DateTime.Now >= x.TaarichMe && DateTime.Now <= x.TaarichAd);
-                   
-                    if (PirteyOved != null)
-                    {
-                        Isuk = PirteyOved.Isuk.HasValue? PirteyOved.Isuk.Value:0;
-                        YechidaIrgunitOved = PirteyOved.YechidaIrgunit.HasValue ? PirteyOved.YechidaIrgunit.Value : 0;
-                    }
-                }
-             
-                if (Isuk > 0)
-                {
-                    using (var context = new BsmEntities())
-                    {
-                        uf.HarshaatOved = context.HarshaotOvdim.Where(h => h.KodIsuk == Isuk && h.KodYechida == YechidaIrgunitOved).ToList();
-                        if(uf.HarshaatOved != null){
-                            List<Masach> Screens = context.Mashacim.Where(m => m.Pail == 1).ToList();
-                            foreach (Masach Screen in Screens.ToList())
-                            {
-                                List<HarshaatMasach> harshaotMasach = new List<HarshaatMasach>();
-                                foreach (Harshaa HarshaatOved in uf.HarshaatOved.ToList())
-                                {
-                                    harshaotMasach = context.HarshaatMasach.Where(h => h.MasachId == Screen.MasachId && h.SugHarshaa == HarshaatOved.SugHarshaa).ToList();
-                                    if (harshaotMasach.Count > 0)
-                                        break;
-                                }
-                               // Screen.Harshaot = context.HarshaatMasach.Where(h => h.MasachId == Screen.MasachId && h.SugHarshaa == uf.HarshaatOved.SugHarshaa).ToList();
-                                if (harshaotMasach.Count == 0)
-                                    Screens.Remove(Screen);
-                            }
+                uf.EmployeeNumber = exchangeSrv.getEmpNumByUserName(UserName);
+                uf.EmployeeFullName = exchangeSrv.getEmpFullName(UserName);
+                uf.UserName = UserName;
+                uf.MursheBankShaot = KayemetHarshaaForBankShaot(exchangeSrv, UserName);
+                int.TryParse(uf.EmployeeNumber, out EmpNum);
 
-                            uf.Screens = Screens;
+                if (EmpNum > 0)
+                {
+                    using (var context = new KdsEntities())//עומדים לעבוד מול הטבלאות של kds Entiti
+                    {
+
+                        var PirteyOved = context.PirteyOvdim.SingleOrDefault(x => x.MisparIshi == EmpNum && DateTime.Now >= x.TaarichMe && DateTime.Now <= x.TaarichAd);
+
+                        if (PirteyOved != null)
+                        {
+                            Isuk = PirteyOved.Isuk.HasValue ? PirteyOved.Isuk.Value : 0;
+                            YechidaIrgunitOved = PirteyOved.YechidaIrgunit.HasValue ? PirteyOved.YechidaIrgunit.Value : 0;
                         }
                     }
-                 //   KodYechida =( uf.HarshaatOved.KodYechidaIchus.HasValue && uf.HarshaatOved.KodYechidaIchus > 0)?
-                    //if (uf.HarshaatOved[0].KodYechidaIchus.HasValue &&  uf.HarshaatOved[0].KodYechidaIchus.Value > 0)
-                    //    KodYechida = uf.HarshaatOved[0].KodYechidaIchus.Value;
-                    //else KodYechida = uf.HarshaatOved[0].KodYechida;
-                   
-                    uf.Yechidot = GetYechidotToUser(Isuk,YechidaIrgunitOved);
-                    //EventLog.WriteEntry("kds", "after  GetYechidotToUser");
-                    //if (uf.Yechidot.Count > 0)
-                    //{
-                    //    EventLog.WriteEntry("kds", "uf.Yechidot.Count > 0");
-                    //    //uf.CurYechida = uf.Yechidot[0];         
-                    //}
-                    //EventLog.WriteEntry("kds", "end");
+                    //EventLog.WriteEntry("kds", "before Isuk > 0");
+                    if (Isuk > 0)
+                    {
+                        using (var context = new BsmEntities())
+                        {
+                            uf.HarshaatOved = context.HarshaotOvdim.Where(h => h.KodIsuk == Isuk && h.KodYechida == YechidaIrgunitOved).ToList();
+                            if (uf.HarshaatOved != null)
+                            {
+                                List<Masach> Screens = context.Mashacim.Where(m => m.Pail == 1).ToList();
+                                foreach (Masach Screen in Screens.ToList())
+                                {
+                                    List<HarshaatMasach> harshaotMasach = new List<HarshaatMasach>();
+                                    foreach (Harshaa HarshaatOved in uf.HarshaatOved.ToList())
+                                    {
+                                        harshaotMasach = context.HarshaatMasach.Where(h => h.MasachId == Screen.MasachId && h.SugHarshaa == HarshaatOved.SugHarshaa).ToList();
+                                        if (harshaotMasach.Count > 0)
+                                            break;
+                                    }
+                                    // Screen.Harshaot = context.HarshaatMasach.Where(h => h.MasachId == Screen.MasachId && h.SugHarshaa == uf.HarshaatOved.SugHarshaa).ToList();
+                                    if (harshaotMasach.Count == 0)
+                                        Screens.Remove(Screen);
+                                }
+
+                                uf.Screens = Screens;
+                            }
+                        }
+                        //   KodYechida =( uf.HarshaatOved.KodYechidaIchus.HasValue && uf.HarshaatOved.KodYechidaIchus > 0)?
+                        //if (uf.HarshaatOved[0].KodYechidaIchus.HasValue &&  uf.HarshaatOved[0].KodYechidaIchus.Value > 0)
+                        //    KodYechida = uf.HarshaatOved[0].KodYechidaIchus.Value;
+                        //else KodYechida = uf.HarshaatOved[0].KodYechida;
+
+                     //   EventLog.WriteEntry("kds", " uf.Screens=" + uf.Screens.Count);
+                       
+                        uf.Yechidot = GetYechidotToUser(Isuk, YechidaIrgunitOved);
+                        
+            //EventLog.WriteEntry("kds", "after  GetYechidotToUser");
+            //if (uf.Yechidot.Count > 0)
+            //{
+            //    EventLog.WriteEntry("kds", "uf.Yechidot.Count > 0");
+            //    //uf.CurYechida = uf.Yechidot[0];         
+            //}
+            //EventLog.WriteEntry("kds", "end");
+        }
+
                 }
 
+
+                //הבא את הקבוצות אליהם המשתמש שייך ב AD
+                // var groups = GetUserADGroups(exchangeSrv, UserName);
+
+                //הבא את הפרופילים השייכים למשתמש מהטבלה - DB  
+                // var profiles = GetProfilesByGroup(groups);
+
+                //הבא את ההרשאות בהתאם לפרופילים של המשתמש
+                //  uf.ProfilesMasachim = GetHarshaotForProfile(profiles);
+                return uf;
             }
-
-
-            //הבא את הקבוצות אליהם המשתמש שייך ב AD
-            // var groups = GetUserADGroups(exchangeSrv, UserName);
-
-            //הבא את הפרופילים השייכים למשתמש מהטבלה - DB  
-            // var profiles = GetProfilesByGroup(groups);
-
-            //הבא את ההרשאות בהתאם לפרופילים של המשתמש
-            //  uf.ProfilesMasachim = GetHarshaotForProfile(profiles);
-            return uf;
+            catch(Exception ex)
+            {
+               // EventLog.WriteEntry("kds",ex.StackTrace);
+                return null;
+            }
         }
 
         private bool KayemetHarshaaForBankShaot(ExchangeInfoServiceSoapClient exchangeSrv, string UserName)

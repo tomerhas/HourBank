@@ -226,16 +226,16 @@ namespace BsmWebApp.Controllers
                    // EventLog.WriteEntry("kds", "before  uf==null");
                     if (uf == null)
                     {
-                        EventLog.WriteEntry("kds", "after  uf==null");
+                       // EventLog.WriteEntry("kds", "after  uf==null");
                         try
                         {
                             var userInfo = _container.Resolve<ISecurityManager>().GetUserInfo(userName);
                             cache.Add(userName, userInfo);
-                           
                             return userInfo;
                         }
                         catch (Exception ex)
                         {
+                            EventLog.WriteEntry("kds", "CurrentUser faild: "+ex.Message);
                             return null;
                         }
                     }

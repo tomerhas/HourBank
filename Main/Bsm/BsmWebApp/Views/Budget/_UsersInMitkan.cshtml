@@ -378,7 +378,7 @@
             filter: ds.filter(),
             sort: ds.sort()
         }).data;
-
+        
         var index = -1;
         // find the index of the matching dataItem
         for (var x = 0; x < view.length; x++) {
@@ -387,11 +387,11 @@
                 break;
             }
         }
-
+        
         if (index === -1) {
             AlertMessage("מ.א/\שם  זה לא קיים למתקן זה",150,300);
          //   alert('מספר אישי זה לא קיים למתקן זה');
-            return;
+            return; 
         }
 
         var page = Math.floor(index / ds.pageSize());
@@ -400,7 +400,7 @@
         ds.page(++page);
         //grid wants a html element. tr:eq(x) by itself searches in the first grid!    
         var row = $("#EmployeesList").find("tr:eq(" + targetIndex + ")")[0];
-        theGrid.select(row);
+      //  theGrid.select(row);
         $("#EmployeesList").find("tr:eq(" + targetIndex + ")")[0].className = "clickable";
      //   return true;
         // console.log('Found it at Page: ' + page + 'index: ' + targetIndex);
