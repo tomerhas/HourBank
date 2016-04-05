@@ -4,6 +4,7 @@ using BsmCommon.DataModels.Profiles;
 using BsmCommon.Helpers;
 using BsmCommon.Interfaces.CachedItems;
 using BsmCommon.Interfaces.Managers;
+using BsmWebApp.Infrastructure;
 using BsmWebApp.Infrastructure.Security;
 using BsmWebApp.ViewModels;
 using Egged.Infrastructure.Menus.DataModels;
@@ -35,17 +36,32 @@ namespace BsmWebApp.Controllers
         public BaseController(IUnityContainer container)
         {
             _container = container;
-            //_SelectedMitkan = SelectedMitkan;
         }
 
-          
+        private void ValidateLoadUsersDefaultInfoToSession()
+        {
+            if (CurrentUser.MursheBankShaot &&  Session["GeneralDetails"] == null)
+            {
+                //  vm.SessionEnd = 0;
+                GeneralObject obj = new GeneralObject();
+                obj.CurYechida = CurrentUser.Yechidot[0];
+                obj.CurMonth = DateTime.Parse("01/" + DateTime.Now.ToString("MM/yyyy"));
+                Session["GeneralDetails"] = obj;
+            }
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            ValidateLoadUsersDefaultInfoToSession();
+            base.OnActionExecuting(filterContext);
+        }
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
+            
             base.OnActionExecuted(filterContext);
 
            // if (filterContext.HttpContext.Session["GeneralDetails"] == null)
            //  filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "Session_End" }));
-
 
             if (filterContext.HttpContext.Session["GeneralDetails"] != null)
             {
@@ -215,39 +231,8 @@ namespace BsmWebApp.Controllers
         {
             get 
             {
-                if (HttpContext.User.Identity.IsAuthenticated)
-                {
-                     string userName;
-                     if (ConfigurationSettings.AppSettings["DebugModeUserName"] == "true")
-                         userName = ConfigurationSettings.AppSettings["DebugUserName"];
-                     else userName = HttpContext.User.Identity.Name;
-                    var cache = _container.Resolve<IUserInfoCachedItems>();
-                    UserInfo uf = cache.Get(userName);
-                   // EventLog.WriteEntry("kds", "before  uf==null");
-                    if (uf == null)
-                    {
-                       // EventLog.WriteEntry("kds", "after  uf==null");
-                        try
-                        {
-                            var userInfo = _container.Resolve<ISecurityManager>().GetUserInfo(userName);
-                            cache.Add(userName, userInfo);
-                            return userInfo;
-                        }
-                        catch (Exception ex)
-                        {
-                            EventLog.WriteEntry("kds", "CurrentUser faild: "+ex.Message);
-                            return null;
-                        }
-                    }
-                    else
-                    {
-                        return uf;
-                    }
-                }
-                else
-                {
-                    return null;
-                }
+                var secValidator = _container.Resolve<SecurityValidator>();
+                return secValidator.GetOrCreateCurrentUser(HttpContext.User);
             }
            
         } 

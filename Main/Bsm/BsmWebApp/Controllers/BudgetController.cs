@@ -40,6 +40,7 @@ namespace BsmWebApp.Controllers
         [PageAuthorize("Budget")]
         public ActionResult Index()
         {
+            
             BudgetMainViewModel vm = InitBudgetVm();
            
             return View(vm);

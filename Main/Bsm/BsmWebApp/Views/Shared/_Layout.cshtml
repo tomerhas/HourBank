@@ -122,6 +122,69 @@
     @RenderSection("scripts", required: false)
 
     <script type="text/javascript">
+        
+        var sessionTimeoutWarning = $("#LblSessionTimeWarnning")[0].innerText;
+        var sessionTimer = null;
+        var responedToWarningTimer = null;
+        $(document).ready(function () {
+            if (window.location.pathname != "/Home/Index" && window.location.pathname != "/") {
+                registerToUserEvents();
+                startTimerForUserActivity();
+            }
+        });
+
+        function startTimerForUserActivity() {
+            console.log("Setting user activity timer to : " + sessionTimeoutWarning + " minutes");
+            sessionTimer = setTimeout(DisplaySessionWarning, parseInt(sessionTimeoutWarning) * 60 * 1000);
+        }
+
+        function DisplaySessionWarning() {
+            console.log("Dsiplaying warning message to user before redirect");
+            var message = "המערכת עומדת להתנתק. האם תרצה להמשיך?";
+            $("#dialog-session").html(message);
+            $("#dialog-session").dialog({
+                resizable: false,
+                modal: true,
+                title: "הודעה",
+                //  height: height,
+                width: 400,
+                focus: function (event, ui) { document.activeElement.blur(); },
+                buttons: {
+                    "אישור": function () {
+                        console.log("User is active. stopping timer");
+                        if (responedToWarningTimer)
+                            clearTimeout(responedToWarningTimer);
+                        $(this).dialog("close");
+                    }
+                }
+
+            });
+            $("#dialog-session").parent("div").attr("id", "dlgSes");
+            responedToWarningTimer = setTimeout(onNoRespondToWarning, 10000);
+        }
+
+        function onNoRespondToWarning() {
+            //redirect to home
+            window.location.href = "/Home/Index";
+        }
+
+        function registerToUserEvents() {
+            var events = ['click', 'mousemove', 'keydown'] // etc
+            $.each(events, function (i, e) {
+                $('body')[e](onUserCommitActivity);
+            });
+        }
+
+        function onUserCommitActivity() {
+            console.log("User is active!!");
+            ResetTimeoutSession();
+        }
+
+        function ResetTimeoutSession() {
+            if (sessionTimer)
+                clearInterval(sessionTimer);
+            startTimerForUserActivity();
+        }
 
 
         // $(document).ready(function () {
@@ -194,17 +257,17 @@
 
         /**************************************************************************************************************************************************/
 
-        var sessionTimeoutWarning = $("#LblSessionTimeWarnning")[0].innerText;
+        
         var sessionTimeout = $("#LblSessionTime")[0].innerText;
         var timeOnPageLoad = new Date();
         var sessionWarningTimer = null;
         var redirectToWelcomePageTimer = null;
         //For warning
-        var sessionWarningTimer = setTimeout('SessionWarning()',
-				parseInt(sessionTimeoutWarning) * 60 * 1000);
-        //To redirect to the welcome page
-        var redirectToWelcomePageTimer = setTimeout('RedirectToWelcomePage()',
-					parseInt(sessionTimeout) * 60 * 1000);
+        ////var sessionWarningTimer = setTimeout('SessionWarning()',
+		////		parseInt(sessionTimeoutWarning) * 60 * 1000);
+        //////To redirect to the welcome page
+        ////var redirectToWelcomePageTimer = setTimeout('RedirectToWelcomePage()',
+		////			parseInt(sessionTimeout) * 60 * 1000);
 
         function clearTimeOutsessionWarning() {
             if (sessionWarningTimer != null) {

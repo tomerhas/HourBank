@@ -170,6 +170,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Security\PageAuthorizeAttribute.cs" />
+    <Compile Include="Infrastructure\Security\SecurityValidator.cs" />
     <Compile Include="Infrastructure\SessionExpireFilterAttribute.cs" />
     <Compile Include="Infrastructure\UnityDependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

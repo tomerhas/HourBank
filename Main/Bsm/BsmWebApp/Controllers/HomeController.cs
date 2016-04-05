@@ -2,6 +2,7 @@
 using BsmCommon.DataModels;
 using BsmCommon.DataModels.Profiles;
 using BsmCommon.Interfaces.CachedItems;
+using BsmWebApp.Infrastructure;
 using BsmWebApp.Infrastructure.Security;
 using BsmWebApp.ViewModels.Home;
 using Egged.Infrastructure.Attribute;
@@ -55,10 +56,6 @@ namespace BsmWebApp.Controllers
                     //  vm.SessionEnd = 0;
                     vm.Today = DateTime.Now;
                     vm.UserName = user.EmployeeFullName;
-                    GeneralObject obj = new GeneralObject();
-                    obj.CurYechida = user.Yechidot[0];
-                    obj.CurMonth = DateTime.Parse("01/" + DateTime.Now.ToString("MM/yyyy"));
-                    Session["GeneralDetails"] = obj;
                 }
                 else
                 {
