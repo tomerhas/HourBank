@@ -12,5 +12,6 @@ namespace BsmCommon.Interfaces.Managers
     {
         List<BudgetChange> GetBudgetChanges(int KodYechida, DateTime Month);
         List<BudgetChangesGrid> GetChangesShaotNosafot(int KodEzor, int KodMitkan, DateTime Month);
+        List<BudgetSpecial> GetBudgetSpecial();
     }
 }

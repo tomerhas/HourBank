@@ -72,6 +72,18 @@ namespace BsmBL.Managers
             return list;
         }
 
+        public List<BudgetSpecial> GetBudgetSpecial()
+        {
+            using (var context = new BsmEntities())
+            {
+                return context.BudgetSpecial.ToList();
+                //var sql = string.Format("select * from TB_BUDGET_SPECIAL");
+                //var res = context.Database.SqlQuery<BudgetSpecial>(sql).OrderBy(e => e.MisparTakziv);
+                //return res.ToList();
+            }
+        }
+
+        
         private BudgetChangesGrid CreateBudgetEmployeeFromDataRow(DataRow row)
         {
             BudgetChangesGrid budgetChange = new BudgetChangesGrid();

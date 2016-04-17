@@ -178,6 +178,9 @@ namespace BsmWebApp.Controllers
             var months = GetMonthsBackList(6);
             vm.Months = new SelectList(months, "Id", "Val");
             vm.SelectedMonth = months[0].Id;
+            var ezors = GetEzorList();
+            vm.Ezors = new SelectList(ezors, "KOD_EZOR", "TEUR_EZOR");
+            vm.SelectedEzor = ezors[0].KOD_EZOR;
             //FilterViewModel vm = new FilterViewModel(months);
             //vm.Month = DateTime.Parse(months[0].Id);
 

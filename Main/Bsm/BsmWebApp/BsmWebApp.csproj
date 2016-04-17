@@ -178,6 +178,7 @@
     <Compile Include="ViewModels\Budgets\BudgetMainViewModel.cs" />
     <Compile Include="ViewModels\Budgets\UserInMitkanVM.cs" />
     <Compile Include="ViewModels\Budgets\UsersInMitkanViewModel.cs" />
+    <Compile Include="ViewModels\Changes\AddBudgetViewModel.cs" />
     <Compile Include="ViewModels\Changes\ChangesMainViewModel.cs" />
     <Compile Include="ViewModels\Errors\ErrorViewModel.cs" />
     <Compile Include="ViewModels\Home\HomeViewModel.cs" />
@@ -1073,6 +1074,7 @@
     <Content Include="Views\Changes\Index.cshtml" />
     <Content Include="Views\Changes\_Changes.cshtml" />
     <Content Include="Views\Shared\_Filter.cshtml" />
+    <Content Include="Views\Changes\_AddBudget.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

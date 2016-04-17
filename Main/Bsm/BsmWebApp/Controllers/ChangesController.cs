@@ -32,6 +32,7 @@ namespace BsmWebApp.Controllers
             ChangesMainViewModel vmResult = new ChangesMainViewModel();// InitChangesVm();
         
             vmResult.Filter = GetFilter();
+            vmResult.Filter.ShowEzor = true;
             vmResult.Page = "Changes";
             return View(vmResult);
 
@@ -59,9 +60,10 @@ namespace BsmWebApp.Controllers
             ChangesMainViewModel vmResult = new ChangesMainViewModel();  //InitChangesVm();
 
             GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
-            vmResult.Changes = ChangesShaotNosafot(1, obj.CurYechida.KodYechida, obj.CurMonth);
+            vmResult.Changes = GetChangesShaotNosafot(vm.SelectedEzor, obj.CurYechida.KodYechida, obj.CurMonth);
             Session["ChangesGrid"] = vmResult.Changes;
             vmResult.Filter = GetFilter();
+            vmResult.Filter.ShowEzor = true;
             vmResult.Filter.SelectedMonth = vm.SelectedMonth ;
 
             if (CurrentUser.GetSugPeilutHatshaa("Changes") == eSugPeiluHarshaa.Update)
@@ -79,7 +81,7 @@ namespace BsmWebApp.Controllers
             return View(vmResult);
         }
 
-        private List<BudgetChangesGrid> ChangesShaotNosafot(int KodEzor, int KodMitkan, DateTime Month)
+        private List<BudgetChangesGrid> GetChangesShaotNosafot(int KodEzor, int KodMitkan, DateTime Month)
         {
            var ManagerChange = _container.Resolve<IChangesManager>();
            var Changes = ManagerChange.GetChangesShaotNosafot(KodEzor,  KodMitkan,  Month);
@@ -107,7 +109,19 @@ namespace BsmWebApp.Controllers
             listMitkan.Sort();
             return Json(listMitkan, JsonRequestBehavior.AllowGet);
         }
-        
+
+        public ActionResult AddBudget()
+        {
+            AddBudgetViewModel vm = new AddBudgetViewModel();
+            var ManagerChange = _container.Resolve<IChangesManager>();
+            //vm.Yechidot= CurrentUser.Yechidot
+            vm.Yechidot = new SelectList(CurrentUser.Yechidot, "KodYechida", "TeurYechida");
+            vm.Yechida = CurrentUser.Yechidot[0];
+            var bs = ManagerChange.GetBudgetSpecial();
+            vm.Budgets = new SelectList(bs, "MisparTakziv", "Description");
+            vm.budget = bs[0];
+            return PartialView("_AddBudget", vm);
+        }
         //public ActionResult ChangesShaotNosafotRead([DataSourceRequest]DataSourceRequest request, int KodEzor, int KodYechida, DateTime month)
         //{
         //    var Changes = ChangesShaotNosafot(KodEzor, KodYechida, month);
@@ -124,7 +138,7 @@ namespace BsmWebApp.Controllers
         //        Reason="fff"             
         //    }));
         //}
-        
+
         //public ActionResult ChangesShaotNosafotUpdate([DataSourceRequest]DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<BudgetChangesGrid> changes)
         //{
         //    changes.ToList().ForEach(change =>
@@ -133,7 +147,7 @@ namespace BsmWebApp.Controllers
         //    });
         //    return Json(changes.ToDataSourceResult(request));
         //}
- 
+
     }
    
 }

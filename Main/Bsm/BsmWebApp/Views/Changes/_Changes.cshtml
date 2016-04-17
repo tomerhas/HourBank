@@ -70,7 +70,7 @@
             </div>
             <div class="col-md-2">
                   <a id="AddLink" href="#" > @*onclick="DisplayAllocatedHoursOptions()">*@
-                    <div id="divAdd" style="text-align: right; width: 200px; text-align: left" class="pointer divCal">
+                    <div id="divAdd" style="text-align: right; width: 200px; text-align: left" class="pointer divCal" onclick="DisplayAddTakziv()">
                         <label id="lblAdd" class="PurpleTextBoldLink pointer" style="padding-top: 5px">הוספת תקציב</label>
                     </div>
                 </a>
@@ -131,8 +131,9 @@
 
          }
      </div>
-}
-}
+    <div id="dialog-change"></div>
+              }
+          }
 
 <script type="text/javascript">
    
@@ -191,6 +192,26 @@
 
     }
     function onDataBound() {
+    }
+
+
+    $(function(){
+        $("#dialog-change").dialog({
+            autoOpen: false, width: 800, height:350,modal:true
+        });
+    });
+
+    function DisplayAddTakziv()
+    {
+        //if(!CanUpdate)
+        //    return;
+        var url= "Changes/AddBudget";
+        $("#dialog-change").html("")
+        .dialog("option","title","הוספת תקציב")
+        .load(url,function(){
+            $("#dialog-change").dialog("open");
+        });
+
     }
 
 </script>

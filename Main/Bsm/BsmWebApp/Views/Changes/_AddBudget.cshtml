@@ -1,0 +1,45 @@
+﻿@model BsmWebApp.ViewModels.Changes.AddBudgetViewModel
+@using (Html.BeginForm())
+{
+<div>
+    <div class="row">
+        <div class="col-md-2">
+            <label class="TextBold"> מתקן מקבל:</label>
+       </div>
+        <div class="col-md-3">
+            @Html.DropDownListFor(m => Model.Yechida.KodYechida , Model.Yechidot, new { @class = "ddl", style = "*width: 100px;height: 29px;" })
+        </div>
+        <div class="col-md-1">
+            <label class="TextBold"> תקציב:</label>
+       </div>
+        <div class="col-md-3">
+            @Html.DropDownListFor(m => Model.budget.MisparTakziv, Model.Budgets, new { @class = "ddl", style = "*width: 100px;height: 29px;" })
+        </div>
+        <div class="col-md-3">
+            <a id="addNew" class="PurpleTextBoldLink pointer" href="#">+צור תקציב חדש</a>
+        </div>
+     </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <label class="TextBold"> כמות:</label>
+        </div>
+        <div class="col-md-3">
+            <input id="inputKamut" style="width: 100px" onfocus="this.select();"  class="styleTBSearch GeneralText TextBoxRO" />
+        </div>
+        <div class="col-md-1">
+            <label class="TextBold"> הנמקה:</label>
+            @*@Html.DropDownListFor(m => @MenuModel.MitkanName.KodYechida, @MenuModel.Yechidot, new { onchange = "ChangeCurrentMitkan(this.options[this.selectedIndex].value);", @class = "ddlMitkan" })*@
+        </div>
+        <div class="col-md-6">
+            <label class="TextBold"> ללללללללללללללל:</label>
+            @*@Html.DropDownListFor(m => @MenuModel.MitkanName.KodYechida, @MenuModel.Yechidot, new { onchange = "ChangeCurrentMitkan(this.options[this.selectedIndex].value);", @class = "ddlMitkan" })*@
+        </div>
+
+    </div>
+
+    <div style="float:left">
+        <button id="btnAuto" value="עדכן תקציב" style="width:100px" class="PurpleButton" onclick="dispalyResult(GetSelected());">עדכן תקציב</button>
+    </div>
+</div>
+}

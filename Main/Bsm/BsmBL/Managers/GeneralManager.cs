@@ -37,7 +37,7 @@ namespace BsmBL.Managers
           using (var db = new KdsEntities())
             {
                 var sql = string.Format("select distinct kod_ezor,teur_ezor from ctb_ezor");
-                var res = db.Database.SqlQuery<TeurEzor>(sql);
+                var res = db.Database.SqlQuery<TeurEzor>(sql).OrderBy(e=>e.TEUR_EZOR);
                 return res.ToList();
             }
         }
