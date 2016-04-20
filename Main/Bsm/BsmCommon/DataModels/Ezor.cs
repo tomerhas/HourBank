@@ -20,6 +20,15 @@ namespace BsmCommon.DataModels
 
     public class TeurEzor
     {
+        public TeurEzor(int kod, string teur)
+        {
+            KOD_EZOR = kod;
+            TEUR_EZOR = teur;
+        }
+        public TeurEzor()
+        {
+
+        }
         //    [Column("KOD_EZOR")]
         public int KOD_EZOR { get; set; }
         //  [Column("TEUR_EZOR")]

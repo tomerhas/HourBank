@@ -27,7 +27,7 @@ namespace BsmBL.Managers
 
         public UserInfo GetUserInfo(string UserName)
         {
-            int EmpNum = 0, Isuk = 0,YechidaIrgunitOved = 0; ;
+            int EmpNum = 0;
             //הבא את נתוני המשתמש מתוך active directory
            
             var exchangeSrv = new ExchangeInfoServiceSoapClient();
@@ -49,16 +49,17 @@ namespace BsmBL.Managers
 
                         if (PirteyOved != null)
                         {
-                            Isuk = PirteyOved.Isuk.HasValue ? PirteyOved.Isuk.Value : 0;
-                            YechidaIrgunitOved = PirteyOved.YechidaIrgunit.HasValue ? PirteyOved.YechidaIrgunit.Value : 0;
+                           // uf.PirteyUser.Isuk = (PirteyOved.Isuk != null) ? PirteyOved.Isuk : 0;
+                           // uf.PirteyUser.YechidaIrgunit = PirteyOved.YechidaIrgunit.HasValue ? PirteyOved.YechidaIrgunit.Value : 0;
+                            uf.PirteyUser = PirteyOved;
                         }
                     }
                     //EventLog.WriteEntry("kds", "before Isuk > 0");
-                    if (Isuk > 0)
+                    if (uf.PirteyUser.Isuk > 0)
                     {
                         using (var context = new BsmEntities())
                         {
-                            uf.HarshaatOved = context.HarshaotOvdim.Where(h => h.KodIsuk == Isuk && h.KodYechida == YechidaIrgunitOved).ToList();
+                            uf.HarshaatOved = context.HarshaotOvdim.Where(h => h.KodIsuk == uf.PirteyUser.Isuk && h.KodYechida == uf.PirteyUser.YechidaIrgunit).ToList();
                             if (uf.HarshaatOved != null)
                             {
                                 List<Masach> Screens = context.Mashacim.Where(m => m.Pail == 1).ToList();
@@ -86,7 +87,7 @@ namespace BsmBL.Managers
 
                      //   EventLog.WriteEntry("kds", " uf.Screens=" + uf.Screens.Count);
                        
-                        uf.Yechidot = GetYechidotToUser(Isuk, YechidaIrgunitOved);
+                        uf.Yechidot = GetYechidotToUser(uf.PirteyUser.Isuk, uf.PirteyUser.YechidaIrgunit);
                         
             //EventLog.WriteEntry("kds", "after  GetYechidotToUser");
             //if (uf.Yechidot.Count > 0)

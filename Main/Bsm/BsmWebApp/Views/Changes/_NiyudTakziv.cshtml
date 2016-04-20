@@ -1,0 +1,60 @@
+﻿@model BsmWebApp.ViewModels.Changes.AddBudgetViewModel
+@using (Html.BeginForm())
+{
+    <div>
+        <div class="row">
+            <div class="col-md-2">
+                <label class="TextBold"> מתקן מקבל:</label>
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownListFor(m => Model.Yechida.KodYechida, Model.Yechidot, new { @class = "ddl", style = "width:200px;height: 29px;" })
+            </div>
+            <div class="col-md-2">
+                <label class="TextBold"> מתקן נותן:</label>
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownListFor(m => Model.Yechida.KodYechida, Model.Yechidot, new { @class = "ddl", style = "width: 200px;height: 29px;" })
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-2">
+                <label class="TextBold"> כמות:</label>
+            </div>
+            <div class="col-md-3">
+                <input id="inputKamut" style="width: 100px" onfocus="this.select();" maxlength="4" class="styleTBSearch GeneralText TextBoxRO" />
+            </div>
+            <div class="col-md-1">
+                <label class="TextBold"> הנמקה:</label>
+            </div>
+            <div class="col-md-6">
+                <textarea id="inputReson" placeholder='רשום הנמקה לניוד ...' style="width:350px;height:135px" maxlength="200" spellcheck="false" autofocus></textarea>
+            </div>
+
+        </div>
+        <br />
+        <br />
+
+    </div>
+}
+<div style="float:left">
+    <button id="btnAuto" value="עדכן תקציב" style="width:100px" class="PurpleButton" onclick="AddBudget();">עדכן תקציב</button>
+</div>
+
+<script>
+    function AddBudget() {
+        var inputReson = $("#inputReson").val();
+        var kamut = $("#inputKamut").val();
+        if (inputReson == "" || kamut == "" || +kamut==0) {
+            AlertMessage("יש למלא את כל הנתונים", 150, 300);
+            return false;
+        }
+        else {
+            AddBudgetNew(@Html.Raw(Json.Encode(Model)) );
+        }
+
+
+    }
+
+</script>

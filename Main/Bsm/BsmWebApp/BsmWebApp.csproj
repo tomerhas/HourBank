@@ -211,15 +211,28 @@
     <Content Include="Content\Images\calender_h.png" />
     <Content Include="Content\Images\clipboard.jpg" />
     <Content Include="Content\Images\double-arrow.png" />
+    <Content Include="Content\Images\changes.png" />
+    <Content Include="Content\Images\Histoty_hover.png" />
+    <Content Include="Content\Images\Histoty_press.png" />
+    <Content Include="Content\Images\Histoty_reg.png" />
     <Content Include="Content\Images\home.png" />
     <Content Include="Content\Images\home_disabled.png" />
     <Content Include="Content\Images\ipus_disable.png" />
     <Content Include="Content\Images\kds.png" />
     <Content Include="Content\Images\Logoegged.png" />
     <Content Include="Content\Images\mafrid.png" />
+    <Content Include="Content\Images\Minus_Budget_ho.png" />
+    <Content Include="Content\Images\Minus_Budget_pr.png" />
+    <Content Include="Content\Images\Minus_Budget_re.png" />
+    <Content Include="Content\Images\niyod_ho.png" />
+    <Content Include="Content\Images\niyod_pr.png" />
+    <Content Include="Content\Images\niyod_re.png" />
     <Content Include="Content\Images\opening-btn.png" />
     <Content Include="Content\Images\pai.png" />
     <Content Include="Content\Images\pen_line.png" />
+    <Content Include="Content\Images\Plus_Budget_ho.png" />
+    <Content Include="Content\Images\Plus_Budget_pr.png" />
+    <Content Include="Content\Images\Plus_Budget_re.png" />
     <Content Include="Content\Images\progress.gif" />
     <Content Include="Content\Images\Rectangle 42.png" />
     <Content Include="Content\Images\refresh.png" />
@@ -489,6 +502,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Page.html" />
     <None Include="Views\Budget\_BudgetInformation.cshtml" />
+    <None Include="Views\Changes\_AddNewBudget.cshtml" />
     <Content Include="WebServices\BsmService.asmx" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
@@ -1075,6 +1089,8 @@
     <Content Include="Views\Changes\_Changes.cshtml" />
     <Content Include="Views\Shared\_Filter.cshtml" />
     <Content Include="Views\Changes\_AddBudget.cshtml" />
+    <Content Include="Views\Changes\_NiyudTakziv.cshtml" />
+    <Content Include="Views\Changes\_GriatTakziv.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

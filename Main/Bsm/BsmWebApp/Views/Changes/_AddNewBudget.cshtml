@@ -1,0 +1,54 @@
+﻿
+<div>
+    <div class="row">
+        <div class="col-md-2">
+            <label class="TextBold"> כמות:</label>
+        </div>
+        <div class="col-md-3">
+            <input id="inputKamut" style="width: 100px" onfocus="this.select();" maxlength="3" class="styleTBSearch GeneralText TextBoxRO" />
+        </div>
+        <div class="col-md-2">
+            <label class="TextBold"> שם תקציב:</label>
+        </div>
+        <div class="col-md-5">
+            <input id="inputName" style="width: 250px" onfocus="this.select();" maxlength="200" class="styleTBSearch GeneralText TextBoxRO" />
+          </div>
+        
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-2">
+            <label class="TextBold"> מספר תקציב:</label>
+        </div>
+        <div class="col-md-3">
+            <input id="inputKamut" style="width: 100px" disabled onfocus="this.select();" maxlength="4"  class="styleTBSearch GeneralText TextBoxRO" />
+        </div>
+        <div class="col-md-1">
+            <label class="TextBold"> הנמקה:</label>
+        </div>
+        <div class="col-md-6">
+            <textarea id="inputReson" placeholder='רשום הנמקה לחלוקת תקציב...' style="width:350px;height:120px" maxlength="200" spellcheck="false" autofocus></textarea>
+        </div>
+
+    </div>
+    <br />
+    <br />
+
+</div>
+
+<div style="float:left">
+    <button id="btnAuto" value="צור תקציב" style="width:100px" class="PurpleButton" onclick="AddBudget();">צור תקציב</button>
+</div>
+
+<script>
+    function AddBudget() {
+        var inputReson = $("#inputReson").val();
+        var kamut = $("#inputKamut").val();
+        if (inputReson == "" || kamut == "" || +kamut==0) {
+            AlertMessage("יש למלא את כל הנתונים", 150, 300);
+            return false;
+        }   
+    }
+
+</script>

@@ -20,7 +20,7 @@ namespace BsmBL.DAL
             _container = container;
         }
 
-        public DataTable GetChangesShaotNosafot(int KodEzor, int KodMitkan, DateTime Month)
+        public DataTable GetChangesShaotNosafot(int KodEzor, DateTime Month, int isuk, int KodMitkan)
         {
             clDal oDal = _container.Resolve<clDal>();
             DataTable dt = new DataTable();
@@ -28,9 +28,10 @@ namespace BsmBL.DAL
             try
             {//מחזיר נתוני עובד: 
                 oDal.AddParameter("p_ezor", ParameterType.ntOracleInteger, KodEzor, ParameterDir.pdInput);
-                oDal.AddParameter("p_mitkan", ParameterType.ntOracleInteger, KodMitkan, ParameterDir.pdInput);
-                oDal.AddParameter("p_date", ParameterType.ntOracleDate, Month, ParameterDir.pdInput);
-                
+                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, Month, ParameterDir.pdInput);
+                oDal.AddParameter("p_isuk", ParameterType.ntOracleInteger, isuk, ParameterDir.pdInput);
+                oDal.AddParameter("p_user_yechida", ParameterType.ntOracleInteger, KodMitkan, ParameterDir.pdInput);
+
                 oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 //  oDal.ExecuteSP(cfunGetSumMeafyen14, ref dt);
 

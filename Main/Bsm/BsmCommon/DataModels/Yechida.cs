@@ -19,6 +19,6 @@ namespace BsmCommon.DataModels
         [Column("SUG_YECHIDA")]
         public string SugYechida { get; set; }
         [Column("KOD_EZOR")]
-        public int? KodEzor { get; set; }
+        public int KodEzor { get; set; }
     }
 }

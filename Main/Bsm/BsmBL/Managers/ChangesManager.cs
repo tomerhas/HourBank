@@ -61,10 +61,10 @@ namespace BsmBL.Managers
             });
         }
 
-        public List<BudgetChangesGrid> GetChangesShaotNosafot(int KodEzor, int KodMitkan, DateTime Month)
+        public List<BudgetChangesGrid> GetChangesShaotNosafot(int KodEzor, DateTime Month, int isuk, int KodMitkan)
         {
             List<BudgetChangesGrid> list = new List<BudgetChangesGrid>();
-            var dt = _container.Resolve<IChangesDal>().GetChangesShaotNosafot(KodEzor, KodMitkan, Month);
+            var dt = _container.Resolve<IChangesDal>().GetChangesShaotNosafot(KodEzor, Month, isuk, KodMitkan);
             foreach (DataRow dr in dt.Rows)
             {
                 list.Add(CreateBudgetEmployeeFromDataRow(dr));
@@ -88,11 +88,12 @@ namespace BsmBL.Managers
         {
             BudgetChangesGrid budgetChange = new BudgetChangesGrid();
            // budgetChange.Masad = int.Parse(row["MASAD"].ToString());
-            budgetChange.Mitkan = int.Parse(row["Mitkan"].ToString());
+            budgetChange.Kod_Yechida = int.Parse(row["KOD_YECHIDA"].ToString());
+            budgetChange.Teur_Yechida = row["TEUR_YECHIDA"].ToString();
             budgetChange.Takziv = float.Parse(row["Takziv"].ToString());
             budgetChange.Yitra = float.Parse(row["Yitra"].ToString());
-            budgetChange.Miztaber = float.Parse(row["Miztaber"].ToString());
-            budgetChange.Reason = row["REASON"].ToString();
+           // budgetChange.Miztaber = float.Parse(row["Miztaber"].ToString());
+           // budgetChange.Reason = row["REASON"].ToString();
 
             return budgetChange;
         }

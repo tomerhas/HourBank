@@ -60,15 +60,15 @@ namespace BsmWebApp.Controllers
             ChangesMainViewModel vmResult = new ChangesMainViewModel();  //InitChangesVm();
 
             GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
-            vmResult.Changes = GetChangesShaotNosafot(vm.SelectedEzor, obj.CurYechida.KodYechida, obj.CurMonth);
+            vmResult.Changes = GetChangesShaotNosafot(vm.SelectedEzor, obj.CurMonth,CurrentUser.PirteyUser.Isuk, CurrentUser.PirteyUser.YechidaIrgunit);
             Session["ChangesGrid"] = vmResult.Changes;
             vmResult.Filter = GetFilter();
             vmResult.Filter.ShowEzor = true;
             vmResult.Filter.SelectedMonth = vm.SelectedMonth ;
 
-            if (CurrentUser.GetSugPeilutHatshaa("Changes") == eSugPeiluHarshaa.Update)
+            if (DateTime.Now < vmResult.Filter.LastDateIdkunBank && CurrentUser.GetSugPeilutHatshaa("Changes") == eSugPeiluHarshaa.Update)
                 vmResult.IsMonthToEdit = true;
-
+            
             if (vmResult.Changes != null && vmResult.Changes.Count > 0)
             {
                 vmResult.ShouldDisplayMessage = 0;
@@ -81,10 +81,10 @@ namespace BsmWebApp.Controllers
             return View(vmResult);
         }
 
-        private List<BudgetChangesGrid> GetChangesShaotNosafot(int KodEzor, int KodMitkan, DateTime Month)
+        private List<BudgetChangesGrid> GetChangesShaotNosafot(int KodEzor, DateTime Month,int isuk , int KodMitkan)
         {
            var ManagerChange = _container.Resolve<IChangesManager>();
-           var Changes = ManagerChange.GetChangesShaotNosafot(KodEzor,  KodMitkan,  Month);
+           var Changes = ManagerChange.GetChangesShaotNosafot(KodEzor, Month, isuk, KodMitkan);
            return Changes;
         }
 
@@ -100,11 +100,11 @@ namespace BsmWebApp.Controllers
 
         public JsonResult GetMitkanStartWith(string startsWith) //, int kod, DateTime tarrich)
         {
-            List<BudgetChangesGrid> employees = (List<BudgetChangesGrid>)(Session["ChangesGrid"]);
+            List<BudgetChangesGrid> changes = (List<BudgetChangesGrid>)(Session["ChangesGrid"]);
            
-            var listMitkan = employees
-                .Where(x => x.Mitkan.ToString().StartsWith(startsWith))
-                .Select(x => x.Mitkan).ToList();
+            var listMitkan = changes
+                .Where(x => x.Teur_Yechida.ToString().StartsWith(startsWith))
+                .Select(x => x.Teur_Yechida).ToList();
 
             listMitkan.Sort();
             return Json(listMitkan, JsonRequestBehavior.AllowGet);
@@ -118,9 +118,39 @@ namespace BsmWebApp.Controllers
             vm.Yechidot = new SelectList(CurrentUser.Yechidot, "KodYechida", "TeurYechida");
             vm.Yechida = CurrentUser.Yechidot[0];
             var bs = ManagerChange.GetBudgetSpecial();
+            foreach (BudgetSpecial b in bs)
+            {
+                b.Description = b.Description + "("+ b.MisparTakziv+")";
+            }
             vm.Budgets = new SelectList(bs, "MisparTakziv", "Description");
             vm.budget = bs[0];
             return PartialView("_AddBudget", vm);
+        }
+
+        public ActionResult MoveBudget()
+        {
+            AddBudgetViewModel vm = new AddBudgetViewModel();
+            var ManagerChange = _container.Resolve<IChangesManager>();
+            //vm.Yechidot= CurrentUser.Yechidot
+            vm.Yechidot = new SelectList(CurrentUser.Yechidot, "KodYechida", "TeurYechida");
+            vm.Yechida = CurrentUser.Yechidot[0];
+         
+            return PartialView("_NiyudTakziv", vm);
+        }
+
+        public ActionResult RemoveBudget()
+        {
+            AddBudgetViewModel vm = new AddBudgetViewModel();
+            var ManagerChange = _container.Resolve<IChangesManager>();
+            //vm.Yechidot= CurrentUser.Yechidot
+            vm.Yechidot = new SelectList(CurrentUser.Yechidot, "KodYechida", "TeurYechida");
+            vm.Yechida = CurrentUser.Yechidot[0];
+           
+            return PartialView("_GriatTakziv", vm);
+        }
+        public ActionResult AddNewBudget()
+        {
+            return PartialView("_AddNewBudget", null);
         }
         //public ActionResult ChangesShaotNosafotRead([DataSourceRequest]DataSourceRequest request, int KodEzor, int KodYechida, DateTime month)
         //{

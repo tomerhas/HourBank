@@ -112,6 +112,7 @@ namespace BsmBL.Managers
                 Yechida item = new Yechida();
                 item.TeurYechida = dr["TeurYechida"].ToString();
                 item.KodYechida = int.Parse(dr["KodYechida"].ToString());
+                item.KodEzor = int.Parse(dr["Kod_ezor"].ToString());
                 list.Add(item);
             }
             return list;

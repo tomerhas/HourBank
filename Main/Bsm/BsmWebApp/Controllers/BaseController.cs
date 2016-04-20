@@ -179,8 +179,12 @@ namespace BsmWebApp.Controllers
             vm.Months = new SelectList(months, "Id", "Val");
             vm.SelectedMonth = months[0].Id;
             var ezors = GetEzorList();
+            ezors.Insert(0,new TeurEzor(0, "בחר הכל"));
+            var ezorsToUser = CurrentUser.Yechidot.GroupBy(e => e.KodEzor).ToList();
             vm.Ezors = new SelectList(ezors, "KOD_EZOR", "TEUR_EZOR");
-            vm.SelectedEzor = ezors[0].KOD_EZOR;
+            if (ezorsToUser.Count == 1)
+                vm.SelectedEzor = ezorsToUser[0].Key;
+            else vm.SelectedEzor = 0;
             //FilterViewModel vm = new FilterViewModel(months);
             //vm.Month = DateTime.Parse(months[0].Id);
 

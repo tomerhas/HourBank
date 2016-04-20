@@ -11,7 +11,7 @@
 
  <script>
      $(document).ready(function () {
-         $("#KodMitkan").kendoAutoComplete({
+         $("#NameMitkan").kendoAutoComplete({
              placeholder: "הקלד שם מתקן...",
              // dataTextField: "SiteName",
              // dataTextField: "MisparIshi",
@@ -31,7 +31,7 @@
                          }, //read
                      parameterMap: function () {// send value of autocomplete as the "startsWith" parameter
                          return {
-                             startsWith: $("#KodMitkan").data("kendoAutoComplete").value()
+                             startsWith: $("#NameMitkan").data("kendoAutoComplete").value()
                          };
                      }
                  } //transport
@@ -48,116 +48,142 @@
      {
     <div class="bgGray" style="height: 64px;">
         <div class="row" style="padding-top: 18px">
-            <div class="col-md-4">
-                <label style="width: 20px; float: right"></label>
-                <span style="clear:both">
-                    <input id="KodMitkan" style="width: 250px" onfocus="this.select();" onkeydown="if (event.keyCode==13){ setTimeout(function(){ findDataItem();  }, 300); return false;} " class="styleTBSearch GeneralText TextBoxRO" />
-                </span>
-                <input class="SearchBG" onclick="findDataItem();" type="button" />
+    <div class="col-md-4">
+        <label style="width: 20px; float: right"></label>
+        <span style="clear:both">
+            <input id="NameMitkan" style="width: 250px" onfocus="this.select();" onkeydown="if (event.keyCode==13){ setTimeout(function(){ findDataItem();  }, 300); return false;} " class="styleTBSearch GeneralText TextBoxRO" />
+        </span>
+        <input class="SearchBG" onclick="findDataItem();" type="button" />
 
-                @*  <input class="CheackBoxBG" type="checkbox" style="margin-right:65px;"/> 
-                      <label  class="GeneralText">הצג חריגים בלבד</label>*@
-            </div>
-
-            <div class="col-md-2">
-
-                <a id="NiyudLink" href="#" > @*onclick="DisplayAllocatedHoursOptions()">*@
-                    <div id="divNiyud" style="text-align: right; width: 200px; text-align: left" class="pointer divCal">
-                        <label id="lblNiyud" class="PurpleTextBoldLink pointer" style="padding-top: 5px">ניוד תקציב</label>
-                    </div>
-                </a>
       
+        @*  <input class="CheackBoxBG" type="checkbox" style="margin-right:65px;"/>
+            <label  class="GeneralText">הצג חריגים בלבד</label>*@
+    </div>
+
+    <div class="col-md-2">
+       
+        <a id="NiyudLink" href="#">
+            @*onclick="DisplayAllocatedHoursOptions()">*@
+            <div id="divNiyud" style=" width: 200px; text-align: left" class="pointer divNiyud" onclick="DisplayDialogTakziv('move')">
+                <label id="lblNiyud" class="PurpleTextBoldLink pointer" style="padding-top: 5px">ניוד תקציב</label>
             </div>
+        </a>
+
+    </div>
+    <div class="col-md-2">
+        <a id="AddLink" href="#">
+            @*onclick="DisplayAllocatedHoursOptions()">*@
+            <div id="divAdd" style="width: 200px; text-align: left" class="pointer divAdd" onclick="DisplayDialogTakziv('add')">
+                <label id="lblAdd" class="PurpleTextBoldLink pointer" style="padding-top: 5px">הוספת תקציב</label>
+            </div>
+        </a>
+
+    </div>
             <div class="col-md-2">
-                  <a id="AddLink" href="#" > @*onclick="DisplayAllocatedHoursOptions()">*@
-                    <div id="divAdd" style="text-align: right; width: 200px; text-align: left" class="pointer divCal" onclick="DisplayAddTakziv()">
-                        <label id="lblAdd" class="PurpleTextBoldLink pointer" style="padding-top: 5px">הוספת תקציב</label>
-                    </div>
-                </a>
-
-            </div>
-
-           <div class="col-md-2">
-                  <a id="sSubtractLink" href="#" > @*onclick="DisplayAllocatedHoursOptions()">*@
-                    <div id="divSubtract" style="text-align: right; width: 200px; text-align: left" class="pointer divCal">
+                @*<div style="text-align: right; width: 200px; text-align: left" class="pointer divHistory" onclick="ShowHistory('8888')"> <label class='PurpleTextBoldLink pointer'>yy</label> </div>*@
+                <a id="sSubtractLink" href="#">
+                    <div id="divSubtract" style="width: 200px; text-align:left" class="pointer divSubtract" onclick="DisplayDialogTakziv('remove')">
                         <label id="lblSubtract" class="PurpleTextBoldLink pointer" style="padding-top: 5px">גריעת תקציב</label>
                     </div>
                 </a>
 
             </div>
-        </div>
+@*<div>
+    <label>אשדוד</label>
+    <div id="buttons" style='float:left' >
+       <div style='float:left;width:70px'  class='pointer alertB' onclick="DisplayDialogTakziv('add')"> <label style="padding-right: 22px;" class='pointer'>הוסף</label> </div>
+       <div style='float:left;width:70px;margin-right:100px' class='pointer alertB' onclick="DisplayDialogTakziv('move')"> <label style="padding-right: 22px;" class='pointer'>נייד</label> </div>
+    </div>
+</div>*@
+    </div>
     </div>
 
-    
+   
      <div class="bgGray">
  
 
       @{
-            //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
-            //Html.Kendo().Grid(Model.UsersInMitkan.Employees)
-            Html.Kendo().Grid<BsmCommon.DataModels.Changes.BudgetChangesGrid>()
-               .Name("ChangesList").Columns(columns =>
-               {
+          //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
+          //Html.Kendo().Grid(Model.UsersInMitkan.Employees)
+          Html.Kendo().Grid<BsmCommon.DataModels.Changes.BudgetChangesGrid>()
+             .Name("ChangesList").Columns(columns =>
+             {
 
-                   columns.Bound(o => o.Mitkan).Title("שם מתקן");
-                   columns.Bound(o => o.Takziv).Title("תקציב שעות נוספות");
-                   columns.Bound(o => o.Yitra).Title("יתרת תקציב מחודש שעבר");
-                   columns.Bound(o => o.Miztaber).Title("שעות ניוד/מבצע");
-                   columns.Bound(o => o.Reason).Title("הנמקה/מבצע");
+                 columns.Bound(o => o.Teur_Yechida).Title("שם מתקן").ClientTemplate("<div><label>#=Teur_Yechida#</label> <div id = 'buttons' style = 'display:none;float:left' ><div style = 'float:left;width:80px'  class='pointer addMin' onclick=\"DisplayDialogTakziv('add')\"><label style = 'padding-right: 32px;' class='PurpleTextBoldLink pointer'>הוסף</label> </div> <div style = 'float:left;width:85px;' class='pointer niyudMin' onclick=\"DisplayDialogTakziv('move')\"><label style = 'padding-right: 37px;' class='PurpleTextBoldLink pointer'>נייד</label> </div> </div></div>")
+                                                                    .HtmlAttributes(new { onmouseover = "ShowButtons(this,\"block\");", onmouseout= "ShowButtons(this,\"none\");" }).Width(500);
+                 columns.Bound(o => o.Takziv).Title("תקציב שעות נוספות");
+                 columns.Bound(o => o.Yitra).Title("יתרת תקציב מחודש שעבר");
+                 columns.Bound(o => o.Kod_Yechida).Title("").ClientTemplate(" <div style='width: 170px'  class='pointer divHistory' onclick=\"ShowHistory('#=Kod_Yechida#')\"> <label style='padding-right: 30px;' class='PurpleTextBoldLink pointer'>היסטוריית ניודים</label> </div>");
+                 //  columns.Bound(o => o.Kod_Yechida).Title("").ClientTemplate("<a class='historyChange' onclick=\"ShowHistory('#=Kod_Yechida#')\">הסטוריית ניודים</a>");
+             })
+     //  .Editable(editable => editable.Mode(GridEditMode.InCell))
+     .Pageable()
+     .Sortable(c => c.AllowUnsort(false))
+      .DataSource(dataSource =>
+          dataSource.Ajax()
+              .PageSize(17)
+              .ServerOperation(false)
+              .Batch(true) // Enable batch updates
+                           //.Model(model =>
+                           //{
+                           //    model.Field(change => change.Mitkan).Editable(false);
+                           //    model.Field(change => change.Takziv).Editable(false);
+                           //    model.Field(change => change.Yitra).Editable(false);
+                           //    model.Field(change => change.miztaber).Editable(false);
+                           //    model.Field(change => change.Reason).Editable(false);
+                           //})
+      .Read(read => read.Action("ChangesMitkanRead", "Changes"))  // Action method invoked when the grid needs data
+                                                                  ////.Create(create => create.Action("ChangesShaotNosafotCreate", "Changes")) // Action method invoked when the user saves a new data item
+                                                                  ////.Update(update => update.Action("ChangesShaotNosafotUpdate", "Changes"))  // Action method invoked when the user saves an updated data item
+                                                                  //.Destroy(destroy => destroy.Action("Products_Destroy", "Home")) // Action method invoked when the user removes a data item
+      )
+     .Render();
 
-               })
-              //  .Editable(editable => editable.Mode(GridEditMode.InCell))
-               .Pageable()
-               .Sortable(c => c.AllowUnsort(false))
-                .DataSource(dataSource =>
-                    dataSource.Ajax()
-                        .PageSize(10)
-                        .ServerOperation(false)
-                        .Batch(true) // Enable batch updates
-                        //.Model(model =>
-                        //{
-                        //    model.Field(change => change.Mitkan).Editable(false);
-                        //    model.Field(change => change.Takziv).Editable(false);
-                        //    model.Field(change => change.Yitra).Editable(false);
-                        //    model.Field(change => change.miztaber).Editable(false);
-                        //    model.Field(change => change.Reason).Editable(false);
-                        //})
-                .Read(read => read.Action("ChangesMitkanRead", "Changes"))  // Action method invoked when the grid needs data
-                ////.Create(create => create.Action("ChangesShaotNosafotCreate", "Changes")) // Action method invoked when the user saves a new data item
-                ////.Update(update => update.Action("ChangesShaotNosafotUpdate", "Changes"))  // Action method invoked when the user saves an updated data item
-                //.Destroy(destroy => destroy.Action("Products_Destroy", "Home")) // Action method invoked when the user removes a data item
-                )
-               .Render();
-
-         }
+    }
      </div>
     <div id="dialog-change"></div>
-              }
+    <div id="dialog-new-budget"></div>
+
+             }
           }
 
 <script type="text/javascript">
    
     var displayMessage = @Model.ShouldDisplayMessage;
-   // var CanUpdate = true;
+    var CanUpdate = true;
     $(document).ready(function(){
         if(displayMessage==1){
             // ModifyGrid("ipus");
             AlertMessage("לא נמצאו נתונים ליחידה והחודש הנבחר",170,330);
             // alert("Need to display message")
         }
-       @* var model = @Html.Raw(Json.Encode(Model));
+   
+        var model = @Html.Raw(Json.Encode(Model));
         CanUpdate = model.IsMonthToEdit;
        
         if(!CanUpdate)
-            DisableElements();*@
+            DisableElements();
 
      });
-
-
+    function ShowButtons(obj,val)
+    {
+        $(obj).find("#buttons").css("display", val); 
+    }
+    function DisableElements()
+    {
+        $("#lblNiyud").removeClass();
+        $("#lblNiyud").addClass("DisabledLink");
+        //$("#lblAuto").removeClass();
+        //$("#lblAuto").addClass("DisabledLink");
+        //$("#divIpus").removeClass();
+        //$("#divIpus").addClass("DisabledIpus");
+        $("#divNiyud").removeClass();
+        $("#divNiyud").addClass("DisabledCal");
+    }
     function findDataItem() {
 
         var theGrid = $('#ChangesList')
-        var dataItem = $('#KodMitkan');
+        var dataItem = $('#NameMitkan');
         if (dataItem.val().trim() == "")
             return;
 
@@ -171,7 +197,7 @@
 
         var index = -1;
         for (var x = 0; x < view.length; x++) {
-            if (view[x].Mitkan == dataItem.val()) { //dataItem.Id) {
+            if (view[x].Teur_Yechida == dataItem.val()) { //dataItem.Id) {
                 index = x;
                 break;
             }
@@ -186,32 +212,78 @@
         var targetIndex = index - (page * ds.pageSize()) + 1;   
         ds.page(++page);
         var row = $("#ChangesList").find("tr:eq(" + targetIndex + ")")[0];
-        theGrid.select(row);
+      //  theGrid.select(row);
         $("#ChangesList").find("tr:eq(" + targetIndex + ")")[0].className = "clickable";
-        return false;
+       // return false;
 
     }
     function onDataBound() {
     }
+    function ShowHistory(mitkan)
+    {
+        var month="01/04/2016";
+        var name="אשקלון";
+        var titel = " פירוט שעות הוספה/הפחתה למתקן ";
+        titel = titel + name + " לחודש " + " \n ";
+        titel = titel + month;
+        $("#dialog-change").html("")
+            .dialog("option", "title", titel)
+            .load('/Budget/DispalyChanges?KodYechida=' + mitkan + "&chodesh=" + month, function () { $("#dialog-change").dialog("open"); });
 
+    }
 
     $(function(){
         $("#dialog-change").dialog({
+            autoOpen: false, width: 820, height:370,modal:true
+        });
+        $("#dialog-new-budget").dialog({
             autoOpen: false, width: 800, height:350,modal:true
         });
     });
 
-    function DisplayAddTakziv()
+    function DisplayDialogTakziv(src)
     {
-        //if(!CanUpdate)
-        //    return;
-        var url= "Changes/AddBudget";
+        var title;
+        var url;
+        switch (src)
+        {
+            case "add":
+                title="  הוספת תקציב  ";
+                url= "Changes/AddBudget";
+                break;
+            case "move":
+                title="  ניוד תקציב ";
+                url= "Changes/MoveBudget";
+                break;  
+            case "remove":
+                title="  גריעת תקציב ";
+                url= "Changes/RemoveBudget";
+                break;    
+        }
+        
         $("#dialog-change").html("")
-        .dialog("option","title","הוספת תקציב")
+        .dialog("option","title",title)
         .load(url,function(){
             $("#dialog-change").dialog("open");
         });
 
     }
+    function DisplayAddNewTakziv()
+    {
+        //if(!CanUpdate)
+        //    return;
+        var url= "Changes/AddNewBudget";
+        $("#dialog-new-budget").html("")
+        .dialog("option","title","יצירת תקציב חדש")
+        .load(url,function(){
+            $("#dialog-new-budget").dialog("open");
+        });
 
+    }
+    function AddBudgetNew(reson)
+    { alert(reson);
+        $("#dialog-change").dialog('close');
+       
+      //  var m= model;
+    }
 </script>

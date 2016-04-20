@@ -9,6 +9,6 @@ namespace BsmCommon.Interfaces.Dal
 {
     public interface IChangesDal
     {
-        DataTable GetChangesShaotNosafot(int KodEzor, int KodMitkan, DateTime Month);
+        DataTable GetChangesShaotNosafot(int KodEzor, DateTime Month, int isuk, int KodMitkan);
     }
 }

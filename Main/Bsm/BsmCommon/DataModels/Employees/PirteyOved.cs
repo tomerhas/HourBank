@@ -20,9 +20,9 @@ namespace BsmCommon.DataModels.Employees
         public DateTime TaarichAd { get; set; }
 
         [ Column("YECHIDA_IRGUNIT")]
-        public int? YechidaIrgunit { get; set; }
+        public int YechidaIrgunit { get; set; }
 
         [Column("ISUK")]
-        public int? Isuk { get; set; }
+        public int Isuk { get; set; }
     }
 }
