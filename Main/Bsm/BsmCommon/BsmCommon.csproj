@@ -67,6 +67,7 @@
     <Compile Include="DataModels\Budgets\BudgetEmployeeGrid.cs" />
     <Compile Include="DataModels\Changes\BudgetChangesGrid.cs" />
     <Compile Include="DataModels\Changes\BudgetSpecial.cs" />
+    <Compile Include="DataModels\Changes\BudgetSpecialYechida.cs" />
     <Compile Include="DataModels\Employees\Oved.cs" />
     <Compile Include="DataModels\Employees\PirteyOved.cs" />
     <Compile Include="DataModels\Ezor.cs" />

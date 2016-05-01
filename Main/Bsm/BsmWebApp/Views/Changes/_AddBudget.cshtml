@@ -1,5 +1,5 @@
 ﻿@model BsmWebApp.ViewModels.Changes.AddBudgetViewModel
-@using (Html.BeginForm())
+@using (Html.BeginForm("Index", "Changes"))
 {
 <div>
     <div class="row">
@@ -40,10 +40,11 @@
     <br />
     
 </div>
-}
 <div style="float:left">
-    <button id="btnAuto" value="עדכן תקציב" style="width:100px" class="PurpleButton" onclick="AddBudget();">עדכן תקציב</button>
+    <button id="btnAuto" type="submit" value="עדכן תקציב" style="width:100px" class="PurpleButton">עדכן תקציב</button>
 </div>
+}
+
 
 <script>
     function AddBudget() {
