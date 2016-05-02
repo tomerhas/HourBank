@@ -550,7 +550,7 @@ background-color:  rgba(137, 94, 138, 0.2) !important;
     background: url("Images/Plus_Budget_re.png") no-repeat left;
     background-position-x: 50px;
 }
-/*
+
 
 .SearchBG {
     background: url("Images/searchImg.png") no-repeat left #895e8a;
@@ -595,7 +595,7 @@ background-color:  rgba(137, 94, 138, 0.2) !important;
     margin-right:-3px;
     float:right;
 }
-
+/*
 .SearchBG:disabled {
     background: url("Images/searchImg.png") no-repeat left #895e8a;
     background-position-x: 8px;
@@ -608,8 +608,7 @@ background-color:  rgba(137, 94, 138, 0.2) !important;
     height:  34px;
     margin-right:-3px;
     float:right;
-}
-
+}*/
 
 
 
@@ -830,7 +829,6 @@ line-height:  30.2px;
      font-family:  Arial;
      font-size:  17.89px;
      font-weight:  700;
-     cursor: default; 
      text-decoration: none; }
 
  .k-dirty {

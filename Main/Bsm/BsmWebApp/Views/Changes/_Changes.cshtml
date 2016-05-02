@@ -59,34 +59,35 @@
         @*  <input class="CheackBoxBG" type="checkbox" style="margin-right:65px;"/>
             <label  class="GeneralText">הצג חריגים בלבד</label>*@
     </div>
+            <div id="divLinks">
+                <div class="col-md-2">
 
-    <div class="col-md-2">
-       
-        <a id="NiyudLink" href="#">
-            @*onclick="DisplayAllocatedHoursOptions()">*@
-            <div id="divNiyud" style=" width: 200px; text-align: left" class="pointer divNiyud" onclick="DisplayDialogTakziv('move')">
-                <label id="lblNiyud" class="PurpleTextBoldLink pointer" style="padding-top: 5px">ניוד תקציב</label>
-            </div>
-        </a>
+                    <a id="NiyudLink" href="#">
+                        @*onclick="DisplayAllocatedHoursOptions()">*@
+                        <div id="divNiyud" style=" width: 200px; text-align: left" class="pointer divNiyud" onclick="DisplayDialogTakziv('move')">
+                            <label id="lblNiyud" class="PurpleTextBoldLink pointer" style="padding-top: 5px">ניוד תקציב</label>
+                        </div>
+                    </a>
 
-    </div>
-    <div class="col-md-2">
-        <a id="AddLink" href="#">
-            @*onclick="DisplayAllocatedHoursOptions()">*@
-            <div id="divAdd" style="width: 200px; text-align: left" class="pointer divAdd" onclick="DisplayDialogTakziv('add')">
-                <label id="lblAdd" class="PurpleTextBoldLink pointer" style="padding-top: 5px">הוספת תקציב</label>
-            </div>
-        </a>
+                </div>
+                <div class="col-md-2">
+                    <a id="AddLink" href="#">
+                        @*onclick="DisplayAllocatedHoursOptions()">*@
+                        <div id="divAdd" style="width: 200px; text-align: left" class="pointer divAdd" onclick="DisplayDialogTakziv('add')">
+                            <label id="lblAdd" class="PurpleTextBoldLink pointer" style="padding-top: 5px">הוספת תקציב</label>
+                        </div>
+                    </a>
 
-    </div>
-            <div class="col-md-2">
-                @*<div style="text-align: right; width: 200px; text-align: left" class="pointer divHistory" onclick="ShowHistory('8888')"> <label class='PurpleTextBoldLink pointer'>yy</label> </div>*@
-                <a id="sSubtractLink" href="#">
-                    <div id="divSubtract" style="width: 200px; text-align:left" class="pointer divSubtract" onclick="DisplayDialogTakziv('remove')">
-                        <label id="lblSubtract" class="PurpleTextBoldLink pointer" style="padding-top: 5px">גריעת תקציב</label>
-                    </div>
-                </a>
+                </div>
+                <div class="col-md-2">
+                    @*<div style="text-align: right; width: 200px; text-align: left" class="pointer divHistory" onclick="ShowHistory('8888')"> <label class='PurpleTextBoldLink pointer'>yy</label> </div>*@
+                    <a id="sSubtractLink" href="#">
+                        <div id="divSubtract" style="width: 200px; text-align:left" class="pointer divSubtract" onclick="DisplayDialogTakziv('remove')">
+                            <label id="lblSubtract" class="PurpleTextBoldLink pointer" style="padding-top: 5px">גריעת תקציב</label>
+                        </div>
+                    </a>
 
+                </div>
             </div>
 @*<div>
     <label>אשדוד</label>
@@ -171,14 +172,14 @@
     }
     function DisableElements()
     {
-        $("#lblNiyud").removeClass();
-        $("#lblNiyud").addClass("DisabledLink");
-        //$("#lblAuto").removeClass();
-        //$("#lblAuto").addClass("DisabledLink");
-        //$("#divIpus").removeClass();
-        //$("#divIpus").addClass("DisabledIpus");
-        $("#divNiyud").removeClass();
+        $('#divLinks').find("a").find("*").prop("class","");    
+        $('#divLinks').find("label").addClass("DisabledLink");
+        $('#divLinks').find("div").prop('onclick',null).off('click');
+        $('#divLinks').find("a").css({cursor:"default"});
+
         $("#divNiyud").addClass("DisabledCal");
+        $("#divAdd").addClass("DisabledCal");
+        $("#divSubtract").addClass("DisabledCal");
     }
     function findDataItem() {
 

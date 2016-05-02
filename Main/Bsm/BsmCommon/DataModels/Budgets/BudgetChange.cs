@@ -14,7 +14,7 @@ namespace BsmCommon.DataModels.Budgets
         [Key, Column("ID")]
         public int Id { get; set; }
 
-        [Column("KOD_YECHID")]
+        [Column("KOD_YECHIDA")]
         public int KodYechida { get; set; }
 
         [Column("CHODESH")]

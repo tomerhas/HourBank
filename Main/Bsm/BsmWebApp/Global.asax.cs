@@ -36,7 +36,7 @@ namespace BsmWebApp
             Bootstrapper boot = new Bootstrapper();
             boot.InitContainer(container);
 
-            
+
 
             UnityDependencyResolver resolver = new UnityDependencyResolver(container);
             DependencyResolver.SetResolver(resolver);
@@ -56,17 +56,58 @@ namespace BsmWebApp
         protected void Session_Start(object sender, EventArgs e)
         {
             string userName;
-             if (ConfigurationSettings.AppSettings["DebugModeUserName"] == "true")
+            if (ConfigurationSettings.AppSettings["DebugModeUserName"] == "true")
                 userName = ConfigurationSettings.AppSettings["DebugUserName"];
-             else userName = HttpContext.Current.User.Identity.Name;
-        
+            else userName = HttpContext.Current.User.Identity.Name;
+
             var cache = ServiceLocator.Current.GetInstance<IUserInfoCachedItems>();
             UserInfo uf = cache.Get(userName);
             if (uf != null)
                 cache.Remove(userName);
-           // EventLog.WriteEntry("kds", "Session_start");
+            // EventLog.WriteEntry("kds", "Session_start");
         }
-     }
+
+        protected void Application_Error()
+        {
+            ServiceLocator.Current.GetInstance<ILogger>().Log("Entering Global error", Category.Exception);
+            HttpContext httpContext = HttpContext.Current;
+            if (httpContext != null && httpContext.Error!= null)
+            {
+                ServiceLocator.Current.GetInstance<ILogger>().Log(AppendInnerExceptions(httpContext.Error,"Global Error ocurred: "), Category.Exception);
+            }
+            RequestContext requestContext = ((MvcHandler)httpContext.CurrentHandler).RequestContext;
+            if (requestContext.HttpContext.Request.IsAjaxRequest())
+            {
+                httpContext.Response.Clear();
+                string controllerName = requestContext.RouteData.GetRequiredString("controller");
+                IControllerFactory factory = ControllerBuilder.Current.GetControllerFactory();
+                IController controller = factory.CreateController(requestContext, controllerName);
+                ControllerContext controllerContext = new ControllerContext(requestContext, (ControllerBase)controller);
+
+                JsonResult jsonResult = new JsonResult();
+                jsonResult.Data = new { success = false, serverError = "500",error= httpContext.Error.ToString() };
+                jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+                jsonResult.ExecuteResult(controllerContext);
+                httpContext.Response.End();
+            }
+        }
+
+        private string AppendInnerExceptions(Exception ex, string curStr)
+        {
+            curStr += "; " + ex.Message;
+            if (ex.InnerException != null)
+            {
+                return AppendInnerExceptions(ex.InnerException, curStr);
+            }
+            else
+            {
+                return curStr;
+            }
+        }
+
+
+    }
+}
         
     
-}
+
