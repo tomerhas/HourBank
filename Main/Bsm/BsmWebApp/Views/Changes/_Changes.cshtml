@@ -110,10 +110,12 @@
              .Name("ChangesList").Columns(columns =>
              {
 
-                 columns.Bound(o => o.Teur_Yechida).Title("שם מתקן").ClientTemplate("<div><label>#=Teur_Yechida#</label> <div id = 'buttons' style = 'display:none;float:left' ><div style = 'float:left;width:80px'  class='pointer addMin' onclick=\"DisplayDialogTakziv('add')\"><label style = 'padding-right: 32px;' class='PurpleTextBoldLink pointer'>הוסף</label> </div> <div style = 'float:left;width:85px;' class='pointer niyudMin' onclick=\"DisplayDialogTakziv('move')\"><label style = 'padding-right: 37px;' class='PurpleTextBoldLink pointer'>נייד</label> </div> </div></div>")
+                 columns.Bound(o => o.Teur_Yechida).Title("מתקן").ClientTemplate("<div><label>#=Teur_Yechida#</label> <div id = 'buttons' style = 'display:none;float:left' ><div style = 'float:left;width:80px'  class='pointer addMin' onclick=\"DisplayDialogTakziv('add')\"><label style = 'padding-right: 32px;' class='PurpleTextBoldLink pointer'>הוסף</label> </div> <div style = 'float:left;width:85px;' class='pointer niyudMin' onclick=\"DisplayDialogTakziv('move')\"><label style = 'padding-right: 37px;' class='PurpleTextBoldLink pointer'>נייד</label> </div> </div></div>")
                                                                     .HtmlAttributes(new { onmouseover = "ShowButtons(this,\"block\");", onmouseout= "ShowButtons(this,\"none\");" }).Width(500);
-                 columns.Bound(o => o.Takziv).Title("תקציב שעות נוספות");
-                 columns.Bound(o => o.Yitra).Title("יתרת תקציב מחודש שעבר");
+                 columns.Bound(o => o.Takziv).Title("תקציב");
+                 columns.Bound(o => o.Yitra).Title("יתרה");
+                 columns.Bound(o => o.Niyud).Title("ניוד");
+                 columns.Bound(o => o.AddRem).Title("הוספה/גריעה");
                  columns.Bound(o => o.Kod_Yechida).Title("").ClientTemplate(" <div style='width: 170px'  class='pointer divHistory' onclick=\"ShowHistory('#=Kod_Yechida#')\"> <label style='padding-right: 30px;' class='PurpleTextBoldLink pointer'>היסטוריית ניודים</label> </div>");
                  //  columns.Bound(o => o.Kod_Yechida).Title("").ClientTemplate("<a class='historyChange' onclick=\"ShowHistory('#=Kod_Yechida#')\">הסטוריית ניודים</a>");
              })
@@ -262,12 +264,27 @@
                 break;    
         }
         
+        //$("#dialog-change").html("")
+        //.dialog("option","title",title)
+        //.load(url,function(){
+        //    $("#dialog-change").dialog("open");
+        //});
+
         $("#dialog-change").html("")
-        .dialog("option","title",title)
+        .dialog({
+            open: function( event, ui ) {
+                jQuery.ajaxSetup({ cache: false });
+            }
+        },"title",title)
         .load(url,function(){
             $("#dialog-change").dialog("open");
         });
 
+    }
+
+    function RefreshGridChanges()
+    {
+        $('#ChangesList').data('kendoGrid').dataSource.read();
     }
     function DisplayAddNewTakziv()
     {
@@ -275,7 +292,11 @@
         //    return;
         var url= "Changes/AddNewBudget";
         $("#dialog-new-budget").html("")
-        .dialog("option","title","יצירת תקציב חדש")
+             .dialog({
+                 open: function( event, ui ) {
+                     jQuery.ajaxSetup({ cache: false });
+                 }
+             },"title","יצירת תקציב חדש")
         .load(url,function(){
             $("#dialog-new-budget").dialog("open");
         });
@@ -287,4 +308,5 @@
        
       //  var m= model;
     }
+    
 </script>

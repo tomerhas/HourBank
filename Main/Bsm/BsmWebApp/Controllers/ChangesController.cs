@@ -61,7 +61,9 @@ namespace BsmWebApp.Controllers
 
             GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
             vmResult.Changes = GetChangesShaotNosafot(vm.SelectedEzor, obj.CurMonth,CurrentUser.PirteyUser.Isuk, CurrentUser.PirteyUser.YechidaIrgunit);
-            Session["ChangesGrid"] = vmResult.Changes;
+            ChangesCachedViewModel sessionVm = new ChangesCachedViewModel() { Changes = vmResult.Changes, SelectedEzor = vm.SelectedEzor, CurMonth = obj.CurMonth, Isuk = CurrentUser.PirteyUser.Isuk, YechidaIrgunit= CurrentUser.PirteyUser.YechidaIrgunit };
+
+            Session["ChangesGrid"] = sessionVm;
             vmResult.Filter = GetFilter();
             vmResult.Filter.ShowEzor = true;
             vmResult.Filter.SelectedMonth = vm.SelectedMonth ;
@@ -80,7 +82,30 @@ namespace BsmWebApp.Controllers
 
             return View(vmResult);
         }
+        [HttpPost]
+        public void SaveBudget(SaveBudgetVM vm)
+        {
+            var month = ((GeneralObject)Session["GeneralDetails"]).CurMonth;
+            var ManagerChange = _container.Resolve<IChangesManager>();
+            ManagerChange.AddTakzivLeMitkan(vm.Mitkan, month, vm.Takziv,vm.Kamut,vm.Comment,CurrentUser.PirteyUser.MisparIshi);
 
+            var budget = _container.Resolve<IBudgetManager>();
+            budget.SaveBudgetLeft(vm.Mitkan, month, CurrentUser.PirteyUser.MisparIshi);
+            //Update the grid session with new data
+            var changesVm = (Session["ChangesGrid"]) as ChangesCachedViewModel;
+            if (changesVm != null)
+            {
+                var changesGridRes = GetChangesShaotNosafot(changesVm.SelectedEzor, changesVm.CurMonth, changesVm.Isuk, changesVm.YechidaIrgunit);
+                changesVm.Changes = changesGridRes;
+            }
+        }
+
+        [HttpPost]
+        public void SaveNewBudget(SaveNewBudgetVM vm)
+        {
+            var ManagerChange = _container.Resolve<IChangesManager>();
+            ManagerChange.AddNewTakziv(vm.Takziv, vm.Name,vm.Kamut,vm.Comment, CurrentUser.PirteyUser.MisparIshi);
+        }
         private List<BudgetChangesGrid> GetChangesShaotNosafot(int KodEzor, DateTime Month,int isuk , int KodMitkan)
         {
            var ManagerChange = _container.Resolve<IChangesManager>();
@@ -90,43 +115,78 @@ namespace BsmWebApp.Controllers
 
         public ActionResult ChangesMitkanRead([DataSourceRequest]DataSourceRequest request)
         {
-
-            List<BudgetChangesGrid> changes = (List<BudgetChangesGrid>)(Session["ChangesGrid"]);
-           // List<BudgetEmployeeGrid> SortedEmployees = employees.OrderBy(o => o.MisparIshi).ToList();
-            return Json(changes.ToDataSourceResult(request));
-            // var employeesContainer = GetEmployeesInMitkan(KodYechida, month);
-            // return Json(employeesContainer.Employees.ToDataSourceResult(request));
+            if (Session["ChangesGrid"] != null)
+            {
+                List<BudgetChangesGrid> changes = ((ChangesCachedViewModel)(Session["ChangesGrid"])).Changes;
+                return Json(changes.ToDataSourceResult(request));
+            }
+            return Json("{}");
         }
 
         public JsonResult GetMitkanStartWith(string startsWith) //, int kod, DateTime tarrich)
         {
-            List<BudgetChangesGrid> changes = (List<BudgetChangesGrid>)(Session["ChangesGrid"]);
-           
-            var listMitkan = changes
-                .Where(x => x.Teur_Yechida.ToString().StartsWith(startsWith))
-                .Select(x => x.Teur_Yechida).ToList();
+            if (Session["ChangesGrid"] != null)
+            {
+                List<BudgetChangesGrid> changes = ((ChangesCachedViewModel)(Session["ChangesGrid"])).Changes;
 
-            listMitkan.Sort();
-            return Json(listMitkan, JsonRequestBehavior.AllowGet);
+                var listMitkan = changes
+                    .Where(x => x.Teur_Yechida.ToString().StartsWith(startsWith))
+                    .Select(x => x.Teur_Yechida).ToList();
+
+                listMitkan.Sort();
+                return Json(listMitkan, JsonRequestBehavior.AllowGet);
+            }
+            return Json("{}");
         }
 
         public ActionResult AddBudget()
         {
             AddBudgetViewModel vm = new AddBudgetViewModel();
-            var ManagerChange = _container.Resolve<IChangesManager>();
-            //vm.Yechidot= CurrentUser.Yechidot
-            vm.Yechidot = new SelectList(CurrentUser.Yechidot, "KodYechida", "TeurYechida");
-            vm.Yechida = CurrentUser.Yechidot[0];
-            var bs = ManagerChange.GetBudgetSpecial();
-            foreach (BudgetSpecial b in bs)
-            {
-                b.Description = b.Description + "("+ b.MisparTakziv+")";
-            }
+          
+            List<Yechida> yechidot = GetListYechidotForCombo();
+            vm.Yechidot = new SelectList(yechidot, "KodYechida", "TeurYechida");
+            vm.Yechida = yechidot[0];
+
+            var bs = GetListBudgetSpecialForCombo();
             vm.Budgets = new SelectList(bs, "MisparTakziv", "Description");
             vm.budget = bs[0];
             return PartialView("_AddBudget", vm);
         }
 
+        private List<Yechida> GetListYechidotForCombo()
+        {
+            List<Yechida> yechidot = CurrentUser.Yechidot;
+            Yechida yechida = new Yechida();
+            yechida.KodHevra = 0;
+            yechida.KodYechida = 0;
+            yechida.TeurYechida = "בחר מתקן...";
+            yechida.KodEzor = 0;
+            yechida.SugYechida = "";
+            yechidot.Insert(0, yechida);
+
+            return yechidot;
+        }
+
+        private List<BudgetSpecial> GetListBudgetSpecialForCombo()
+        {
+            var ManagerChange = _container.Resolve<IChangesManager>();
+            var bs = ManagerChange.GetBudgetSpecial();
+
+            foreach (BudgetSpecial b in bs)
+            {
+                b.Description = b.Description + "(" + b.MisparTakziv + ")";
+            }
+
+            BudgetSpecial takziv = new BudgetSpecial();
+            takziv.MisparTakziv = 0;
+            takziv.Description = "בחר תקציב מהרשימה...";
+            takziv.Amount = 0;
+            takziv.Reason = "";
+            takziv.TaarichIdkun = DateTime.Now;
+
+            bs.Insert(0, takziv);
+            return bs;
+        }
         public ActionResult MoveBudget()
         {
             AddBudgetViewModel vm = new AddBudgetViewModel();
@@ -151,6 +211,11 @@ namespace BsmWebApp.Controllers
         public ActionResult AddNewBudget()
         {
             return PartialView("_AddNewBudget", null);
+        }
+        public int GetNextTakzivNumber()
+        {
+            var ManagerChange = _container.Resolve<IChangesManager>();
+            return ManagerChange.GetNextTakzivNumber();
         }
         //public ActionResult ChangesShaotNosafotRead([DataSourceRequest]DataSourceRequest request, int KodEzor, int KodYechida, DateTime month)
         //{
@@ -179,5 +244,20 @@ namespace BsmWebApp.Controllers
         //}
 
     }
-   
+
+    public class SaveBudgetVM
+    {
+        public int Mitkan { get; set; }
+        public int Takziv { get; set; }
+        public decimal Kamut { get; set; }
+        public string Comment { get; set; }
+    }
+
+    public class SaveNewBudgetVM
+    {
+        public string Name { get; set; }
+        public decimal Kamut { get; set; }
+        public int Takziv { get; set; }
+        public string Comment { get; set; }
+    }
 }

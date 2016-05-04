@@ -1,19 +1,19 @@
 ﻿@model BsmWebApp.ViewModels.Changes.AddBudgetViewModel
-@using (Html.BeginForm("Index", "Changes"))
-{
+
+
 <div>
     <div class="row">
         <div class="col-md-2">
             <label class="TextBold"> מתקן מקבל:</label>
        </div>
         <div class="col-md-3">
-            @Html.DropDownListFor(m => Model.Yechida.KodYechida , Model.Yechidot, new { @class = "ddl", style = "width: 180px;height: 29px;" })
+            @Html.DropDownListFor(m => Model.Yechida.KodYechida, Model.Yechidot, new {@id= "KodMitkan", @onchange = "EnableFields();", @class = "ddl", style = "width: 180px;height: 29px;" })
         </div>
         <div class="col-md-1">
             <label class="TextBold"> תקציב:</label>
        </div>
         <div class="col-md-3">
-            @Html.DropDownListFor(m => Model.budget.MisparTakziv, Model.Budgets, new { @class = "ddl", style = "width: 180px;height: 29px;" })
+            @Html.DropDownListFor(m => Model.budget.MisparTakziv, Model.Budgets, new { @id = "KodTakziv",@onchange = "EnableFields();", @class = "ddl", style = "width: 180px;height: 29px;" })
         </div>
         <div class="col-md-3">
             <a id="addNew" class="PurpleTextBoldLink pointer" onclick="DisplayAddNewTakziv()" href="#">+צור תקציב חדש</a>
@@ -26,13 +26,13 @@
             <label class="TextBold"> כמות:</label>
         </div>
         <div class="col-md-3">
-            <input id="inputKamut" style="width: 100px" onfocus="this.select();" maxlength="4"   class="styleTBSearch GeneralText TextBoxRO" />
+            <input id="inputKamut" type="number"  onkeypress="return isNumberKey(event);" disabled="disabled" style="width: 100px" onfocus="this.select();" maxlength="4"   class="styleTBSearch GeneralText TextBoxRO" />
         </div>
         <div class="col-md-1">
             <label class="TextBold"> הנמקה:</label>
         </div>
         <div class="col-md-6">
-            <textarea id="inputReson" placeholder='רשום הנמקה לחלוקת תקציב...' style="width:350px;height:120px" maxlength="200" spellcheck="false" autofocus></textarea>
+            <textarea id="inputReson" disabled="disabled"  placeholder='רשום הנמקה לחלוקת תקציב...' style="width:350px;height:120px" maxlength="200" spellcheck="false" autofocus></textarea>
         </div>
 
     </div>
@@ -41,21 +41,58 @@
     
 </div>
 <div style="float:left">
-    <button id="btnAuto" type="submit" value="עדכן תקציב" style="width:100px" class="PurpleButton">עדכן תקציב</button>
+    <button id="btnAuto" value="עדכן תקציב" style="width:100px" class="PurpleButton" onclick="AddBudgetAjax()">עדכן תקציב</button>
 </div>
-}
+
 
 
 <script>
-    function AddBudget() {
+
+    function EnableFields() {
+       // debugger;
+       // var model = @Html.Raw(Json.Encode(Model));
+        var selectMitkan = $('#KodMitkan')[0].selectedIndex;
+        var selectTakziv = $('#KodTakziv')[0].selectedIndex;
+       
+        if (selectMitkan != 0 && selectTakziv != 0)
+        {
+            $("#inputKamut").prop('disabled', false);
+            $("#inputReson").prop('disabled',false);
+        }
+        
+    }
+    function AddBudgetAjax() {
+
+        if (InsertAllFields()) {
+            var selectMitkan = $('#KodMitkan')[0].value;
+            var selectTakziv = $('#KodTakziv')[0].value;
+            var inputReson = $("#inputReson").val();
+            var kamutVal = $("#inputKamut").val();
+
+            var data = { Mitkan: selectMitkan, Takziv: selectTakziv, Kamut: kamutVal, Comment: inputReson };
+            $.post("/Changes/SaveBudget", data, function (res) {
+                AlertMessage("תקציב נוסף בהצלחה")
+                RefreshGridChanges();
+                $("#dialog-change").dialog("close");
+            });
+        }
+        else {
+            AlertMessage("חובה לעדכן את כל השדות", 150, 300);
+            return false;
+        }
+    }
+
+    function InsertAllFields() {
+        var selectMitkan = $('#KodMitkan')[0].selectedIndex;
+        var selectTakziv = $('#KodTakziv')[0].selectedIndex;
         var inputReson = $("#inputReson").val();
         var kamut = $("#inputKamut").val();
-        if (inputReson == "" || kamut == "" || +kamut==0) {
-            AlertMessage("יש למלא את כל הנתונים", 150, 300);
+        if (selectMitkan == 0 || selectTakziv==0 || inputReson == "" || kamut == "" || +kamut == 0) { 
             return false;
         }
         else {
-            AddBudgetNew(@Html.Raw(Json.Encode(Model)) );
+            return true;
+           // AddBudgetNew(@Html.Raw(Json.Encode(Model)) );
         }
 
 

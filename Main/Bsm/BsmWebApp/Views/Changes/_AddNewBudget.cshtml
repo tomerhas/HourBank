@@ -5,13 +5,13 @@
             <label class="TextBold"> כמות:</label>
         </div>
         <div class="col-md-3">
-            <input id="inputKamut" style="width: 100px" onfocus="this.select();" maxlength="3" class="styleTBSearch GeneralText TextBoxRO" />
+            <input id="inputKamutNew" style="width: 100px" onfocus="this.select();" onkeypress="return isNumberKey(event);"  maxlength="3" class="styleTBSearch GeneralText TextBoxRO" />
         </div>
         <div class="col-md-2">
             <label class="TextBold"> שם תקציב:</label>
         </div>
         <div class="col-md-5">
-            <input id="inputName" style="width: 250px" onfocus="this.select();" maxlength="200" class="styleTBSearch GeneralText TextBoxRO" />
+            <input id="inputName" style="width: 250px" onfocus="this.select();" onblur="SetNumTakziv();" maxlength="40" class="styleTBSearch GeneralText TextBoxRO" />
           </div>
         
     </div>
@@ -22,13 +22,13 @@
             <label class="TextBold"> מספר תקציב:</label>
         </div>
         <div class="col-md-3">
-            <input id="inputTakziv" style="width: 100px" disabled onfocus="this.select();" maxlength="4"  class="styleTBSearch GeneralText TextBoxRO" />
+            <input id="inputTakziv" style="width: 100px;background-color:lightgrey" readonly="readonly" onfocus="this.select();" maxlength="4"  class="styleTBSearch GeneralText TextBoxRO" />
         </div>
         <div class="col-md-1">
             <label class="TextBold"> הנמקה:</label>
         </div>
         <div class="col-md-6">
-            <textarea id="inputReson" placeholder='רשום הנמקה לחלוקת תקציב...' style="width:350px;height:120px" maxlength="200" spellcheck="false" autofocus></textarea>
+            <textarea id="inputResonNew" placeholder='רשום הנמקה ליצירת תקציב...' style="width:350px;height:120px" maxlength="200" spellcheck="false" autofocus></textarea>
         </div>
 
     </div>
@@ -38,17 +38,46 @@
 </div>
 
 <div style="float:left">
-    <button id="btnAuto" value="צור תקציב" style="width:100px" class="PurpleButton" onclick="AddBudget();">צור תקציב</button>
+    <button id="btnAuto" value="צור תקציב" style="width:100px" class="PurpleButton" onclick="AddNewBudget();">צור תקציב</button>
 </div>
 
 <script>
-    function AddBudget() {
-        var inputReson = $("#inputReson").val();
-        var kamut = $("#inputKamut").val();
-        if (inputReson == "" || kamut == "" || +kamut==0) {
-            AlertMessage("יש למלא את כל הנתונים", 150, 300);
+    function SetNumTakziv() {
+        $.post("/Changes/GetNextTakzivNumber", function (res) {
+            $("#inputTakziv").val(res);
+        });
+    }
+    function AddNewBudget() {
+
+        if (InsertAllFields()) {
+            
+            var NameTakziv = $("#inputName").val();
+            var KamutTakziv = $("#inputKamutNew").val();
+            var inputReson = $("#inputResonNew").val();
+            var MisparTakziv = $("#inputTakziv").val();
+            var data = { Name: NameTakziv, Kamut: KamutTakziv, Takziv: MisparTakziv, Comment: inputReson };
+            $.post("/Changes/SaveNewBudget", data, function (res) {
+                AlertMessage("תקציב נוצר בהצלחה", 170, 300)
+                $("#dialog-new-budget").dialog("close");
+            });
+        }
+        else {
+            AlertMessage("חובה לעדכן את כל השדות", 150, 300);
             return false;
-        }   
+        }
+    }
+
+    function InsertAllFields() {
+        var Name = $("#inputName").val();
+        var Kamut = $("#inputKamutNew").val();
+        var inputReson = $("#inputResonNew").val();
+        var Takziv = $("#inputTakziv").val();
+        if (Name.trim() == '' || Kamut.trim() == '' || inputReson.trim() == '' || Takziv.trim() == '') {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
 </script>

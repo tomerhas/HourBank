@@ -19,6 +19,8 @@ namespace BsmBL.DAL
         private const string cfunGgetShaotNosafotMeshek = "PKG_BUDGET.fun_get_shaot_nosafot_meshek";
         private const string cProGetEmployeesDetailsForMitkan = "PKG_BUDGET.GetEmployeesDetailsForMitkan";
         private const string cFunSaveEmployeeBudgets = "PKG_BUDGET.fun_save_employee_Michsot";
+        private const string cFunGetFullBudget = "PKG_BUDGET.fun_get_full_budget_mitkan";
+        private const string cProSaveBudgetLeft = "PKG_BUDGET.pro_update_budget_left";
         private IUnityContainer _container;
 
         public BudgetDal(IUnityContainer container)
@@ -114,6 +116,45 @@ namespace BsmBL.DAL
 
                 oDal.ExecuteSP(cFunSaveEmployeeBudgets);
                 return int.Parse(oDal.GetValParam("p_code").ToString());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public decimal GetFullBudgetToMitkan(int KodYechida, DateTime Month)
+        {
+            clDal oDal = _container.Resolve<clDal>();
+            DataTable dt = new DataTable();
+
+            try
+            {
+                oDal.AddParameter("p_result", ParameterType.ntOracleDecimal, null, ParameterDir.pdReturnValue);
+                oDal.AddParameter("p_kod_yechida", ParameterType.ntOracleInteger, KodYechida, ParameterDir.pdInput);
+                oDal.AddParameter("p_chodesh", ParameterType.ntOracleDate, Month, ParameterDir.pdInput);
+                oDal.ExecuteSP(cFunGetFullBudget);
+
+                return oDal.GetValParam("p_result") != "null" ? decimal.Parse(oDal.GetValParam("p_result").ToString()) : 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void SaveBudgetLeft(int p_kod_yechida, DateTime p_chodesh, int p_user)
+        {
+            clDal oDal = _container.Resolve<clDal>();
+            DataTable dt = new DataTable();
+
+            try
+            {//מחזיר נתוני עובד: 
+                oDal.AddParameter("p_kod_yechida", ParameterType.ntOracleInteger, p_kod_yechida, ParameterDir.pdInput);
+                oDal.AddParameter("p_chodesh", ParameterType.ntOracleDate, p_chodesh, ParameterDir.pdInput);
+                oDal.AddParameter("p_user", ParameterType.ntOracleInteger, p_user, ParameterDir.pdInput);
+
+                oDal.ExecuteSP(cProSaveBudgetLeft);
             }
             catch (Exception ex)
             {

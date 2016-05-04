@@ -59,7 +59,7 @@ namespace BsmWebApp.Controllers
                 }
                 else
                 {
-                    ViewBag.ErrorMessege = ".אינך מורשה להיכנס למערכת. לקבלת הרשאות אנא פנה למנהל מערכת";
+                    ViewBag.ErrorMessege = "אינך מורשה להיכנס למערכת. לבירור נא פנה למרכז התמיכה בטלפון 2466";
                     return View("Error");
                 //    return RedirectToAction("Index", "Error", new { error = " .אינך מורשה לצפות בדף זה. לקבלת הרשאות אנא פנה למנהל מערכת" });
                 }

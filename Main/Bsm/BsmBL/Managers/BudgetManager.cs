@@ -16,6 +16,7 @@ using Microsoft.Practices.Unity;
 using BsmCommon.Interfaces.DAL;
 using BsmCommon.UDT;
 using System.Diagnostics;
+using BsmCommon.DataModels.Changes;
 
 namespace BsmBL.Managers
 {
@@ -47,6 +48,7 @@ namespace BsmBL.Managers
         {
         
             Budget budget = null;
+          //  Budget budgetPrevMonth = null;
 
             using (var context = new BsmEntities())
             {
@@ -56,7 +58,8 @@ namespace BsmBL.Managers
                     var BudgetDal = _container.Resolve<IBudgetDal>();
                     budget.BudgetUsed = BudgetDal.GetShaotnosafotMeshek(KodYechida, Month);
                     budget.ShaotByMeafyen14 = GetSachMeafyen14(KodYechida, Month);
-                    budget.YitratTakzivToDivide = budget.BudgetVal - budget.ShaotByMeafyen14;
+                    budget.YitratTakzivToDivide = GetBudgetLeft(KodYechida, Month);// budget.BudgetVal - budget.ShaotByMeafyen14;
+                    budget.BudgetVal = BudgetDal.GetFullBudgetToMitkan(KodYechida, Month) + GetBudgetLeft(KodYechida, Month.AddMonths(-1));   
                 }
             }
 
@@ -64,7 +67,17 @@ namespace BsmBL.Managers
             return budget;
 
         }
-
+        public decimal GetBudgetLeft(int KodYechida, DateTime Month)
+        {
+            BudgetLeft budgetLeft = null;
+            using (var context = new BsmEntities())
+            {
+                budgetLeft = context.BudgetLeft.FirstOrDefault(x => x.KodYechida == KodYechida && x.Month == Month);
+                if (budgetLeft != null)
+                    return budgetLeft.BudgetLeftAmount;
+            }
+            return 0;
+        }
         public Budget GetBudget(int KodYechida, DateTime Month)
         {
             Budget budget = null;
@@ -397,10 +410,15 @@ namespace BsmBL.Managers
             var BudgetDal = _container.Resolve<IBudgetDal>();
             return BudgetDal.SaveEmployeeMichsot(KodYechida, userId,ocollMichsot);
         }
+
+        public void SaveBudgetLeft(int p_kod_yechida, DateTime p_chodesh, int p_user)
+        {
+            _container.Resolve<BudgetDal>().SaveBudgetLeft(p_kod_yechida, p_chodesh, p_user);
+        }
     }
 
-   
-   
+  
+
     //empDetails = context.PirteyOvdim.Where(x => x.YechidaIrgunit == KodYechida &&
     //                (
     //                    (Month >= x.TaarichMe && Month<=x.TaarichAd) ||

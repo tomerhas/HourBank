@@ -86,16 +86,59 @@ namespace BsmBL.Managers
         
         private BudgetChangesGrid CreateBudgetEmployeeFromDataRow(DataRow row)
         {
+            string erech;
             BudgetChangesGrid budgetChange = new BudgetChangesGrid();
            // budgetChange.Masad = int.Parse(row["MASAD"].ToString());
             budgetChange.Kod_Yechida = int.Parse(row["KOD_YECHIDA"].ToString());
             budgetChange.Teur_Yechida = row["TEUR_YECHIDA"].ToString();
-            budgetChange.Takziv = float.Parse(row["Takziv"].ToString());
-            budgetChange.Yitra = float.Parse(row["Yitra"].ToString());
-           // budgetChange.Miztaber = float.Parse(row["Miztaber"].ToString());
-           // budgetChange.Reason = row["REASON"].ToString();
+            budgetChange.Takziv = row["Takziv"].ToString()=="0"? "": row["Takziv"].ToString();
+            budgetChange.Yitra = row["Yitra"].ToString() == "0" ? "" : row["Yitra"].ToString();
+            erech = row["Niyud"].ToString() == "0" ? "" : row["Niyud"].ToString();
+            if (erech.IndexOf('-') > -1)
+                erech =string.Concat((int.Parse(erech) * (-1)).ToString(), "-");
+            budgetChange.Niyud = erech;// row["Niyud"].ToString() == "0" ? "" : row["Niyud"].ToString();  
+            erech = row["addrem"].ToString() == "0" ? "" : row["addrem"].ToString();
+            if (erech.IndexOf('-') > -1)
+                erech = string.Concat((int.Parse(erech) * (-1)).ToString(), "-");
+            budgetChange.AddRem = erech;// row["addrem"].ToString() == "0" ? "" : row["addrem"].ToString(); 
 
             return budgetChange;
         }
+
+
+        public void AddTakzivLeMitkan(int p_mitkan, DateTime p_chodesh, int p_id_takziv, decimal p_kamut, string p_reason, int p_user)
+        {
+            _container.Resolve<IChangesDal>().AddTakzivLeMitkan(p_mitkan, p_chodesh, p_id_takziv, p_kamut, p_reason, p_user);
+        }
+
+        public void AddNewTakziv(int p_id_takziv, string p_teur, decimal p_kamut, string p_reason, int p_user)
+        {
+            _container.Resolve<IChangesDal>().AddNewTakziv(p_id_takziv, p_teur, p_kamut, p_reason, p_user);
+        }
+
+        public void SaveChangeMitkan(int p_mitkan, DateTime p_chodesh, decimal p_erech, string p_reason, int p_user, int p_type)
+        {
+            _container.Resolve<IChangesDal>().SaveChangeMitkan(p_mitkan, p_chodesh, p_erech, p_reason, p_user, p_type);
+        }
+
+        public void SaveReductionMitkan(int p_mitkan, DateTime p_chodesh, decimal p_kamut, string p_reason, int p_user)
+        {
+            _container.Resolve<IChangesDal>().SaveReductionMitkan(p_mitkan, p_chodesh, p_kamut, p_reason, p_user);
+        }
+
+        public int GetNextTakzivNumber()
+        {
+            int num = 0;
+            BudgetSpecial bs;
+            using (var context = new BsmEntities())
+            {
+                bs = context.BudgetSpecial.OrderByDescending(X => X.MisparTakziv).FirstOrDefault();
+                if (bs != null)
+                    num = bs.MisparTakziv + 1;
+            }
+            return num;
+        }
+
+      
     }
 }

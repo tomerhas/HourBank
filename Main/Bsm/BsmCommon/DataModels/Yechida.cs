@@ -20,5 +20,6 @@ namespace BsmCommon.DataModels
         public string SugYechida { get; set; }
         [Column("KOD_EZOR")]
         public int KodEzor { get; set; }
+
     }
 }

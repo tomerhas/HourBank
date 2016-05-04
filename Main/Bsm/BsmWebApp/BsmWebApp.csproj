@@ -179,6 +179,7 @@
     <Compile Include="ViewModels\Budgets\UserInMitkanVM.cs" />
     <Compile Include="ViewModels\Budgets\UsersInMitkanViewModel.cs" />
     <Compile Include="ViewModels\Changes\AddBudgetViewModel.cs" />
+    <Compile Include="ViewModels\Changes\ChangesCachedViewModel.cs" />
     <Compile Include="ViewModels\Changes\ChangesMainViewModel.cs" />
     <Compile Include="ViewModels\Errors\ErrorViewModel.cs" />
     <Compile Include="ViewModels\Home\HomeViewModel.cs" />

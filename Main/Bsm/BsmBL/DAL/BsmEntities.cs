@@ -33,6 +33,7 @@ namespace BsmBL.DAL
         public DbSet<HarshaatMasach> HarshaatMasach { get; set; }
         public DbSet<BudgetSpecial> BudgetSpecial { get; set; }
         public DbSet<BudgetSpecialYechida> BudgetSpecialYechida { get; set; }
+        public DbSet<BudgetLeft> BudgetLeft { get; set; }
         public DbSet<LogItem> Logs { get; set; }
      
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -47,6 +48,8 @@ namespace BsmBL.DAL
             modelBuilder.Entity<HarshaatMasach>().ToTable("TB_HARSHAOT_MASACH", schemaName);
             modelBuilder.Entity<BudgetSpecial>().ToTable("TB_BUDGET_SPECIAL", schemaName);
             modelBuilder.Entity<BudgetSpecialYechida>().ToTable("TB_BUDGET_SPECIAL_YECHIDA", schemaName);
+            modelBuilder.Entity<BudgetLeft>().ToTable("TB_BUDGET_LEFT", schemaName);
+            
             modelBuilder.Entity<LogItem>().ToTable("TB_LOG", schemaName);
         }
     }

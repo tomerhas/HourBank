@@ -179,12 +179,17 @@ namespace BsmWebApp.Controllers
                 });
 
 
-
                 var budget = _container.Resolve<IBudgetManager>();
                 var code = budget.SaveEmployeeMichsot(KodYechida, meadken, oCollBudgetMichsa);
-                 if(code == 1)
-                     ModelState.AddModelError(string.Empty, "ארעה שגיאה בשמירת נתונים, אנא פנה למנהל מערכת");
-                 else ModelState.AddModelError(string.Empty, "הנתונים נשמרו בהצלחה");
+               
+
+                if (code == 1)
+                    ModelState.AddModelError(string.Empty, "ארעה שגיאה בשמירת נתונים, אנא פנה למנהל מערכת");
+                else
+                {
+                    budget.SaveBudgetLeft(KodYechida, month, meadken);
+                    ModelState.AddModelError(string.Empty, "הנתונים נשמרו בהצלחה");
+                }
                return Json(employees.ToDataSourceResult(request, ModelState), JsonRequestBehavior.AllowGet);
                  }
             catch(Exception ex)

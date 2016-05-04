@@ -20,7 +20,7 @@ namespace BsmCommon.DataModels.Changes
         public int MisparTakziv { get; set; }
 
         [Column("AMOUNT")]
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
 
         [Column("REASON")]
         public string Reasson { get; set; }
