@@ -13,6 +13,7 @@ namespace BsmBL.DAL
     public class ChangesDal : IChangesDal
     {
         private const string cProGetChanges = "PKG_CHANGES.PRO_Get_changes";
+        private const string cProGetBudgetSpecial = "PKG_CHANGES.pro_get_takzivim_details";
         private const string cProAddTakzivToMitkan = "PKG_CHANGES.PRO_ADD_TAKZIV_TO_MITKAN";
         private const string cProAddNewTakziv = "PKG_CHANGES.PRO_ADD_NEW_TAKZIV";
         private const string cProSaveChangeMitkan = "PKG_CHANGES.pro_save_change_mitkan";
@@ -53,7 +54,24 @@ namespace BsmBL.DAL
                 throw ex;
             }
         }
+        
+        public DataTable GetBudgetSpecial()
+        {
+            clDal oDal = _container.Resolve<clDal>();
+            DataTable dt = new DataTable();
 
+            try
+            {//מחזיר נתוני עובד: 
+                oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(cProGetBudgetSpecial, dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public void AddTakzivLeMitkan(int p_mitkan,DateTime p_chodesh, int p_id_takziv, decimal p_kamut, string p_reason,int p_user)
         {
             clDal oDal = _container.Resolve<clDal>();

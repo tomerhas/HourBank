@@ -74,13 +74,23 @@ namespace BsmBL.Managers
 
         public List<BudgetSpecial> GetBudgetSpecial()
         {
-            using (var context = new BsmEntities())
+            List<BudgetSpecial> list = new List<BudgetSpecial>();
+            BudgetSpecial bs;
+            var dt = _container.Resolve<IChangesDal>().GetBudgetSpecial();
+            foreach (DataRow  row in dt.Rows)
             {
-                return context.BudgetSpecial.ToList();
-                //var sql = string.Format("select * from TB_BUDGET_SPECIAL");
-                //var res = context.Database.SqlQuery<BudgetSpecial>(sql).OrderBy(e => e.MisparTakziv);
-                //return res.ToList();
+                bs = new BudgetSpecial();
+                bs.MisparTakziv=int.Parse(row["MISPAR_TAKZIV"].ToString());
+                bs.Description = row["DESCRIPTION"].ToString();
+                bs.Amount= int.Parse(row["AMOUNT"].ToString());
+                bs.Reason = row["REASON"].ToString(); 
+                list.Add(bs);
             }
+            return list;
+            //using (var context = new BsmEntities())
+            //{
+            //    return context.BudgetSpecial.ToList();
+            //}
         }
 
         

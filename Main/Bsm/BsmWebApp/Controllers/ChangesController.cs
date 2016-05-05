@@ -156,6 +156,15 @@ namespace BsmWebApp.Controllers
         private List<Yechida> GetListYechidotForCombo()
         {
             List<Yechida> yechidot = CurrentUser.Yechidot;
+            var month = ((GeneralObject)Session["GeneralDetails"]).CurMonth;
+            decimal shaot;
+            var budget= _container.Resolve<IBudgetManager>();
+            foreach (Yechida y in yechidot)
+            {
+                shaot = budget.GetBudgetLeftForMitkan(y.KodYechida, month);
+                if(shaot!=0)
+                    y.TeurYechida = y.TeurYechida + "(יתרת שעות " + shaot + ")";
+            }
             Yechida yechida = new Yechida();
             yechida.KodHevra = 0;
             yechida.KodYechida = 0;
@@ -172,10 +181,10 @@ namespace BsmWebApp.Controllers
             var ManagerChange = _container.Resolve<IChangesManager>();
             var bs = ManagerChange.GetBudgetSpecial();
 
-            foreach (BudgetSpecial b in bs)
-            {
-                b.Description = b.Description + "(" + b.MisparTakziv + ")";
-            }
+            //foreach (BudgetSpecial b in bs)
+            //{
+            //    b.Description = b.Description + "(" + b.MisparTakziv + ")";
+            //}
 
             BudgetSpecial takziv = new BudgetSpecial();
             takziv.MisparTakziv = 0;

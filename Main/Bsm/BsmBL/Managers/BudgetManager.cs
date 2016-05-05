@@ -415,6 +415,17 @@ namespace BsmBL.Managers
         {
             _container.Resolve<BudgetDal>().SaveBudgetLeft(p_kod_yechida, p_chodesh, p_user);
         }
+
+        public decimal GetBudgetLeftForMitkan(int p_kod_yechida, DateTime p_chodesh)
+        {
+            using (var db = new BsmEntities())
+            {
+                var left = db.BudgetLeft.FirstOrDefault(f => f.KodYechida == p_kod_yechida && f.Month == p_chodesh);
+                if (left != null)
+                    return left.BudgetLeftAmount;
+            }
+            return 0;
+        }
     }
 
   

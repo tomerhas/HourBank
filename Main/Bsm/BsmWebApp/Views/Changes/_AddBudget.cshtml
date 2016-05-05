@@ -7,15 +7,15 @@
             <label class="TextBold"> מתקן מקבל:</label>
        </div>
         <div class="col-md-3">
-            @Html.DropDownListFor(m => Model.Yechida.KodYechida, Model.Yechidot, new {@id= "KodMitkan", @onchange = "EnableFields();", @class = "ddl", style = "width: 180px;height: 29px;" })
+            @Html.DropDownListFor(m => Model.Yechida.KodYechida, Model.Yechidot, new {@id= "KodMitkan", @onchange = "EnableFields();", @class = "ddl", style = "width: 200px;height: 29px;" })
         </div>
         <div class="col-md-1">
             <label class="TextBold"> תקציב:</label>
        </div>
-        <div class="col-md-3">
-            @Html.DropDownListFor(m => Model.budget.MisparTakziv, Model.Budgets, new { @id = "KodTakziv",@onchange = "EnableFields();", @class = "ddl", style = "width: 180px;height: 29px;" })
+        <div class="col-md-4">
+            @Html.DropDownListFor(m => Model.budget.MisparTakziv, Model.Budgets, new { @id = "KodTakziv",@onchange = "EnableFields();", @class = "ddl", style = "width: 250px;height: 29px;" })
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <a id="addNew" class="PurpleTextBoldLink pointer" onclick="DisplayAddNewTakziv()" href="#">+צור תקציב חדש</a>
         </div>
      </div>
@@ -26,7 +26,7 @@
             <label class="TextBold"> כמות:</label>
         </div>
         <div class="col-md-3">
-            <input id="inputKamut" type="number"  onkeypress="return isNumberKey(event);" disabled="disabled" style="width: 100px" onfocus="this.select();" maxlength="4"   class="styleTBSearch GeneralText TextBoxRO" />
+            <input id="inputKamut" type="number"  onkeypress="return isNumberKey(event);" onblur="CheckAmount();" disabled="disabled" style="width: 100px" onfocus="this.select();" maxlength="4"   class="styleTBSearch GeneralText TextBoxRO" />
         </div>
         <div class="col-md-1">
             <label class="TextBold"> הנמקה:</label>
@@ -47,6 +47,33 @@
 
 
 <script>
+    $(document).ready(function () {
+        $('#KodTakziv option').each(function (i, item) {
+            if (item.text.indexOf(')') > -1) {
+                var split = item.value.split(')')[0].split(' ');
+                var num = split[split.length - 1];
+                if (num == 0)
+                    item.disabled = true;
+            }
+            else {
+                if (item.value != 0)
+                    item.disabled = true;
+            }
+        });
+
+        $('#KodMitkan option').each(function (i, item) {
+            if (item.text.indexOf(')') > -1) {
+                var split = item.value.split(')')[0].split(' ');
+                var num = split[split.length - 1];
+                if (num == 0)
+                    item.disabled = true;
+            }
+            else {
+                if (item.value !=0 )
+                    item.disabled = true;
+            }
+        });
+    });
 
     function EnableFields() {
        // debugger;
@@ -61,6 +88,25 @@
         }
         
     }
+
+    function CheckAmount() {
+        var kamut = $("#inputKamut").val();
+        if (kamut != "") {
+            var selectTakziv = $('#KodTakziv')[0].selectedIndex;
+            var takziv = $("#KodTakziv option:selected").text();
+            var split = takziv.split(')')[0].split(' ');
+            var num = split[split.length - 1];
+
+            if (kamut > num) {
+                $("#btnAuto").prop('disabled', true);
+                AlertMessage("לא ניתן לעדכן מעבר ליתרה", 150, 300);
+            }
+            else
+                $("#btnAuto").prop('disabled', false);
+        }
+
+     
+    }
     function AddBudgetAjax() {
 
         if (InsertAllFields()) {
@@ -71,7 +117,7 @@
 
             var data = { Mitkan: selectMitkan, Takziv: selectTakziv, Kamut: kamutVal, Comment: inputReson };
             $.post("/Changes/SaveBudget", data, function (res) {
-                AlertMessage("תקציב נוסף בהצלחה")
+                AlertMessage("תקציב נוסף בהצלחה", 150, 300);
                 RefreshGridChanges();
                 $("#dialog-change").dialog("close");
             });

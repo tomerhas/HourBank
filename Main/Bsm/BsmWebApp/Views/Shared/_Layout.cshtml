@@ -140,7 +140,7 @@
 
         function DisplaySessionWarning() {
             console.log("Dsiplaying warning message to user before redirect");
-            var message = "המערכת עומדת להתנתק. האם תרצה להמשיך?";
+            var message = "זמן ההתחברות עומד להסתיים. האם תרצה להמשיך?";
             $("#dialog-session").html(message);
             $("#dialog-session").dialog({
                 resizable: false,
@@ -160,7 +160,7 @@
 
             });
             $("#dialog-session").parent("div").attr("id", "dlgSes");
-            responedToWarningTimer = setTimeout(onNoRespondToWarning, 10000);
+            responedToWarningTimer = setTimeout(onNoRespondToWarning, 30000);
         }
 
         function onNoRespondToWarning() {

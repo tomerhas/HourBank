@@ -319,9 +319,10 @@ hr {
 
 
 .PurpleButton:disabled {
-    background-color: #e2e7e7;
+    background-color:grey
     text-decoration:none
 }
+
 
 .DisabledExec {
     border-radius:  3px;
