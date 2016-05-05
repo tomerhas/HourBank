@@ -86,7 +86,7 @@ public class ChkAutoComplete extends Base {
 		budget.searchAutoComplete.sendKeys("אאאא");
 		budget.btnAutoComplete.click();
 		WebElement element = driver.findElement(By.id("dialog-message"));
-		Assert.assertEquals(element.getText(),"מ.א/שם זה לא קיים למתקן זה");
+		Assert.assertEquals(element.getText(),"מ.א/שם לא קיים למתקן זה");
 		budget.btnAccept.click();
 		
 		
@@ -161,7 +161,7 @@ public class ChkAutoComplete extends Base {
 		budget.searchAutoComplete.sendKeys("0");
 		budget.btnAutoComplete.click();
 		WebElement element = driver.findElement(By.id("dialog-message"));
-		Assert.assertEquals(element.getText(),"מ.א/שם זה לא קיים למתקן זה");
+		Assert.assertEquals(element.getText(),"מ.א/שם לא קיים למתקן זה");
 		budget.btnAccept.click();
 		
 		

@@ -19,6 +19,7 @@ import egged.hourbank.utils.Base;
 @Listeners ({egged.hourbank.listener.TestListener.class})
 public class AutoAllocation extends Base {
 	
+	
 	public WebDriver driver;
 	int i;
 	int j;
@@ -28,7 +29,7 @@ public class AutoAllocation extends Base {
 	String nametd;
 	String actualtdname;
 	String plantdname;
-	String plantdname1;
+	
 	
 	
 	
