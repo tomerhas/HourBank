@@ -237,7 +237,7 @@
 
     $(function(){
         $("#dialog-change").dialog({
-            autoOpen: false, width: 950, height:370,modal:true
+            autoOpen: false, width: 1050, height:370,modal:true
         });
         $("#dialog-new-budget").dialog({
             autoOpen: false, width: 800, height:350,modal:true
@@ -270,16 +270,28 @@
         //    $("#dialog-change").dialog("open");
         //});
 
+
+        //dialog.dialog({
+        //    title: title,
+        //    open: function( event, ui ) {
+        //        jQuery.ajaxSetup({ cache: false });
+        //    },
+        //    load:(url,function(){
+        //        $("#dialog-change").dialog("open");
+        //    })
+        //});
+   
+
         $("#dialog-change").html("")
         .dialog({
             open: function( event, ui ) {
                 jQuery.ajaxSetup({ cache: false });
             }
-        },"title",title)
+        })
         .load(url,function(){
             $("#dialog-change").dialog("open");
         });
-
+      
     }
 
     function RefreshGridChanges()

@@ -1,19 +1,18 @@
-﻿@model BsmWebApp.ViewModels.Changes.AddBudgetViewModel
-@using (Html.BeginForm())
-{
+﻿@model BsmWebApp.ViewModels.Changes.NiyudBudgetViewModel
+
     <div>
         <div class="row">
             <div class="col-md-2">
                 <label class="TextBold"> מתקן מקבל:</label>
             </div>
             <div class="col-md-4">
-                @Html.DropDownListFor(m => Model.Yechida.KodYechida, Model.Yechidot, new { @class = "ddl", style = "width:200px;height: 29px;" })
+                @Html.DropDownListFor(m => Model.YechidaIn.KodYechida, Model.YechidotIn, new { @id = "KodMitkanIn", @onchange = "EnableFields();", @class = "ddl", style = "width:250px;height: 29px;" })
             </div>
             <div class="col-md-2">
                 <label class="TextBold"> מתקן נותן:</label>
             </div>
             <div class="col-md-4">
-                @Html.DropDownListFor(m => Model.Yechida.KodYechida, Model.Yechidot, new { @class = "ddl", style = "width: 200px;height: 29px;" })
+                @Html.DropDownListFor(m => Model.YechidaOut.KodYechida, Model.YechidotOut, new { @id = "KodMitkanOut", @onchange = "EnableFields();", @class = "ddl", style = "width: 250px;height: 29px;" })
             </div>
         </div>
         <br />
@@ -23,13 +22,13 @@
                 <label class="TextBold"> כמות:</label>
             </div>
             <div class="col-md-3">
-                <input id="inputKamut" style="width: 100px" onfocus="this.select();" maxlength="4" class="styleTBSearch GeneralText TextBoxRO" />
+                <input id="inputKamut" style="width: 100px" onfocus="this.select();" disabled="disabled"  onkeypress="return isNumberKey(event);" onblur="CheckAmount();" maxlength="4" class="styleTBSearch GeneralText TextBoxRO" />
             </div>
             <div class="col-md-1">
                 <label class="TextBold"> הנמקה:</label>
             </div>
             <div class="col-md-6">
-                <textarea id="inputReson" placeholder='רשום הנמקה לניוד ...' style="width:350px;height:135px" maxlength="200" spellcheck="false" autofocus></textarea>
+                <textarea id="inputReson" placeholder='רשום הנמקה לניוד ...' disabled="disabled"  style="width:350px;height:135px" maxlength="200" spellcheck="false" autofocus></textarea>
             </div>
 
         </div>
@@ -37,24 +36,95 @@
         <br />
 
     </div>
-}
+
 <div style="float:left">
-    <button id="btnAuto" value="עדכן תקציב" style="width:100px" class="PurpleButton" onclick="AddBudget();">עדכן תקציב</button>
+    <button id="btnAuto" value="עדכן תקציב" style="width:100px" class="PurpleButton" onclick="ChangeBudgetAjax();">עדכן תקציב</button>
 </div>
 
 <script>
-    function AddBudget() {
+   $(document).ready(function () {
+       $('#KodMitkanOut option').each(function (i, item) {
+            if (item.text.indexOf(')') > -1) {
+                var split = item.value.split(')')[0].split(' ');
+                var num = split[split.length - 1];
+                if (num == 0)
+                    item.disabled = true;
+            }
+            else {
+                if (item.value !=0 )
+                    item.disabled = true;
+            }
+        });
+    });
+
+    function EnableFields() {
+       // debugger;
+        var selectMitkanIn = $('#KodMitkanIn')[0].selectedIndex;
+        var selectMitkanOut = $('#KodMitkanOut')[0].selectedIndex;
+
+        if (selectMitkanIn != 0 && selectMitkanOut != 0)
+        {
+            $("#inputKamut").prop('disabled', false);
+            $("#inputReson").prop('disabled',false);
+        }
+        else {
+            $("#inputKamut").prop('disabled', true);
+            $("#inputReson").prop('disabled', true);
+        }
+
+    }
+
+    function CheckAmount() {
+        var kamut = $("#inputKamut").val();
+        if (kamut != "") {
+         //   var selectTakziv = $('#KodTakziv')[0].selectedIndex;
+            var takziv = $("#KodMitkanOut option:selected").text();
+            var split = takziv.split(')')[0].split(' ');
+            var num = split[split.length - 1];
+
+            if (+kamut > +num) {
+                $("#btnAuto").prop('disabled', true);
+                AlertMessage("לא ניתן לעדכן מעבר ליתרה", 150, 300);
+            }
+            else
+                $("#btnAuto").prop('disabled', false);
+        }
+    }
+
+    function ChangeBudgetAjax() {
+
+        if (InsertAllFields()) {
+            var selectMitkanIn = $('#KodMitkanIn')[0].value;
+            var selectMitkanOut = $('#KodMitkanOut')[0].value;
+            var inputReson = $("#inputReson").val();
+            var kamutVal = $("#inputKamut").val();
+
+            var data = { Mitkan: selectMitkanIn, MitkanOut: selectMitkanOut, Kamut: kamutVal, Comment: inputReson };
+            $.post("/Changes/SaveNiyudBudget", data, function (res) {
+                AlertMessage("נתונים עודכנו בהצלחה", 150, 300);
+                RefreshGridChanges();
+                $("#dialog-change").dialog("close");
+            });
+        }
+        else {
+            AlertMessage("חובה לעדכן את כל השדות", 150, 300);
+            return false;
+        }
+    }
+
+    function InsertAllFields() {
+        var selectMitkanIn = $('#KodMitkanIn')[0].selectedIndex;
+        var selectMitkanOut = $('#KodMitkanOut')[0].selectedIndex;
         var inputReson = $("#inputReson").val();
         var kamut = $("#inputKamut").val();
-        if (inputReson == "" || kamut == "" || +kamut==0) {
-            AlertMessage("יש למלא את כל הנתונים", 150, 300);
+        if (selectMitkanIn == 0 || selectMitkanOut == 0 || inputReson == "" || kamut == "" || +kamut == 0) {
             return false;
         }
         else {
-            AddBudgetNew(@Html.Raw(Json.Encode(Model)) );
+            return true;
+            // AddBudgetNew(@Html.Raw(Json.Encode(Model)) );
         }
 
 
     }
-
 </script>

@@ -22,7 +22,7 @@ namespace BsmWebApp
     {
         protected void Application_Start()
         {
-            Session["GeneralDetails"] = null;
+          //  Session["GeneralDetails"] = null;
             foreach (System.Collections.DictionaryEntry entry in HttpContext.Current.Cache)
             {
                 EventLog.WriteEntry("kds", "Application_Start");

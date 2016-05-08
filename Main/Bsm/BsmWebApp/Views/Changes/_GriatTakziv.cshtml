@@ -1,19 +1,21 @@
-﻿@model BsmWebApp.ViewModels.Changes.AddBudgetViewModel
-@using (Html.BeginForm())
-{
+﻿@model BsmWebApp.ViewModels.Changes.GriaBudgetViewModel
+
     <div>
         <div class="row">
             <div class="col-md-2">
                 <label class="TextBold"> שם המתקן:</label>
             </div>
-            <div class="col-md-5">
-                @Html.DropDownListFor(m => Model.Yechida.KodYechida, Model.Yechidot, new { @class = "ddl", style = "width: 200px;height: 29px;" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(m => Model.Yechida.KodYechida, Model.Yechidot, new { @id = "KodMitkan", @onchange = "EnableFields();", @class = "ddl", style = "width: 350px;height: 29px;" })
             </div>
             <div class="col-md-1">
                 <label class="TextBold"> כמות:</label>
             </div>
-            <div class="col-md-4">
-                <input id="inputKamut" style="width: 100px" onfocus="this.select();" maxlength="4"  class="styleTBSearch GeneralText TextBoxRO" />
+            <div class="col-md-2">      
+                <input id="inputKamut" style="width: 100px" onkeypress="return isNumberKey(event);" onblur="CheckAmount();"  disabled="disabled" onfocus="this.select();" maxlength="4"  class="styleTBSearch GeneralText TextBoxRO" />
+            </div>
+            <div class="col-md-1">
+               
             </div>
         </div>
         <br />
@@ -23,7 +25,7 @@
                 <label class="TextBold"> הנמקה:</label>
             </div>
             <div class="col-md-10">
-                <textarea id="inputReson" placeholder='רשום הנמקה לגרעית תקציב ...' style="width:500px;height:120px" maxlength="200" spellcheck="false" autofocus></textarea>
+                <textarea id="inputReson" disabled="disabled" placeholder='רשום הנמקה לגריעת תקציב ...' style="width:700px;height:120px" maxlength="200" spellcheck="false" autofocus></textarea>
             </div>
 
         </div>
@@ -31,21 +33,90 @@
         <br />
 
     </div>
-}
+
 <div style="float:left">
-    <button id="btnAuto" value="עדכן תקציב" style="width:100px" class="PurpleButton" onclick="AddBudget();">עדכן תקציב</button>
+    <button id="btnGria" value="עדכן תקציב" style="width:100px" class="PurpleButton" onclick="ReductionBudgetAjax();">עדכן תקציב</button>
 </div>
 
 <script>
-    function AddBudget() {
+
+    $(document).ready(function () {
+        $('#KodMitkan option').each(function (i, item) {
+            if (item.text.indexOf(')') > -1) {
+                var split = item.value.split(')')[0].split(' ');
+                var num = split[split.length - 1];
+                if (+num == 0)
+                    item.disabled = true;
+            }
+            else {
+                if (item.value != 0)
+                    item.disabled = true;
+            }
+        });
+    });
+
+    function EnableFields() {
+        var selectMitkan = $('#KodMitkan')[0].selectedIndex;
+
+        if (selectMitkan != 0) {
+            $("#inputKamut").prop('disabled', false);
+            $("#inputReson").prop('disabled', false);
+        }
+        else {
+            $("#inputKamut").prop('disabled', true);
+            $("#inputReson").prop('disabled', true);
+        }
+
+    }
+
+    function CheckAmount() {
+        var kamut = $("#inputKamut").val();
+        if (kamut != "") {
+           // var selectTakziv = $('#KodMitkan')[0].selectedIndex;
+            var takziv = $("#KodMitkan option:selected").text();
+            var split = takziv.split(')')[0].split(' ');
+            var num = split[split.length - 1];
+
+            if (+kamut > +num) {
+                $("#btnGria").prop('disabled', true);
+                AlertMessage("לא ניתן לעדכן מעבר ליתרה", 150, 300);
+            }
+            else
+                $("#btnGria").prop('disabled', false);
+        }
+
+
+    }
+    function ReductionBudgetAjax() {
+
+        if (InsertAllFields()) {
+            var selectMitkan = $('#KodMitkan')[0].value;
+            var inputReson = $("#inputReson").val();
+            var kamutVal = $("#inputKamut").val();
+
+            var data = { Mitkan: selectMitkan, Kamut: kamutVal, Comment: inputReson };
+            $.post("/Changes/ReductionBudget", data, function (res) {
+                AlertMessage("נתונים עודכנו בהצלחה", 150, 300);
+                RefreshGridChanges();
+                $("#dialog-change").dialog("close");
+            });
+        }
+        else {
+            AlertMessage("חובה לעדכן את כל השדות", 150, 300);
+            return false;
+        }
+    }
+
+    function InsertAllFields() {
+        var selectMitkan = $('#KodMitkan')[0].selectedIndex;
         var inputReson = $("#inputReson").val();
         var kamut = $("#inputKamut").val();
-        if (inputReson == "" || kamut == "" || +kamut==0) {
-            AlertMessage("יש למלא את כל הנתונים", 150, 300);
+        if (selectMitkan == 0 || inputReson == "" || kamut == "" || +kamut == 0) {
             return false;
         }
         else {
-            AddBudgetNew(@Html.Raw(Json.Encode(Model)) );
+            return true;
+           // AddBudgetNew(@Html.Raw(Json.Encode(Model)) );
         }
 
 

@@ -181,6 +181,8 @@
     <Compile Include="ViewModels\Changes\AddBudgetViewModel.cs" />
     <Compile Include="ViewModels\Changes\ChangesCachedViewModel.cs" />
     <Compile Include="ViewModels\Changes\ChangesMainViewModel.cs" />
+    <Compile Include="ViewModels\Changes\GriaBudgetViewModel.cs" />
+    <Compile Include="ViewModels\Changes\NiyudBudgetViewModel.cs" />
     <Compile Include="ViewModels\Errors\ErrorViewModel.cs" />
     <Compile Include="ViewModels\Home\HomeViewModel.cs" />
     <Compile Include="ViewModels\LayoutViewModel.cs" />

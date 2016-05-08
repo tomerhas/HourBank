@@ -30,15 +30,15 @@ namespace BsmWebApp.Controllers
         {
 
             ChangesMainViewModel vmResult = new ChangesMainViewModel();// InitChangesVm();
-        
+
             vmResult.Filter = GetFilter();
             vmResult.Filter.ShowEzor = true;
             vmResult.Page = "Changes";
             return View(vmResult);
 
-          //**  ChangesMainViewModel vm = InitChangesVm();
-         
-          //**  return View(vm);
+            //**  ChangesMainViewModel vm = InitChangesVm();
+
+            //**  return View(vm);
         }
 
         //private ChangesMainViewModel InitChangesVm()
@@ -60,17 +60,17 @@ namespace BsmWebApp.Controllers
             ChangesMainViewModel vmResult = new ChangesMainViewModel();  //InitChangesVm();
 
             GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
-            vmResult.Changes = GetChangesShaotNosafot(vm.SelectedEzor, obj.CurMonth,CurrentUser.PirteyUser.Isuk, CurrentUser.PirteyUser.YechidaIrgunit);
-            ChangesCachedViewModel sessionVm = new ChangesCachedViewModel() { Changes = vmResult.Changes, SelectedEzor = vm.SelectedEzor, CurMonth = obj.CurMonth, Isuk = CurrentUser.PirteyUser.Isuk, YechidaIrgunit= CurrentUser.PirteyUser.YechidaIrgunit };
+            vmResult.Changes = GetChangesShaotNosafot(vm.SelectedEzor, obj.CurMonth, CurrentUser.PirteyUser.Isuk, CurrentUser.PirteyUser.YechidaIrgunit);
+            ChangesCachedViewModel sessionVm = new ChangesCachedViewModel() { Changes = vmResult.Changes, SelectedEzor = vm.SelectedEzor, CurMonth = obj.CurMonth, Isuk = CurrentUser.PirteyUser.Isuk, YechidaIrgunit = CurrentUser.PirteyUser.YechidaIrgunit };
 
             Session["ChangesGrid"] = sessionVm;
             vmResult.Filter = GetFilter();
             vmResult.Filter.ShowEzor = true;
-            vmResult.Filter.SelectedMonth = vm.SelectedMonth ;
+            vmResult.Filter.SelectedMonth = vm.SelectedMonth;
 
             if (DateTime.Now < vmResult.Filter.LastDateIdkunBank && CurrentUser.GetSugPeilutHatshaa("Changes") == eSugPeiluHarshaa.Update)
                 vmResult.IsMonthToEdit = true;
-            
+
             if (vmResult.Changes != null && vmResult.Changes.Count > 0)
             {
                 vmResult.ShouldDisplayMessage = 0;
@@ -87,7 +87,7 @@ namespace BsmWebApp.Controllers
         {
             var month = ((GeneralObject)Session["GeneralDetails"]).CurMonth;
             var ManagerChange = _container.Resolve<IChangesManager>();
-            ManagerChange.AddTakzivLeMitkan(vm.Mitkan, month, vm.Takziv,vm.Kamut,vm.Comment,CurrentUser.PirteyUser.MisparIshi);
+            ManagerChange.AddTakzivLeMitkan(vm.Mitkan, month, vm.Takziv, vm.Kamut, vm.Comment, CurrentUser.PirteyUser.MisparIshi);
 
             var budget = _container.Resolve<IBudgetManager>();
             budget.SaveBudgetLeft(vm.Mitkan, month, CurrentUser.PirteyUser.MisparIshi);
@@ -101,16 +101,53 @@ namespace BsmWebApp.Controllers
         }
 
         [HttpPost]
-        public void SaveNewBudget(SaveNewBudgetVM vm)
+        public void SaveNewBudget(SaveBudgetVM vm)
         {
             var ManagerChange = _container.Resolve<IChangesManager>();
-            ManagerChange.AddNewTakziv(vm.Takziv, vm.Name,vm.Kamut,vm.Comment, CurrentUser.PirteyUser.MisparIshi);
+            ManagerChange.AddNewTakziv(vm.Takziv, vm.Name, vm.Kamut, vm.Comment, CurrentUser.PirteyUser.MisparIshi);
         }
-        private List<BudgetChangesGrid> GetChangesShaotNosafot(int KodEzor, DateTime Month,int isuk , int KodMitkan)
+
+
+        [HttpPost]
+        public void SaveNiyudBudget(SaveBudgetVM vm)
         {
-           var ManagerChange = _container.Resolve<IChangesManager>();
-           var Changes = ManagerChange.GetChangesShaotNosafot(KodEzor, Month, isuk, KodMitkan);
-           return Changes;
+            var month = ((GeneralObject)Session["GeneralDetails"]).CurMonth;
+            var ManagerChange = _container.Resolve<IChangesManager>();
+            ManagerChange.SaveChangeMitkan(vm.Mitkan, month, vm.Kamut, vm.Comment, CurrentUser.PirteyUser.MisparIshi, (int)TypeChange.Add);
+            ManagerChange.SaveChangeMitkan(vm.MitkanOut, month, vm.Kamut, vm.Comment, CurrentUser.PirteyUser.MisparIshi, (int)TypeChange.Reduction);
+            var budget = _container.Resolve<IBudgetManager>();
+            budget.SaveBudgetLeft(vm.Mitkan, month, CurrentUser.PirteyUser.MisparIshi);
+            budget.SaveBudgetLeft(vm.MitkanOut, month, CurrentUser.PirteyUser.MisparIshi);
+            //Update the grid session with new data
+            var changesVm = (Session["ChangesGrid"]) as ChangesCachedViewModel;
+            if (changesVm != null)
+            {
+                var changesGridRes = GetChangesShaotNosafot(changesVm.SelectedEzor, changesVm.CurMonth, changesVm.Isuk, changesVm.YechidaIrgunit);
+                changesVm.Changes = changesGridRes;
+            }
+        }
+        [HttpPost]
+        public void ReductionBudget(SaveBudgetVM vm)
+        {
+            var month = ((GeneralObject)Session["GeneralDetails"]).CurMonth;
+            var ManagerChange = _container.Resolve<IChangesManager>();
+            ManagerChange.SaveReductionMitkan(vm.Mitkan, month, vm.Kamut, vm.Comment, CurrentUser.PirteyUser.MisparIshi);
+
+            var budget = _container.Resolve<IBudgetManager>();
+            budget.SaveBudgetLeft(vm.Mitkan, month, CurrentUser.PirteyUser.MisparIshi);
+            //Update the grid session with new data
+            var changesVm = (Session["ChangesGrid"]) as ChangesCachedViewModel;
+            if (changesVm != null)
+            {
+                var changesGridRes = GetChangesShaotNosafot(changesVm.SelectedEzor, changesVm.CurMonth, changesVm.Isuk, changesVm.YechidaIrgunit);
+                changesVm.Changes = changesGridRes;
+            }
+        }
+        private List<BudgetChangesGrid> GetChangesShaotNosafot(int KodEzor, DateTime Month, int isuk, int KodMitkan)
+        {
+            var ManagerChange = _container.Resolve<IChangesManager>();
+            var Changes = ManagerChange.GetChangesShaotNosafot(KodEzor, Month, isuk, KodMitkan);
+            return Changes;
         }
 
         public ActionResult ChangesMitkanRead([DataSourceRequest]DataSourceRequest request)
@@ -142,7 +179,7 @@ namespace BsmWebApp.Controllers
         public ActionResult AddBudget()
         {
             AddBudgetViewModel vm = new AddBudgetViewModel();
-          
+
             List<Yechida> yechidot = GetListYechidotForCombo();
             vm.Yechidot = new SelectList(yechidot, "KodYechida", "TeurYechida");
             vm.Yechida = yechidot[0];
@@ -155,16 +192,11 @@ namespace BsmWebApp.Controllers
 
         private List<Yechida> GetListYechidotForCombo()
         {
-            List<Yechida> yechidot = CurrentUser.Yechidot;
-            var month = ((GeneralObject)Session["GeneralDetails"]).CurMonth;
+            List<Yechida> yechidot = new List<Yechida>();// CurrentUser.Yechidot.ToList();
             decimal shaot;
-            var budget= _container.Resolve<IBudgetManager>();
-            foreach (Yechida y in yechidot)
-            {
-                shaot = budget.GetBudgetLeftForMitkan(y.KodYechida, month);
-                if(shaot!=0)
-                    y.TeurYechida = y.TeurYechida + "(יתרת שעות " + shaot + ")";
-            }
+            var month = ((GeneralObject)Session["GeneralDetails"]).CurMonth;
+            var budget = _container.Resolve<IBudgetManager>();
+
             Yechida yechida = new Yechida();
             yechida.KodHevra = 0;
             yechida.KodYechida = 0;
@@ -172,6 +204,18 @@ namespace BsmWebApp.Controllers
             yechida.KodEzor = 0;
             yechida.SugYechida = "";
             yechidot.Insert(0, yechida);
+
+            CurrentUser.Yechidot.ForEach((item) =>
+            {
+                yechida = new Yechida();
+                yechida.KodYechida = item.KodYechida;
+
+                shaot = budget.GetBudgetLeftForMitkan(yechida.KodYechida, month);
+                if (shaot != 0)
+                    yechida.TeurYechida = item.TeurYechida + "(יתרת שעות " + shaot + ")";
+                else yechida.TeurYechida = item.TeurYechida;
+                yechidot.Add(yechida);
+            });
 
             return yechidot;
         }
@@ -198,23 +242,24 @@ namespace BsmWebApp.Controllers
         }
         public ActionResult MoveBudget()
         {
-            AddBudgetViewModel vm = new AddBudgetViewModel();
-            var ManagerChange = _container.Resolve<IChangesManager>();
-            //vm.Yechidot= CurrentUser.Yechidot
-            vm.Yechidot = new SelectList(CurrentUser.Yechidot, "KodYechida", "TeurYechida");
-            vm.Yechida = CurrentUser.Yechidot[0];
-         
+            NiyudBudgetViewModel vm = new NiyudBudgetViewModel();
+
+
+            List<Yechida> yechidot = GetListYechidotForCombo();
+            vm.YechidotOut = new SelectList(yechidot, "KodYechida", "TeurYechida");
+            vm.YechidotIn = new SelectList(yechidot, "KodYechida", "TeurYechida");
+            vm.YechidaIn = yechidot[0];
+            vm.YechidaOut = yechidot[0];
             return PartialView("_NiyudTakziv", vm);
         }
 
         public ActionResult RemoveBudget()
         {
-            AddBudgetViewModel vm = new AddBudgetViewModel();
-            var ManagerChange = _container.Resolve<IChangesManager>();
-            //vm.Yechidot= CurrentUser.Yechidot
-            vm.Yechidot = new SelectList(CurrentUser.Yechidot, "KodYechida", "TeurYechida");
-            vm.Yechida = CurrentUser.Yechidot[0];
-           
+            GriaBudgetViewModel vm = new GriaBudgetViewModel();
+
+            List<Yechida> yechidot = GetListYechidotForCombo();
+            vm.Yechidot = new SelectList(yechidot, "KodYechida", "TeurYechida");
+            vm.Yechida = yechidot[0];
             return PartialView("_GriatTakziv", vm);
         }
         public ActionResult AddNewBudget()
@@ -260,13 +305,14 @@ namespace BsmWebApp.Controllers
         public int Takziv { get; set; }
         public decimal Kamut { get; set; }
         public string Comment { get; set; }
+        public string Name { get; set; }
+        public int MitkanOut { get; set; }
     }
 
-    public class SaveNewBudgetVM
+    public enum TypeChange
     {
-        public string Name { get; set; }
-        public decimal Kamut { get; set; }
-        public int Takziv { get; set; }
-        public string Comment { get; set; }
+        Add =1,
+        Reduction=2
     }
+
 }
