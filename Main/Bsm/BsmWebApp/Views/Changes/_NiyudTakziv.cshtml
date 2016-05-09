@@ -12,7 +12,7 @@
                 <label class="TextBold"> מתקן נותן:</label>
             </div>
             <div class="col-md-4">
-                @Html.DropDownListFor(m => Model.YechidaOut.KodYechida, Model.YechidotOut, new { @id = "KodMitkanOut", @onchange = "EnableFields();", @class = "ddl", style = "width: 250px;height: 29px;" })
+                @Html.DropDownListFor(m => Model.YechidaOut.KodYechida, Model.YechidotOut, new { @id = "KodMitkanOut", @onchange = "EnableFields();CheckAmount();", @class = "ddl", style = "width: 250px;height: 29px;" })
             </div>
         </div>
         <br />

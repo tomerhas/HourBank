@@ -6,13 +6,13 @@
                 <label class="TextBold"> שם המתקן:</label>
             </div>
             <div class="col-md-6">
-                @Html.DropDownListFor(m => Model.Yechida.KodYechida, Model.Yechidot, new { @id = "KodMitkan", @onchange = "EnableFields();", @class = "ddl", style = "width: 350px;height: 29px;" })
+                @Html.DropDownListFor(m => Model.Yechida.KodYechida, Model.Yechidot, new { @id = "KodMitkan", @onchange = "EnableFields();CheckAmount();", @class = "ddl", style = "width: 350px;height: 29px;" })
             </div>
             <div class="col-md-1">
                 <label class="TextBold"> כמות:</label>
             </div>
             <div class="col-md-2">      
-                <input id="inputKamut" style="width: 100px" onkeypress="return isNumberKey(event);" onblur="CheckAmount();"  disabled="disabled" onfocus="this.select();" maxlength="4"  class="styleTBSearch GeneralText TextBoxRO" />
+                <input id="inputKamut" style="width: 100px" onkeypress="return isNumberKey(event);"  onblur="CheckAmount();"  disabled="disabled" onfocus="OnFocus(this);" maxlength="4"  class="styleTBSearch GeneralText TextBoxRO" />
             </div>
             <div class="col-md-1">
                
@@ -55,6 +55,11 @@
         });
     });
 
+    function OnFocus(obj) {
+        var kamut = $("#inputKamut").val();
+        $("#inputKamut").val(kamut.replace("-",""));
+        obj.select();
+    }
     function EnableFields() {
         var selectMitkan = $('#KodMitkan')[0].selectedIndex;
 
@@ -70,7 +75,10 @@
     }
 
     function CheckAmount() {
-        var kamut = $("#inputKamut").val();
+        var kamut = getKamut();// $("#inputKamut").val();
+      //  debugger;
+       // if (kamut.indexOf("-") > -1)
+        //    kamut = kamut.split('-')[0];
         if (kamut != "") {
            // var selectTakziv = $('#KodMitkan')[0].selectedIndex;
             var takziv = $("#KodMitkan option:selected").text();
@@ -81,8 +89,10 @@
                 $("#btnGria").prop('disabled', true);
                 AlertMessage("לא ניתן לעדכן מעבר ליתרה", 150, 300);
             }
-            else
+            else {
+                $("#inputKamut").val(kamut+ "-")
                 $("#btnGria").prop('disabled', false);
+            }
         }
 
 
@@ -92,7 +102,7 @@
         if (InsertAllFields()) {
             var selectMitkan = $('#KodMitkan')[0].value;
             var inputReson = $("#inputReson").val();
-            var kamutVal = $("#inputKamut").val();
+            var kamutVal = getKamut();// $("#inputKamut").val();
 
             var data = { Mitkan: selectMitkan, Kamut: kamutVal, Comment: inputReson };
             $.post("/Changes/ReductionBudget", data, function (res) {
@@ -110,7 +120,8 @@
     function InsertAllFields() {
         var selectMitkan = $('#KodMitkan')[0].selectedIndex;
         var inputReson = $("#inputReson").val();
-        var kamut = $("#inputKamut").val();
+        var kamut = getKamut();//$("#inputKamut").val();
+       
         if (selectMitkan == 0 || inputReson == "" || kamut == "" || +kamut == 0) {
             return false;
         }
@@ -118,8 +129,14 @@
             return true;
            // AddBudgetNew(@Html.Raw(Json.Encode(Model)) );
         }
-
-
     }
 
+    function getKamut() {
+        var kamut = $("#inputKamut").val();
+        //  debugger;
+        if (kamut.indexOf("-") > -1)
+            kamut = kamut.split('-')[0];
+
+        return kamut;
+    }
 </script>

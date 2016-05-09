@@ -439,36 +439,40 @@ background-color:  rgba(137, 94, 138, 0.2) !important;
 
 .divNiyud {
       background: url("Images/niyod_re.png") no-repeat   #e7e7e7;
-      background-position-x: 130px;
+      background-position-x: 90px;
       margin-right:50px;
 }
 .divNiyud:hover { 
      background: url("Images/niyod_ho.png") no-repeat  #e7e7e7;
-       background-position-x: 130px;
+       background-position-x: 90px;
       margin-right:50px; 
 }
 
 
 .divAdd {
       background: url("Images/Plus_Budget_re.png") no-repeat   #e7e7e7;
-      background-position-x: 130px;
+      background-position-x: 110px;
+      background-position-y: 6px;
       margin-right:50px;
 }
 .divAdd:hover { 
      background: url("Images/Plus_Budget_ho.png") no-repeat  #e7e7e7;
-       background-position-x: 130px;
-      margin-right:50px; 
+     background-position-x: 110px;
+     background-position-y: 6px;
+     margin-right:50px; 
 }
 
 
 .divSubtract {
       background: url("Images/Minus_Budget_re.png") no-repeat   #e7e7e7;
-      background-position-x: 130px;
+      background-position-x: 110px;
+      background-position-y: 6px;
       margin-right:50px;
 }
 .divSubtract:hover { 
      background: url("Images/Minus_Budget_ho.png") no-repeat  #e7e7e7;
-       background-position-x: 130px;
+       background-position-x: 110px;
+       background-position-y: 6px;
       margin-right:50px; 
 }
 .DisabledCal {

@@ -176,17 +176,33 @@ namespace BsmWebApp.Controllers
             return Json("{}");
         }
 
-        public ActionResult AddBudget()
+        public ActionResult AddBudget(SaveBudgetVM sv)
         {
             AddBudgetViewModel vm = new AddBudgetViewModel();
 
             List<Yechida> yechidot = GetListYechidotForCombo();
             vm.Yechidot = new SelectList(yechidot, "KodYechida", "TeurYechida");
-            vm.Yechida = yechidot[0];
+            if (sv.Mitkan != null && sv.Mitkan > 0)
+            {
+                Yechida ym = yechidot.FirstOrDefault(y => y.KodYechida == sv.Mitkan);
+                vm.Yechida = ym;
+            }
+            else vm.Yechida = yechidot[0];
 
-            var bs = GetListBudgetSpecialForCombo();
+
+            List<BudgetSpecial> bs = GetListBudgetSpecialForCombo();
             vm.Budgets = new SelectList(bs, "MisparTakziv", "Description");
-            vm.budget = bs[0];
+
+            if (sv.Takziv != null && sv.Takziv > 0)
+            {
+                BudgetSpecial bsp = bs.FirstOrDefault(b => b.MisparTakziv == sv.Takziv);
+                vm.budget = bsp;
+            }
+            else vm.budget = bs[0];
+
+            vm.Kamut = sv.Kamut;
+            vm.Comment = sv.Comment;
+            vm.AddNewSucceeded = sv.AddNewSucceeded;
             return PartialView("_AddBudget", vm);
         }
 
@@ -262,9 +278,10 @@ namespace BsmWebApp.Controllers
             vm.Yechida = yechidot[0];
             return PartialView("_GriatTakziv", vm);
         }
-        public ActionResult AddNewBudget()
+        public ActionResult AddNewBudget(SaveBudgetVM vm)
         {
-            return PartialView("_AddNewBudget", null);
+            vm.NewTakziv = GetNextTakzivNumber();
+            return PartialView("_AddNewBudget", vm);
         }
         public int GetNextTakzivNumber()
         {
@@ -307,6 +324,8 @@ namespace BsmWebApp.Controllers
         public string Comment { get; set; }
         public string Name { get; set; }
         public int MitkanOut { get; set; }
+        public int NewTakziv { get; set; }
+        public int AddNewSucceeded { get; set; }
     }
 
     public enum TypeChange

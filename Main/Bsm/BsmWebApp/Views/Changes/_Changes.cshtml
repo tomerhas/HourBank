@@ -64,7 +64,7 @@
 
                     <a id="NiyudLink" href="#">
                         @*onclick="DisplayAllocatedHoursOptions()">*@
-                        <div id="divNiyud" style=" width: 200px; text-align: left" class="pointer divNiyud" onclick="DisplayDialogTakziv('move')">
+                        <div id="divNiyud" style=" width: 140px; text-align: left" class="pointer divNiyud" onclick="DisplayDialogTakziv('move')">
                             <label id="lblNiyud" class="PurpleTextBoldLink pointer" style="padding-top: 5px">ניוד תקציב</label>
                         </div>
                     </a>
@@ -73,7 +73,7 @@
                 <div class="col-md-2">
                     <a id="AddLink" href="#">
                         @*onclick="DisplayAllocatedHoursOptions()">*@
-                        <div id="divAdd" style="width: 200px; text-align: left" class="pointer divAdd" onclick="DisplayDialogTakziv('add')">
+                        <div id="divAdd" style="width: 140px; text-align: left" class="pointer divAdd" onclick="DisplayDialogTakziv('add')">
                             <label id="lblAdd" class="PurpleTextBoldLink pointer" style="padding-top: 5px">הוספת תקציב</label>
                         </div>
                     </a>
@@ -82,7 +82,7 @@
                 <div class="col-md-2">
                     @*<div style="text-align: right; width: 200px; text-align: left" class="pointer divHistory" onclick="ShowHistory('8888')"> <label class='PurpleTextBoldLink pointer'>yy</label> </div>*@
                     <a id="sSubtractLink" href="#">
-                        <div id="divSubtract" style="width: 200px; text-align:left" class="pointer divSubtract" onclick="DisplayDialogTakziv('remove')">
+                        <div id="divSubtract" style="width: 140px; text-align:left" class="pointer divSubtract" onclick="DisplayDialogTakziv('remove')">
                             <label id="lblSubtract" class="PurpleTextBoldLink pointer" style="padding-top: 5px">גריעת תקציב</label>
                         </div>
                     </a>
@@ -263,12 +263,13 @@
                 url= "Changes/RemoveBudget";
                 break;    
         }
-        
-        //$("#dialog-change").html("")
-        //.dialog("option","title",title)
-        //.load(url,function(){
-        //    $("#dialog-change").dialog("open");
-        //});
+        jQuery.ajaxSetup({ cache: false });
+       
+        $("#dialog-change").html("")
+        .dialog("option","title",title)
+        .load(url,function(){
+            $("#dialog-change").dialog("open");
+        });
 
 
         //dialog.dialog({
@@ -282,34 +283,39 @@
         //});
    
 
-        $("#dialog-change").html("")
-        .dialog({
-            open: function( event, ui ) {
-                jQuery.ajaxSetup({ cache: false });
-            }
-        })
-        .load(url,function(){
-            $("#dialog-change").dialog("open");
-        });
+        //$("#dialog-change").html("")
+        //.dialog({
+        //    open: function( event, ui ) {
+        //        jQuery.ajaxSetup({ cache: false });
+        //    }
+        //},"title",title)
+        //.load(url,function(){
+        //    $("#dialog-change").dialog("open");
+        //});
       
     }
-
+    function RefreshTakziv(data)
+    {
+        $("#dialog-change").html("")
+       .dialog("option","title","הוספת תקציב")
+       .load("Changes/AddBudget",data,function(){
+           $("#dialog-change").dialog("open");
+       });
+      //  AlertMessage("תקציב נוצר בהצלחה", 170, 300)
+    }
     function RefreshGridChanges()
     {
         $('#ChangesList').data('kendoGrid').dataSource.read();
     }
-    function DisplayAddNewTakziv()
+    function DisplayAddNewTakziv(data)
     {
         //if(!CanUpdate)
         //    return;
+       // jQuery.ajaxSetup({ cache: false });
         var url= "Changes/AddNewBudget";
         $("#dialog-new-budget").html("")
-             .dialog({
-                 open: function( event, ui ) {
-                     jQuery.ajaxSetup({ cache: false });
-                 }
-             },"title","יצירת תקציב חדש")
-        .load(url,function(){
+             .dialog("option","title","יצירת תקציב חדש")
+        .load(url,data,function(){
             $("#dialog-new-budget").dialog("open");
         });
 

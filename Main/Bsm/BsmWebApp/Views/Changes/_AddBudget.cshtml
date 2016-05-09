@@ -13,10 +13,10 @@
             <label class="TextBold"> תקציב:</label>
        </div>
         <div class="col-md-4">
-            @Html.DropDownListFor(m => Model.budget.MisparTakziv, Model.Budgets, new { @id = "KodTakziv",@onchange = "EnableFields();", @class = "ddl", style = "width: 250px;height: 29px;" })
+            @Html.DropDownListFor(m => Model.budget.MisparTakziv, Model.Budgets, new { @id = "KodTakziv",@onchange = "EnableFields();CheckAmount();", @class = "ddl", style = "width: 250px;height: 29px;" })
         </div>
         <div class="col-md-2">
-            <a id="addNew" class="PurpleTextBoldLink pointer" onclick="DisplayAddNewTakziv()" href="#">+צור תקציב חדש</a>
+            <a id="addNew" class="PurpleTextBoldLink pointer" onclick="AddNewTakziv()" href="#">+צור תקציב חדש</a>
         </div>
      </div>
     <br />
@@ -73,6 +73,18 @@
                     item.disabled = true;
             }
         });
+        var model = @Html.Raw(Json.Encode(Model));
+        $("#inputReson").val(model.Comment);
+        $("#inputKamut").val(model.Kamut);
+        if(model.AddNewSucceeded ==1)
+        {
+            if($("#inputKamut").val() != "")
+                $("#inputKamut").prop('disabled', false);
+            if($("#inputReson").val() != "")
+                $("#inputReson").prop('disabled',false);
+
+            AlertMessage("תקציב נוצר בהצלחה", 170, 300)
+        }
     });
 
     function EnableFields() {
@@ -111,6 +123,7 @@
 
      
     }
+
     function AddBudgetAjax() {
 
         if (InsertAllFields()) {
@@ -148,4 +161,15 @@
 
     }
 
+
+    function AddNewTakziv() {
+
+        var selectMitkan = $('#KodMitkan')[0].value;
+        var selectTakziv = $('#KodTakziv')[0].value;
+        var inputReson = $("#inputReson").val();
+        var kamutVal = $("#inputKamut").val();
+
+        var data = { Mitkan: selectMitkan, Takziv: selectTakziv, Kamut: kamutVal, Comment: inputReson };
+        DisplayAddNewTakziv(data);
+    }
 </script>

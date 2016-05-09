@@ -11,9 +11,6 @@ namespace BsmCommon.DataModels.Budgets
     public class BudgetChange
     {
 
-        [Key, Column("ID")]
-        public int Id { get; set; }
-
         [Column("KOD_YECHIDA")]
         public int KodYechida { get; set; }
 
@@ -32,7 +29,7 @@ namespace BsmCommon.DataModels.Budgets
         [Column("MEADKEN")]
         public int Meadken { get; set; }
 
-        [Column("TAARICH_IDKUN")]
+        [Key, Column("TAARICH_IDKUN", Order = 0)]
         public DateTime TaarichIdkun { get; set; }
 
         [NotMapped]
