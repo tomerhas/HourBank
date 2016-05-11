@@ -59,6 +59,7 @@ namespace BsmWebApp.Controllers
                 }
                 else
                 {
+                    ViewBag.Img = "~/Content/Images/Lock_Icon.png";
                     ViewBag.ErrorMessege = "אינך מורשה להיכנס למערכת. לבירור נא פנה למרכז התמיכה בטלפון 2466";
                     return View("Error");
                 //    return RedirectToAction("Index", "Error", new { error = " .אינך מורשה לצפות בדף זה. לקבלת הרשאות אנא פנה למנהל מערכת" });
@@ -67,7 +68,7 @@ namespace BsmWebApp.Controllers
             }
             else 
             {
-               // vm.Error = "User not recognized";
+                ViewBag.Img = "~/Content/Images/warning.png";
                 ViewBag.ErrorMessege = ".ארעה שגיאה במערכת. אנא פנה למנהל מערכת";
                 return View("Error");
             }
@@ -84,7 +85,7 @@ namespace BsmWebApp.Controllers
          //       vm.SessionEnd = 1;
            //     vm.Today = DateTime.Now;
            //     vm.UserName = user.EmployeeFullName;
-                GeneralObject obj = new GeneralObject();
+                FilterCachedViewModel obj = new FilterCachedViewModel();
                 obj.CurYechida = user.Yechidot[0];
                 obj.CurMonth = DateTime.Parse("01/" + DateTime.Now.ToString("MM/yyyy"));
                 Session["GeneralDetails"] = obj;

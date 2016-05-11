@@ -42,7 +42,7 @@ namespace BsmWebApp.Controllers
         {
             
             BudgetMainViewModel vm = InitBudgetVm();
-           
+            InitFilterChash();
             return View(vm);
         }
 
@@ -53,7 +53,7 @@ namespace BsmWebApp.Controllers
         {
             var x = 0;
             DateTime month = DateTime.Parse(vm.SelectedMonth);
-            var curMitkan = ((GeneralObject)Session["GeneralDetails"]).CurYechida.KodYechida;//**CurrentUser.CurYechida.KodYechida;
+            var curMitkan = ((FilterCachedViewModel)Session["GeneralDetails"]).CurYechida.KodYechida;//**CurrentUser.CurYechida.KodYechida;
             var manager = _container.Resolve<IBudgetManager>();
             if (curMitkan > 0)
             {
@@ -107,10 +107,10 @@ namespace BsmWebApp.Controllers
             vm.Month =  DateTime.Parse(vm.Filter.SelectedMonth);
             ////IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
 
-            ////var taarich = Gmanager.GetLastDateIdkunBank(((GeneralObject)Session["GeneralDetails"]).CurMonth);
+            ////var taarich = Gmanager.GetLastDateIdkunBank(((FilterCachedViewModel)Session["GeneralDetails"]).CurMonth);
             ////if (taarich != DateTime.MinValue)
             ////{
-            ////    vm.LastDateIdkunBank = taarich;// Gmanager.GetLastDateIdkunBank(((GeneralObject)Session["GeneralDetails"]).CurMonth);
+            ////    vm.LastDateIdkunBank = taarich;// Gmanager.GetLastDateIdkunBank(((FilterCachedViewModel)Session["GeneralDetails"]).CurMonth);
             ////    vm.LastDateIdkunBankStr = string.Concat("יום ", DateHelper.getDayHeb(vm.LastDateIdkunBank.AddDays(-1)), " ,", vm.LastDateIdkunBank.AddDays(-1).ToShortDateString());
 
             ////    if (DateTime.Now < vm.LastDateIdkunBank && CurrentUser.GetSugPeilutHatshaa("Budget") == eSugPeiluHarshaa.Update)
@@ -230,17 +230,27 @@ namespace BsmWebApp.Controllers
 
         public ActionResult GetInformationBudget()
         {
-            BudgetChangesVM vm = new BudgetChangesVM();
             var manager = _container.Resolve<IChangesManager>();
+            var budget = _container.Resolve<IBudgetManager>();
+            
+            BudgetChangesVM vm = new BudgetChangesVM();
             List<BudgetChangeVM> list = new List<BudgetChangeVM>();
-            var curMitkan = ((GeneralObject)Session["GeneralDetails"]);
+            
+            var curMitkan = ((FilterCachedViewModel)Session["GeneralDetails"]);
             int KodYechida = curMitkan.CurYechida.KodYechida;
             DateTime chodesh=curMitkan.CurMonth;
+
+            vm.Budget = budget.GetBudgetDetails(KodYechida, chodesh);
+            vm.YitraPrevMonth = budget.GetBudgetLeftForMitkan(KodYechida, chodesh.AddMonths(-1));
+          
             
-            vm.Budget = _container.Resolve<IBudgetManager>().GetBudget(KodYechida, chodesh);
-            var changes = manager.GetBudgetChanges(KodYechida, chodesh);
+           var changes = manager.GetBudgetChanges(KodYechida, chodesh);
             changes.ForEach(x => list.Add(new BudgetChangeVM(x)));
             vm.BudgetChanges= list.OrderBy(c => c.BudgetChange.TaarichIdkun).ToList();
+
+            vm.SumChanges =  manager.GetExtensionsBudget(KodYechida, chodesh).Sum(x => x.Amount) - manager.GetReductionsBudget(KodYechida, chodesh).Sum(x => x.Amount);
+            if(vm.BudgetChanges.Count>0)
+                vm.LastChange = vm.BudgetChanges[vm.BudgetChanges.Count - 1].BudgetChange.ValToDisplay;
            // var sd = vm.BudgetChanges[0].BudgetChange.TaarichIdkun.ToString().Split(' ')[0];
             return PartialView("_BudgetInformation", vm);
         }

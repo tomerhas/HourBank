@@ -222,6 +222,7 @@
     <Content Include="Content\Images\home_disabled.png" />
     <Content Include="Content\Images\ipus_disable.png" />
     <Content Include="Content\Images\kds.png" />
+    <Content Include="Content\Images\Lock_Icon.png" />
     <Content Include="Content\Images\Logoegged.png" />
     <Content Include="Content\Images\mafrid.png" />
     <Content Include="Content\Images\Minus_Budget_ho.png" />
@@ -236,7 +237,9 @@
     <Content Include="Content\Images\Plus_Budget_ho.png" />
     <Content Include="Content\Images\Plus_Budget_pr.png" />
     <Content Include="Content\Images\Plus_Budget_re.png" />
+    <Content Include="Content\Images\progress-bar_2.gif" />
     <Content Include="Content\Images\progress.gif" />
+    <Content Include="Content\Images\progress_bar.gif" />
     <Content Include="Content\Images\Rectangle 42.png" />
     <Content Include="Content\Images\refresh.png" />
     <Content Include="Content\Images\refresh_h.png" />

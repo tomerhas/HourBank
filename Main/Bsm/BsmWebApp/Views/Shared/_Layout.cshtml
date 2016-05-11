@@ -25,6 +25,7 @@
 
         function AlertMessage(msg, height, width) {
             $('.ui-dialog').css("clear", "both");
+            
             $("#dialog-message").html(msg);
             $("#dialog-message").dialog({
                 resizable: false,
@@ -43,7 +44,7 @@
                     } 
                 }
             });
-
+            $("#dialog-message").css('zIndex', 9999);
             $("#dialog-message").parent("div").attr("id", "dlgMsg");
         }</script>
 
@@ -58,8 +59,7 @@
         <div id="GeneralTitle">מערכת ניהול שעות עבודה משק</div>
     </div>
 
-    <div id="divProgress" class="Progress" style="text-align: right; position: absolute; left: 52%; top: 35%; z-index: 1000; display: none">
-        <img src="~/Content/Images/progress.gif" style="width: 100px; height: 100px" />
+    <div id="divProgress" class="Progress">
     </div>
     @* // @if (MenuModel != null)
  // {     
@@ -223,6 +223,7 @@
         }
 
         function AlertMessagePosition(x, y, title, msg, height, width) {
+
 
             $("#dialog-message").html(msg);
             $("#dialog-message").dialog({

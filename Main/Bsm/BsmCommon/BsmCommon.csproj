@@ -67,13 +67,14 @@
     <Compile Include="DataModels\Budgets\BudgetEmployeeGrid.cs" />
     <Compile Include="DataModels\Changes\BudgetChangesGrid.cs" />
     <Compile Include="DataModels\Changes\BudgetLeft.cs" />
+    <Compile Include="DataModels\Changes\BudgetReduction.cs" />
     <Compile Include="DataModels\Changes\BudgetSpecial.cs" />
     <Compile Include="DataModels\Changes\BudgetSpecialYechida.cs" />
     <Compile Include="DataModels\Employees\Oved.cs" />
     <Compile Include="DataModels\Employees\PirteyOved.cs" />
     <Compile Include="DataModels\Ezor.cs" />
     <Compile Include="DataModels\FilterModel.cs" />
-    <Compile Include="DataModels\GeneralObject.cs" />
+    <Compile Include="DataModels\FilterCachedViewModel.cs" />
     <Compile Include="DataModels\MonthHolder.cs" />
     <Compile Include="DataModels\Parameter.cs" />
     <Compile Include="DataModels\Profiles\Harshaa.cs" />

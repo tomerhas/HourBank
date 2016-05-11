@@ -21,13 +21,22 @@
  {
      
   <div class="row" style="padding-top: 18px">
-    <div class="col-md-4">
-        <label class="TextBold"> שעות נוספות <br />תקציב בסיסי: </label>
+        <div class="col-md-3">
+        <label class="TextBold"> תקציב לפי תקן: </label>
     </div>
-    <div class="col-md-4">
-        <label class="TextBold"> תקציב<br /> לפי תקן: </label>
+    <div class="col-md-2">
+        <label class="TextBold"> יתרת תקציב <br />חודש קודם: </label>
     </div>
-      <div class="col-md-4">
+       <div class="col-md-2">
+        <label class="TextBold"> ניוד: </label>
+    </div>
+     <div class="col-md-2">
+        <label class="TextBold"> הוספה/גריעה: </label>
+    </div>
+       <div class="col-md-3">
+        <label class="TextBold"> הסטוריה: </label>
+    </div>
+     @* <div class="col-md-2">
          <label class="TextBold"> שינוי אחרון: </label><br />
           <label class="TextBold" style=" font-weight: 400;font-size: 14px;">נכון לתאריך 
             @if (Model.BudgetChanges.Count > 0)
@@ -36,35 +45,44 @@
                 @Html.DisplayFor(model => model.BudgetChanges[(Model.BudgetChanges.Count-1)].BudgetChange.TaarichIdkun.ToString().Split(' ')[0])   
             }
           </label>
-    </div>
+    </div>*@
   </div>
 
 <div class="row" style="padding-top: 18px">
-    <div class="col-md-4">
+    <div class="col-md-3">
           <label  class="TextBoxRO GeneralText"  style="width: 100px;border:none;background-color:white">
-               @Html.DisplayFor(model => model.Budget.BudgetVal)
+               @Html.DisplayFor(model => model.Budget.BudgetLefiTeken)
           </label> 
     </div>
-      <div class="col-md-4">
+      <div class="col-md-2">
           <label  class="TextBoxRO GeneralText"  style="width: 100px;border:none;background-color:white">
-               @Html.DisplayFor(model => model.Budget.BudgetVal)
+               @Html.DisplayFor(model => model.YitraPrevMonth)
           </label> 
     </div>
-     <div class="col-md-4">
-          <label  class="TextBoxRO GeneralText"  style="width: 70px;border:none;background-color:white;margin-left:-5px;float:right">
+     <div class="col-md-2">
+          <label  class="TextBoxRO GeneralText"  style="width: 100px;border:none;background-color:white">
+               @Html.DisplayFor(model => model.LastChange)
+          </label> 
+    </div>
+     <div class="col-md-2">
+          <label  class="TextBoxRO GeneralText"  style="width: 100px;border:none;background-color:white">
+               @Html.DisplayFor(model => model.SumChanges)
+          </label> 
+    </div>
+  <div class="col-md-3">
+        @*  <label  class="TextBoxRO GeneralText"  style="width: 70px;border:none;background-color:white;margin-left:-5px;float:right">
             @if (Model.BudgetChanges.Count > 0)
             {  
                  @Html.DisplayFor(model => model.BudgetChanges[(Model.BudgetChanges.Count-1)].BudgetChange.ValToDisplay)
             }
-          </label> 
+          </label> *@
          @if (Model.BudgetChanges.Count > 0)
          {  
           <input class="pointer TextBoxRO linkstyle" onclick="ShowChanges();" value="הצג שינויים"  type="text" />
          } 
          else
          {
-           <input class="TextBoxRO linkstyle linkstyleDisabled" disabled value="הצג שינויים"  type="text" />@*
-          <label  class="TextBoxRO linkstyle linkstyleDisabled"   >הצג שינויים</label>*@
+           <input class="TextBoxRO linkstyle linkstyleDisabled" disabled value="הצג שינויים"  type="text" />
          } 
     </div>
   </div>

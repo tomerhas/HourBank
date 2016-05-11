@@ -20,7 +20,7 @@
                         //}
                       //  else
                        // {
-                            @Html.DropDownListFor(m => m.SelectedEzor, Model.Ezors, new { @onchange = "EnableButton();", @class = "ddl", style = "width: 100px;height: 29px;" })
+                            @Html.DropDownListFor(m => m.SelectedEzor, Model.Ezors, new { @onchange = "EnableButton();ChangeCurrentEzor(this.options[this.selectedIndex].value);", @class = "ddl", style = "width: 100px;height: 29px;" })
                         //}
                     }
                         <label class="TextBold" style="margin-right: 20px;">תאריך:</label>
@@ -62,11 +62,8 @@
                             AlertMessagePosition(e.pageX,e.pageY,"שים לב","אם תאריך אחרון לעדכון הוא יום עבודה (אינו שבת, חג וכו')",170,300);
                         });
                         EnableButton();
-
-
+        
                     });
-
-
                     function ChangeCurrentMonth(month) {
                         //   var model = @Html.Raw(Json.Encode(Model));
                         //  model.SelectedMonth =month;
@@ -82,6 +79,18 @@
                  }
              }*/
                         });
+
+                    }
+
+                    function ChangeCurrentEzor(ezor) {
+                        //   var model = @Html.Raw(Json.Encode(Model));
+                          //  model.SelectedMonth =month;
+
+                          jQuery.ajax({
+                              url: '/Home/ChangeEzor?ezor='+ ezor,
+                              type: 'POST',
+                              contentType: 'application/json'
+                          });
 
                     }
 

@@ -124,7 +124,7 @@
      .Sortable(c => c.AllowUnsort(false))
       .DataSource(dataSource =>
           dataSource.Ajax()
-              .PageSize(17)
+              .PageSize(12)
               .ServerOperation(false)
               .Batch(true) // Enable batch updates
                            //.Model(model =>
@@ -157,7 +157,7 @@
     $(document).ready(function(){
         if(displayMessage==1){
             // ModifyGrid("ipus");
-            AlertMessage("לא נמצאו נתונים ליחידה והחודש הנבחר",170,330);
+            AlertMessage("לא קיימים מתקנים בהם אתה רשאי לצפות באזור שבחרת",170,330);
             // alert("Need to display message")
         }
    
@@ -179,9 +179,9 @@
         $('#divLinks').find("div").prop('onclick',null).off('click');
         $('#divLinks').find("a").css({cursor:"default"});
 
-        $("#divNiyud").addClass("DisabledCal");
-        $("#divAdd").addClass("DisabledCal");
-        $("#divSubtract").addClass("DisabledCal");
+        $("#divNiyud").addClass("DisabledNiyud");
+        $("#divAdd").addClass("DisabledAdd");
+        $("#divSubtract").addClass("DisabledSub");
     }
     function findDataItem() {
 

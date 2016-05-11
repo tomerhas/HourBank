@@ -11,6 +11,9 @@ namespace BsmCommon.Interfaces.Managers
     public interface IChangesManager
     {
         List<BudgetChange> GetBudgetChanges(int KodYechida, DateTime Month);
+        List<BudgetSpecialYechida> GetExtensionsBudget(int KodYechida, DateTime Month);
+        List<BudgetReduction> GetReductionsBudget(int KodYechida, DateTime Month);
+
         List<BudgetChangesGrid> GetChangesShaotNosafot(int KodEzor, DateTime Month, int isuk, int KodMitkan);
         List<BudgetSpecial> GetBudgetSpecial();
 

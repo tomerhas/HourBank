@@ -48,6 +48,23 @@ namespace BsmBL.Managers
             }
         }
 
+        public List<BudgetSpecialYechida> GetExtensionsBudget(int KodYechida, DateTime Month)
+        {
+            using (var context = new BsmEntities())
+            {
+                return context.BudgetSpecialYechida.Where(x => x.KodYechida == KodYechida && x.Chodesh == Month).ToList();
+
+            }
+        }
+
+        public List<BudgetReduction> GetReductionsBudget(int KodYechida, DateTime Month)
+        {
+            using (var context = new BsmEntities())
+            {
+                return context.BudgetReduction.Where(x => x.KodYechida == KodYechida && x.Chodesh == Month).ToList();
+
+            }
+        }
         private void EnrichBudgetChangesList(List<BudgetChange> list, List<Oved> ovdim)
         {
             list.ForEach(budgetChange =>

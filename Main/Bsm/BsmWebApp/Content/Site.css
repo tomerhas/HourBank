@@ -448,6 +448,11 @@ background-color:  rgba(137, 94, 138, 0.2) !important;
       margin-right:50px; 
 }
 
+.DisabledNiyud {
+      background: url("Images/Plus_Budget_re.png") no-repeat  #e7e7e7 ;
+      background-position-x: 90px;
+      margin-right:50px; 
+}
 
 .divAdd {
       background: url("Images/Plus_Budget_re.png") no-repeat   #e7e7e7;
@@ -455,6 +460,8 @@ background-color:  rgba(137, 94, 138, 0.2) !important;
       background-position-y: 6px;
       margin-right:50px;
 }
+
+
 .divAdd:hover { 
      background: url("Images/Plus_Budget_ho.png") no-repeat  #e7e7e7;
      background-position-x: 110px;
@@ -462,6 +469,12 @@ background-color:  rgba(137, 94, 138, 0.2) !important;
      margin-right:50px; 
 }
 
+.DisabledAdd {
+      background: url("Images/Plus_Budget_re.png") no-repeat  #e7e7e7 ;
+      background-position-x: 110px;
+      background-position-y: 6px;
+      margin-right:50px;
+}
 
 .divSubtract {
       background: url("Images/Minus_Budget_re.png") no-repeat   #e7e7e7;
@@ -475,11 +488,22 @@ background-color:  rgba(137, 94, 138, 0.2) !important;
        background-position-y: 6px;
       margin-right:50px; 
 }
+
+.DisabledSub {
+      background: url("Images/Plus_Budget_re.png") no-repeat  #e7e7e7 ;
+       background-position-x: 110px;
+       background-position-y: 6px;
+      margin-right:50px; 
+}
 .DisabledCal {
       background: url("Images/auto_disable.png") no-repeat  #e7e7e7 ;
       margin-right:50px;
       background-position-x: 130px;
 }
+
+
+
+
 .PurpleTextLink {
    color:  #895e8a;
     font-size:  17.89px;
@@ -836,18 +860,54 @@ line-height:  30.2px;
      font-weight:  700;
      text-decoration: none; }
 
- .k-dirty {
+.k-dirty {
     position: absolute;
     width: 0;
     height: 0;
-     border-style: solid; 
-     border-width: 0px !important; 
-     border-color: #f00 transparent transparent #f00; 
+    border-style: solid;
+    border-width: 0px !important;
+    border-color: #f00 transparent transparent #f00;
     margin: -0.45em 0 0 -0.6em;
     padding: 0;
     overflow: hidden;
     vertical-align: top;
+}
 
+.AmountInput {
+
+    width: 100px;
+    background-color:white;
+}
+
+.AmountInput:disabled{
+
+    width: 100px;
+    background-color:lightgrey;
+}
+.divError {
+    font-size:18pt;
+    font-weight:bolder;
+    color:white;
+    text-align: center; 
+    font-family:  Arial;
+    background-color:   #89648a;
+    height:50px;
+}
+
+.ErrorBG {
+    background: url("Images/Lock_Icon.png") no-repeat left #89648a;
+    background-position-x: 500px;
+    background-color: #89648a;
+    width:50px;
+}
+
+.Progress {
+
+    background-image:url("Images/progress_bar.gif");
+    height:30px;
+    background-repeat:no-repeat; display:none;
+    width:500px; text-align: right; position: absolute; left: 40%; top: 45%; z-index: 1000; 
+}
 /*ui-state-focus,
 .ui-widget-content .ui-state-focus,
 .ui-widget-header .ui-state-focus {

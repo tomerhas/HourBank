@@ -34,6 +34,7 @@ namespace BsmWebApp.Controllers
             vmResult.Filter = GetFilter();
             vmResult.Filter.ShowEzor = true;
             vmResult.Page = "Changes";
+            InitFilterChash();
             return View(vmResult);
 
             //**  ChangesMainViewModel vm = InitChangesVm();
@@ -59,7 +60,7 @@ namespace BsmWebApp.Controllers
 
             ChangesMainViewModel vmResult = new ChangesMainViewModel();  //InitChangesVm();
 
-            GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
+            FilterCachedViewModel obj = (FilterCachedViewModel)Session["GeneralDetails"];
             vmResult.Changes = GetChangesShaotNosafot(vm.SelectedEzor, obj.CurMonth, CurrentUser.PirteyUser.Isuk, CurrentUser.PirteyUser.YechidaIrgunit);
             ChangesCachedViewModel sessionVm = new ChangesCachedViewModel() { Changes = vmResult.Changes, SelectedEzor = vm.SelectedEzor, CurMonth = obj.CurMonth, Isuk = CurrentUser.PirteyUser.Isuk, YechidaIrgunit = CurrentUser.PirteyUser.YechidaIrgunit };
 
@@ -85,7 +86,7 @@ namespace BsmWebApp.Controllers
         [HttpPost]
         public void SaveBudget(SaveBudgetVM vm)
         {
-            var month = ((GeneralObject)Session["GeneralDetails"]).CurMonth;
+            var month = ((FilterCachedViewModel)Session["GeneralDetails"]).CurMonth;
             var ManagerChange = _container.Resolve<IChangesManager>();
             ManagerChange.AddTakzivLeMitkan(vm.Mitkan, month, vm.Takziv, vm.Kamut, vm.Comment, CurrentUser.PirteyUser.MisparIshi);
 
@@ -111,7 +112,7 @@ namespace BsmWebApp.Controllers
         [HttpPost]
         public void SaveNiyudBudget(SaveBudgetVM vm)
         {
-            var month = ((GeneralObject)Session["GeneralDetails"]).CurMonth;
+            var month = ((FilterCachedViewModel)Session["GeneralDetails"]).CurMonth;
             var ManagerChange = _container.Resolve<IChangesManager>();
             ManagerChange.SaveChangeMitkan(vm.Mitkan, month, vm.Kamut, vm.Comment, CurrentUser.PirteyUser.MisparIshi, (int)TypeChange.Add);
             ManagerChange.SaveChangeMitkan(vm.MitkanOut, month, vm.Kamut, vm.Comment, CurrentUser.PirteyUser.MisparIshi, (int)TypeChange.Reduction);
@@ -129,7 +130,7 @@ namespace BsmWebApp.Controllers
         [HttpPost]
         public void ReductionBudget(SaveBudgetVM vm)
         {
-            var month = ((GeneralObject)Session["GeneralDetails"]).CurMonth;
+            var month = ((FilterCachedViewModel)Session["GeneralDetails"]).CurMonth;
             var ManagerChange = _container.Resolve<IChangesManager>();
             ManagerChange.SaveReductionMitkan(vm.Mitkan, month, vm.Kamut, vm.Comment, CurrentUser.PirteyUser.MisparIshi);
 
@@ -210,7 +211,8 @@ namespace BsmWebApp.Controllers
         {
             List<Yechida> yechidot = new List<Yechida>();// CurrentUser.Yechidot.ToList();
             decimal shaot;
-            var month = ((GeneralObject)Session["GeneralDetails"]).CurMonth;
+            var ezor=0;
+            var month = ((FilterCachedViewModel)Session["GeneralDetails"]).CurMonth;
             var budget = _container.Resolve<IBudgetManager>();
 
             Yechida yechida = new Yechida();
@@ -221,16 +223,23 @@ namespace BsmWebApp.Controllers
             yechida.SugYechida = "";
             yechidot.Insert(0, yechida);
 
+            var filter = ((FilterCachedViewModel)Session["GeneralDetails"]); ;
+            if (filter != null)
+             {
+                 ezor = filter.Ezor;
+             }
             CurrentUser.Yechidot.ForEach((item) =>
             {
-                yechida = new Yechida();
-                yechida.KodYechida = item.KodYechida;
-
-                shaot = budget.GetBudgetLeftForMitkan(yechida.KodYechida, month);
-                if (shaot != 0)
+                if (ezor == 0 || item.KodEzor == ezor)
+                {
+                    yechida = new Yechida();
+                    yechida.KodYechida = item.KodYechida;
+                    shaot = budget.GetBudgetLeftForMitkan(yechida.KodYechida, month);
+                    //yechidot.if (shaot != 0)
                     yechida.TeurYechida = item.TeurYechida + "(יתרת שעות " + shaot + ")";
-                else yechida.TeurYechida = item.TeurYechida;
-                yechidot.Add(yechida);
+                    // else yechida.TeurYechida = item.TeurYechida;
+                    yechidot.Add(yechida);
+                }
             });
 
             return yechidot;

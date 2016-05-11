@@ -21,8 +21,11 @@ namespace BsmCommon.DataModels.Budgets
         [Key, Column("CHODESH", Order = 1)] 
         public DateTime Month { get; set; }
 
-        [Display(Name = "תקציב")]
         [Column("BUDGET")]
+        public decimal BudgetLefiTeken { get; set; }
+        
+        [Display(Name = "תקציב")]
+        [NotMapped]
         public decimal BudgetVal{ get; set; }
 
        [Display(Name = "שעות שבוצעו")]

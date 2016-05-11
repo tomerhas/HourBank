@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace BsmCommon.DataModels
 {
-    public class GeneralObject
+    public class FilterCachedViewModel
     {
         public Yechida CurYechida { get; set; }
         public DateTime CurMonth { get; set; }
+        public int Ezor { get; set; }
 
-        public GeneralObject()
+        public FilterCachedViewModel()
         {
             CurYechida = new Yechida();
         }

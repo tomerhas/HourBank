@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
+      @Styles.Render("~/Content/css")
 </head>
 <body>
      @{
@@ -12,16 +13,19 @@
 @using(Html.BeginForm())
 {
 <div style="height:500px">
-    <br />
-    <br />
+   <div style="height:80px"></div>
      <div class="row">
-     <div class="col-md-3"></div>
+    
 
-          <div  class="col-md-7" style="font-size:14pt;font-weight:bolder;color:red;text-align: center; "  > @ViewBag.ErrorMessege</div>
-        
+      <div  class="divError"  >
+       @*  <div class="ErrorBG col-md-4" style="height:50px;float:left" ></div>*@
+         <div style="padding-top:8px" >
+            <img src="@Url.Content(ViewBag.Img)"   />
+              @ViewBag.ErrorMessege</div>
+
+      </div>
           @*  <div  class="col-md-7" style="font-size:14pt;font-weight:bolder;color:red;text-align: center; "  >@Model.ErrorMessege</div>*@
         
-    <div class="col-md-3"></div>
     </div>
 </div>
 }

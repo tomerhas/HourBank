@@ -42,12 +42,16 @@ namespace BsmWebApp.Controllers
         {
             if (CurrentUser.MursheBankShaot &&  Session["GeneralDetails"] == null)
             {
-                //  vm.SessionEnd = 0;
-                GeneralObject obj = new GeneralObject();
+                InitFilterChash();
+            }
+        }
+
+        protected void InitFilterChash()
+        {
+              FilterCachedViewModel obj = new FilterCachedViewModel();
                 obj.CurYechida = CurrentUser.Yechidot[0];
                 obj.CurMonth = DateTime.Parse("01/" + DateTime.Now.ToString("MM/yyyy"));
                 Session["GeneralDetails"] = obj;
-            }
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -85,7 +89,7 @@ namespace BsmWebApp.Controllers
             lvm.Username = CurrentUser.EmployeeFullName;
            // lvm.MitkanName = CurrentUser.CurYechida.TeurYechida;
 
-            lvm.MitkanName =  ((GeneralObject)Session["GeneralDetails"]).CurYechida;//** CurrentUser.CurYechida;
+            lvm.MitkanName =  ((FilterCachedViewModel)Session["GeneralDetails"]).CurYechida;//** CurrentUser.CurYechida;
        //     lvm.NumYechidot = CurrentUser.Yechidot.Count;
             lvm.Yechidot = new SelectList(CurrentUser.Yechidot, "KodYechida", "TeurYechida", lvm.MitkanName.KodYechida); ;
             lvm.LastDateCalc = GatLastTaarichOfCalc();
@@ -103,11 +107,11 @@ namespace BsmWebApp.Controllers
         //    //    return null;
         //    //}
         //    //else
-        //    //    return ((GeneralObject)Session["GeneralDetails"]);
+        //    //    return ((FilterCachedViewModel)Session["GeneralDetails"]);
         //}
         private string GatLastTaarichOfCalc()
         {
-            GeneralObject obG = ((GeneralObject)Session["GeneralDetails"]);
+            FilterCachedViewModel obG = ((FilterCachedViewModel)Session["GeneralDetails"]);
             IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
             string taarich = Gmanager.GetLastTaarichcalc(obG.CurMonth, obG.CurYechida.KodYechida);//CurrentUser.CurYechida.KodYechida);
             if (taarich != "")
@@ -137,7 +141,7 @@ namespace BsmWebApp.Controllers
         public void ChangeMitkan(int mitkan)
         {
             Yechida yechida = CurrentUser.Yechidot.SingleOrDefault(y => y.KodYechida == mitkan);
-            GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
+            FilterCachedViewModel obj = (FilterCachedViewModel)Session["GeneralDetails"];
             obj.CurYechida = yechida; ;
             Session["GeneralDetails"] = obj;
         }
@@ -145,8 +149,17 @@ namespace BsmWebApp.Controllers
         // public ActionResult ChangeMonth(string month,string model) 
         public void ChangeMonth(string month)
         {
-            GeneralObject obj = (GeneralObject)Session["GeneralDetails"];
+            FilterCachedViewModel obj = (FilterCachedViewModel)Session["GeneralDetails"];
             obj.CurMonth = DateTime.Parse(month);
+            Session["GeneralDetails"] = obj;
+            // return View();
+        }
+
+
+        public void ChangeEzor(string ezor)
+        {
+            FilterCachedViewModel obj = (FilterCachedViewModel)Session["GeneralDetails"];
+            obj.Ezor = int.Parse(ezor);
             Session["GeneralDetails"] = obj;
             // return View();
         }
@@ -178,9 +191,9 @@ namespace BsmWebApp.Controllers
             var months = GetMonthsBackList(6);
             vm.Months = new SelectList(months, "Id", "Val");
             vm.SelectedMonth = months[0].Id;
-            var ezors = GetEzorList();
-            ezors.Insert(0,new TeurEzor(0, "בחר הכל"));
-            var ezorsToUser = CurrentUser.Yechidot.GroupBy(e => e.KodEzor).ToList();
+            var ezors = GetEzorList().OrderBy(e=>e.KOD_EZOR).ToList();
+            ezors.Insert(0,new TeurEzor(0, "בחר אזור"));
+            var ezorsToUser = CurrentUser.Yechidot.GroupBy(e => e.KodEzor).ToList();      
             vm.Ezors = new SelectList(ezors, "KOD_EZOR", "TEUR_EZOR");
             if (ezorsToUser.Count == 1)
                 vm.SelectedEzor = ezorsToUser[0].Key;
@@ -190,10 +203,10 @@ namespace BsmWebApp.Controllers
 
             IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
 
-            var taarich = Gmanager.GetLastDateIdkunBank(((GeneralObject)Session["GeneralDetails"]).CurMonth);
+            var taarich = Gmanager.GetLastDateIdkunBank(((FilterCachedViewModel)Session["GeneralDetails"]).CurMonth);
             if (taarich != DateTime.MinValue)
             {
-                vm.LastDateIdkunBank = taarich;// Gmanager.GetLastDateIdkunBank(((GeneralObject)Session["GeneralDetails"]).CurMonth);
+                vm.LastDateIdkunBank = taarich;// Gmanager.GetLastDateIdkunBank(((FilterCachedViewModel)Session["GeneralDetails"]).CurMonth);
                 vm.LastDateIdkunBankStr = string.Concat("יום ", DateHelper.getDayHeb(vm.LastDateIdkunBank.AddDays(-1)), " ,", vm.LastDateIdkunBank.AddDays(-1).ToShortDateString());
 
                 //if (DateTime.Now <LastDateIdkunBank && CurrentUser.GetSugPeilutHatshaa("Budget") == eSugPeiluHarshaa.Update)
@@ -225,7 +238,7 @@ namespace BsmWebApp.Controllers
             if (user != null)
             {
                
-                GeneralObject obj = Session["GeneralDetails"] as GeneralObject;
+                FilterCachedViewModel obj = Session["GeneralDetails"] as FilterCachedViewModel;
                 obj.CurYechida = obj.CurYechida;// user.Yechidot[0];
                 obj.CurMonth = obj.CurMonth;// DateTime.Parse("01/" + DateTime.Now.ToString("MM/yyyy"));
                 Session["GeneralDetails"] = obj;

@@ -22,7 +22,8 @@
             <label class="TextBold"> מספר תקציב:</label>
         </div>
         <div class="col-md-3">
-            <input id="inputTakziv" style="width: 100px;background-color:lightgrey"  value="@Model.NewTakziv" readonly="readonly" onfocus="this.select();" maxlength="4"  class="styleTBSearch GeneralText TextBoxRO" />
+            <input id="inputTakziv"  value="@Model.NewTakziv" disabled="disabled" 
+                onfocus="this.select();" maxlength="3"  class="styleTBSearch GeneralText TextBoxRO AmountInput" />
         </div>
         <div class="col-md-1">
             <label class="TextBold"> הנמקה:</label>
@@ -46,6 +47,7 @@
     var data;
 
     $(document).ready(function () {
+       
         var model = @Html.Raw(Json.Encode(Model));
         data=model;
     });
@@ -69,7 +71,7 @@
              var dataNew = { Name: NameTakziv, Kamut: KamutTakziv, Takziv: MisparTakziv, Comment: inputReson };
            // debugger;
             $.post("/Changes/SaveNewBudget", dataNew, function (res) {
-                // AlertMessage("תקציב נוצר בהצלחה", 170, 300)
+               //  AlertMessage("תקציב נוצר בהצלחה", 170, 300)
                 $("#dialog-change").dialog("close");
                 $("#dialog-new-budget").dialog("close");
                 data.AddNewSucceeded=1;

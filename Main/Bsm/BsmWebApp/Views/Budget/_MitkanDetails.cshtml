@@ -122,7 +122,7 @@
     //});
     $(function () {
         $("#dialog-info").dialog({
-            autoOpen: false, width: 600, height: 305, modal: true,
+            autoOpen: false, width: 750, height: 305, modal: true,
             buttons: {
                 "סגור": function () {
                     $(this).dialog("close");
@@ -131,6 +131,7 @@
         });
     });
     function ShowBudgetInformation() {
+        jQuery.ajaxSetup({ cache: false });
         var url = "Budget/GetInformationBudget";
         $("#dialog-info").html("")
         .dialog("option", "title", "מידע נוסף")

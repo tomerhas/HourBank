@@ -59,7 +59,7 @@ namespace BsmBL.Managers
                     budget.BudgetUsed = BudgetDal.GetShaotnosafotMeshek(KodYechida, Month);
                     budget.ShaotByMeafyen14 = GetSachMeafyen14(KodYechida, Month);
                     budget.YitratTakzivToDivide = GetBudgetLeft(KodYechida, Month);// budget.BudgetVal - budget.ShaotByMeafyen14;
-                    budget.BudgetVal = BudgetDal.GetFullBudgetToMitkan(KodYechida, Month) + GetBudgetLeft(KodYechida, Month.AddMonths(-1));   
+                    budget.BudgetVal = BudgetDal.GetFullBudgetToMitkan(KodYechida, Month);// +GetBudgetLeft(KodYechida, Month.AddMonths(-1));   
                 }
             }
 
