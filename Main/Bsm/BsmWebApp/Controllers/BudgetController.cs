@@ -330,14 +330,14 @@ namespace BsmWebApp.Controllers
             return  PartialView("_DisplayChangesPopUp",vm);
         }
 
-        public JsonResult GetMisparIshiWith(string startsWith) //, int kod, DateTime tarrich)
+        public JsonResult GetMisparIshiWith(string str) //, int kod, DateTime tarrich)
         {
             int inpValidate = -1;
             List<BudgetEmployeeGrid> employees = (List<BudgetEmployeeGrid>)(Session["EmployeesGrid"]);
-            if (!int.TryParse(startsWith, out inpValidate))
+            if (!int.TryParse(str, out inpValidate))
             {
                 var namelist = employees
-                    .Where(x => x.FullName.ToString().StartsWith(startsWith))
+                    .Where(x => x.FullName.ToString().StartsWith(str)) //Contains(str))
                     .Select(x => x.FullName).ToList();
                 namelist.Sort();
 
@@ -347,7 +347,7 @@ namespace BsmWebApp.Controllers
             {
               
                 var listIds = employees
-                    .Where(x => x.MisparIshi.ToString().StartsWith(startsWith))
+                    .Where(x => x.MisparIshi.ToString().StartsWith(str)) //Contains(str))
                     .Select(x => x.MisparIshi).ToList();
 
                 listIds.Sort();

@@ -59,7 +59,9 @@
         <div id="GeneralTitle">מערכת ניהול שעות עבודה משק</div>
     </div>
 
-    <div id="divProgress" class="Progress">
+    <div id="divProgress" class="Progress TextBoxRO GeneralText">
+        <br /> 
+        אנא המתן . . .
     </div>
     @* // @if (MenuModel != null)
  // {     
@@ -154,6 +156,11 @@
                         //console.log("User is active. stopping timer");
                         if (responedToWarningTimer)
                             clearTimeout(responedToWarningTimer);
+                        jQuery.ajax({
+                            url: '/Budget/RecommenceSession',
+                            type: 'POST',
+                            contentType: 'application/json'
+                        });
                         $(this).dialog("close");
                     }
                 }

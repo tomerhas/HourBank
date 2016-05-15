@@ -68,7 +68,7 @@ namespace BsmWebApp.Controllers
             }
             else 
             {
-                ViewBag.Img = "~/Content/Images/warning.png";
+                ViewBag.Img = "~/Content/Images/alert_icon.png";
                 ViewBag.ErrorMessege = ".ארעה שגיאה במערכת. אנא פנה למנהל מערכת";
                 return View("Error");
             }

@@ -200,6 +200,7 @@
     <Content Include="Content\Images\alert hover.png" />
     <Content Include="Content\Images\alert press.png" />
     <Content Include="Content\Images\alert.png" />
+    <Content Include="Content\Images\alert_icon.png" />
     <Content Include="Content\Images\arrow_next.png" />
     <Content Include="Content\Images\arrow_prev_disabled.png" />
     <Content Include="Content\Images\arrow_disabled.png" />
@@ -240,6 +241,7 @@
     <Content Include="Content\Images\progress-bar_2.gif" />
     <Content Include="Content\Images\progress.gif" />
     <Content Include="Content\Images\progress_bar.gif" />
+    <Content Include="Content\Images\progress_bar_01.gif" />
     <Content Include="Content\Images\Rectangle 42.png" />
     <Content Include="Content\Images\refresh.png" />
     <Content Include="Content\Images\refresh_h.png" />

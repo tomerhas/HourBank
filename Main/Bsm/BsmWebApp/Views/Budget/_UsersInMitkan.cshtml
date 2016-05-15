@@ -16,7 +16,7 @@
              // dataTextField: "SiteName",
              // dataTextField: "MisparIshi",
              // dataValueField: "MisparIshi",
-             filter: "startswith",
+             filter: "str",
              minLength: 1,
              maxLength:5,
              dataSource: {
@@ -31,7 +31,7 @@
                          }, //read
                      parameterMap: function () {// send value of autocomplete as the "startsWith" parameter
                          return {
-                             startsWith: $("#MisparIshi").data("kendoAutoComplete").value()
+                             str: $("#MisparIshi").data("kendoAutoComplete").value()
                          };
                      }
                  } //transport
@@ -119,132 +119,135 @@
                 <a id="cancel" class="PurpleTextBoldLink pointer k-grid-cancel-changes k-cancel" href="#" onclick="ModifyGrid('cancel');">בטל שינויים</a>
             </div>
         </div>
-    </div>
-    <div class="bgGray">
-        <div class="BgFirstTitleGrid">
-            <div class="col-md-8 divFirstHeader" style="padding-top: 5px">
-                <label class="TextBold">נתוני עובד</label>
-            </div>
+    </div>@*
+    <div id="divGrid" style="width:100%;height:580px;"   >
+        <div >*@
+        <div class="bgGray">
+            <div class="BgFirstTitleGrid">
+                <div class="col-md-8 divFirstHeader" style="padding-top: 5px">
+                    <label class="TextBold">נתוני עובד</label>
+                </div>
 
-            <div class="col-md-4 divFirstHeader" style="padding-left: 1px; border-right: 1px solid white; padding-top: 5px">
-                <label class="TextBold">נתוני הקצאה לחודש נוכחי</label>
+                <div class="col-md-4 divFirstHeader" style="padding-left: 1px; border-right: 1px solid white; padding-top: 5px">
+                    <label class="TextBold">נתוני הקצאה לחודש נוכחי</label>
+                </div>
             </div>
         </div>
-    </div>
  
-    <div class="bgGray">
+        <div  class="bgGray k-rtl">@* style="height:560px;overflow-y:scroll;">*@
     
-        @{
-            //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
-            //Html.Kendo().Grid(Model.UsersInMitkan.Employees)
-            Html.Kendo().Grid<BsmCommon.DataModels.Budgets.BudgetEmployeeGrid>()
-               .Name("EmployeesList").Columns(columns =>
-               {
-               //  columns.Bound(o => o.MisparIshi).ClientTemplate("#=GetImage(data.MisparIshi)#").HtmlAttributes(new { style = "text-align: center; width: 30%; min-width: 60px;" });
-
-
-               //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  value='ff'   onclick='OpenKds();'   />").Width(80);
-               columns.Template(o => o.MisparIshi).ClientTemplate("<img src='../../Content/Images/pai.png' onclick='OpenKds(#= MisparIshi #);' />").HtmlAttributes(new { @class = "pointer" , @id = ("tdKds#= Masad #") });  //http://kds/Modules/Ovdim/NochechutMerukezet.aspx
-               columns.Bound(o => o.MisparIshi).Title("מספר אישי");
-               columns.Bound(o => o.FullName).Title("שם עובד").HtmlAttributes(new { @id = "tdName" });
-               columns.Bound(o => o.TeurIsuk).Title("עיסוק");
-               columns.Bound(o => o.AlTikni).Title("על תקני");
-               columns.Bound(o => o.TeurMutamut).Title("מותאם");
-               columns.Bound(o => o.TeurGil).Title("גיל");
-               columns.Bound(o => o.MichsaYomit).Title("מכסה יומית");
-               columns.Bound(o => o.NosafotPrev).Title("הקצאה לחודש קודם").HtmlAttributes(new { @id = ("tdPrevMonth#= Masad #") });
-               columns.Bound(o => o.MichsaCur).Title("הקצאת שעות").HtmlAttributes(new { @id = ("tdMichsa#= Masad #") ,  onfocusin = "focusInput(this);", onchange = "CheakValid(this);", @class = "CellEditGrid" }).Width(80);
-               columns.Bound(o => o.ShaotShebuzu).Title("שעות שבוצעו").HtmlAttributes(new { @id = ("tdShaotUsed#= Masad #") });
-               columns.Bound(o => o.Paar).Title("פער").HtmlAttributes(new { @id = ("tdPaar") });//.ClientTemplate("<div style='direction:ltr'>#= Paar #</div>");//.HtmlAttributes(new { style = " direction:ltr;" });
-               columns.Bound(o => o.ReadOnly).Hidden();
-
-
-               // columns.Bound(o => o.MisparIshi).Filterable(false).Width(125).ClientTemplate(Html.Kendo().NumericTextBox().Name("mp_sss").Min(0).HtmlAttributes(new { value = "#=o.MisparIshi#", style = "width: 100px;" }).ToClientTemplate().ToHtmlString());
-               // onclick="ShowPopUp('@Html.DisplayFor(model => model.KodMitkan)','@Html.DisplayFor(model => model.MitkanName)','@Html.ValueFor(model => model.Month, "{0:dd/MM/yyyy}")');
-               //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  style='float: right;'  value='הפק דוח' onclick='ShowReportNochechut(dataItem.MisparIshi, 4545)'  />").Width(80);
-               ////columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input style='float: right;' type='button' value= 'הפק דוח' onclick='ShowReportNochechut(#= MisparIshi #);'     />").Width(80);
-
-
-               //   columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='submit'  style='float: right;'  value='הפק דוח' name='action:Nochechut' />").Width(80);
-               columns.Bound(o => o.MichsaMakor).HtmlAttributes(new { @id = "tdMakorVal" }).Hidden();
-
-@* columns.Template(o=> @Html.ActionLink("הפק דו''ח","CreateNochechutRdl",new{ovedId=o.MisparIshi})).Width(100);
-                   columns.Template(o=>{
-                                    return string.Format("<a href='#' onclick='ShowPopUp({0});'>פתח</a>",o.MisparIshi);
-                                    }).Width(100);*@
-
-
-                  })
-                   .ToolBar(toolbar =>
+            @{
+                //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
+                //Html.Kendo().Grid(Model.UsersInMitkan.Employees)
+                Html.Kendo().Grid<BsmCommon.DataModels.Budgets.BudgetEmployeeGrid>()
+                   .Name("EmployeesList").Columns(columns =>
                    {
-                       toolbar.Custom().Text("עדכן מכסות").HtmlAttributes(new { @class = "k-grid-save-changes k-update" });
-                       // toolbar.Custom().Text("עדכן מכסות").HtmlAttributes(new { @onclick = "CheckHaveChanges();", @class = "k-grid-save-changes k-update" });
-                       toolbar.Custom().Text("בטל שינויים").HtmlAttributes(new { @class = "k-grid-cancel-changes k-cancel" });
-                   })
-
-                   .Editable(editable => editable.Mode(GridEditMode.InCell))
-                   .Pageable()
-                   .Sortable(c => c.AllowUnsort(false))
+                   //  columns.Bound(o => o.MisparIshi).ClientTemplate("#=GetImage(data.MisparIshi)#").HtmlAttributes(new { style = "text-align: center; width: 30%; min-width: 60px;" });
 
 
+                   //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  value='ff'   onclick='OpenKds();'   />").Width(80);
+                       columns.Template(o => o.MisparIshi).ClientTemplate("<img src='../../Content/Images/pai.png' onclick='OpenKds(#= MisparIshi #);' />").HtmlAttributes(new { @class = "pointer", @id = ("tdKds#= Masad #") }).Width(35);  //http://kds/Modules/Ovdim/NochechutMerukezet.aspx
+                   columns.Bound(o => o.MisparIshi).Title("מספר אישי");
+                   columns.Bound(o => o.FullName).Title("שם עובד").HtmlAttributes(new { @id = "tdName" });
+                   columns.Bound(o => o.TeurIsuk).Title("עיסוק");
+                   columns.Bound(o => o.AlTikni).Title("על תקני");
+                   columns.Bound(o => o.TeurMutamut).Title("מותאם");
+                   columns.Bound(o => o.TeurGil).Title("גיל");
+                   columns.Bound(o => o.MichsaYomit).Title("מכסה יומית");
+                   columns.Bound(o => o.NosafotPrev).Title("הקצאה לחודש קודם").HtmlAttributes(new { @id = ("tdPrevMonth#= Masad #") });
+                   columns.Bound(o => o.MichsaCur).Title("הקצאת שעות").HtmlAttributes(new { @id = ("tdMichsa#= Masad #") ,  onfocusin = "focusInput(this);", onchange = "CheakValid(this);", @class = "CellEditGrid" }).Width(120);
+                   columns.Bound(o => o.ShaotShebuzu).Title("שעות שבוצעו").HtmlAttributes(new { @id = ("tdShaotUsed#= Masad #") });
+                   columns.Bound(o => o.Paar).Title("פער").HtmlAttributes(new { @id = ("tdPaar") });//.ClientTemplate("<div style='direction:ltr'>#= Paar #</div>");//.HtmlAttributes(new { style = " direction:ltr;" });
+                   columns.Bound(o => o.ReadOnly).Hidden();
 
-                  //.Filterable()
-                   .Events(events => events.DataBound("onDataBound"))
-                   // .Events(events => events.Change("onChange").Remove("YourFunctionForAfterDelete")
-                   //.Editable(editable => editable.Mode(GridEditMode.InmaxlengthCell)) // Use in-cell editing mode
-                   .DataSource(dataSource =>
-                       dataSource.Ajax()
-                           .PageSize(12)
-                           .ServerOperation(false)
-                           .Batch(true) // Enable batch updates
-                           .Model(model =>
-                           {
-                               model.Id(employee => employee.MisparIshi); // Specify the property which is the unique identifier of the model
 
-                               model.Field(employee => employee.MisparIshi).Editable(false);
-                               model.Field(employee => employee.FullName).Editable(false);
-                               model.Field(employee => employee.TeurIsuk).Editable(false);
-                               model.Field(employee => employee.AlTikni).Editable(false);
-                               model.Field(employee => employee.TeurMutamut).Editable(false);
-                               model.Field(employee => employee.TeurGil).Editable(false);
-                               model.Field(employee => employee.MichsaYomit).Editable(false);
-                               model.Field(employee => employee.NosafotPrev).Editable(false);
-                               model.Field(employee => employee.NosafotCur).Editable(false);
-                               model.Field(employee => employee.ShaotShebuzu).Editable(false);
-                               model.Field(employee => employee.MichsaCur).Editable(DateTime.Now < Model.Filter.LastDateIdkunBank ? true : false);
-                               model.Field(employee => employee.Paar).Editable(false);
-                           })
-                           //  .Read(read => read.Action("EmployeesInMitkanRead", "Budget", new { UsersInMitkan = Model.UsersInMitkan })) 
-                       .Read(read => read.Action("EmployeesInMitkanRead", "Budget", new { KodYechida = Model.KodMitkan, month = Model.Month }))  // Action method invoked when the grid needs data
-                           //.Create(create => create.Action("Products_Create", "Home")) // Action method invoked when the user saves a new data item
-                       .Update(update => update.Action("EmployeesInMitkanUpdate", "Budget", new { KodYechida = Model.KodMitkan, month = Model.Month })) //"additionalInfo"))  // Action method invoked when the user saves an updated data item
+                   // columns.Bound(o => o.MisparIshi).Filterable(false).Width(125).ClientTemplate(Html.Kendo().NumericTextBox().Name("mp_sss").Min(0).HtmlAttributes(new { value = "#=o.MisparIshi#", style = "width: 100px;" }).ToClientTemplate().ToHtmlString());
+                   // onclick="ShowPopUp('@Html.DisplayFor(model => model.KodMitkan)','@Html.DisplayFor(model => model.MitkanName)','@Html.ValueFor(model => model.Month, "{0:dd/MM/yyyy}")');
+                   //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  style='float: right;'  value='הפק דוח' onclick='ShowReportNochechut(dataItem.MisparIshi, 4545)'  />").Width(80);
+                   ////columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input style='float: right;' type='button' value= 'הפק דוח' onclick='ShowReportNochechut(#= MisparIshi #);'     />").Width(80);
 
-                       .Events(events =>
+
+                   //   columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='submit'  style='float: right;'  value='הפק דוח' name='action:Nochechut' />").Width(80);
+                   columns.Bound(o => o.MichsaMakor).HtmlAttributes(new { @id = "tdMakorVal" }).Hidden();
+
+    @* columns.Template(o=> @Html.ActionLink("הפק דו''ח","CreateNochechutRdl",new{ovedId=o.MisparIshi})).Width(100);
+                       columns.Template(o=>{
+                                        return string.Format("<a href='#' onclick='ShowPopUp({0});'>פתח</a>",o.MisparIshi);
+                                        }).Width(100);*@
+
+
+                      })
+                       .ToolBar(toolbar =>
                        {
-                           events.Error("onError");
+                           toolbar.Custom().Text("עדכן מכסות").HtmlAttributes(new { @class = "k-grid-save-changes k-update" });
+                           // toolbar.Custom().Text("עדכן מכסות").HtmlAttributes(new { @onclick = "CheckHaveChanges();", @class = "k-grid-save-changes k-update" });
+                           toolbar.Custom().Text("בטל שינויים").HtmlAttributes(new { @class = "k-grid-cancel-changes k-cancel" });
                        })
-                   // .Events(events => events.Error("onError"))
 
-                   //   .Events(events => events.RequestEnd("onGridRequestEnd"))
-                   //.Destroy(destroy => destroy.Action("Products_Destroy", "Home")) // Action method invoked when the user removes a data item
+                       .Editable(editable => editable.Mode(GridEditMode.InCell))
+                       .Pageable() // scroll
+                       .Sortable(c => c.AllowUnsort(false))// scroll
+                    // .Scrollable(scr => scr.Height(500)) // scroll
+                    
+                      //.Filterable()
+                       .Events(events => events.DataBound("onDataBound"))
+                       // .Events(events => events.Change("onChange").Remove("YourFunctionForAfterDelete")
+                       //.Editable(editable => editable.Mode(GridEditMode.InmaxlengthCell)) // Use in-cell editing mode
+                       .DataSource(dataSource =>
+                           dataSource.Ajax()
+                               .PageSize(12) //scroll
+                               .ServerOperation(false)
+                               .Batch(true) // Enable batch updates
+                               .Model(model =>
+                               {
+                                   model.Id(employee => employee.MisparIshi); // Specify the property which is the unique identifier of the model
 
-                       // .Update(update => update
-                   // .Action("EmployeesInMitkanUpdate", "Budget"))  // Action invoked when the user saves an updated data item
-                   // .Events(events => events.SaveChanges("CheckHaveChanges"))
-                       )
-                   /*  .Events(events => events.SaveChanges(
-                           @<text>
-                             function(e) {
-                             alert("jj");
-                           CheckHaveChanges();
-                             }
-                             </text>
-                             ))*/
-                  .Render();
+                                   model.Field(employee => employee.MisparIshi).Editable(false);
+                                   model.Field(employee => employee.FullName).Editable(false);
+                                   model.Field(employee => employee.TeurIsuk).Editable(false);
+                                   model.Field(employee => employee.AlTikni).Editable(false);
+                                   model.Field(employee => employee.TeurMutamut).Editable(false);
+                                   model.Field(employee => employee.TeurGil).Editable(false);
+                                   model.Field(employee => employee.MichsaYomit).Editable(false);
+                                   model.Field(employee => employee.NosafotPrev).Editable(false);
+                                   model.Field(employee => employee.NosafotCur).Editable(false);
+                                   model.Field(employee => employee.ShaotShebuzu).Editable(false);
+                                   model.Field(employee => employee.MichsaCur).Editable(DateTime.Now < Model.Filter.LastDateIdkunBank ? true : false);
+                                   model.Field(employee => employee.Paar).Editable(false);
+                               })
+                               //  .Read(read => read.Action("EmployeesInMitkanRead", "Budget", new { UsersInMitkan = Model.UsersInMitkan })) 
+                           .Read(read => read.Action("EmployeesInMitkanRead", "Budget", new { KodYechida = Model.KodMitkan, month = Model.Month }))  // Action method invoked when the grid needs data
+                               //.Create(create => create.Action("Products_Create", "Home")) // Action method invoked when the user saves a new data item
+                           .Update(update => update.Action("EmployeesInMitkanUpdate", "Budget", new { KodYechida = Model.KodMitkan, month = Model.Month })) //"additionalInfo"))  // Action method invoked when the user saves an updated data item
+
+                           .Events(events =>
+                           {
+                               events.Error("onError");
+                           })
+                       // .Events(events => events.Error("onError"))
+
+                       //   .Events(events => events.RequestEnd("onGridRequestEnd"))
+                       //.Destroy(destroy => destroy.Action("Products_Destroy", "Home")) // Action method invoked when the user removes a data item
+
+                           // .Update(update => update
+                       // .Action("EmployeesInMitkanUpdate", "Budget"))  // Action invoked when the user saves an updated data item
+                       // .Events(events => events.SaveChanges("CheckHaveChanges"))
+                           )
+                       /*  .Events(events => events.SaveChanges(
+                               @<text>
+                                 function(e) {
+                                 alert("jj");
+                               CheckHaveChanges();
+                                 }
+                                 </text>
+                                 ))*/
+                      .Render();
    
-        }
-        
-    </div>@*
+            }
+      @*  </div>
+        </div>*@
+     </div>   
+        @*
     <input id="idTest"  type="text" value="ffff"/>*@
     <div id="dialog-confirm"></div>
   
@@ -273,7 +276,7 @@
         }
     }*@
 
-
+   
     function focusInput(val){
 
        // debugger;
@@ -327,7 +330,6 @@
             DisableElements();
 
        // $('#idTest').attr("disabled", '' );
-
     });
 
     function DisableElements()
