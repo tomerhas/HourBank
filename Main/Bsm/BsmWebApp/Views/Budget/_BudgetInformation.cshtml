@@ -50,12 +50,16 @@
 
 <div class="row" style="padding-top: 18px">
     <div class="col-md-3">
-          <label  class="TextBoxRO GeneralText"  style="width: 100px;border:none;background-color:white">
-               @Html.DisplayFor(model => model.Budget.BudgetLefiTeken)
-          </label> 
+         <input   type="text"  disabled  class="TextBoxRO GeneralText" value="@Model.Budget.BudgetLefiTeken" style="width: 130px;padding-right:7px;border:none;  margin-left: -35px; background-color:white" /> 
+         <input id="btnAlert" class="alertImg pointer" onfocus="this.blur();" onclick="this.blur(); ShowInfo();"   style="position: relative;background-color:white" type="text" /> 
+      
+      @*    <label  class="alertImg pointer TextBoxRO GeneralText"  style="width: 100px;border:none;background-color:white">
+           
+          @Html.DisplayFor(model => model.Budget.BudgetLefiTeken)
+          </label> *@
     </div>
       <div class="col-md-2">
-          <label  class="TextBoxRO GeneralText"  style="width: 100px;border:none;background-color:white">
+          <label  id="txtMichsa" class="TextBoxRO GeneralText"  style="width: 100px;border:none;background-color:white">
                @Html.DisplayFor(model => model.YitraPrevMonth)
           </label> 
     </div>
@@ -87,21 +91,50 @@
     </div>
   </div>
      
+      <div id="Dialog-Info">
+           @{
+           <div class="row" >
+             <div class="col-md-6">
+                  <label  class="GeneralText" > מכסה בסיסית:</label> 
+             </div>
+                <label   class="GeneralText" >  @Html.DisplayFor(model => model.Budget.MichsaBasic) </label> 
+           </div>
+          <div class="row" >
+             <div class="col-md-6">
+                  <label  class="GeneralText"   > גיל:</label> 
+             </div>
+              <label  class="GeneralText" >  @Html.DisplayFor(model => model.Budget.Age) </label> 
+           </div>
+           <div class="row" >
+             <div class="col-md-6">
+                  <label  class="GeneralText"   > הלבשה:</label> 
+             </div>
+               <label  class="GeneralText" >  @Html.DisplayFor(model => model.Budget.Halbasha) </label> 
+           </div>
+           <div class="row" >
+             <div class="col-md-6">
+                  <label  class="GeneralText"   > איזון מצבת:</label> 
+             </div>
+                     <label id="lblIzun" class="GeneralText" style="direction:ltr" >  @Html.DisplayFor(model => model.Budget.IzunMatzevet) </label> 
+           </div>
+           }
+    </div>
+     
      <div id="Dialog-Box">
           <div class="t-rtl">
             @{
-                //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
-                Html.Kendo().Grid(Model.BudgetChanges)
-                   .Name("BudgetChangesList").Columns(columns =>
-                   {
-                       columns.Bound(o => o.BudgetChange.TaarichIdkun).Title("<center><strong>תאריך</strong></center>").Format("{0:dd/MM/yyyy}").Width(50);               
-                       columns.Bound(o => o.BudgetChange.MeadkenName).Title("<center><strong>מעדכן</strong></center>").Width(50);
-                       columns.Bound(o => o.BudgetChange.ValToDisplay).Title("<center><strong>הפחתה/הוספה</strong></center>").Width(50);//.HtmlAttributes(new { style = " direction:ltr;" });
-                       columns.Bound(o => o.BudgetChange.Reason).Title("<center><strong>הנמקה</strong></center>").Width(50);
+         //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
+         Html.Kendo().Grid(Model.BudgetChanges)
+            .Name("BudgetChangesList").Columns(columns =>
+            {
+                columns.Bound(o => o.BudgetChange.TaarichIdkun).Title("<center><strong>תאריך</strong></center>").Format("{0:dd/MM/yyyy}").Width(50);
+                columns.Bound(o => o.BudgetChange.MeadkenName).Title("<center><strong>מעדכן</strong></center>").Width(50);
+                columns.Bound(o => o.BudgetChange.ValToDisplay).Title("<center><strong>הפחתה/הוספה</strong></center>").Width(50);//.HtmlAttributes(new { style = " direction:ltr;" });
+                columns.Bound(o => o.BudgetChange.Reason).Title("<center><strong>הנמקה</strong></center>").Width(50);
 
 
-                   })
-                   .Render();
+            })
+            .Render();
             }
         </div>
     </div>
@@ -109,6 +142,11 @@
   
 
 <script>
+    $(document).load(function () {
+        
+        alert($("#lblIzun").val());
+    });
+
     function ShowChanges() {
          $('#Dialog-Box').dialog('open');     
     }
@@ -124,5 +162,18 @@
         }
     });
 
-
+    function ShowInfo() {
+        $('#Dialog-Info').dialog('open');
+    }
+    $('#Dialog-Info').dialog({
+        autoOpen: false,
+        title: "שעות נוספות תקציב",
+        width: 300,
+        modal: false,
+        buttons: {
+            "סגור": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
 </script>

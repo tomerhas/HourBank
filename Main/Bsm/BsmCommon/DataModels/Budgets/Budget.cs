@@ -59,6 +59,18 @@ namespace BsmCommon.DataModels.Budgets
         [Column("BAKASHA_ID")]
         public long BakashaId { get; set; }
 
+        [Column("MICHSA_BASIC")]
+        public decimal MichsaBasic { get; set; }
+
+        [Column("AGE_ADDITION")]
+        public decimal Age { get; set; }
+         
+        [Column("HALBASHA_ADDITION")]
+        public decimal Halbasha { get; set; }
+
+        [Column("IZUN_MATZEVET_LETEKEN")]
+        public decimal IzunMatzevet { get; set; }
+        	 
         //public List<BudgetChange> BudgetChanges { get; set; }
 
         //[Display(Name = "יתרת מחודש קודם")]

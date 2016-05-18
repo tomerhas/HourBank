@@ -146,7 +146,7 @@
 
 
                    //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  value='ff'   onclick='OpenKds();'   />").Width(80);
-                       columns.Template(o => o.MisparIshi).ClientTemplate("<img src='../../Content/Images/pai.png' onclick='OpenKds(#= MisparIshi #);' />").HtmlAttributes(new { @class = "pointer", @id = ("tdKds#= Masad #") }).Width(35);  //http://kds/Modules/Ovdim/NochechutMerukezet.aspx
+                       columns.Template(o => o.MisparIshi).ClientTemplate("<img src='../../Content/Images/pai.png' onclick='OpenKds(#= MisparIshi #);' /><img src='../../Content/Images/warning_kds.png' id='warIcon' style='margin-right:7px'  title='קיים סידור ללא שעת התחלה או שעת גמר'  />").HtmlAttributes(new { @class = "pointer", @id = ("tdKds#= Masad #") }).Width(50);  //http://kds/Modules/Ovdim/NochechutMerukezet.aspx
                    columns.Bound(o => o.MisparIshi).Title("מספר אישי");
                    columns.Bound(o => o.FullName).Title("שם עובד").HtmlAttributes(new { @id = "tdName" });
                    columns.Bound(o => o.TeurIsuk).Title("עיסוק");
@@ -169,7 +169,7 @@
 
                    //   columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='submit'  style='float: right;'  value='הפק דוח' name='action:Nochechut' />").Width(80);
                    columns.Bound(o => o.MichsaMakor).HtmlAttributes(new { @id = "tdMakorVal" }).Hidden();
-
+                   columns.Bound(o => o.MisSign).HtmlAttributes(new { @id = "tdMisSign" }).Hidden();
     @* columns.Template(o=> @Html.ActionLink("הפק דו''ח","CreateNochechutRdl",new{ovedId=o.MisparIshi})).Width(100);
                        columns.Template(o=>{
                                         return string.Format("<a href='#' onclick='ShowPopUp({0});'>פתח</a>",o.MisparIshi);
@@ -618,11 +618,13 @@
         var now= new Date();
         var model = @Html.Raw(Json.Encode(Model));
         var num=0;
+        
         trs.each(function () {
             var dt = grid.dataItem($(this));
             if (dt.dirty == true) {
                 grid._modelChange({ field: "MichsaCur", model: dt });
             }
+           
             if(dt.Paar.toString().indexOf("-")>-1)
             {
                 var val = dt.Paar.toString().split("-");
@@ -633,7 +635,11 @@
                $(this).find('td.CellEditGrid').prop('disabled', true ).css('color','#bbbbbb'); 
                $(this).find('td.CellEditGrid').removeClass('CellEditGrid').addClass("tdGridDisabled");    //.attr('readonly', true).css( 'color','#bbbbbb'); 
             }
-       
+            
+            if(dt.MisSign == 0){
+                var id ='td#tdKds'+dt.Masad; 
+                $(this).find(id).find('#warIcon').css("display", "none");
+            }
         });
      
         SimunEdit();

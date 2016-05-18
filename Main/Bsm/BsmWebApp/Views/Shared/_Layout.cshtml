@@ -66,16 +66,27 @@
     @* // @if (MenuModel != null)
  // {     
     *@<div>
-        @if (MenuModel.Yechidot.Count() == 1)
-        {
-            <span class="col-md-7 text-left name">שם מוסך: @MenuModel.MitkanName.TeurYechida |</span>
-        }
-        else
-        {
-            <span class="col-md-7 text-left name">@Html.DropDownListFor(m => @MenuModel.MitkanName.KodYechida, @MenuModel.Yechidot, new { onchange = "ChangeCurrentMitkan(this.options[this.selectedIndex].value);", @class = "ddlMitkan" })  | </span>@* @*//new { @onchange = "EnableButton();", @class = "ddl" }*@
-                                                
-@*<span class="col-md-7 text-left name">@MenuModel.MitkanName.KodYechida  @Html.DropDownListFor(m =>  @MenuModel.MitkanName.KodYechida, @MenuModel.Yechidot, new { autopostback = "false" , onchange = "document.location.href = '/Budget/Index?mitkan=' + this.options[this.selectedIndex].value;", @class = "ddlMitkan" })  | </span>*@ @*//new { @onchange = "EnableButton();", @class = "ddl" }*@
-        }
+          @{
+             
+                string CurrentURL = Request.FilePath;
+                
+                if(CurrentURL != "/Changes")
+                {
+                    if (MenuModel.Yechidot.Count() == 1)
+                    {
+                        <span class="col-md-7 text-left name">שם מוסך: @MenuModel.MitkanName.TeurYechida |</span>
+                    }
+                    else
+                    {
+                        <span class="col-md-7 text-left name">@Html.DropDownListFor(m => @MenuModel.MitkanName.KodYechida, @MenuModel.Yechidot, new { onchange = "ChangeCurrentMitkan(this.options[this.selectedIndex].value);", @class = "ddlMitkan" })  | </span>@* @*//new { @onchange = "EnableButton();", @class = "ddl" }*@                              
+                        @*<span class="col-md-7 text-left name">@MenuModel.MitkanName.KodYechida  @Html.DropDownListFor(m =>  @MenuModel.MitkanName.KodYechida, @MenuModel.Yechidot, new { autopostback = "false" , onchange = "document.location.href = '/Budget/Index?mitkan=' + this.options[this.selectedIndex].value;", @class = "ddlMitkan" })  | </span>*@ @*//new { @onchange = "EnableButton();", @class = "ddl" }*@
+                    }
+                }
+                else
+                {
+                      <span class="col-md-7 text-left name">&nbsp;&nbsp; </span>
+                }
+          }
 
         <span class="col-md-1 text-left name">@MenuModel.Username </span>
 

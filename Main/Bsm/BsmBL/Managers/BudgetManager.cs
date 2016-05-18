@@ -375,6 +375,7 @@ namespace BsmBL.Managers
             //   budgetEmployee.NosafotCur = float.Parse(row["Nosafot_Cur"].ToString());
 
             budgetEmployee.ShaotShebuzu = decimal.Parse(row["ShaotShebuzu"].ToString());
+            budgetEmployee.MisSign = int.Parse(row["mis_sign"].ToString());
             var paar = budgetEmployee.ShaotShebuzu - budgetEmployee.MichsaCur;
 
             if (paar < 0)
