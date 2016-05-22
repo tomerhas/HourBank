@@ -117,8 +117,8 @@ namespace BsmBL.Managers
            // budgetChange.Masad = int.Parse(row["MASAD"].ToString());
             budgetChange.Kod_Yechida = int.Parse(row["KOD_YECHIDA"].ToString());
             budgetChange.Teur_Yechida = row["TEUR_YECHIDA"].ToString();
-            budgetChange.Takziv = row["Takziv"].ToString()=="0"? "":  row["Takziv"].ToString();
-            budgetChange.Yitra = row["Yitra"].ToString() == "0" ? "" : row["Yitra"].ToString();
+            budgetChange.Takziv =( row["Takziv"].ToString() == "0" || row["Takziv"].ToString() == "") ? "" : String.Format("{0:0.0}", decimal.Parse(row["Takziv"].ToString()));
+            budgetChange.Yitra = (row["Yitra"].ToString() == "0" || row["Yitra"].ToString() == "") ? "" : String.Format("{0:0.0}", decimal.Parse(row["Yitra"].ToString())); 
             erech = row["Niyud"].ToString() == "0" ? "" : row["Niyud"].ToString();
             if (erech.IndexOf('-') > -1)
                 erech =string.Concat((int.Parse(erech) * (-1)).ToString(), "-");
