@@ -111,7 +111,7 @@
              {
 
                  columns.Bound(o => o.Teur_Yechida).Title("מתקן").ClientTemplate("<div><label>#=Teur_Yechida#</label> <div id = 'buttons' style = 'display:none;float:left' ><div style = 'float:left;width:80px'  class='pointer addMin' onclick=\"DisplayDialogTakziv('add')\"><label style = 'padding-right: 32px;' class='PurpleTextBoldLink pointer'>הוסף</label> </div> <div style = 'float:left;width:85px;' class='pointer niyudMin' onclick=\"DisplayDialogTakziv('move')\"><label style = 'padding-right: 37px;' class='PurpleTextBoldLink pointer'>נייד</label> </div> </div></div>")
-                                                                    .HtmlAttributes(new { onmouseover = "ShowButtons(this,\"block\");", onmouseout= "ShowButtons(this,\"none\");" }).Width(500);
+                                                                    .HtmlAttributes(new { id="tdTeurYechida",onmouseover = "ShowButtons(this,\"block\");", onmouseout= "ShowButtons(this,\"none\");" }).Width(500);
                  columns.Bound(o => o.Takziv).Title("תקציב");
                  columns.Bound(o => o.Yitra).Title("יתרה");
                  columns.Bound(o => o.Niyud).Title("ניוד");
@@ -122,6 +122,7 @@
      //  .Editable(editable => editable.Mode(GridEditMode.InCell))
      .Pageable()
      .Sortable(c => c.AllowUnsort(false))
+     .Events(events => events.DataBound("onDataBound"))
       .DataSource(dataSource =>
           dataSource.Ajax()
               .PageSize(12)
@@ -167,7 +168,8 @@
         if(!CanUpdate)
             DisableElements();
 
-     });
+    });
+
     function ShowButtons(obj,val)
     {
         $(obj).find("#buttons").css("display", val); 
@@ -221,6 +223,22 @@
 
     }
     function onDataBound() {
+        var grid = $("#ChangesList").data("kendoGrid");
+        var trs = grid.tbody.find('tr');
+        var now= new Date();
+      
+       
+        trs.each(function () {
+            var dt = grid.dataItem($(this));
+
+            if(!(CanUpdate))
+            {  
+                $(this).find('td#tdTeurYechida').find('#buttons').find(".addMin").disabled="disabled";
+                //$(this).find('td#tdTeurYechida').find('#buttons').find('div.pointer.addMin').unbind
+                //$(this).find('td#tdTeurYechida').find('#buttons')[0].children[0].unbind( "click" );
+               // $(this).find('td#tdTeurYechida').find('#buttons')[0].children[1].unbind( "click" );
+            }
+        });
     }
     function ShowHistory(mitkan)
     {

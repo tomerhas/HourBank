@@ -16,6 +16,9 @@ namespace BsmCommon.DataModels.Changes
 
         [Key, Column("CHODESH", Order = 1)]
         public DateTime Month { get; set; }
+
+
+     
         [Column("BUDGET_LEFT")]
         public decimal BudgetLeftAmount { get; set; }
 

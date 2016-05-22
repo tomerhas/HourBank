@@ -2,17 +2,18 @@
 
     <div>
         <div class="row">
-            <div class="col-md-2">
-                <label class="TextBold"> מתקן מקבל:</label>
-            </div>
-            <div class="col-md-4">
-                @Html.DropDownListFor(m => Model.YechidaIn.KodYechida, Model.YechidotIn, new { @id = "KodMitkanIn", @onchange = "EnableFields();", @class = "ddl", style = "width:250px;height: 29px;" })
-            </div>
+           
             <div class="col-md-2">
                 <label class="TextBold"> מתקן נותן:</label>
             </div>
             <div class="col-md-4">
                 @Html.DropDownListFor(m => Model.YechidaOut.KodYechida, Model.YechidotOut, new { @id = "KodMitkanOut", @onchange = "EnableFields();", @class = "ddl", style = "width: 250px;height: 29px;" })
+            </div>
+             <div class="col-md-2">
+                <label class="TextBold"> מתקן מקבל:</label>
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownListFor(m => Model.YechidaIn.KodYechida, Model.YechidotIn, new { @id = "KodMitkanIn", @onchange = "EnableFields();", @class = "ddl", style = "width:250px;height: 29px;" })
             </div>
         </div>
         <br />
@@ -22,7 +23,7 @@
                 <label class="TextBold"> כמות:</label>
             </div>
             <div class="col-md-3">
-                <input id="inputKamut"  onfocus="this.select();" disabled="disabled"  onkeypress="return isNumberKey(event);"  maxlength="4" class="styleTBSearch GeneralText TextBoxRO AmountInput" />
+                <input id="inputKamut"  onfocus="this.select();" disabled="disabled"   class="styleTBSearch GeneralText TextBoxRO AmountInput" />
             </div>
             <div class="col-md-1">
                 <label class="TextBold"> הנמקה:</label>
@@ -43,7 +44,8 @@
 
 <script>
     $(document).ready(function () {
-        $("#inputKamut").mask('0000000000.0', { placeholder: "" });
+        $("#inputKamut").mask('00000.0', { placeholder: "" });
+
        $('#KodMitkanOut option').each(function (i, item) {
             if (item.text.indexOf(')') > -1) {
                 var split = item.text.split(')')[0].split(' ');

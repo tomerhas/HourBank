@@ -115,19 +115,19 @@ namespace BsmBL.DAL
             }
         }
 
-        public void SaveChangeMitkan(int p_mitkan, DateTime p_chodesh, decimal p_erech, string p_reason, int p_user,int p_type)
+        public void SaveChangeMitkan(int p_mitkan_from, int p_mitkan_to, DateTime p_chodesh, decimal p_erech, string p_reason, int p_user)
         {
             clDal oDal = _container.Resolve<clDal>();
             DataTable dt = new DataTable();
 
             try
             {//מחזיר נתוני עובד: 
-                oDal.AddParameter("p_mitkan", ParameterType.ntOracleInteger, p_mitkan, ParameterDir.pdInput);
+                oDal.AddParameter("p_mitkan_from", ParameterType.ntOracleInteger, p_mitkan_from, ParameterDir.pdInput);
+                oDal.AddParameter("p_mitkan_to", ParameterType.ntOracleInteger, p_mitkan_to, ParameterDir.pdInput);
                 oDal.AddParameter("p_chodesh", ParameterType.ntOracleDate, p_chodesh, ParameterDir.pdInput);
                 oDal.AddParameter("p_erech", ParameterType.ntOracleDecimal, p_erech, ParameterDir.pdInput);
                 oDal.AddParameter("p_reason", ParameterType.ntOracleVarchar, p_reason, ParameterDir.pdInput);
                 oDal.AddParameter("p_user", ParameterType.ntOracleInteger, p_user, ParameterDir.pdInput);
-                oDal.AddParameter("p_type", ParameterType.ntOracleInteger, p_type, ParameterDir.pdInput);
 
                 oDal.ExecuteSP(cProSaveChangeMitkan);
             }

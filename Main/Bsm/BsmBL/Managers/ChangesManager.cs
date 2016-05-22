@@ -43,8 +43,7 @@ namespace BsmBL.Managers
         {
             using (var context = new BsmEntities())
             {
-                return context.BudgetChanges.Where(x => x.KodYechida == KodYechida && x.Month == Month).ToList();
-
+                return context.BudgetChanges.Where(x => (x.FromYechida == KodYechida ||  x.ToYechida == KodYechida )&& x.Month == Month).ToList();
             }
         }
 
@@ -118,7 +117,7 @@ namespace BsmBL.Managers
            // budgetChange.Masad = int.Parse(row["MASAD"].ToString());
             budgetChange.Kod_Yechida = int.Parse(row["KOD_YECHIDA"].ToString());
             budgetChange.Teur_Yechida = row["TEUR_YECHIDA"].ToString();
-            budgetChange.Takziv = row["Takziv"].ToString()=="0"? "": row["Takziv"].ToString();
+            budgetChange.Takziv = row["Takziv"].ToString()=="0"? "":  row["Takziv"].ToString();
             budgetChange.Yitra = row["Yitra"].ToString() == "0" ? "" : row["Yitra"].ToString();
             erech = row["Niyud"].ToString() == "0" ? "" : row["Niyud"].ToString();
             if (erech.IndexOf('-') > -1)
@@ -143,9 +142,9 @@ namespace BsmBL.Managers
             _container.Resolve<IChangesDal>().AddNewTakziv(p_id_takziv, p_teur, p_kamut, p_reason, p_user);
         }
 
-        public void SaveChangeMitkan(int p_mitkan, DateTime p_chodesh, decimal p_erech, string p_reason, int p_user, int p_type)
+        public void SaveChangeMitkan(int p_mitkan_from,int p_mitkan_to, DateTime p_chodesh, decimal p_erech, string p_reason, int p_user)
         {
-            _container.Resolve<IChangesDal>().SaveChangeMitkan(p_mitkan, p_chodesh, p_erech, p_reason, p_user, p_type);
+            _container.Resolve<IChangesDal>().SaveChangeMitkan(p_mitkan_from, p_mitkan_to, p_chodesh, p_erech, p_reason, p_user);
         }
 
         public void SaveReductionMitkan(int p_mitkan, DateTime p_chodesh, decimal p_kamut, string p_reason, int p_user)

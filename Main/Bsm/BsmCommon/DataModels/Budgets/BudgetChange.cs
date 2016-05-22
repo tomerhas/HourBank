@@ -11,8 +11,11 @@ namespace BsmCommon.DataModels.Budgets
     public class BudgetChange
     {
 
-        [Column("KOD_YECHIDA")]
-        public int KodYechida { get; set; }
+        [Column("YECHIDA_FROM")]
+        public int FromYechida { get; set; }
+
+        [Column("YECHIDA_TO")]
+        public int ToYechida { get; set; }
 
         [Column("CHODESH")]
         public DateTime Month { get; set; }
@@ -20,8 +23,8 @@ namespace BsmCommon.DataModels.Budgets
         [Column("ERECH")]
         public int Val { get; set; }
 
-        [Column("TYPE")]
-        public int Type { get; set; }
+        //[Column("TYPE")]
+        //public int Type { get; set; }
          
         [Column("REASON")]
         public string Reason { get; set; }

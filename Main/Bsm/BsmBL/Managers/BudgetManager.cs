@@ -74,7 +74,9 @@ namespace BsmBL.Managers
             {
                 budgetLeft = context.BudgetLeft.FirstOrDefault(x => x.KodYechida == KodYechida && x.Month == Month);
                 if (budgetLeft != null)
-                    return budgetLeft.BudgetLeftAmount;
+                {
+                    return decimal.Parse(String.Format("{0:0.0}", budgetLeft.BudgetLeftAmount));
+                }
             }
             return 0;
         }

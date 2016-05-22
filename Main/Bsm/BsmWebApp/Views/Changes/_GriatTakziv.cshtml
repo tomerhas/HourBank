@@ -12,7 +12,7 @@
                 <label class="TextBold"> כמות:</label>
             </div>
             <div class="col-md-2">      
-                <input id="inputKamut" onkeypress="return isNumberKey(event);" onblur="CheckAmount('input');" disabled="disabled" onfocus="OnFocus(this);" maxlength="4"  class="styleTBSearch GeneralText TextBoxRO AmountInput" />
+                <input id="inputKamut"  onblur="CheckAmount('input');" disabled="disabled" onfocus="OnFocus(this);"    class="styleTBSearch GeneralText TextBoxRO AmountInput" />
             </div>
             <div class="col-md-1">
                
@@ -41,7 +41,7 @@
 <script>
 
     $(document).ready(function () {
-        $("#inputKamut").mask('0000000000.0', { placeholder: "" });
+        $("#inputKamut").mask('00000.0', { placeholder: "" });
 
         $('#KodMitkan option').each(function (i, item) {
             if (item.text.indexOf(')') > -1) {
@@ -78,7 +78,7 @@
 
     function CheckAmount(src) {
         var kamut = getKamut();// $("#inputKamut").val();
-      //  debugger;
+     //   debugger;
        // if (kamut.indexOf("-") > -1)
         //    kamut = kamut.split('-')[0];
         if (kamut != "") {
@@ -91,14 +91,14 @@
                 // $("#btnGria").prop('disabled', true);
                 if(src =="")
                     AlertMessage("לא ניתן לעדכן מעבר ליתרה", 150, 300);
-                return false;
+              //  return false;
             }
-            else {
+          //  else {
                 if (src != "")
                     $("#inputKamut").val(kamut + "-");
-                return true;
+             //   return true;
                // $("#btnGria").prop('disabled', false);
-            }
+           // }
         }
 
 

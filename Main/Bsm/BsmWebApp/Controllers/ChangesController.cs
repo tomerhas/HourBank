@@ -114,8 +114,8 @@ namespace BsmWebApp.Controllers
         {
             var month = ((FilterCachedViewModel)Session["GeneralDetails"]).CurMonth;
             var ManagerChange = _container.Resolve<IChangesManager>();
-            ManagerChange.SaveChangeMitkan(vm.Mitkan, month, vm.Kamut, vm.Comment, CurrentUser.PirteyUser.MisparIshi, (int)TypeChange.Add);
-            ManagerChange.SaveChangeMitkan(vm.MitkanOut, month, vm.Kamut, vm.Comment, CurrentUser.PirteyUser.MisparIshi, (int)TypeChange.Reduction);
+            ManagerChange.SaveChangeMitkan(vm.MitkanOut,vm.Mitkan, month, vm.Kamut, vm.Comment, CurrentUser.PirteyUser.MisparIshi);
+          //  ManagerChange.SaveChangeMitkan(vm.MitkanOut, month, vm.Kamut, vm.Comment, CurrentUser.PirteyUser.MisparIshi, (int)TypeChange.Reduction);
             var budget = _container.Resolve<IBudgetManager>();
             budget.SaveBudgetLeft(vm.Mitkan, month, CurrentUser.PirteyUser.MisparIshi);
             budget.SaveBudgetLeft(vm.MitkanOut, month, CurrentUser.PirteyUser.MisparIshi);
@@ -193,7 +193,7 @@ namespace BsmWebApp.Controllers
 
             List<BudgetSpecial> bs = GetListBudgetSpecialForCombo();
             vm.Budgets = new SelectList(bs, "MisparTakziv", "Description");
-
+   
             if (sv.Takziv != null && sv.Takziv > 0)
             {
                 BudgetSpecial bsp = bs.FirstOrDefault(b => b.MisparTakziv == sv.Takziv);
@@ -236,12 +236,11 @@ namespace BsmWebApp.Controllers
                     yechida.KodYechida = item.KodYechida;
                     shaot = budget.GetBudgetLeftForMitkan(yechida.KodYechida, month);
                     //yechidot.if (shaot != 0)
-                    yechida.TeurYechida = item.TeurYechida + "(יתרת שעות " + shaot + ")";
+                    yechida.TeurYechida = item.TeurYechida + " (יתרת שעות " + shaot + ")";
                     // else yechida.TeurYechida = item.TeurYechida;
                     yechidot.Add(yechida);
                 }
             });
-
             return yechidot;
         }
 

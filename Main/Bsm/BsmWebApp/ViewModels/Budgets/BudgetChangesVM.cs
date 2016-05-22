@@ -12,8 +12,9 @@ namespace BsmWebApp.ViewModels.Budgets
          //public DateTime month;
          public Budget Budget { get; set; }
          public decimal YitraPrevMonth { get; set; }
-         public string LastChange { get; set; }
+        // public string LastChange { get; set; }
          public decimal SumChanges { get; set; }
+         public decimal SachNiyud { get; set; }
          public List<BudgetChangeVM> BudgetChanges { get; set; }
 
           public  BudgetChangesVM()
@@ -28,9 +29,9 @@ namespace BsmWebApp.ViewModels.Budgets
      {
          public BudgetChangeVM(BudgetChange bc)
          {
-             if (bc.Type == 1)
-                 bc.ValToDisplay = bc.Val + "+";
-             else bc.ValToDisplay = bc.Val + "-";
+             //if (bc.Type == 1)
+             //    bc.ValToDisplay = bc.Val + "+";
+             //else bc.ValToDisplay = bc.Val + "-";
              BudgetChange = bc;
          }
          public BudgetChange BudgetChange { get; set; }

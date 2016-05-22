@@ -250,8 +250,7 @@ namespace BsmWebApp.Controllers
 
             vm.SumChanges =  manager.GetExtensionsBudget(KodYechida, chodesh).Sum(x => x.Amount) - manager.GetReductionsBudget(KodYechida, chodesh).Sum(x => x.Amount);
             if(vm.BudgetChanges.Count>0)
-                vm.LastChange = vm.BudgetChanges[vm.BudgetChanges.Count - 1].BudgetChange.ValToDisplay;
-           // var sd = vm.BudgetChanges[0].BudgetChange.TaarichIdkun.ToString().Split(' ')[0];
+                vm.SachNiyud =  vm.BudgetChanges.Where(b => b.BudgetChange.ToYechida == KodYechida).Sum(x => x.BudgetChange.Val) - vm.BudgetChanges.Where(b => b.BudgetChange.FromYechida == KodYechida).Sum(x => x.BudgetChange.Val);
             return PartialView("_BudgetInformation", vm);
         }
        //[HttpGet]
