@@ -232,7 +232,7 @@ namespace BsmWebApp.Controllers
         {
             var manager = _container.Resolve<IChangesManager>();
             var budget = _container.Resolve<IBudgetManager>();
-            
+            //String.Format("{0:0.0}", decimal.Parse(row["Takziv"].ToString()));
             BudgetChangesVM vm = new BudgetChangesVM();
             List<BudgetChangeVM> list = new List<BudgetChangeVM>();
             
@@ -242,7 +242,7 @@ namespace BsmWebApp.Controllers
 
             vm.Budget = budget.GetBudgetDetails(KodYechida, chodesh);
             vm.YitraPrevMonth = budget.GetBudgetLeftForMitkan(KodYechida, chodesh.AddMonths(-1));
-          
+            vm.Budget.BudgetLefiTeken = decimal.Parse(String.Format("{0:0.0}", vm.Budget.BudgetLefiTeken));
             
            var changes = manager.GetBudgetChanges(KodYechida, chodesh);
             changes.ForEach(x => list.Add(new BudgetChangeVM(x)));

@@ -64,6 +64,7 @@ namespace BsmCommon.DataModels.Budgets
         public decimal MichsaBasic { get; set; }
 
         [Column("AGE_ADDITION")]
+        [DisplayFormat(DataFormatString = "{0:n1}")]
         public decimal Age { get; set; }
          
         [Column("HALBASHA_ADDITION")]

@@ -120,12 +120,12 @@ namespace BsmBL.Managers
             budgetChange.Takziv =( row["Takziv"].ToString() == "0" || row["Takziv"].ToString() == "") ? "" : String.Format("{0:0.0}", decimal.Parse(row["Takziv"].ToString()));
             budgetChange.Yitra = (row["Yitra"].ToString() == "0" || row["Yitra"].ToString() == "") ? "" : String.Format("{0:0.0}", decimal.Parse(row["Yitra"].ToString())); 
             erech = row["Niyud"].ToString() == "0" ? "" : row["Niyud"].ToString();
-            if (erech.IndexOf('-') > -1)
-                erech =string.Concat((int.Parse(erech) * (-1)).ToString(), "-");
+           // if (erech.IndexOf('-') > -1)
+           //     erech =string.Concat((decimal.Parse(erech) * (-1)).ToString(), "-");
             budgetChange.Niyud = erech;// row["Niyud"].ToString() == "0" ? "" : row["Niyud"].ToString();  
             erech = row["addrem"].ToString() == "0" ? "" : row["addrem"].ToString();
-            if (erech.IndexOf('-') > -1)
-                erech = string.Concat((int.Parse(erech) * (-1)).ToString(), "-");
+           // if (erech.IndexOf('-') > -1)
+          //      erech = string.Concat((int.Parse(erech) * (-1)).ToString(), "-");
             budgetChange.AddRem = erech;// row["addrem"].ToString() == "0" ? "" : row["addrem"].ToString(); 
 
             return budgetChange;

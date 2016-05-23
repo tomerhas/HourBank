@@ -61,27 +61,33 @@ namespace BsmWebApp.Controllers
             ChangesMainViewModel vmResult = new ChangesMainViewModel();  //InitChangesVm();
 
             FilterCachedViewModel obj = (FilterCachedViewModel)Session["GeneralDetails"];
-            vmResult.Changes = GetChangesShaotNosafot(vm.SelectedEzor, obj.CurMonth, CurrentUser.PirteyUser.Isuk, CurrentUser.PirteyUser.YechidaIrgunit);
-            ChangesCachedViewModel sessionVm = new ChangesCachedViewModel() { Changes = vmResult.Changes, SelectedEzor = vm.SelectedEzor, CurMonth = obj.CurMonth, Isuk = CurrentUser.PirteyUser.Isuk, YechidaIrgunit = CurrentUser.PirteyUser.YechidaIrgunit };
-
-            Session["ChangesGrid"] = sessionVm;
-            vmResult.Filter = GetFilter();
-            vmResult.Filter.ShowEzor = true;
-            vmResult.Filter.SelectedMonth = vm.SelectedMonth;
-
-            if (DateTime.Now < vmResult.Filter.LastDateIdkunBank && CurrentUser.GetSugPeilutHatshaa("Changes") == eSugPeiluHarshaa.Update)
-                vmResult.IsMonthToEdit = true;
-
-            if (vmResult.Changes != null && vmResult.Changes.Count > 0)
+            if (vm.SelectedEzor != 0)
             {
-                vmResult.ShouldDisplayMessage = 0;
-            }
-            else
-            {
-                vmResult.ShouldDisplayMessage = 1;
-            }
+                vmResult.Changes = GetChangesShaotNosafot(vm.SelectedEzor, obj.CurMonth, CurrentUser.PirteyUser.Isuk, CurrentUser.PirteyUser.YechidaIrgunit);
+                ChangesCachedViewModel sessionVm = new ChangesCachedViewModel() { Changes = vmResult.Changes, SelectedEzor = vm.SelectedEzor, CurMonth = obj.CurMonth, Isuk = CurrentUser.PirteyUser.Isuk, YechidaIrgunit = CurrentUser.PirteyUser.YechidaIrgunit };
 
-            return View(vmResult);
+                Session["ChangesGrid"] = sessionVm;
+                vmResult.Filter = GetFilter();
+                vmResult.Filter.ShowEzor = true;
+                vmResult.Filter.SelectedMonth = vm.SelectedMonth;
+
+                if (DateTime.Now < vmResult.Filter.LastDateIdkunBank && CurrentUser.GetSugPeilutHatshaa("Changes") == eSugPeiluHarshaa.Update)
+                    vmResult.IsMonthToEdit = true;
+
+                if (vmResult.Changes != null && vmResult.Changes.Count > 0)
+                {
+                    vmResult.ShouldDisplayMessage = 0;
+                }
+                else
+                {
+                    vmResult.ShouldDisplayMessage = 1;
+                }
+
+                return View(vmResult);
+            }
+            else return Index();
+
+           
         }
         [HttpPost]
         public void SaveBudget(SaveBudgetVM vm)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BsmCommon.DataModels.Budgets;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace BsmWebApp.ViewModels.Budgets
 {
@@ -11,9 +12,12 @@ namespace BsmWebApp.ViewModels.Budgets
          //public int kod_mitkan;
          //public DateTime month;
          public Budget Budget { get; set; }
+          [DisplayFormat(DataFormatString = "{0:n1}")]
          public decimal YitraPrevMonth { get; set; }
         // public string LastChange { get; set; }
+          [DisplayFormat(DataFormatString = "{0:n1}")]
          public decimal SumChanges { get; set; }
+         [DisplayFormat(DataFormatString = "{0:n1}")]
          public decimal SachNiyud { get; set; }
          public List<BudgetChangeVM> BudgetChanges { get; set; }
 

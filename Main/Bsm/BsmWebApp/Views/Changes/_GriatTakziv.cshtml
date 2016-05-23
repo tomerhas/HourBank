@@ -32,7 +32,7 @@
         <br />
         <br />
 
-    </div>
+    @*</div>*@
 
 <div style="float:left">
     <button id="btnGria" value="עדכן תקציב" style="width:100px" class="PurpleButton" onclick="ReductionBudgetAjax();">עדכן תקציב</button>
@@ -91,12 +91,12 @@
                 // $("#btnGria").prop('disabled', true);
                 if(src =="")
                     AlertMessage("לא ניתן לעדכן מעבר ליתרה", 150, 300);
-              //  return false;
+                return false;
             }
           //  else {
                 if (src != "")
                     $("#inputKamut").val(kamut + "-");
-             //   return true;
+               return true;
                // $("#btnGria").prop('disabled', false);
            // }
         }
@@ -104,7 +104,7 @@
 
     }
     function ReductionBudgetAjax() {
-
+        debugger;
         if (InsertAllFields()) {
             if (CheckAmount("")) {
                 var selectMitkan = $('#KodMitkan')[0].value;
