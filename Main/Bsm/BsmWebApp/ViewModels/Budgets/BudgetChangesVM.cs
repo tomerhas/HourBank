@@ -20,7 +20,7 @@ namespace BsmWebApp.ViewModels.Budgets
          [DisplayFormat(DataFormatString = "{0:n1}")]
          public decimal SachNiyud { get; set; }
          public List<BudgetChangeVM> BudgetChanges { get; set; }
-
+         public List<ChangeHistoryGrid> ChangesHistory { get; set; }
           public  BudgetChangesVM()
           {
               BudgetChanges = new List<BudgetChangeVM>();

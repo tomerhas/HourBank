@@ -28,20 +28,19 @@ namespace BsmWebApp.Controllers
         [PageAuthorize("Changes")]
         public ActionResult Index()
         {
-
+            return View(getDefaultChangesVM());
+        }
+        private ChangesMainViewModel getDefaultChangesVM()
+        {
             ChangesMainViewModel vmResult = new ChangesMainViewModel();// InitChangesVm();
 
             vmResult.Filter = GetFilter();
             vmResult.Filter.ShowEzor = true;
             vmResult.Page = "Changes";
             InitFilterChash();
-            return View(vmResult);
 
-            //**  ChangesMainViewModel vm = InitChangesVm();
-
-            //**  return View(vm);
+            return vmResult;
         }
-
         //private ChangesMainViewModel InitChangesVm()
         //{
         //   // var months = GetMonthsBackList(6);
@@ -85,7 +84,12 @@ namespace BsmWebApp.Controllers
 
                 return View(vmResult);
             }
-            else return Index();
+            else
+            {
+                vmResult = getDefaultChangesVM();
+                vmResult.ShouldDisplayMessage = 2;
+                return Index();
+            }
 
            
         }
@@ -270,7 +274,7 @@ namespace BsmWebApp.Controllers
             bs.Insert(0, takziv);
             return bs;
         }
-        public ActionResult MoveBudget()
+        public ActionResult MoveBudget(SaveBudgetVM sv)
         {
             NiyudBudgetViewModel vm = new NiyudBudgetViewModel();
 
@@ -278,7 +282,13 @@ namespace BsmWebApp.Controllers
             List<Yechida> yechidot = GetListYechidotForCombo();
             vm.YechidotOut = new SelectList(yechidot, "KodYechida", "TeurYechida");
             vm.YechidotIn = new SelectList(yechidot, "KodYechida", "TeurYechida");
-            vm.YechidaIn = yechidot[0];
+            if (sv.Mitkan != null && sv.Mitkan > 0)
+            {
+                Yechida ym = yechidot.FirstOrDefault(y => y.KodYechida == sv.Mitkan);
+                vm.YechidaIn = ym;
+            }
+            else vm.YechidaIn = yechidot[0];
+           // vm.YechidaIn = yechidot[0];
             vm.YechidaOut = yechidot[0];
             return PartialView("_NiyudTakziv", vm);
         }

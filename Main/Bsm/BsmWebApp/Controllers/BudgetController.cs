@@ -53,7 +53,8 @@ namespace BsmWebApp.Controllers
         {
             var x = 0;
             DateTime month = DateTime.Parse(vm.SelectedMonth);
-            var curMitkan = ((FilterCachedViewModel)Session["GeneralDetails"]).CurYechida.KodYechida;//**CurrentUser.CurYechida.KodYechida;
+            var objMitkan = ((FilterCachedViewModel)Session["GeneralDetails"]).CurYechida;
+            var curMitkan = objMitkan.KodYechida;//**CurrentUser.CurYechida.KodYechida;
             var manager = _container.Resolve<IBudgetManager>();
             if (curMitkan > 0)
             {
@@ -68,6 +69,7 @@ namespace BsmWebApp.Controllers
                 ////vmResult.MitkanName = vm.MitkanName;
                 vmResult.Filter.SelectedMonth = vm.SelectedMonth;
                 vmResult.KodMitkan = curMitkan;
+                vmResult.MitkanName = objMitkan.TeurYechida;
                 vmResult.Month = month;
                 UsersInMitkanViewModel res = null;
                 totalMsToExecute = StopwatchHelper.TimedAction<UsersInMitkanViewModel>(()=> GetEmployeesInMitkan(curMitkan, month),out res);
@@ -316,12 +318,13 @@ namespace BsmWebApp.Controllers
         {
          
             var manager = _container.Resolve<IChangesManager>();
-            var changes = manager.GetBudgetChanges(KodYechida,DateTime.Parse(chodesh));
+           //** var changes = manager.GetHistory(KodYechida,DateTime.Parse(chodesh));
 
             BudgetChangesVM vm = new BudgetChangesVM();
+            vm.ChangesHistory = manager.GetHistory(KodYechida, DateTime.Parse(chodesh)); 
           //  vm.kod_mitkan = KodYechida;
           //  vm.month = DateTime.Parse(chodesh);
-            changes.ForEach(x => vm.BudgetChanges.Add(new BudgetChangeVM(x)));
+           //** changes.ForEach(x => vm.BudgetChanges.Add(new BudgetChangeVM(x)));
             //יוצרים פה  viewmodelמודל ומעבירים אותו
               
             //var res = PartialView("_DisplayChangesPopUp");

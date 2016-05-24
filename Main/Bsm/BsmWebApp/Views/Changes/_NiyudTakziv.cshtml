@@ -117,7 +117,7 @@
 
                     var data = { Mitkan: selectMitkanIn, MitkanOut: selectMitkanOut, Kamut: kamutVal, Comment: inputReson };
                     $.post("/Changes/SaveNiyudBudget", data, function (res) {
-                        AlertMessage("נתונים עודכנו בהצלחה", 150, 300);
+                        AlertMessage("הנתונים עודכנו בהצלחה", 150, 300);
                         RefreshGridChanges();
                         $("#dialog-change").dialog("close");
                     });

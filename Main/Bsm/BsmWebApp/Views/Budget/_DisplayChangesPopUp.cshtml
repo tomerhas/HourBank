@@ -6,23 +6,19 @@
    *@
 @using(Html.BeginForm())
     { 
-   
-    
 
-  <br />
 
   <div class="t-rtl">
         @{
             //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
-            Html.Kendo().Grid(Model.BudgetChanges)
-               .Name("BudgetChangesList").Columns(columns =>
+        Html.Kendo().Grid(Model.ChangesHistory)
+               .Name("HistoryList").Columns(columns =>
                {
-                   columns.Bound(o => o.BudgetChange.TaarichIdkun).Title("<center><strong>תאריך</strong></center>").Format("{0:dd/MM/yyyy}").Width(100);               
-                   columns.Bound(o => o.BudgetChange.MeadkenName).Title("<center><strong>מעדכן</strong></center>").Width(100);
-                   columns.Bound(o => o.BudgetChange.Val).Title("<center><strong>הפחתה/הוספה</strong></center>").Width(100);
-                   columns.Bound(o => o.BudgetChange.Reason).Title("<center><strong>הנמקה</strong></center>").Width(100);
-
-
+                   columns.Bound(o => o.Kamut).Title("<center><strong>כמות</strong></center>").HtmlAttributes(new { @style = "direction:ltr;text-align:right" }).Width(100);
+                   columns.Bound(o => o.SugPeula).Title("<center><strong>סוג פעולה</strong></center>").Width(200);
+                   columns.Bound(o => o.Meadken).Title("<center><strong>מעדכן</strong></center>").Width(100);
+                   columns.Bound(o => o.TaarichIdkun).Title("<center><strong>תאריך</strong></center>").Format("{0:dd/MM/yyyy}").Width(100);               
+                   columns.Bound(o => o.Reason).Title("<center><strong>הנמקה</strong></center>").Width(100);
                })
                .Render();
         }

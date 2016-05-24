@@ -165,6 +165,24 @@ namespace BsmBL.Managers
             return num;
         }
 
+        public List<ChangeHistoryGrid> GetHistory(int p_mitkan, DateTime p_chodesh)
+        {
+            List<ChangeHistoryGrid> list = new List<ChangeHistoryGrid>();
+            ChangeHistoryGrid ch;
+            var dt = _container.Resolve<IChangesDal>().GetHistory(p_mitkan, p_chodesh);
+            foreach (DataRow  row in dt.Rows)
+            {
+                ch = new ChangeHistoryGrid();
+                ch.Kamut = decimal.Parse(row["kamut"].ToString());
+                ch.SugPeula = row["sug_peula"].ToString();
+                ch.Meadken = row["MEADKEN"].ToString();
+                ch.TaarichIdkun = DateTime.Parse(row["TAARICH_IDKUN"].ToString());
+                ch.Reason = row["REASON"].ToString();
+                list.Add(ch);
+            }
+            return list;
+        }
+
       
     }
 }

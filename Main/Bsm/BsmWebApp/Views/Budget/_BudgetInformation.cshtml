@@ -82,7 +82,7 @@
           </label> *@
          @if (Model.BudgetChanges.Count > 0)
          {  
-          <input class="pointer TextBoxRO linkstyle" onclick="ShowChanges();" value="הצג שינויים"  type="text" />
+          <input class="pointer TextBoxRO linkstyle" onclick="ShowHistory();" value="הצג שינויים"  type="text" />
          } 
          else
          {
@@ -120,24 +120,7 @@
            }
     </div>
      
-     <div id="Dialog-Box">
-          <div class="t-rtl">
-            @{
-         //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
-         Html.Kendo().Grid(Model.BudgetChanges)
-            .Name("BudgetChangesList").Columns(columns =>
-            {
-                columns.Bound(o => o.BudgetChange.TaarichIdkun).Title("<center><strong>תאריך</strong></center>").Format("{0:dd/MM/yyyy}").Width(50);
-                columns.Bound(o => o.BudgetChange.MeadkenName).Title("<center><strong>מעדכן</strong></center>").Width(50);
-                columns.Bound(o => o.BudgetChange.ValToDisplay).Title("<center><strong>הפחתה/הוספה</strong></center>").Width(50);//.HtmlAttributes(new { style = " direction:ltr;" });
-                columns.Bound(o => o.BudgetChange.Reason).Title("<center><strong>הנמקה</strong></center>").Width(50);
-
-
-            })
-            .Render();
-            }
-        </div>
-    </div>
+    
  }
   
 
@@ -147,20 +130,6 @@
         alert($("#lblIzun").val());
     });
 
-    function ShowChanges() {
-         $('#Dialog-Box').dialog('open');     
-    }
-
-    $('#Dialog-Box').dialog({
-        autoOpen: false,        
-        width: 700,
-        modal: false,
-        buttons: {
-            "סגור": function () {
-                $(this).dialog("close");
-            }
-        }
-    });
 
     function ShowInfo() {
         $('#Dialog-Info').dialog('open');

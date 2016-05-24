@@ -82,7 +82,7 @@
                 <div class="col-md-2">
                     @*<div style="text-align: right; width: 200px; text-align: left" class="pointer divHistory" onclick="ShowHistory('8888')"> <label class='PurpleTextBoldLink pointer'>yy</label> </div>*@
                     <a id="sSubtractLink" href="#">
-                        <div id="divSubtract" style="width: 140px; text-align:left" class="pointer divSubtract" onclick="DisplayDialogTakziv('remove')">
+                        <div id="divSubtract" style="width: 140px; text-align:left" class="pointer divSubtract" onclick="DisplayDialogTakziv('remove',0)">
                             <label id="lblSubtract" class="PurpleTextBoldLink pointer" style="padding-top: 5px">גריעת תקציב</label>
                         </div>
                     </a>
@@ -110,13 +110,13 @@
              .Name("ChangesList").Columns(columns =>
              {
 
-                 columns.Bound(o => o.Teur_Yechida).Title("מתקן").ClientTemplate("<div><label>#=Teur_Yechida#</label> <div id = 'buttons'   style = 'display:none;float:left' ><div style = 'float:left;width:80px'  class='pointer addMin' onclick=\"DisplayDialogTakziv('add','#=Kod_Yechida#')\"><label style = 'padding-right: 32px;' class='PurpleTextBoldLink pointer'>הוסף</label> </div> <div  style = 'float:left;width:85px;' class='pointer niyudMin' onclick=\"DisplayDialogTakziv('move')\"><label style = 'padding-right: 37px;' class='PurpleTextBoldLink pointer'>נייד</label> </div> </div></div>")
+                 columns.Bound(o => o.Teur_Yechida).Title("מתקן").ClientTemplate("<div><label>#=Teur_Yechida#</label> <div id = 'buttons'   style = 'display:none;float:left' ><div style = 'float:left;width:80px'  class='pointer addMin' onclick=\"DisplayDialogTakziv('add','#=Kod_Yechida#')\"><label style = 'padding-right: 32px;' class='PurpleTextBoldLink pointer'>הוסף</label> </div> <div  style = 'float:left;width:85px;' class='pointer niyudMin' onclick=\"DisplayDialogTakziv('move','#=Kod_Yechida#')\"><label style = 'padding-right: 37px;' class='PurpleTextBoldLink pointer'>נייד</label> </div> </div></div>")
                                                                     .HtmlAttributes(new { id = "tdTeurYechida", onmouseover = "ShowButtons(this,\"block\");", onmouseout = "ShowButtons(this,\"none\");" }).Width(500);
                  columns.Bound(o => o.Takziv).Title("תקציב").HtmlAttributes(new { @style = "direction:ltr;text-align:right" });
                  columns.Bound(o => o.Yitra).Title("יתרה").HtmlAttributes(new { @style = "direction:ltr;text-align:right" });
                  columns.Bound(o => o.Niyud).Title("ניוד").HtmlAttributes(new { @style = "direction:ltr;text-align:right" });
-                 columns.Bound(o => o.AddRem).Title("הוספה/גריעה").HtmlAttributes(new { @style = "direction:ltr;text-align:right" }); 
-                 columns.Bound(o => o.Kod_Yechida).Title("").ClientTemplate(" <div style='width: 170px'  class='pointer divHistory' onclick=\"ShowHistory('#=Kod_Yechida#')\"> <label style='padding-right: 30px;' class='PurpleTextBoldLink pointer'>היסטוריית ניודים</label> </div>");
+                 columns.Bound(o => o.AddRem).Title("הוספה/גריעה").HtmlAttributes(new { @style = "direction:ltr;text-align:right" });
+                 columns.Bound(o => o.Kod_Yechida).Title("").ClientTemplate(" <div style='width: 170px'  class='pointer divHistory' onclick=\"ShowHistory('#=Kod_Yechida#','#=Teur_Yechida#')\"> <label style='padding-right: 30px;' class='PurpleTextBoldLink pointer'>היסטורייה</label> </div>");
                  //  columns.Bound(o => o.Kod_Yechida).Title("").ClientTemplate("<a class='historyChange' onclick=\"ShowHistory('#=Kod_Yechida#')\">הסטוריית ניודים</a>");
              })
      //  .Editable(editable => editable.Mode(GridEditMode.InCell))
@@ -160,6 +160,9 @@
             // ModifyGrid("ipus");
             AlertMessage("לא קיימים מתקנים בהם אתה רשאי לצפות באזור שבחרת",170,330);
             // alert("Need to display message")
+        }
+        else if(displayMessage==2){
+            AlertMessage("אנא בחר איזור",170,330);
         }
    
         var model = @Html.Raw(Json.Encode(Model));
@@ -235,18 +238,16 @@
             {  
                 $(this).find('td#tdTeurYechida').find('#buttons').find("div").prop('onclick',null).off('click');
                 $(this).find('td#tdTeurYechida').find('#buttons').find("div").css("opacity" ,"0.2");
-                //$(this).find('td#tdTeurYechida').find('#buttons').find('div.pointer.addMin').unbind
-                //$(this).find('td#tdTeurYechida').find('#buttons')[0].children[0].unbind( "click" );
-               // $(this).find('td#tdTeurYechida').find('#buttons')[0].children[1].unbind( "click" );
             }
         });
     }
-    function ShowHistory(mitkan)
+    function ShowHistory(mitkan,teur)
     {
-        var month="01/04/2016";
-        var name="אשקלון";
-        var titel = " פירוט שעות הוספה/הפחתה למתקן ";
-        titel = titel + name + " לחודש " + " \n ";
+        jQuery.ajaxSetup({ cache: false });
+        var model = @Html.Raw(Json.Encode(Model));
+        var month=model.Filter.SelectedMonth;
+        var titel = " פירוט למתקן ";
+        titel = titel + teur + " לחודש " + " \n ";
         titel = titel + month;
         $("#dialog-change").html("")
             .dialog("option", "title", titel)
@@ -286,8 +287,7 @@
         var data = { Mitkan: kod };
         $("#dialog-change").html("")
         .dialog("option","title",title)
-         .data('sv',data)
-        .load(url,function(){
+        .load(url,data,function(){
             $("#dialog-change").dialog("open");
         });
 

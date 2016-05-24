@@ -65,6 +65,7 @@
     <Compile Include="DataModels\Budgets\BudgetChange.cs" />
     <Compile Include="DataModels\Budgets\BudgetEmployee.cs" />
     <Compile Include="DataModels\Budgets\BudgetEmployeeGrid.cs" />
+    <Compile Include="DataModels\Budgets\ChangeHistoryGrid.cs" />
     <Compile Include="DataModels\Changes\BudgetChangesGrid.cs" />
     <Compile Include="DataModels\Changes\BudgetLeft.cs" />
     <Compile Include="DataModels\Changes\BudgetReduction.cs" />

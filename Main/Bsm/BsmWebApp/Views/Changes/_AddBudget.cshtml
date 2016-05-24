@@ -87,7 +87,7 @@
                 $("#inputReson").prop('disabled',false);
 
             setTimeout(function(){
-                AlertMessage("תקציב נוצר בהצלחה", 170, 300)
+                AlertMessage("התקציב נוצר בהצלחה", 170, 300)
             },100);
             //AlertMessage("תקציב נוצר בהצלחה", 170, 300)
         }
@@ -144,7 +144,7 @@
 
                 var data = { Mitkan: selectMitkan, Takziv: selectTakziv, Kamut: kamutVal, Comment: inputReson };
                 $.post("/Changes/SaveBudget", data, function (res) {
-                    AlertMessage("תקציב נוסף בהצלחה", 150, 300);
+                    AlertMessage("התקציב נוסף בהצלחה", 150, 300);
                     RefreshGridChanges();
                     $("#dialog-change").dialog("close");
                 });

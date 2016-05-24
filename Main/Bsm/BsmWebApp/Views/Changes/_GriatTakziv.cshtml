@@ -78,7 +78,7 @@
 
     function CheckAmount(src) {
         var kamut = getKamut();// $("#inputKamut").val();
-     //   debugger;
+
        // if (kamut.indexOf("-") > -1)
         //    kamut = kamut.split('-')[0];
         if (kamut != "") {
@@ -87,6 +87,9 @@
             var split = takziv.split(')')[0].split(' ');
             var num = split[split.length - 1];
 
+            if (src != "")
+                $("#inputKamut").val(kamut + "-");
+
             if (+kamut > +num) {
                 // $("#btnGria").prop('disabled', true);
                 if(src =="")
@@ -94,8 +97,7 @@
                 return false;
             }
           //  else {
-                if (src != "")
-                    $("#inputKamut").val(kamut + "-");
+               
                return true;
                // $("#btnGria").prop('disabled', false);
            // }
@@ -104,7 +106,7 @@
 
     }
     function ReductionBudgetAjax() {
-        debugger;
+        
         if (InsertAllFields()) {
             if (CheckAmount("")) {
                 var selectMitkan = $('#KodMitkan')[0].value;
@@ -113,7 +115,7 @@
 
                 var data = { Mitkan: selectMitkan, Kamut: kamutVal, Comment: inputReson };
                 $.post("/Changes/ReductionBudget", data, function (res) {
-                    AlertMessage("נתונים עודכנו בהצלחה", 150, 300);
+                    AlertMessage("הנתונים עודכנו בהצלחה", 150, 300);
                     RefreshGridChanges();
                     $("#dialog-change").dialog("close");
                 });

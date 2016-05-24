@@ -18,8 +18,7 @@ namespace BsmBL.DAL
         private const string cProAddNewTakziv = "PKG_CHANGES.PRO_ADD_NEW_TAKZIV";
         private const string cProSaveChangeMitkan = "PKG_CHANGES.pro_save_change_mitkan";
         private const string cProSaveReductionMitkan = "PKG_CHANGES.pro_save_reducation_mitkan";
-       
-        
+        private const string cProGetHistory = "PKG_CHANGES.PRO_GET_HISTORIYA";
         private IUnityContainer _container;
 
         public ChangesDal(IUnityContainer container)
@@ -158,8 +157,26 @@ namespace BsmBL.DAL
             }
         }
 
-       
-        
+
+        public DataTable GetHistory(int p_mitkan, DateTime p_chodesh)
+        {
+            clDal oDal = _container.Resolve<clDal>();
+            DataTable dt = new DataTable();
+
+            try
+            {//מחזיר נתוני עובד: 
+                oDal.AddParameter("p_mitkan", ParameterType.ntOracleInteger, p_mitkan, ParameterDir.pdInput);
+                oDal.AddParameter("p_date", ParameterType.ntOracleDate, p_chodesh, ParameterDir.pdInput);
+                oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(cProGetHistory, dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
     }
 }
