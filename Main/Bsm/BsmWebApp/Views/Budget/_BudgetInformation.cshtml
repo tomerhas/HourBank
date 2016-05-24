@@ -91,7 +91,7 @@
     </div>
   </div>
      
-      <div id="Dialog-Info">
+      <div id="Dialog-Michsa-Info">
            @{
            <div class="row" >
              <div class="col-md-6">
@@ -125,16 +125,11 @@
   
 
 <script>
-    $(document).load(function () {
-        
-        alert($("#lblIzun").val());
-    });
-
 
     function ShowInfo() {
-        $('#Dialog-Info').dialog('open');
+        $('#Dialog-Michsa-Info').dialog('open');
     }
-    $('#Dialog-Info').dialog({
+    $('#Dialog-Michsa-Info').dialog({
         autoOpen: false,
         title: "שעות נוספות תקציב",
         width: 300,

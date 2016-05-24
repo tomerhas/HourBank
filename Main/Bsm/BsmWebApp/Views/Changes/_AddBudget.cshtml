@@ -17,6 +17,9 @@
         </div>
         <div class="col-md-2">
             <a id="addNew" class="PurpleTextBoldLink pointer" onclick="AddNewTakziv()" href="#">+צור תקציב חדש</a>
+            <br />  <br />
+           
+             <a id="THistory" class="PurpleTextBoldLink pointer" onclick="ShowHistory()" href="#"> הסטוריית תקציב</a>
         </div>
      </div>
     <br />
@@ -64,18 +67,6 @@
             }
         });
 
-       /* $('#KodMitkan option').each(function (i, item) {
-            if (item.text.indexOf(')') > -1) {
-                var split = item.value.split(')')[0].split(' ');
-                var num = split[split.length - 1];
-                if (num == 0)
-                    item.disabled = true;
-            }
-            else {
-                if (item.value !=0 )
-                    item.disabled = true;
-            }
-        });*/
         var model = @Html.Raw(Json.Encode(Model));
         $("#inputReson").val(model.Comment);
         $("#inputKamut").val(model.Kamut);
@@ -183,4 +174,30 @@
         var data = { Mitkan: selectMitkan, Takziv: selectTakziv, Kamut: kamutVal, Comment: inputReson };
         DisplayAddNewTakziv(data);
     }
+
+    function ShowHistory()
+    {
+        
+        var takziv = $("#KodTakziv option:selected").text();
+        var split = takziv.split(')')[0].split('(');
+        var num=split[1].split(' ');
+        num = num[num.length - 1];
+        var name =split[0];
+
+        ShowTakzivHistory(num,name);
+    }
+    function ShowInfo() {
+        $('#Dialog-History').dialog('open');
+    }
+    $('#Dialog-Info').dialog({
+        autoOpen: false,
+        title: "שעות נוספות תקציב",
+        width: 300,
+        modal: false,
+        buttons: {
+            "סגור": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
 </script>

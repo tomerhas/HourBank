@@ -25,6 +25,7 @@ namespace BsmCommon.Interfaces.Managers
         int GetNextTakzivNumber();
         List<ChangeHistoryGrid> GetHistory(int p_mitkan, DateTime p_chodesh);
         bool IsYechidaBetokef(int kodYechida, DateTime month);
+        List<BudgetSpecialYechida> GetTakzivHistory(int kodTakziv);
 
     }
 }

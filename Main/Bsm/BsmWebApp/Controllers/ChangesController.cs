@@ -312,6 +312,17 @@ namespace BsmWebApp.Controllers
             var ManagerChange = _container.Resolve<IChangesManager>();
             return ManagerChange.GetNextTakzivNumber();
         }
+
+        public ActionResult DispalyTakzivHistory(int KodTakziv)
+        {
+            var ManagerChange = _container.Resolve<IChangesManager>();
+         
+            TakzivHistoryViewModel vm = new TakzivHistoryViewModel();
+            vm.TakzivHistoryList = ManagerChange.GetTakzivHistory(KodTakziv);
+            return PartialView("_DisplayTakzivHistory", vm);
+        }
+
+      
         //public ActionResult ChangesShaotNosafotRead([DataSourceRequest]DataSourceRequest request, int KodEzor, int KodYechida, DateTime month)
         //{
         //    var Changes = ChangesShaotNosafot(KodEzor, KodYechida, month);

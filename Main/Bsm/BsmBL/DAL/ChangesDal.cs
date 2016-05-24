@@ -1,4 +1,5 @@
-﻿using BsmCommon.Interfaces.Dal;
+﻿using BsmCommon.DataModels.Changes;
+using BsmCommon.Interfaces.Dal;
 using DalOraInfra.DAL;
 using Microsoft.Practices.Unity;
 using System;
@@ -19,6 +20,7 @@ namespace BsmBL.DAL
         private const string cProSaveChangeMitkan = "PKG_CHANGES.pro_save_change_mitkan";
         private const string cProSaveReductionMitkan = "PKG_CHANGES.pro_save_reducation_mitkan";
         private const string cProGetHistory = "PKG_CHANGES.PRO_GET_HISTORIYA";
+        private const string cProGetHistoryTakziv = "PKG_CHANGES.Pro_Get_History_Takziv";
         private IUnityContainer _container;
 
         public ChangesDal(IUnityContainer container)
@@ -178,5 +180,23 @@ namespace BsmBL.DAL
             }
         }
 
+        public DataTable GetTakzivHistory(int kodTakziv)
+        {
+            clDal oDal = _container.Resolve<clDal>();
+            DataTable dt = new DataTable();
+
+            try
+            {//מחזיר נתוני עובד: 
+                oDal.AddParameter("p_takziv_id", ParameterType.ntOracleInteger, kodTakziv, ParameterDir.pdInput);  
+                oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(cProGetHistoryTakziv, dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

@@ -147,9 +147,10 @@
      </div>
     <div id="dialog-change"></div>
     <div id="dialog-new-budget"></div>
+    <div id="dialog-history-takziv"></div>
 
-             }
-          }
+     }
+}
 
 <script type="text/javascript">
    
@@ -268,10 +269,14 @@
 
     $(function(){
         $("#dialog-change").dialog({
-            autoOpen: false, width: 1050, height:370,modal:true
+            autoOpen: false, width: 1050, height:385,modal:true
         });
         $("#dialog-new-budget").dialog({
             autoOpen: false, width: 800, height:350,modal:true
+        });
+
+        $("#dialog-history-takziv").dialog({
+            autoOpen: false, width: 1050, height:370,modal:true
         });
     });
 
@@ -351,11 +356,27 @@
         });
 
     }
-    function AddBudgetNew(reson)
-    { alert(reson);
-        $("#dialog-change").dialog('close');
+    //function AddBudgetNew(reson)
+    //{ alert(reson);
+    //    $("#dialog-change").dialog('close');
        
-      //  var m= model;
-    }
+    //  //  var m= model;
+    //}
     
+    function ShowTakzivHistory(num,name)
+    {    
+        
+        jQuery.ajaxSetup({ cache: false });
+        var model = @Html.Raw(Json.Encode(Model));
+        var month=model.Filter.SelectedMonth;
+        var mitkan=model.KodMitkan;
+        var teur=model.MitkanName;
+        var titel = " פירוט  שעות לתקציב ";
+        titel = titel + num +"-"+ name; 
+
+        $("#dialog-history-takziv").html("")
+            .dialog("option", "title", titel)
+            .load('/Changes/DispalyTakzivHistory?KodTakziv=' + num , function () { $("#dialog-history-takziv").dialog("open"); });
+
+    }
 </script>

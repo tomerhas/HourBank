@@ -1,4 +1,5 @@
 ﻿using BsmCommon.DataModels.Budgets;
+using BsmCommon.DataModels.Changes;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,5 +19,6 @@ namespace BsmCommon.Interfaces.Dal
         void SaveChangeMitkan(int p_mitkan_from, int p_mitkan_to, DateTime p_chodesh, decimal p_erech, string p_reason, int p_user);
         void SaveReductionMitkan(int p_mitkan, DateTime p_chodesh, decimal p_kamut, string p_reason, int p_user);
         DataTable GetHistory(int p_mitkan, DateTime p_chodesh);
+        DataTable GetTakzivHistory(int kodTakziv);
     }
 }

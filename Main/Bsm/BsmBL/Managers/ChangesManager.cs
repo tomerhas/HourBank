@@ -201,6 +201,23 @@ namespace BsmBL.Managers
 
       }
 
+      public List<BudgetSpecialYechida> GetTakzivHistory(int kodTakziv)
+      {
+          List<BudgetSpecialYechida> list = new List<BudgetSpecialYechida>();
+          BudgetSpecialYechida ch;
+          var dt = _container.Resolve<IChangesDal>().GetTakzivHistory(kodTakziv);
+          foreach (DataRow row in dt.Rows)
+          {
+              ch = new BudgetSpecialYechida();
+              ch.TeurYechida = row["teur_yechida"].ToString();  
+              ch.Amount =decimal.Parse(row["amount"].ToString());
+              ch.MeadkenName = row["MEADKEN"].ToString();
+              ch.TaarichIdkun = DateTime.Parse(row["TAARICH_IDKUN"].ToString());
+              ch.Reason = row["REASON"].ToString();
+              list.Add(ch);
+          }
+          return list;
+      }
 
     }
 }

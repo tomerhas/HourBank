@@ -260,7 +260,7 @@
 <label hidden id="KdsPath">@System.Configuration.ConfigurationManager.AppSettings["KdsPathPage"]</label>
    <div  id="dialog-grid"></div>
 <div id="dialogNoch" title="Basic dialog">
-     <div id="dialog-change"></div>
+    
 </div>
 
 <script type="text/javascript">
@@ -956,27 +956,7 @@
 
 
      
-    $(function(){
-        $("#dialog-change").dialog({
-            autoOpen: false, width: 1050, height:370,modal:true
-        });
-    });
-
-    function ShowHistory()
-    {
-        jQuery.ajaxSetup({ cache: false });
-        var model = @Html.Raw(Json.Encode(Model));
-        var month=model.Filter.SelectedMonth;
-        var mitkan=model.KodMitkan;
-        var teur=model.MitkanName;
-        var titel = " פירוט  למתקן ";
-        titel = titel + teur + " לחודש " + " \n ";
-        titel = titel + month;
-        $("#dialog-change").html("")
-            .dialog("option", "title", titel)
-            .load('/Budget/DispalyChanges?KodYechida=' + mitkan + "&chodesh=" + month, function () { $("#dialog-change").dialog("open"); });
-
-    }
+   
 
 
         
