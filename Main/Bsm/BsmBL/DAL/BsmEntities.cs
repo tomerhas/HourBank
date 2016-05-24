@@ -36,6 +36,7 @@ namespace BsmBL.DAL
         public DbSet<BudgetLeft> BudgetLeft { get; set; }
         public DbSet<BudgetReduction> BudgetReduction { get; set; }
         public DbSet<LogItem> Logs { get; set; }
+        public DbSet<BankMeshekYechida> BankMeshekYechida { get; set; }
      
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -51,8 +52,8 @@ namespace BsmBL.DAL
             modelBuilder.Entity<BudgetSpecialYechida>().ToTable("TB_BUDGET_SPECIAL_YECHIDA", schemaName);
             modelBuilder.Entity<BudgetReduction>().ToTable("TB_BUDGET_REDUCTION", schemaName);
             modelBuilder.Entity<BudgetLeft>().ToTable("TB_BUDGET_LEFT", schemaName);
-            
             modelBuilder.Entity<LogItem>().ToTable("TB_LOG", schemaName);
+            modelBuilder.Entity<BankMeshekYechida>().ToTable("TB_BANK_MESHEK_YECHIDA", schemaName);
         }
     }
 }

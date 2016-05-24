@@ -88,7 +88,7 @@ namespace BsmWebApp.Controllers
             {
                 vmResult = getDefaultChangesVM();
                 vmResult.ShouldDisplayMessage = 2;
-                return Index();
+                return View(vmResult);
             }
 
            
@@ -224,7 +224,7 @@ namespace BsmWebApp.Controllers
             var ezor=0;
             var month = ((FilterCachedViewModel)Session["GeneralDetails"]).CurMonth;
             var budget = _container.Resolve<IBudgetManager>();
-
+            var change = _container.Resolve<IChangesManager>(); 
             Yechida yechida = new Yechida();
             yechida.KodHevra = 0;
             yechida.KodYechida = 0;
@@ -240,7 +240,7 @@ namespace BsmWebApp.Controllers
              }
             CurrentUser.Yechidot.ForEach((item) =>
             {
-                if (ezor == 0 || item.KodEzor == ezor)
+                if (ezor == 0 || item.KodEzor == ezor && change.IsYechidaBetokef(item.KodYechida, month))
                 {
                     yechida = new Yechida();
                     yechida.KodYechida = item.KodYechida;

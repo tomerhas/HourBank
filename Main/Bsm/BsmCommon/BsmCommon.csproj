@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CachedItems\UserInfoCachedItems.cs" />
+    <Compile Include="DataModels\BankMeshekYechida.cs" />
     <Compile Include="DataModels\Budgets\Budget.cs" />
     <Compile Include="DataModels\Budgets\BudgetChange.cs" />
     <Compile Include="DataModels\Budgets\BudgetEmployee.cs" />

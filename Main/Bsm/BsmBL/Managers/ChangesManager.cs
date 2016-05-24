@@ -1,4 +1,5 @@
 ﻿using BsmBL.DAL;
+using BsmCommon.DataModels;
 using BsmCommon.DataModels.Budgets;
 using BsmCommon.DataModels.Changes;
 using BsmCommon.DataModels.Employees;
@@ -112,21 +113,15 @@ namespace BsmBL.Managers
         
         private BudgetChangesGrid CreateBudgetEmployeeFromDataRow(DataRow row)
         {
-            string erech;
+            //string erech;
             BudgetChangesGrid budgetChange = new BudgetChangesGrid();
            // budgetChange.Masad = int.Parse(row["MASAD"].ToString());
             budgetChange.Kod_Yechida = int.Parse(row["KOD_YECHIDA"].ToString());
             budgetChange.Teur_Yechida = row["TEUR_YECHIDA"].ToString();
-            budgetChange.Takziv =( row["Takziv"].ToString() == "0" || row["Takziv"].ToString() == "") ? "" : String.Format("{0:0.0}", decimal.Parse(row["Takziv"].ToString()));
-            budgetChange.Yitra = (row["Yitra"].ToString() == "0" || row["Yitra"].ToString() == "") ? "" : String.Format("{0:0.0}", decimal.Parse(row["Yitra"].ToString())); 
-            erech = row["Niyud"].ToString() == "0" ? "" : row["Niyud"].ToString();
-           // if (erech.IndexOf('-') > -1)
-           //     erech =string.Concat((decimal.Parse(erech) * (-1)).ToString(), "-");
-            budgetChange.Niyud = erech;// row["Niyud"].ToString() == "0" ? "" : row["Niyud"].ToString();  
-            erech = row["addrem"].ToString() == "0" ? "" : row["addrem"].ToString();
-           // if (erech.IndexOf('-') > -1)
-          //      erech = string.Concat((int.Parse(erech) * (-1)).ToString(), "-");
-            budgetChange.AddRem = erech;// row["addrem"].ToString() == "0" ? "" : row["addrem"].ToString(); 
+            budgetChange.Takziv = decimal.Parse(row["Takziv"].ToString()) == 0 ? -9999 : decimal.Parse(row["Takziv"].ToString());//(row["Takziv"].ToString() == "0" || row["Takziv"].ToString() == "") ? "" : String.Format("{0:0.0}", decimal.Parse(row["Takziv"].ToString()));
+            budgetChange.Yitra = decimal.Parse(row["Yitra"].ToString()) == 0 ? -9999 : decimal.Parse(row["Yitra"].ToString());//(row["Yitra"].ToString() == "0" || row["Yitra"].ToString() == "") ? "" : String.Format("{0:0.0}", decimal.Parse(row["Yitra"].ToString())); 
+            budgetChange.Niyud = decimal.Parse(row["Niyud"].ToString()) == 0 ? -9999 : decimal.Parse(row["Niyud"].ToString()); //row["Niyud"].ToString() == "0" ? "" : row["Niyud"].ToString();
+            budgetChange.AddRem = decimal.Parse(row["addrem"].ToString())==0 ? -9999 : decimal.Parse(row["addrem"].ToString());// erech;// row["addrem"].ToString() == "0" ? "" : row["addrem"].ToString(); 
 
             return budgetChange;
         }
@@ -183,6 +178,29 @@ namespace BsmBL.Managers
             return list;
         }
 
-      
+      public bool IsYechidaBetokef(int kodYechida, DateTime month)
+      {
+          
+          DateTime to= month.AddMonths(1).AddDays(-1);
+            using (var context = new BsmEntities())
+            {
+                var queryable = IsDateInRange(context, month, to);
+                queryable = queryable.Where(x => x.KodYechida == kodYechida); 
+       
+                if (queryable.ToList().Count>0 )
+                    return true;
+                else return false;
+            }
+      }
+
+      private IQueryable<BankMeshekYechida> IsDateInRange(BsmEntities context, DateTime from, DateTime to)
+      {
+          return context.BankMeshekYechida.Where(x => (to >= x.MeTaarich && to <= x.AdTaarich)
+                || (from >= x.MeTaarich && from <= x.AdTaarich)
+                || (from <= x.MeTaarich && to >= x.AdTaarich));
+
+      }
+
+
     }
 }

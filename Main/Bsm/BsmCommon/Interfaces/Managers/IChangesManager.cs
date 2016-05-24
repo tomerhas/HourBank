@@ -24,6 +24,7 @@ namespace BsmCommon.Interfaces.Managers
          void SaveReductionMitkan(int p_mitkan, DateTime p_chodesh, decimal p_kamut, string p_reason, int p_user);
         int GetNextTakzivNumber();
         List<ChangeHistoryGrid> GetHistory(int p_mitkan, DateTime p_chodesh);
+        bool IsYechidaBetokef(int kodYechida, DateTime month);
 
     }
 }
