@@ -12,13 +12,13 @@ namespace BsmWebApp.ViewModels.Budgets
          //public int kod_mitkan;
          //public DateTime month;
          public Budget Budget { get; set; }
-          [DisplayFormat(DataFormatString = "{0:n1}")]
-         public decimal YitraPrevMonth { get; set; }
+       //   [DisplayFormat(DataFormatString = "{0:n1}")]
+         public float YitraPrevMonth { get; set; }
         // public string LastChange { get; set; }
           [DisplayFormat(DataFormatString = "{0:n1}")]
-         public decimal SumChanges { get; set; }
+         public float SumChanges { get; set; }
          [DisplayFormat(DataFormatString = "{0:n1}")]
-         public decimal SachNiyud { get; set; }
+          public float SachNiyud { get; set; }
          public List<BudgetChangeVM> BudgetChanges { get; set; }
          public List<ChangeHistoryGrid> ChangesHistory { get; set; }
           public  BudgetChangesVM()

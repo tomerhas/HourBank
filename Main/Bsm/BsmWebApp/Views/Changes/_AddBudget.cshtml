@@ -19,7 +19,7 @@
             <a id="addNew" class="PurpleTextBoldLink pointer" onclick="AddNewTakziv()" href="#">+צור תקציב חדש</a>
             <br />  <br />
            
-             <a id="THistory" class="PurpleTextBoldLink pointer" onclick="ShowHistory()" href="#"> הסטוריית תקציב</a>
+             <a id="THistory" class="PurpleTextBoldLink pointer" onclick="OpenHistoryPopUp()" href="#"> הסטוריית תקציב</a>
         </div>
      </div>
     <br />
@@ -175,16 +175,19 @@
         DisplayAddNewTakziv(data);
     }
 
-    function ShowHistory()
+    function OpenHistoryPopUp()
     {
-        
+       // debugger;
+        var selectTakziv = $('#KodTakziv')[0].value;
+        if(selectTakziv ==0)
+            return false;
         var takziv = $("#KodTakziv option:selected").text();
         var split = takziv.split(')')[0].split('(');
-        var num=split[1].split(' ');
-        num = num[num.length - 1];
-        var name =split[0];
+      //  var num=split[1].split(' ');
+       // num = num[num.length - 1];
+       var name =split[0];
 
-        ShowTakzivHistory(num,name);
+        ShowTakzivHistory(selectTakziv,name);
     }
     function ShowInfo() {
         $('#Dialog-History').dialog('open');

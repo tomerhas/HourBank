@@ -39,8 +39,8 @@ namespace BsmCommon.UDT
         private decimal m_MISPAR_ISHI;
         
         private bool m_MISPAR_ISHIIsNull;
-        
-        private decimal m_MICHSA;
+
+        private float m_MICHSA;
         
         private bool m_MICHSAIsNull;
         
@@ -159,7 +159,8 @@ namespace BsmCommon.UDT
         }
         
         [OracleObjectMappingAttribute("MICHSA")]
-        public decimal MICHSA {
+        public float MICHSA
+        {
             get {
                 return this.m_MICHSA;
             }
@@ -220,7 +221,7 @@ namespace BsmCommon.UDT
             }
             this.MICHSAIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "MICHSA");
             if ((MICHSAIsNull == false)) {
-                this.MICHSA = ((decimal)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "MICHSA")));
+                this.MICHSA = ((float)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "MICHSA")));
             }
         }
         

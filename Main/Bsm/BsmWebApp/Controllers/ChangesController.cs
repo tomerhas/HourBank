@@ -87,6 +87,8 @@ namespace BsmWebApp.Controllers
             else
             {
                 vmResult = getDefaultChangesVM();
+                vmResult.Filter.SelectedMonth = vm.SelectedMonth;
+                ChangeMonth(vm.SelectedMonth);
                 vmResult.ShouldDisplayMessage = 2;
                 return View(vmResult);
             }
@@ -220,7 +222,7 @@ namespace BsmWebApp.Controllers
         private List<Yechida> GetListYechidotForCombo()
         {
             List<Yechida> yechidot = new List<Yechida>();// CurrentUser.Yechidot.ToList();
-            decimal shaot;
+            float shaot;
             var ezor=0;
             var month = ((FilterCachedViewModel)Session["GeneralDetails"]).CurMonth;
             var budget = _container.Resolve<IBudgetManager>();
@@ -355,7 +357,7 @@ namespace BsmWebApp.Controllers
     {
         public int Mitkan { get; set; }
         public int Takziv { get; set; }
-        public decimal Kamut { get; set; }
+        public float Kamut { get; set; }
         public string Comment { get; set; }
         public string Name { get; set; }
         public int MitkanOut { get; set; }

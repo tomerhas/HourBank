@@ -118,31 +118,31 @@ namespace BsmBL.Managers
            // budgetChange.Masad = int.Parse(row["MASAD"].ToString());
             budgetChange.Kod_Yechida = int.Parse(row["KOD_YECHIDA"].ToString());
             budgetChange.Teur_Yechida = row["TEUR_YECHIDA"].ToString();
-            budgetChange.Takziv = decimal.Parse(row["Takziv"].ToString()) == 0 ? -9999 : decimal.Parse(row["Takziv"].ToString());//(row["Takziv"].ToString() == "0" || row["Takziv"].ToString() == "") ? "" : String.Format("{0:0.0}", decimal.Parse(row["Takziv"].ToString()));
-            budgetChange.Yitra = decimal.Parse(row["Yitra"].ToString()) == 0 ? -9999 : decimal.Parse(row["Yitra"].ToString());//(row["Yitra"].ToString() == "0" || row["Yitra"].ToString() == "") ? "" : String.Format("{0:0.0}", decimal.Parse(row["Yitra"].ToString())); 
-            budgetChange.Niyud = decimal.Parse(row["Niyud"].ToString()) == 0 ? -9999 : decimal.Parse(row["Niyud"].ToString()); //row["Niyud"].ToString() == "0" ? "" : row["Niyud"].ToString();
-            budgetChange.AddRem = decimal.Parse(row["addrem"].ToString())==0 ? -9999 : decimal.Parse(row["addrem"].ToString());// erech;// row["addrem"].ToString() == "0" ? "" : row["addrem"].ToString(); 
+            budgetChange.Takziv = float.Parse(row["Takziv"].ToString()) == 0 ? -9999 : float.Parse(row["Takziv"].ToString());//(row["Takziv"].ToString() == "0" || row["Takziv"].ToString() == "") ? "" : String.Format("{0:0.0}", decimal.Parse(row["Takziv"].ToString()));
+            budgetChange.Yitra = float.Parse(row["Yitra"].ToString()) == 0 ? -9999 : float.Parse(row["Yitra"].ToString());//(row["Yitra"].ToString() == "0" || row["Yitra"].ToString() == "") ? "" : String.Format("{0:0.0}", decimal.Parse(row["Yitra"].ToString())); 
+            budgetChange.Niyud = float.Parse(row["Niyud"].ToString()) == 0 ? -9999 : float.Parse(row["Niyud"].ToString()); //row["Niyud"].ToString() == "0" ? "" : row["Niyud"].ToString();
+            budgetChange.AddRem = float.Parse(row["addrem"].ToString()) == 0 ? -9999 : float.Parse(row["addrem"].ToString());// erech;// row["addrem"].ToString() == "0" ? "" : row["addrem"].ToString(); 
 
             return budgetChange;
         }
 
 
-        public void AddTakzivLeMitkan(int p_mitkan, DateTime p_chodesh, int p_id_takziv, decimal p_kamut, string p_reason, int p_user)
+        public void AddTakzivLeMitkan(int p_mitkan, DateTime p_chodesh, int p_id_takziv, float p_kamut, string p_reason, int p_user)
         {
             _container.Resolve<IChangesDal>().AddTakzivLeMitkan(p_mitkan, p_chodesh, p_id_takziv, p_kamut, p_reason, p_user);
         }
 
-        public void AddNewTakziv(int p_id_takziv, string p_teur, decimal p_kamut, string p_reason, int p_user)
+        public void AddNewTakziv(int p_id_takziv, string p_teur, float p_kamut, string p_reason, int p_user)
         {
             _container.Resolve<IChangesDal>().AddNewTakziv(p_id_takziv, p_teur, p_kamut, p_reason, p_user);
         }
 
-        public void SaveChangeMitkan(int p_mitkan_from,int p_mitkan_to, DateTime p_chodesh, decimal p_erech, string p_reason, int p_user)
+        public void SaveChangeMitkan(int p_mitkan_from, int p_mitkan_to, DateTime p_chodesh, float p_erech, string p_reason, int p_user)
         {
             _container.Resolve<IChangesDal>().SaveChangeMitkan(p_mitkan_from, p_mitkan_to, p_chodesh, p_erech, p_reason, p_user);
         }
 
-        public void SaveReductionMitkan(int p_mitkan, DateTime p_chodesh, decimal p_kamut, string p_reason, int p_user)
+        public void SaveReductionMitkan(int p_mitkan, DateTime p_chodesh, float p_kamut, string p_reason, int p_user)
         {
             _container.Resolve<IChangesDal>().SaveReductionMitkan(p_mitkan, p_chodesh, p_kamut, p_reason, p_user);
         }
@@ -168,7 +168,7 @@ namespace BsmBL.Managers
             foreach (DataRow  row in dt.Rows)
             {
                 ch = new ChangeHistoryGrid();
-                ch.Kamut = decimal.Parse(row["kamut"].ToString());
+                ch.Kamut = float.Parse(row["kamut"].ToString());
                 ch.SugPeula = row["sug_peula"].ToString();
                 ch.Meadken = row["MEADKEN"].ToString();
                 ch.TaarichIdkun = DateTime.Parse(row["TAARICH_IDKUN"].ToString());
@@ -209,8 +209,8 @@ namespace BsmBL.Managers
           foreach (DataRow row in dt.Rows)
           {
               ch = new BudgetSpecialYechida();
-              ch.TeurYechida = row["teur_yechida"].ToString();  
-              ch.Amount =decimal.Parse(row["amount"].ToString());
+              ch.TeurYechida = row["teur_yechida"].ToString();
+              ch.Amount = float.Parse(row["amount"].ToString());
               ch.MeadkenName = row["MEADKEN"].ToString();
               ch.TaarichIdkun = DateTime.Parse(row["TAARICH_IDKUN"].ToString());
               ch.Reason = row["REASON"].ToString();

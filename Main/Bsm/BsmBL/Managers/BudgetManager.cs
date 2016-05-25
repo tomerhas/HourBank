@@ -67,7 +67,7 @@ namespace BsmBL.Managers
             return budget;
 
         }
-        public decimal GetBudgetLeft(int KodYechida, DateTime Month)
+        public float GetBudgetLeft(int KodYechida, DateTime Month)
         {
             BudgetLeft budgetLeft = null;
             using (var context = new BsmEntities())
@@ -75,7 +75,7 @@ namespace BsmBL.Managers
                 budgetLeft = context.BudgetLeft.FirstOrDefault(x => x.KodYechida == KodYechida && x.Month == Month);
                 if (budgetLeft != null)
                 {
-                    return decimal.Parse(String.Format("{0:0.0}", budgetLeft.BudgetLeftAmount));
+                    return budgetLeft.BudgetLeftAmount;// decimal.Parse(String.Format("{0:0.0}", budgetLeft.BudgetLeftAmount));
                 }
             }
             return 0;
@@ -166,10 +166,10 @@ namespace BsmBL.Managers
 
 
 
-        private decimal GetSachMeafyen14(int KodYechida, DateTime Month)
+        private float GetSachMeafyen14(int KodYechida, DateTime Month)
         {  
                 var BudgetManager = _container.Resolve<IBudgetDal>();
-                decimal sum = BudgetManager.GetSumMeafyen14(KodYechida, Month);
+                float sum = BudgetManager.GetSumMeafyen14(KodYechida, Month);
                 return sum;     
         }
 
@@ -372,11 +372,11 @@ namespace BsmBL.Managers
             budgetEmployee.MichsaYomit = float.Parse(row["Michsa_Yomit"].ToString());
             budgetEmployee.NosafotPrev = float.Parse(row["Nosafot_Prev"].ToString());
             // budgetEmployee.MichsaPrev = float.Parse(row["Michsa_Prev"].ToString());
-            budgetEmployee.MichsaCur = decimal.Parse(row["Michsa_Cur"].ToString());
+            budgetEmployee.MichsaCur = float.Parse(row["Michsa_Cur"].ToString());
             budgetEmployee.MichsaMakor = budgetEmployee.MichsaCur;
             //   budgetEmployee.NosafotCur = float.Parse(row["Nosafot_Cur"].ToString());
 
-            budgetEmployee.ShaotShebuzu = decimal.Parse(row["ShaotShebuzu"].ToString());
+            budgetEmployee.ShaotShebuzu = float.Parse(row["ShaotShebuzu"].ToString());
             budgetEmployee.MisSign = int.Parse(row["mis_sign"].ToString());
             var paar = budgetEmployee.ShaotShebuzu - budgetEmployee.MichsaCur;
 
@@ -419,13 +419,13 @@ namespace BsmBL.Managers
             _container.Resolve<BudgetDal>().SaveBudgetLeft(p_kod_yechida, p_chodesh, p_user);
         }
 
-        public decimal GetBudgetLeftForMitkan(int p_kod_yechida, DateTime p_chodesh)
-        {
+        public float GetBudgetLeftForMitkan(int p_kod_yechida, DateTime p_chodesh)
+        { 
             using (var db = new BsmEntities())
             {
                 var left = db.BudgetLeft.FirstOrDefault(f => f.KodYechida == p_kod_yechida && f.Month == p_chodesh);
                 if (left != null)
-                    return left.BudgetLeftAmount;
+                    return left.BudgetLeftAmount; 
             }
             return 0;
         }

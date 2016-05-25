@@ -16,6 +16,6 @@ namespace BsmWebApp.ViewModels.Changes
         }
         public SelectList Yechidot { get; set; }
         public Yechida Yechida { get; set; }
-        public int Kamut { get; set; }
+        public float Kamut { get; set; }
     }
 }

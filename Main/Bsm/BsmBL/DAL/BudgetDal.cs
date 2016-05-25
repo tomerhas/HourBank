@@ -28,7 +28,7 @@ namespace BsmBL.DAL
             _container = container;
         }
 
-        public decimal GetSumMeafyen14(int KodYechida, DateTime Month)
+        public float GetSumMeafyen14(int KodYechida, DateTime Month)
         {
             clDal oDal = _container.Resolve<clDal>();
             DataTable dt = new DataTable();
@@ -44,7 +44,7 @@ namespace BsmBL.DAL
 
                 oDal.ExecuteSP(cfunGetSumMeafyen14);
 
-                return oDal.GetValParam("p_result") != "null" ? decimal.Parse(oDal.GetValParam("p_result").ToString()) : 0;
+                return oDal.GetValParam("p_result") != "null" ? float.Parse(oDal.GetValParam("p_result").ToString()) : 0;
 
               //  return dt;
             }
@@ -54,7 +54,7 @@ namespace BsmBL.DAL
             }
         }
 
-        public decimal GetShaotnosafotMeshek(int KodYechida, DateTime Month)
+        public float GetShaotnosafotMeshek(int KodYechida, DateTime Month)
         {
             clDal oDal = _container.Resolve<clDal>();
             DataTable dt = new DataTable();
@@ -69,7 +69,7 @@ namespace BsmBL.DAL
 
                 oDal.ExecuteSP(cfunGgetShaotNosafotMeshek);
 
-                return decimal.Parse(oDal.GetValParam("p_result").ToString());
+                return float.Parse(oDal.GetValParam("p_result").ToString());
 
                 //  return dt;
             }
@@ -123,7 +123,7 @@ namespace BsmBL.DAL
             }
         }
 
-        public decimal GetFullBudgetToMitkan(int KodYechida, DateTime Month)
+        public float GetFullBudgetToMitkan(int KodYechida, DateTime Month)
         {
             clDal oDal = _container.Resolve<clDal>();
             DataTable dt = new DataTable();
@@ -135,7 +135,7 @@ namespace BsmBL.DAL
                 oDal.AddParameter("p_chodesh", ParameterType.ntOracleDate, Month, ParameterDir.pdInput);
                 oDal.ExecuteSP(cFunGetFullBudget);
 
-                return oDal.GetValParam("p_result") != "null" ? decimal.Parse(oDal.GetValParam("p_result").ToString()) : 0;
+                return oDal.GetValParam("p_result") != "null" ? float.Parse(oDal.GetValParam("p_result").ToString()) : 0;
             }
             catch (Exception ex)
             {

@@ -188,7 +188,7 @@
     <Compile Include="ViewModels\Home\HomeViewModel.cs" />
     <Compile Include="ViewModels\LayoutViewModel.cs" />
     <Compile Include="ViewModels\Reports\ReportingServicesReportViewModel.cs" />
-    <None Include="Views\Changes\_DisplayTakzivHistory.cshtml" />
+
     <Compile Include="WebServices\BsmService.asmx.cs">
       <DependentUpon>BsmService.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -1102,6 +1102,7 @@
     <Content Include="Views\Changes\_AddBudget.cshtml" />
     <Content Include="Views\Changes\_NiyudTakziv.cshtml" />
     <Content Include="Views\Changes\_GriatTakziv.cshtml" />
+    <Content Include="Views\Changes\_DisplayTakzivHistory.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

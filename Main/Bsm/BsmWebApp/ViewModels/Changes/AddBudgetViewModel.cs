@@ -18,7 +18,7 @@ namespace BsmWebApp.ViewModels.Changes
         public SelectList Budgets { get; set; }
         public Yechida Yechida { get; set; }
         public BudgetSpecial budget { get; set; }
-        public decimal Kamut { get; set; }
+        public float Kamut { get; set; }
         public string Comment { get; set; }
         public int AddNewSucceeded { get; set; }
     }

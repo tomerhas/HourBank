@@ -760,11 +760,14 @@ box-shadow:  0px 0px 6.86px 0.14px #a7a9af;
 .k-grid 
 {
      border-style:solid;
-    border-width:1px;
-    border-color: #000000;
+    border-width:2px;
     background-color:#f3f3f3;
+    border-color:transparent;
 }
 
+.k-grid .k-no-data .td{
+    padding:0px;
+}
 .k-grid .k-alt
 {
     border-color: #e2e5ed;

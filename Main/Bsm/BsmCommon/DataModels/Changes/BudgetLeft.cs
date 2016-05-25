@@ -20,7 +20,7 @@ namespace BsmCommon.DataModels.Changes
 
      
         [Column("BUDGET_LEFT")]
-        public decimal BudgetLeftAmount { get; set; }
+        public float BudgetLeftAmount { get; set; }
 
         [Column("TAARICH_IDKUN")]
         public DateTime TaarichIdkun { get; set; }

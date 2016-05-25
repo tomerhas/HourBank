@@ -23,13 +23,13 @@ namespace BsmCommon.DataModels.Budgets
         public float NosafotCur { get; set; }
 
       //  [RegularExpression(@"^([0-9]{0,3})|([0-9]{0,3}\.([0-9]{1,2}))$", ErrorMessage = "יש להכניס ערך מספרי בפורמט 999.99")]
-        public decimal MichsaCur { get; set; }
+        public float MichsaCur { get; set; }
 
-        public decimal MichsaMakor { get; set; }
-        public decimal ShaotShebuzu { get; set; }
+        public float MichsaMakor { get; set; }
+        public float ShaotShebuzu { get; set; }
         public float NosafotNotUsed { get; set; }
     //    public string Paar { get; set; }
-        public decimal Paar { get; set; }
+        public float Paar { get; set; }
         public int CurYechida { get; set; }
         public string ReadOnly { get; set; }
         public int MisSign { get; set; }

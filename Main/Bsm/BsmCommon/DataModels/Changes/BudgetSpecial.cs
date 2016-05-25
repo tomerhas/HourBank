@@ -15,7 +15,7 @@ namespace BsmCommon.DataModels.Changes
         [Column("DESCRIPTION")]
         public string Description { get; set; }
         [Column("AMOUNT")]
-        public decimal Amount { get; set; }
+        public float Amount { get; set; }
         [Column("REASON")]
         public string Reason { get; set; }
         [Column("TAARICH_IDKUN")]

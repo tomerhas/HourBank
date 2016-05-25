@@ -8,7 +8,7 @@ namespace BsmCommon.DataModels.Budgets
 {
     public class ChangeHistoryGrid
     {
-        public decimal Kamut { get; set; }
+        public float Kamut { get; set; }
         public string SugPeula { get; set; }
         public string Meadken { get; set; }
         public DateTime TaarichIdkun { get; set; }

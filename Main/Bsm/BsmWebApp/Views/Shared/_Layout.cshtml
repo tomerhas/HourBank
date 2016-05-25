@@ -52,6 +52,7 @@
 
 <body dir="rtl">
     @{
+        string CurrentURL = Request.FilePath;
         LayoutViewModel MenuModel = ViewBag.LayoutViewModel;
     }
     <div class="col-md-4" style="padding-right: 10px; padding-top: 10px;">
@@ -68,7 +69,7 @@
     *@<div>
           @{
              
-                string CurrentURL = Request.FilePath;
+               
                 
                 if(CurrentURL == "/Budget")
                 {
@@ -111,8 +112,14 @@
             </div>
             <div class="col-md-7">
                 <div align="left" style="padding-top: 14px;">
-                    <label class="GeneralText">חישוב אחרון של התקציב: </label>
-                    <label class="GeneralText">@MenuModel.LastDateCalc</label>
+                       @{
+
+                        if(CurrentURL != "/")
+                        {
+                        <label class="GeneralText">חישוב אחרון של התקציב: </label>
+                        <label class="GeneralText">@MenuModel.LastDateCalc</label>
+                           }
+                       }
                 </div>
             </div>
         </div>

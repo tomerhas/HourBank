@@ -21,7 +21,7 @@ namespace BsmCommon.DataModels.Budgets
         public DateTime Month { get; set; }
 
         [Column("ERECH")]
-        public int Val { get; set; }
+        public float Val { get; set; }
 
         //[Column("TYPE")]
         //public int Type { get; set; }

@@ -226,6 +226,7 @@
        // return false;
 
     }
+   
     function onDataBound() {
         var grid = $("#ChangesList").data("kendoGrid");
         var trs = grid.tbody.find('tr');
@@ -253,8 +254,18 @@
             }
         });
     }
+
+    $(".k-link").click(function(e) { return GoFirstPage(e);  });
+    function GoFirstPage(e)
+    {
+        var grid = $("#ChangesList").data("kendoGrid");
+        var pager = grid.pager;
+        pager.page(1);
+    }
+
     function ShowHistory(mitkan,teur)
     {
+        
         jQuery.ajaxSetup({ cache: false });
         var model = @Html.Raw(Json.Encode(Model));
         var month=model.Filter.SelectedMonth;

@@ -17,11 +17,11 @@ namespace BsmCommon.Interfaces.Managers
         List<BudgetChangesGrid> GetChangesShaotNosafot(int KodEzor, DateTime Month, int isuk, int KodMitkan);
         List<BudgetSpecial> GetBudgetSpecial();
 
-        void AddTakzivLeMitkan(int p_mitkan, DateTime p_chodesh, int p_id_takziv, decimal p_kamut, string p_reason, int p_user);
+        void AddTakzivLeMitkan(int p_mitkan, DateTime p_chodesh, int p_id_takziv, float p_kamut, string p_reason, int p_user);
 
-        void AddNewTakziv(int p_id_takziv, string p_teur, decimal p_kamut, string p_reason, int p_user);
-        void SaveChangeMitkan(int p_mitkan_from, int p_mitkan_to, DateTime p_chodesh, decimal p_erech, string p_reason, int p_user);
-         void SaveReductionMitkan(int p_mitkan, DateTime p_chodesh, decimal p_kamut, string p_reason, int p_user);
+        void AddNewTakziv(int p_id_takziv, string p_teur, float p_kamut, string p_reason, int p_user);
+        void SaveChangeMitkan(int p_mitkan_from, int p_mitkan_to, DateTime p_chodesh, float p_erech, string p_reason, int p_user);
+        void SaveReductionMitkan(int p_mitkan, DateTime p_chodesh, float p_kamut, string p_reason, int p_user);
         int GetNextTakzivNumber();
         List<ChangeHistoryGrid> GetHistory(int p_mitkan, DateTime p_chodesh);
         bool IsYechidaBetokef(int kodYechida, DateTime month);

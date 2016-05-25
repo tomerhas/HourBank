@@ -22,18 +22,18 @@ namespace BsmCommon.DataModels.Budgets
         public DateTime Month { get; set; }
 
         [Column("BUDGET")]
-        public decimal BudgetLefiTeken { get; set; }
+        public float BudgetLefiTeken { get; set; }
         
         [Display(Name = "תקציב")]
         [NotMapped]
-        public decimal BudgetVal{ get; set; }
+        public float BudgetVal{ get; set; }
 
        [Display(Name = "שעות שבוצעו")]
         [Column("BUDGET_USED")]
-        public decimal? Budget_Used { get; set; }
+        public float? Budget_Used { get; set; }
        
         [NotMapped]
-        public decimal BudgetUsed
+       public float BudgetUsed
         {
             get
             {
@@ -41,18 +41,18 @@ namespace BsmCommon.DataModels.Budgets
             }
             set
             {
-                Budget_Used = value == 0 ? new Nullable<decimal>() : value;
+                Budget_Used = value == 0 ? new Nullable<float>() : value;
             }
         }
 
         [Display(Name = "שעות שהוקצו")]
         [NotMapped]
-        public decimal ShaotByMeafyen14 { get; set; }
+        public float ShaotByMeafyen14 { get; set; }
 
 
         [Display(Name = "שעות שנותרו להקצאה")]
         [NotMapped]
-        public decimal YitratTakzivToDivide { get; set; }
+        public float YitratTakzivToDivide { get; set; }
 
         [Column("TAARICH_IDKUN")]
         public DateTime TaarichIdkun { get; set; }
@@ -61,17 +61,17 @@ namespace BsmCommon.DataModels.Budgets
         public long BakashaId { get; set; }
 
         [Column("MICHSA_BASIC")]
-        public decimal MichsaBasic { get; set; }
+        public float MichsaBasic { get; set; }
 
         [Column("AGE_ADDITION")]
         [DisplayFormat(DataFormatString = "{0:n1}")]
-        public decimal Age { get; set; }
+        public float Age { get; set; }
          
         [Column("HALBASHA_ADDITION")]
-        public decimal Halbasha { get; set; }
+        public float Halbasha { get; set; }
 
         [Column("IZUN_MATZEVET_LETEKEN")]
-        public decimal IzunMatzevet { get; set; }
+        public float IzunMatzevet { get; set; }
         	 
         //public List<BudgetChange> BudgetChanges { get; set; }
 

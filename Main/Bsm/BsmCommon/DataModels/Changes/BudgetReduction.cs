@@ -17,7 +17,7 @@ namespace BsmCommon.DataModels.Changes
         public DateTime Chodesh { get; set; }
 
         [Column("AMOUNT")]
-        public decimal Amount { get; set; }
+        public float Amount { get; set; }
 
         [Column("REASON")]
         public string Reasson { get; set; }
