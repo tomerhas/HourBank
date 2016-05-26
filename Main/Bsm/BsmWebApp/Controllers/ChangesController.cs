@@ -14,6 +14,7 @@ using BsmWebApp.Infrastructure.Security;
 using Egged.Infrastructure.Menus.DataModels;
 using BsmWebApp.ViewModels;
 using BsmCommon.Enums;
+using BsmWebApp.ViewModels.Budgets;
 
 
 namespace BsmWebApp.Controllers
@@ -34,10 +35,12 @@ namespace BsmWebApp.Controllers
         {
             ChangesMainViewModel vmResult = new ChangesMainViewModel();// InitChangesVm();
 
+            InitFilterChash();
+
             vmResult.Filter = GetFilter();
             vmResult.Filter.ShowEzor = true;
             vmResult.Page = "Changes";
-            InitFilterChash();
+            
 
             return vmResult;
         }
@@ -324,7 +327,7 @@ namespace BsmWebApp.Controllers
             return PartialView("_DisplayTakzivHistory", vm);
         }
 
-      
+       
         //public ActionResult ChangesShaotNosafotRead([DataSourceRequest]DataSourceRequest request, int KodEzor, int KodYechida, DateTime month)
         //{
         //    var Changes = ChangesShaotNosafot(KodEzor, KodYechida, month);

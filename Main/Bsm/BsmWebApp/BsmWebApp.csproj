@@ -188,7 +188,6 @@
     <Compile Include="ViewModels\Home\HomeViewModel.cs" />
     <Compile Include="ViewModels\LayoutViewModel.cs" />
     <Compile Include="ViewModels\Reports\ReportingServicesReportViewModel.cs" />
-
     <Compile Include="WebServices\BsmService.asmx.cs">
       <DependentUpon>BsmService.asmx</DependentUpon>
       <SubType>Component</SubType>

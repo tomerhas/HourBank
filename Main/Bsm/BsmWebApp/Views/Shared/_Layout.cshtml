@@ -114,7 +114,7 @@
                 <div align="left" style="padding-top: 14px;">
                        @{
 
-                        if(CurrentURL != "/")
+                           if (CurrentURL != "/" && CurrentURL.IndexOf("/Home") ==-1)
                         {
                         <label class="GeneralText">חישוב אחרון של התקציב: </label>
                         <label class="GeneralText">@MenuModel.LastDateCalc</label>
@@ -284,142 +284,142 @@
         /**************************************************************************************************************************************************/
 
         
-        var sessionTimeout = $("#LblSessionTime")[0].innerText;
-        var timeOnPageLoad = new Date();
-        var sessionWarningTimer = null;
-        var redirectToWelcomePageTimer = null;
-        //For warning
-        ////var sessionWarningTimer = setTimeout('SessionWarning()',
-		////		parseInt(sessionTimeoutWarning) * 60 * 1000);
-        //////To redirect to the welcome page
-        ////var redirectToWelcomePageTimer = setTimeout('RedirectToWelcomePage()',
-		////			parseInt(sessionTimeout) * 60 * 1000);
+        //////var sessionTimeout = $("#LblSessionTime")[0].innerText;
+        //////var timeOnPageLoad = new Date();
+        //////var sessionWarningTimer = null;
+        //////var redirectToWelcomePageTimer = null;
+        ////////For warning
+        //////////var sessionWarningTimer = setTimeout('SessionWarning()',
+		//////////		parseInt(sessionTimeoutWarning) * 60 * 1000);
+        ////////////To redirect to the welcome page
+        //////////var redirectToWelcomePageTimer = setTimeout('RedirectToWelcomePage()',
+		//////////			parseInt(sessionTimeout) * 60 * 1000);
 
-        function clearTimeOutsessionWarning() {
-            if (sessionWarningTimer != null) {
-                clearTimeout(sessionWarningTimer);
-            }
-            if (redirectToWelcomePageTimer != null) {
-                clearTimeout(redirectToWelcomePageTimer);
-            }
-            //reset the time on page load
-            timeOnPageLoad = new Date();
-            sessionWarningTimer = setTimeout('SessionWarning()',
-                    parseInt(sessionTimeoutWarning) * 60 * 1000);
-            //To redirect to the welcome page
-            redirectToWelcomePageTimer = setTimeout
-                    ('RedirectToWelcomePage()', parseInt(sessionTimeout) * 60 * 1000);
-        }
-        //Session Warning
-        function SessionWarning() {
-            //minutes left for expiry
-            var minutesForExpiry = (parseInt(sessionTimeout) -
-					parseInt(sessionTimeoutWarning));
-            var message = "זמן ההתחברות עומד להסתיים בעוד  " +
-		minutesForExpiry + " דקות. ברצונך לחדש את זמן ההתחברות?";
+        //////function clearTimeOutsessionWarning() {
+        //////    if (sessionWarningTimer != null) {
+        //////        clearTimeout(sessionWarningTimer);
+        //////    }
+        //////    if (redirectToWelcomePageTimer != null) {
+        //////        clearTimeout(redirectToWelcomePageTimer);
+        //////    }
+        //////    //reset the time on page load
+        //////    timeOnPageLoad = new Date();
+        //////    sessionWarningTimer = setTimeout('SessionWarning()',
+        //////            parseInt(sessionTimeoutWarning) * 60 * 1000);
+        //////    //To redirect to the welcome page
+        //////    redirectToWelcomePageTimer = setTimeout
+        //////            ('RedirectToWelcomePage()', parseInt(sessionTimeout) * 60 * 1000);
+        //////}
+        ////////Session Warning
+        //////function SessionWarning() {
+        //////    //minutes left for expiry
+        //////    var minutesForExpiry = (parseInt(sessionTimeout) -
+		//////			parseInt(sessionTimeoutWarning));
+        //////    var message = "זמן ההתחברות עומד להסתיים בעוד  " +
+		//////minutesForExpiry + " דקות. ברצונך לחדש את זמן ההתחברות?";
 
-            //Confirm the user if he wants to extend the session
+        //////    //Confirm the user if he wants to extend the session
 
-            if ($("#dialog-message").closest('.ui-dialog').is(':visible')) {
-                $("#dialog-message").dialog("close");
-            }
+        //////    if ($("#dialog-message").closest('.ui-dialog').is(':visible')) {
+        //////        $("#dialog-message").dialog("close");
+        //////    }
 
-            $("#dialog-session").html(message);
-            $("#dialog-session").dialog({
-                resizable: false,
-                modal: true,
-                title: "הודעה",
-                //  height: height,
-                width: 400,
-                focus: function (event, ui) { document.activeElement.blur(); },
-                buttons: {
-                    "אישור": function () {
-                        $(this).dialog("close");
-                        jQuery.ajax({
-                            url: '/Budget/RecommenceSession',
-                            type: 'POST',
-                            contentType: 'application/json'//,
-                            //   success: function (result) {
-                            //    if (result.message == "Session Time out") {
-                            //         window.location.href = "/Home/Session_End";
-                            //     }
-                            //   }
-                        });
-                        //Clear the RedirectToWelcomePage method
-                        if (redirectToWelcomePageTimer != null) {
-                            clearTimeout(redirectToWelcomePageTimer);
-                        }
-                        //reset the time on page load
-                        timeOnPageLoad = new Date();
-                        sessionWarningTimer = setTimeout('SessionWarning()',
-                                parseInt(sessionTimeoutWarning) * 60 * 1000);
-                        //To redirect to the welcome page
-                        redirectToWelcomePageTimer = setTimeout
-                                ('RedirectToWelcomePage()', parseInt(sessionTimeout) * 60 * 1000);
-                    },
-                    "לדף הבית": function () {
-                        $(this).dialog("close");
-                        window.location.href = "/Home/Index";
-                    }
-                }
+        //////    $("#dialog-session").html(message);
+        //////    $("#dialog-session").dialog({
+        //////        resizable: false,
+        //////        modal: true,
+        //////        title: "הודעה",
+        //////        //  height: height,
+        //////        width: 400,
+        //////        focus: function (event, ui) { document.activeElement.blur(); },
+        //////        buttons: {
+        //////            "אישור": function () {
+        //////                $(this).dialog("close");
+        //////                jQuery.ajax({
+        //////                    url: '/Budget/RecommenceSession',
+        //////                    type: 'POST',
+        //////                    contentType: 'application/json'//,
+        //////                    //   success: function (result) {
+        //////                    //    if (result.message == "Session Time out") {
+        //////                    //         window.location.href = "/Home/Session_End";
+        //////                    //     }
+        //////                    //   }
+        //////                });
+        //////                //Clear the RedirectToWelcomePage method
+        //////                if (redirectToWelcomePageTimer != null) {
+        //////                    clearTimeout(redirectToWelcomePageTimer);
+        //////                }
+        //////                //reset the time on page load
+        //////                timeOnPageLoad = new Date();
+        //////                sessionWarningTimer = setTimeout('SessionWarning()',
+        //////                        parseInt(sessionTimeoutWarning) * 60 * 1000);
+        //////                //To redirect to the welcome page
+        //////                redirectToWelcomePageTimer = setTimeout
+        //////                        ('RedirectToWelcomePage()', parseInt(sessionTimeout) * 60 * 1000);
+        //////            },
+        //////            "לדף הבית": function () {
+        //////                $(this).dialog("close");
+        //////                window.location.href = "/Home/Index";
+        //////            }
+        //////        }
 
-            });
-            $("#dialog-session").parent("div").attr("id", "dlgSes");
-            //var answer = confirm(message);
+        //////    });
+        //////    $("#dialog-session").parent("div").attr("id", "dlgSes");
+        //////    //var answer = confirm(message);
 
-            ////if yes, extend the session.
-            //if(answer)
-            //{
-            //   // var img = new Image(1, 1);
-            //   // img.src = 'KeepAlive.cshtml?date=' + escape(new Date());
-            //    jQuery.ajax({
-            //        url: '/Budget/RecommenceSession',
-            //        type: 'POST',
-            //        contentType: 'application/json'//,
-            //     //   success: function (result) {
-            //        //    if (result.message == "Session Time out") {
-            //       //         window.location.href = "/Home/Session_End";
-            //       //     }
-            //     //   }
-            //    });
-            //    //Clear the RedirectToWelcomePage method
-            //    if (redirectToWelcomePageTimer != null) {
-            //        clearTimeout(redirectToWelcomePageTimer);
-            //    }
-            //    //reset the time on page load
-            //    timeOnPageLoad =  new Date();
-            //    sessionWarningTimer = setTimeout('SessionWarning()', 
-            //	        parseInt(sessionTimeoutWarning) * 60 * 1000);
-            //    //To redirect to the welcome page
-            //    redirectToWelcomePageTimer = setTimeout
-            //            ('RedirectToWelcomePage()',parseInt(sessionTimeout) * 60 * 1000);
-            //}
+        //////    ////if yes, extend the session.
+        //////    //if(answer)
+        //////    //{
+        //////    //   // var img = new Image(1, 1);
+        //////    //   // img.src = 'KeepAlive.cshtml?date=' + escape(new Date());
+        //////    //    jQuery.ajax({
+        //////    //        url: '/Budget/RecommenceSession',
+        //////    //        type: 'POST',
+        //////    //        contentType: 'application/json'//,
+        //////    //     //   success: function (result) {
+        //////    //        //    if (result.message == "Session Time out") {
+        //////    //       //         window.location.href = "/Home/Session_End";
+        //////    //       //     }
+        //////    //     //   }
+        //////    //    });
+        //////    //    //Clear the RedirectToWelcomePage method
+        //////    //    if (redirectToWelcomePageTimer != null) {
+        //////    //        clearTimeout(redirectToWelcomePageTimer);
+        //////    //    }
+        //////    //    //reset the time on page load
+        //////    //    timeOnPageLoad =  new Date();
+        //////    //    sessionWarningTimer = setTimeout('SessionWarning()', 
+        //////    //	        parseInt(sessionTimeoutWarning) * 60 * 1000);
+        //////    //    //To redirect to the welcome page
+        //////    //    redirectToWelcomePageTimer = setTimeout
+        //////    //            ('RedirectToWelcomePage()',parseInt(sessionTimeout) * 60 * 1000);
+        //////    //}
 
-            //*************************
-            //Even after clicking ok(extending session) or cancel button, 
-            //if the session time is over. Then exit the session.
-            var currentTime = new Date();
-            //time for expiry
-            var timeForExpiry = timeOnPageLoad.setMinutes(timeOnPageLoad.getMinutes() +
-				parseInt(sessionTimeout));
+        //////    //*************************
+        //////    //Even after clicking ok(extending session) or cancel button, 
+        //////    //if the session time is over. Then exit the session.
+        //////    var currentTime = new Date();
+        //////    //time for expiry
+        //////    var timeForExpiry = timeOnPageLoad.setMinutes(timeOnPageLoad.getMinutes() +
+		//////		parseInt(sessionTimeout));
 
-            //Current time is greater than the expiry time
-            if (Date.parse(currentTime) > timeForExpiry) {
-                $("#dialog-session").dialog("close");
-                // AlertMessage("זמן התחברות הסתיים,תועבר לדף הבית", 170, 400);
-                window.location.href = "/Home/Session_End";
-                //   window.location = "../Welcome.aspx";
-            }
-            //**************************
-        }
+        //////    //Current time is greater than the expiry time
+        //////    if (Date.parse(currentTime) > timeForExpiry) {
+        //////        $("#dialog-session").dialog("close");
+        //////        // AlertMessage("זמן התחברות הסתיים,תועבר לדף הבית", 170, 400);
+        //////        window.location.href = "/Home/Session_End";
+        //////        //   window.location = "../Welcome.aspx";
+        //////    }
+        //////    //**************************
+        //////}
 
-        //Session timeout
-        function RedirectToWelcomePage() {
-            $("#dialog-session").dialog("close");
-            // AlertMessage("זמן התחברות הסתיים,תועבר לדף הבית", 170, 400);
-            window.location.href = "/Home/Session_End";
-            //  window.location = "../Welcome.aspx";
-        }
+        //////Session timeout
+        ////function RedirectToWelcomePage() {
+        ////    $("#dialog-session").dialog("close");
+        ////    // AlertMessage("זמן התחברות הסתיים,תועבר לדף הבית", 170, 400);
+        ////    window.location.href = "/Home/Session_End";
+        ////    //  window.location = "../Welcome.aspx";
+        ////}
 
         function isNumberKey(evt) {
 

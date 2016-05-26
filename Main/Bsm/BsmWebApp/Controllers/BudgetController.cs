@@ -40,9 +40,8 @@ namespace BsmWebApp.Controllers
         [PageAuthorize("Budget")]
         public ActionResult Index()
         {
-            
-            BudgetMainViewModel vm = InitBudgetVm();
             InitFilterChash();
+            BudgetMainViewModel vm = InitBudgetVm();
             return View(vm);
         }
 
@@ -339,7 +338,7 @@ namespace BsmWebApp.Controllers
             if (!int.TryParse(str, out inpValidate))
             {
                 var namelist = employees
-                    .Where(x => x.FullName.ToString().StartsWith(str)) //Contains(str))
+                    .Where(x => x.FullName.ToString().Contains(str)) //StartsWith(str)) //
                     .Select(x => x.FullName).ToList();
                 namelist.Sort();
 

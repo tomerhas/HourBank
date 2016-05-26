@@ -265,16 +265,16 @@
 
     function ShowHistory(mitkan,teur)
     {
-        
         jQuery.ajaxSetup({ cache: false });
         var model = @Html.Raw(Json.Encode(Model));
         var month=model.Filter.SelectedMonth;
         var titel = " פירוט למתקן ";
         titel = titel + teur + " לחודש " + " \n ";
         titel = titel + month;
+        
         $("#dialog-change").html("")
             .dialog("option", "title", titel)
-            .load('/Budget/DispalyChanges?KodYechida=' + mitkan + "&chodesh=" + month, function () { $("#dialog-change").dialog("open"); });
+            .load('/Budget/DispalyChanges?KodYechida=' + mitkan + "&chodesh=" + month, function () {  $("#dialog-change").dialog("open"); });
 
     }
 

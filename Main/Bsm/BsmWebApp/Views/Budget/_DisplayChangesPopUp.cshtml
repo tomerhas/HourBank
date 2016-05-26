@@ -3,12 +3,14 @@
 @*    <div >
         <span  style="font-size:13px;text-align: center; ">פירוט שעות הוספה/הפחתה למתקן </span>
     </div>
+
    *@
+
 @using(Html.BeginForm())
     { 
 
 
-  <div class="t-rtl">
+  <div class="t-rtl" >
         @{
             //<a class="analyticsDetailsInfo" href="/Admin/ModifyExamAnalytic?examTypeId=225&analyticId=Core&addAnalytic=False">ערוך אנליטיקה</a>
         Html.Kendo().Grid(Model.ChangesHistory)
@@ -24,3 +26,4 @@
         }
     </div>
 }
+ <label style="color:transparent">.</label> @*   label פותר בעיה תצוגתית - לא להוריד*@
