@@ -47,7 +47,7 @@ public class UpdateMichsa extends Base {
 		budget.btnAccept.click();
 		
 
-		while (num < 2) {
+		while (num <4) {
 
 			nametd = "tdMichsa" + i;
 			eltd = Budget.clickMichsa(driver, nametd);
@@ -62,12 +62,12 @@ public class UpdateMichsa extends Base {
 				
 
 				eltd.click();
-				budget.typeMichsa.sendKeys("99999");
+				budget.typeMichsa.sendKeys("9999");
 
-				if (num == 1) {
-					FirstTd = nametd;
+			//	if (num == 1) {
+			//		FirstTd = nametd;
 
-				}
+			//	}
 				
 
 			}
@@ -83,9 +83,13 @@ public class UpdateMichsa extends Base {
 				"לא ניתן לבצע שמירה: סה''כ המכסות שעודכנו גדול מתקציב השעות הנוספות");
 		budget.btnAccept.click();
 		
-		eltd = Budget.clickMichsa(driver, FirstTd);
-		eltd.click();
-		budget.typeMichsa.sendKeys("0");
+		
+		budget.lblReset.click();
+		budget.btnYes.click();
+		
+		//eltd = Budget.clickMichsa(driver, FirstTd);
+		//eltd.click();
+		//budget.typeMichsa.sendKeys("0");
 		
 		eltd = Budget.clickMichsa(driver, nametd);
 		eltd.click();
