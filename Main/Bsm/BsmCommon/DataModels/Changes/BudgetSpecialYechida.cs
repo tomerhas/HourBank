@@ -10,13 +10,13 @@ namespace BsmCommon.DataModels.Changes
 {
     public class BudgetSpecialYechida
     {
-        [Key, Column("KOD_YECHIDA", Order = 0)]
+        [Column("KOD_YECHIDA")]
         public int KodYechida { get; set; }
 
         [Column("CHODESH")]
         public DateTime Chodesh { get; set; }
 
-        [Key, Column("MISPAR_TAKZIV", Order = 1)]
+        [Column("MISPAR_TAKZIV")]
         public int MisparTakziv { get; set; }
 
         [Column("AMOUNT")]
@@ -25,7 +25,7 @@ namespace BsmCommon.DataModels.Changes
         [Column("REASON")]
         public string Reason { get; set; }
 
-        [Column("TAARICH_IDKUN")]
+        [Key, Column("TAARICH_IDKUN", Order = 0)]
         public DateTime TaarichIdkun { get; set; }
 
         [Column("MEADKEN")]

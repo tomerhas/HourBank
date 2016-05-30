@@ -146,7 +146,7 @@
 
 
                    //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  value='ff'   onclick='OpenKds();'   />").Width(80);
-                       columns.Template(o => o.MisparIshi).ClientTemplate("<img src='../../Content/Images/pai.png' onclick='OpenKds(#= MisparIshi #);' /><img src='../../Content/Images/warning_kds.png' id='warIcon' style='margin-right:7px'  title='קיים סידור ללא שעת התחלה או שעת גמר'  />").HtmlAttributes(new { @class = "pointer", @id = ("tdKds#= Masad #") }).Width(50);  //http://kds/Modules/Ovdim/NochechutMerukezet.aspx
+                       columns.Template(o => o.MisparIshi).ClientTemplate("<img src='../../Content/Images/pai.png' class='pointer' onclick='OpenKds(#= MisparIshi #);' /><img src='../../Content/Images/warning_kds.png' id='warIcon' style='margin-right:7px'  title='קיים סידור ללא שעת התחלה או שעת גמר'  />").HtmlAttributes(new { @id = ("tdKds#= Masad #") }).Width(50);  //http://kds/Modules/Ovdim/NochechutMerukezet.aspx
                    columns.Bound(o => o.MisparIshi).Title("מספר אישי");
                    columns.Bound(o => o.FullName).Title("שם עובד").HtmlAttributes(new { @id = "tdName" });
                    columns.Bound(o => o.TeurIsuk).Title("עיסוק");
@@ -368,7 +368,7 @@
     function findDataItem() {
         //get grid datasource
         //  debugger;
-        clearTimeOutsessionWarning();
+       
         var theGrid = $('#EmployeesList')
         var dataItem = $('#MisparIshi');
         if(dataItem.val().trim() =="")
@@ -761,6 +761,12 @@
             }
             if(dt.ShaotShebuzu > dt.MichsaCur)
                 grid.table.find("tr[data-uid='" + row.uid + "']").find("td#tdPaar").css( 'color','red');  //.addClass("highlighted-row");
+           // debugger;
+            if(dt.MisSign == 0){
+                var id ='td#tdKds'+dt.Masad; 
+                grid.table.find("tr[data-uid='" + row.uid + "']").find('#warIcon').css("display", "none");
+             //   $(this).find(id).find('#warIcon').css("display", "none");
+            }
         });
         
     }
