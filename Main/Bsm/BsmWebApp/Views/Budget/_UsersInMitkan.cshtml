@@ -146,7 +146,7 @@
 
 
                    //  columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='button'  value='ff'   onclick='OpenKds();'   />").Width(80);
-                       columns.Template(o => o.MisparIshi).ClientTemplate("<img src='../../Content/Images/pai.png' class='pointer' onclick='OpenKds(#= MisparIshi #);' /><img src='../../Content/Images/warning_kds.png' id='warIcon' style='margin-right:7px'  title='קיים סידור ללא שעת התחלה או שעת גמר'  />").HtmlAttributes(new { @id = ("tdKds#= Masad #") }).Width(50);  //http://kds/Modules/Ovdim/NochechutMerukezet.aspx
+                       columns.Template(o => o.MisparIshi).ClientTemplate("<img src='../../Content/Images/pai.png' class='pointer' id='IconKds' onclick='OpenKds(#= MisparIshi #);' /><img src='../../Content/Images/warning_kds.png' id='warIcon' style='margin-right:7px'  title='קיים סידור ללא שעת התחלה או שעת גמר'  />").HtmlAttributes(new { @id = ("tdKds#= Masad #") }).Width(60);  //http://kds/Modules/Ovdim/NochechutMerukezet.aspx
                    columns.Bound(o => o.MisparIshi).Title("מספר אישי");
                    columns.Bound(o => o.FullName).Title("שם עובד").HtmlAttributes(new { @id = "tdName" });
                    columns.Bound(o => o.TeurIsuk).Title("עיסוק");
