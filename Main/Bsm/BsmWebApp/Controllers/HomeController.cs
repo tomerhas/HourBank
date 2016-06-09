@@ -50,8 +50,11 @@ namespace BsmWebApp.Controllers
                         ViewBag.SessionEnd = 1;
                     else
                     {
+                       // ViewBag.SessionEnd = 0;
+                      //  vm.Error = error;
+                        vm.ImgSrc = "~/Content/Images/Lock_Icon.png";
+                        vm.Error= error;
                         ViewBag.SessionEnd = 0;
-                        vm.Error = error;
                     }
                     //  vm.SessionEnd = 0;
                     vm.Today = DateTime.Now;

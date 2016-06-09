@@ -20,5 +20,7 @@ namespace BsmWebApp.ViewModels.Home
                 return false;
             }
         }
+
+        public string ImgSrc { get; set; }
     }
 }

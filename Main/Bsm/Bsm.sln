@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedLib", "SharedLib", "{F8B05487-FF3E-48CC-B589-88A42F1394DE}"
 	ProjectSection(SolutionItems) = preProject
 		SharedLib\EntityFramework.dll = SharedLib\EntityFramework.dll
@@ -32,41 +34,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfrastructureLogs", "Infrastructure\InfrastructureLogs\InfrastructureLogs.csproj", "{E679DFB2-FF85-4ACF-B63F-65567DBFCA4F}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 9
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://tfssrv01:8080/tfs/ksafimcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = BsmBL\\BsmBL.csproj
-		SccProjectName1 = BsmBL
-		SccLocalPath1 = BsmBL
-		SccProjectUniqueName2 = BsmCommon\\BsmCommon.csproj
-		SccProjectName2 = BsmCommon
-		SccLocalPath2 = BsmCommon
-		SccProjectUniqueName3 = Egged.Infrastructure\\Egged.Infrastructure.csproj
-		SccProjectTopLevelParentUniqueName3 = Bsm.sln
-		SccProjectName3 = Egged.Infrastructure
-		SccLocalPath3 = Egged.Infrastructure
-		SccProjectUniqueName4 = Tests\\BLTests\\BLTests.csproj
-		SccProjectTopLevelParentUniqueName4 = Bsm.sln
-		SccProjectName4 = Tests/BLTests
-		SccLocalPath4 = Tests\\BLTests
-		SccProjectUniqueName5 = Infrastructure\\CacheInfra\\CacheInfra.csproj
-		SccProjectTopLevelParentUniqueName5 = Bsm.sln
-		SccProjectName5 = Infrastructure/CacheInfra
-		SccLocalPath5 = Infrastructure\\CacheInfra
-		SccProjectUniqueName6 = DalOraInfra\\DalOraInfra.csproj
-		SccProjectTopLevelParentUniqueName6 = Bsm.sln
-		SccProjectName6 = DalOraInfra
-		SccLocalPath6 = DalOraInfra
-		SccProjectUniqueName7 = BsmWebApp\\BsmWebApp.csproj
-		SccProjectName7 = BsmWebApp
-		SccLocalPath7 = BsmWebApp
-		SccProjectUniqueName8 = Infrastructure\\InfrastructureLogs\\InfrastructureLogs.csproj
-		SccProjectTopLevelParentUniqueName8 = Bsm.sln
-		SccProjectName8 = Infrastructure/InfrastructureLogs
-		SccLocalPath8 = Infrastructure\\InfrastructureLogs
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -127,9 +94,44 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A414C1F8-0C57-4ECF-A356-2F23B257E9A1} = {CEA86DD8-9BD3-48FB-B4A9-34C8A3EEA221}
+		{C61CC266-FA7C-41D6-BCBC-7A1889B42113} = {7195885B-DF3F-4D48-B4CA-1FBBD0A452B9}
 		{D6968B94-1A4F-4F26-8095-5297AF0E0E83} = {CEA86DD8-9BD3-48FB-B4A9-34C8A3EEA221}
 		{C9B59C0B-A7C3-433A-9C5C-C11EB2E8EA7F} = {CEA86DD8-9BD3-48FB-B4A9-34C8A3EEA221}
 		{E679DFB2-FF85-4ACF-B63F-65567DBFCA4F} = {CEA86DD8-9BD3-48FB-B4A9-34C8A3EEA221}
-		{C61CC266-FA7C-41D6-BCBC-7A1889B42113} = {7195885B-DF3F-4D48-B4CA-1FBBD0A452B9}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 9
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfssrv2015:8080/tfs/ksafimcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = BsmBL\\BsmBL.csproj
+		SccProjectName1 = BsmBL
+		SccLocalPath1 = BsmBL
+		SccProjectUniqueName2 = BsmCommon\\BsmCommon.csproj
+		SccProjectName2 = BsmCommon
+		SccLocalPath2 = BsmCommon
+		SccProjectUniqueName3 = Egged.Infrastructure\\Egged.Infrastructure.csproj
+		SccProjectTopLevelParentUniqueName3 = Bsm.sln
+		SccProjectName3 = Egged.Infrastructure
+		SccLocalPath3 = Egged.Infrastructure
+		SccProjectUniqueName4 = Tests\\BLTests\\BLTests.csproj
+		SccProjectTopLevelParentUniqueName4 = Bsm.sln
+		SccProjectName4 = Tests/BLTests
+		SccLocalPath4 = Tests\\BLTests
+		SccProjectUniqueName5 = Infrastructure\\CacheInfra\\CacheInfra.csproj
+		SccProjectTopLevelParentUniqueName5 = Bsm.sln
+		SccProjectName5 = Infrastructure/CacheInfra
+		SccLocalPath5 = Infrastructure\\CacheInfra
+		SccProjectUniqueName6 = DalOraInfra\\DalOraInfra.csproj
+		SccProjectTopLevelParentUniqueName6 = Bsm.sln
+		SccProjectName6 = DalOraInfra
+		SccLocalPath6 = DalOraInfra
+		SccProjectUniqueName7 = BsmWebApp\\BsmWebApp.csproj
+		SccProjectName7 = BsmWebApp
+		SccLocalPath7 = BsmWebApp
+		SccProjectUniqueName8 = Infrastructure\\InfrastructureLogs\\InfrastructureLogs.csproj
+		SccProjectTopLevelParentUniqueName8 = Bsm.sln
+		SccProjectName8 = Infrastructure/InfrastructureLogs
+		SccLocalPath8 = Infrastructure\\InfrastructureLogs
 	EndGlobalSection
 EndGlobal

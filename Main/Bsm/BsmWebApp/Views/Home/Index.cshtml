@@ -20,9 +20,17 @@
     <br />
      <div class="row">
      <div class="col-md-3"></div>
-        @if(Model.HasError)
+        @if (Model.HasError)
         {
-            <div  class="col-md-7" style="font-size:14pt;font-weight:bolder;color:red;text-align: center; "  >@Model.Error</div>
+            <div class="divError">
+                @*  <div class="ErrorBG col-md-4" style="height:50px;float:left" ></div>*@
+                <div style="padding-top:8px">
+                    <img src="@Url.Content(Model.ImgSrc)" />
+                    @Model.Error
+                </div>
+
+            </div>
+            @*<div  class="col-md-7" style="font-size:14pt;font-weight:bolder;color:red;text-align: center; "  >@Model.Error</div>*@
         }
         
           
