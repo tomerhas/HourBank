@@ -29,7 +29,7 @@ namespace BsmCommon.DataModels.Budgets
         public float ShaotShebuzu { get; set; }
         public float NosafotNotUsed { get; set; }
     //    public string Paar { get; set; }
-        public float Paar { get; set; }
+        public decimal Paar { get; set; }
         public int CurYechida { get; set; }
         public string ReadOnly { get; set; }
         public int MisSign { get; set; }

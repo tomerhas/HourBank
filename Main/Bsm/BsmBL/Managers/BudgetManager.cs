@@ -378,16 +378,16 @@ namespace BsmBL.Managers
 
             budgetEmployee.ShaotShebuzu = float.Parse(row["ShaotShebuzu"].ToString());
             budgetEmployee.MisSign = int.Parse(row["mis_sign"].ToString());
-            var paar = budgetEmployee.ShaotShebuzu - budgetEmployee.MichsaCur;
+            decimal paar = (decimal)budgetEmployee.ShaotShebuzu - (decimal)budgetEmployee.MichsaCur;
 
             if (paar < 0)
-                budgetEmployee.Paar = paar;// string.Concat(paar * (-1), "-");
+                budgetEmployee.Paar =  paar;// string.Concat(paar * (-1), "-");
                                            // budgetEmployee.Paar =
             else
             {
                 if (paar == 0)
                     budgetEmployee.Paar = 0;// "0";
-                else budgetEmployee.Paar = paar;// paar.ToString();
+                else budgetEmployee.Paar =  paar;// paar.ToString();
             }
             // budgetEmployee.CurYechida = int.Parse(row["cur_yechida"].ToString());
 
