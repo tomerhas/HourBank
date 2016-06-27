@@ -245,7 +245,7 @@ namespace BsmWebApp.Controllers
              }
             CurrentUser.Yechidot.ForEach((item) =>
             {
-                if (ezor == 0 || item.KodEzor == ezor && change.IsYechidaBetokef(item.KodYechida, month))
+                if ((ezor == 0 || item.KodEzor == ezor) && change.IsYechidaBetokef(item.KodYechida, month))
                 {
                     yechida = new Yechida();
                     yechida.KodYechida = item.KodYechida;
