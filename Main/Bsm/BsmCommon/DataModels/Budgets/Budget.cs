@@ -72,7 +72,10 @@ namespace BsmCommon.DataModels.Budgets
 
         [Column("IZUN_MATZEVET_LETEKEN")]
         public float IzunMatzevet { get; set; }
-        	 
+
+        [Column("IZUN_MATZEVET_LETEKEN_MIZTABER")]
+        public float IzunMatzevetMiztaber { get; set; }
+
         //public List<BudgetChange> BudgetChanges { get; set; }
 
         //[Display(Name = "יתרת מחודש קודם")]
