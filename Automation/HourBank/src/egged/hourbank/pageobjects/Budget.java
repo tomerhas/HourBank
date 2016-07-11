@@ -52,7 +52,7 @@ public  class Budget {
 	@FindBy(how = How.ID, using = "MichsaCur")
 	public WebElement typeMichsa;
 	
-	@FindBy(how = How.ID, using = "tdKds0")
+	@FindBy(how = How.ID, using = "IconKds")
 	public WebElement lnkKds;
 	
 	@FindBy(how = How.ID, using = "ctl00_upHeader")
