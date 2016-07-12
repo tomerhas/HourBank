@@ -88,6 +88,7 @@
     <Compile Include="DataModels\Reports\Report.cs" />
     <Compile Include="DataModels\Reports\ReportParam.cs" />
     <Compile Include="DataModels\Yechida.cs" />
+    <Compile Include="Enums\eBudgetLeft.cs" />
     <Compile Include="Enums\eFormat.cs" />
     <Compile Include="Enums\eSugPeiluHarshaa.cs" />
     <Compile Include="Helpers\ArrayHelper.cs" />

@@ -7,7 +7,7 @@ using BsmCommon.Interfaces.Managers;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Data;                                                                                                                                                                                                                                                                                                                        
 using System.Data.Objects.SqlClient;
 using System.Linq;
 using System.Text;
@@ -17,6 +17,7 @@ using BsmCommon.Interfaces.DAL;
 using BsmCommon.UDT;
 using System.Diagnostics;
 using BsmCommon.DataModels.Changes;
+using BsmCommon.Enums;
 
 namespace BsmBL.Managers
 {
@@ -59,7 +60,7 @@ namespace BsmBL.Managers
                     budget.BudgetUsed = BudgetDal.GetShaotnosafotMeshek(KodYechida, Month);
                     budget.ShaotByMeafyen14 = GetSachMeafyen14(KodYechida, Month);
                     budget.YitratTakzivToDivide = GetBudgetLeft(KodYechida, Month);// budget.BudgetVal - budget.ShaotByMeafyen14;
-                    budget.BudgetVal = BudgetDal.GetFullBudgetToMitkan(KodYechida, Month);// +GetBudgetLeft(KodYechida, Month.AddMonths(-1));   
+                    budget.BudgetVal = BudgetDal.GetFullBudgetToMitkan(KodYechida, Month,(int)eBudgetLeft.BeudgetLeftActual);// +GetBudgetLeft(KodYechida, Month.AddMonths(-1));   
                 }
             }
 
@@ -420,13 +421,22 @@ namespace BsmBL.Managers
             _container.Resolve<BudgetDal>().SaveBudgetLeft(p_kod_yechida, p_chodesh, p_user);
         }
 
-        public float GetBudgetLeftForMitkan(int p_kod_yechida, DateTime p_chodesh)
+        public float GetBudgetLeftForMitkan(int p_kod_yechida, DateTime p_chodesh,eBudgetLeft type)
         { 
+
             using (var db = new BsmEntities())
             {
                 var left = db.BudgetLeft.FirstOrDefault(f => f.KodYechida == p_kod_yechida && f.Month == p_chodesh);
                 if (left != null)
-                    return left.BudgetLeftAmount; 
+                {
+                    switch (type)
+                    {
+                        case eBudgetLeft.BudgetLeftTichnun:
+                            return left.BudgetLeftAmount;
+                        case eBudgetLeft.BeudgetLeftActual:
+                            return left.BudgetLeftAmountActual;
+                    }
+                }   
             }
             return 0;
         }

@@ -123,7 +123,7 @@ namespace BsmBL.DAL
             }
         }
 
-        public float GetFullBudgetToMitkan(int KodYechida, DateTime Month)
+        public float GetFullBudgetToMitkan(int KodYechida, DateTime Month, int type)
         {
             clDal oDal = _container.Resolve<clDal>();
             DataTable dt = new DataTable();
@@ -133,6 +133,7 @@ namespace BsmBL.DAL
                 oDal.AddParameter("p_result", ParameterType.ntOracleDecimal, null, ParameterDir.pdReturnValue);
                 oDal.AddParameter("p_kod_yechida", ParameterType.ntOracleInteger, KodYechida, ParameterDir.pdInput);
                 oDal.AddParameter("p_chodesh", ParameterType.ntOracleDate, Month, ParameterDir.pdInput);
+                oDal.AddParameter("p_type", ParameterType.ntOracleInteger, type, ParameterDir.pdInput); 
                 oDal.ExecuteSP(cFunGetFullBudget);
 
                 return oDal.GetValParam("p_result") != "null" ? float.Parse(oDal.GetValParam("p_result").ToString()) : 0;

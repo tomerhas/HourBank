@@ -249,7 +249,7 @@ namespace BsmWebApp.Controllers
                 {
                     yechida = new Yechida();
                     yechida.KodYechida = item.KodYechida;
-                    shaot = budget.GetBudgetLeftForMitkan(yechida.KodYechida, month);
+                    shaot = budget.GetBudgetLeftForMitkan(yechida.KodYechida, month, eBudgetLeft.BudgetLeftTichnun);
                     //yechidot.if (shaot != 0)
                     yechida.TeurYechida = item.TeurYechida + " (יתרת שעות " + shaot + ")";
                     // else yechida.TeurYechida = item.TeurYechida;

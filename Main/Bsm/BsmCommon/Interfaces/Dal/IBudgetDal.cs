@@ -9,7 +9,7 @@ namespace BsmCommon.Interfaces.DAL
         float GetShaotnosafotMeshek(int KodYechida, DateTime Month);
         DataTable GetEmployeeDatails(int KodYechida, DateTime Month);
         int SaveEmployeeMichsot(int KodYechida, int userId, COLL_BUDGET_EMPLOYEES_MICHSA ocollMichsot);
-        float GetFullBudgetToMitkan(int KodYechida, DateTime Month);
+        float GetFullBudgetToMitkan(int KodYechida, DateTime Month, int type);
         void SaveBudgetLeft(int p_kod_yechida, DateTime p_chodesh, int p_user);
     }
 }

@@ -242,7 +242,7 @@ namespace BsmWebApp.Controllers
             DateTime chodesh=curMitkan.CurMonth;
 
             vm.Budget = budget.GetBudgetDetails(KodYechida, chodesh);
-            vm.YitraPrevMonth = budget.GetBudgetLeftForMitkan(KodYechida, chodesh.AddMonths(-1));
+            vm.YitraPrevMonth = budget.GetBudgetLeftForMitkan(KodYechida, chodesh.AddMonths(-1),eBudgetLeft.BeudgetLeftActual);
             vm.Budget.BudgetLefiTeken = vm.Budget.BudgetLefiTeken;// decimal.Parse(String.Format("{0:0.0}", vm.Budget.BudgetLefiTeken));
             
            var changes = manager.GetBudgetChanges(KodYechida, chodesh);

@@ -26,5 +26,7 @@ namespace BsmCommon.DataModels.Changes
         public DateTime TaarichIdkun { get; set; }
         [Column("MEADKEN")]
         public int? Meadken { get; set; }
+        [Column("BUDGET_LEFT_ACTUAL")]
+        public float BudgetLeftAmountActual { get; set; }
     }
 }
