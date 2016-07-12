@@ -434,7 +434,7 @@ namespace BsmBL.Managers
                         case eBudgetLeft.BudgetLeftTichnun:
                             return left.BudgetLeftAmount;
                         case eBudgetLeft.BeudgetLeftActual:
-                            return left.BudgetLeftAmountActual;
+                            return left.BudgetLeftAmountActual.HasValue ? left.BudgetLeftAmountActual.Value : 0;
                     }
                 }   
             }

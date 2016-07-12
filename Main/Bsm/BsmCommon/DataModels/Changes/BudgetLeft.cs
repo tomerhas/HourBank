@@ -27,6 +27,6 @@ namespace BsmCommon.DataModels.Changes
         [Column("MEADKEN")]
         public int? Meadken { get; set; }
         [Column("BUDGET_LEFT_ACTUAL")]
-        public float BudgetLeftAmountActual { get; set; }
+        public float? BudgetLeftAmountActual { get; set; }
     }
 }
