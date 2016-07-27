@@ -19,25 +19,25 @@ public class ChkPrevMonth extends Base {
 	@Test
 	public void chkPrevMonth() {
 
-		enterBudget();
+		enterNanagment();
 		 
 		
 	
 		Calendar now = Calendar.getInstance();
 		String sysdate = "0" + (now.get(Calendar.MONTH) + 1) + "/"
 				+ now.get(Calendar.YEAR);
-		String date = budget.listDate.getAttribute("value");
+		String date = managment.listDate.getAttribute("value");
 		Assert.assertEquals(date.substring(3, 10),sysdate);
 		
-		Assert.assertFalse(budget.btnNextMonth.isEnabled(),
+		Assert.assertFalse(managment.btnNextMonth.isEnabled(),
 				"btnNextMonth is enabled");
-		budget.btnPrevMonth.click();
-		Assert.assertTrue(budget.btnNextMonth.isEnabled(),
+		managment.btnPrevMonth.click();
+		Assert.assertTrue(managment.btnNextMonth.isEnabled(),
 				"btnNextMonth is disabled");
-		budget.btnShow.click();
+		managment.btnShow.click();
 
 		try {
-			exists=budget.daysLeft.isDisplayed();
+			exists=managment.daysLeft.isDisplayed();
 			System.out.println(exists+"1");
 			
 		} catch (NoSuchElementException e) {
@@ -47,23 +47,23 @@ public class ChkPrevMonth extends Base {
 
 		if (exists == false) {
 			System.out.println(exists+"3");
-			Assert.assertFalse(budget.btnUpdate.isEnabled(),
+			Assert.assertFalse(managment.btnUpdate.isEnabled(),
 					"btnUpdate is enabled");
-			Assert.assertTrue(budget.lblResetDisabled.isDisplayed(),"lblReset is enabled");
-			Assert.assertTrue(budget.lblAutoAllocationDisabled.isDisplayed(),"lblAutoAllocation is enabled");
-			Assert.assertTrue(budget.btnUnDoDisabled.isDisplayed(),"btnUnDo is enabled");
+			Assert.assertTrue(managment.lblResetDisabled.isDisplayed(),"lblReset is enabled");
+			Assert.assertTrue(managment.lblAutoAllocationDisabled.isDisplayed(),"lblAutoAllocation is enabled");
+			Assert.assertTrue(managment.btnUnDoDisabled.isDisplayed(),"btnUnDo is enabled");
 			
 
 		}
 
 		if (exists == true) {
             System.out.println(exists+"4");
-			Assert.assertTrue(budget.btnUpdate.isEnabled(),
+			Assert.assertTrue(managment.btnUpdate.isEnabled(),
 					"btnUpdate is disabled");
-			Assert.assertTrue(budget.btnUnDo.isEnabled(), "btnUnDo is disabled");
-			Assert.assertTrue(budget.lblReset.isEnabled(),
+			Assert.assertTrue(managment.btnUnDo.isEnabled(), "btnUnDo is disabled");
+			Assert.assertTrue(managment.lblReset.isEnabled(),
 					"lblReset is disabled");
-			Assert.assertTrue(budget.lblAutoAllocation.isEnabled(),
+			Assert.assertTrue(managment.lblAutoAllocation.isEnabled(),
 					"lblAutoAllocation is disabled");
 
 		}

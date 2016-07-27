@@ -38,13 +38,13 @@ public class UpdateMichsa extends Base {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 		
-		enterBudget();
+		enterNanagment();
 
-		budget.btnUpdate.click();
+		managment.btnUpdate.click();
 		WebElement element = driver.findElement(By.id("dialog-message"));
 		System.out.println(element.getText());
 		Assert.assertEquals(element.getText(), "לא בוצע שינוי במסך");
-		budget.btnAccept.click();
+		managment.btnAccept.click();
 		
 
 		while (num <5) {
@@ -62,7 +62,7 @@ public class UpdateMichsa extends Base {
 				
 
 				eltd.click();
-				budget.typeMichsa.sendKeys("9999");
+				managment.typeMichsa.sendKeys("9999");
 
 			//	if (num == 1) {
 			//		FirstTd = nametd;
@@ -76,16 +76,16 @@ public class UpdateMichsa extends Base {
 
 		}
 
-		budget.btnUpdate.click();
+		managment.btnUpdate.click();
 		WebElement element4 = driver.findElement(By.id("dialog-message"));
 		System.out.println(element4.getText());
 		Assert.assertEquals(element4.getText(),
 				"לא ניתן לבצע שמירה: סה''כ המכסות שעודכנו גדול מתקציב השעות הנוספות");
-		budget.btnAccept.click();
+		managment.btnAccept.click();
 		
 		
-		budget.lblReset.click();
-		budget.btnYes.click();
+		managment.lblReset.click();
+		managment.btnYes.click();
 		
 		//eltd = Budget.clickMichsa(driver, FirstTd);
 		//eltd.click();
@@ -93,18 +93,18 @@ public class UpdateMichsa extends Base {
 		
 		eltd = Managment.clickMichsa(driver, nametd);
 		eltd.click();
-		budget.typeMichsa.sendKeys("30");
-		budget.btnUpdate.click();
+		managment.typeMichsa.sendKeys("30");
+		managment.btnUpdate.click();
 		WebElement element1 = driver.findElement(By.id("dialog-confirm"));
 		Assert.assertEquals(element1.getText(),
 				"עדכון זה יגרום לעדכון שעות נוספות לעובדים, האם לעדכן?");
-		budget.btnSaveMichsaNo.click();
-		budget.btnUpdate.click();
+		managment.btnSaveMichsaNo.click();
+		managment.btnUpdate.click();
 		WebElement element2 = driver.findElement(By.id("dialog-confirm"));
 		Assert.assertEquals(element2.getText(),
 				"עדכון זה יגרום לעדכון שעות נוספות לעובדים, האם לעדכן?");
 		
-		budget.btnSaveMichsaYes.click();
+		managment.btnSaveMichsaYes.click();
 		
 		
 		
@@ -149,24 +149,24 @@ public class UpdateMichsa extends Base {
     		
         }
 		
-		budget.btnAcceptSuccess.click();
+		managment.btnAcceptSuccess.click();
 		eltd = Managment.clickMichsa(driver, nametd);
 		eltd.click();
-		budget.typeMichsa.sendKeys("201");
-		budget.btnUpdate.click();
-		budget.btnSaveMichsaYes.click();
+		managment.typeMichsa.sendKeys("201");
+		managment.btnUpdate.click();
+		managment.btnSaveMichsaYes.click();
 		WebElement element5 = driver.findElement(By.id("dialog-message"));
 		System.out.println(element5.getText());
 		Assert.assertEquals(element5.getText(),
 				"ארעה שגיאה בשמירת נתונים, אנא פנה למנהל מערכת");
-		budget.btnAccept.click();
+		managment.btnAccept.click();
 		
 		eltd = Managment.clickMichsa(driver, nametd);
 		eltd.click();
-		budget.typeMichsa.sendKeys("0");
-		budget.btnUpdate.click();
-		budget.btnSaveMichsaYes.click();
-		budget.btnAcceptSuccess.click();
+		managment.typeMichsa.sendKeys("0");
+		managment.btnUpdate.click();
+		managment.btnSaveMichsaYes.click();
+		managment.btnAcceptSuccess.click();
 
 	}
 

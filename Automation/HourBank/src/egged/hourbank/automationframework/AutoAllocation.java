@@ -41,10 +41,10 @@ public class AutoAllocation extends Base {
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		
-		enterBudget();
-		budget.lblAutoAllocation.click();
-		budget.radioPrevPlan.click();
-		budget.btnAutoAllocation.click();
+		enterNanagment();
+		managment.lblAutoAllocation.click();
+		managment.radioPrevPlan.click();
+		managment.btnAutoAllocation.click();
 		
 		
 		String symbol = "-";
@@ -90,10 +90,10 @@ public class AutoAllocation extends Base {
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		
-		enterBudget();
-		budget.lblAutoAllocation.click();
-		budget.radioCurActual.click();
-		budget.btnAutoAllocation.click();
+		enterNanagment();
+		managment.lblAutoAllocation.click();
+		managment.radioCurActual.click();
+		managment.btnAutoAllocation.click();
 		
 		
 		String symbol = "-";

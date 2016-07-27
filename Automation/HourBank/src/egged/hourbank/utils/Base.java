@@ -24,7 +24,7 @@ public abstract  class Base {
 
 private WebDriver driver;
 public Main main ;
-public Managment budget ;
+public Managment managment ;
 
 public WebDriver getDriver() {
     return driver;
@@ -35,7 +35,7 @@ public WebDriver getDriver() {
 
 public void initBudget()
 {
-	  budget = PageFactory.initElements(driver, Managment.class);
+	managment = PageFactory.initElements(driver, Managment.class);
 }
 
 
@@ -70,13 +70,13 @@ public void tearDownDriver() {
 	
 	
 
-public   void enterBudget ()    {
+public   void enterNanagment ()    {
 	
 	
 	main.lnkBudget.click();
-	Select droplist = new Select(budget.mitkanName);
+	Select droplist = new Select(managment.mitkanName);
 	droplist.selectByVisibleText("הנהלת מוסך נתניה");
-	budget.btnShow.click();
+	managment.btnShow.click();
 	
 	
 }

@@ -24,13 +24,13 @@ public class LinkToKds extends Base {
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-		enterBudget();
-		budget.lnkKds.click();
+		enterNanagment();
+		managment.lnkKds.click();
 		Common a = new Common();
 		a.waitForWindow("Nochechut", driver);
 		driver.manage().window().maximize();
-		Assert.assertEquals(budget.KdsHeader.getText(), "נוכחות מרוכזת");
-		System.out.println(budget.KdsHeader.getText());
+		Assert.assertEquals(managment.KdsHeader.getText(), "נוכחות מרוכזת");
+		System.out.println(managment.KdsHeader.getText());
 
 		
 	}

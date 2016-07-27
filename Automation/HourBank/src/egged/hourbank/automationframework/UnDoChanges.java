@@ -33,7 +33,7 @@ public class UnDoChanges extends Base {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		
-		enterBudget();
+		enterNanagment();
 
 		while (flag) {
 
@@ -46,22 +46,22 @@ public class UnDoChanges extends Base {
 				flag = false;
 				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 				eltd.click();
-				budget.typeMichsa.sendKeys("46.5");
-				budget.btnUnDo.click();
+				managment.typeMichsa.sendKeys("46.5");
+				managment.btnUnDo.click();
 				WebElement element1 = driver.findElement(By
 						.id("dialog-confirm"));
 				
 				Common.Wait_For_Element_Visibile(driver, 60, "dialog-confirm", null);
 				Assert.assertEquals(element1.getText(),
 						"עדכון זה יגרום לביטול השעות שעדכנת כעת, האם לבטל שינויים?");
-				budget.btnNo.click();
+				managment.btnNo.click();
 				Assert.assertEquals(eltd.getText(), "46.5");
-				budget.btnUnDo.click();
+				managment.btnUnDo.click();
 				WebElement element2 = driver.findElement(By
 						.id("dialog-confirm"));
 				Assert.assertEquals(element2.getText(),
 						"עדכון זה יגרום לביטול השעות שעדכנת כעת, האם לבטל שינויים?");
-				budget.btnYes.click();
+				managment.btnYes.click();
 				eltd = Managment.clickMichsa(driver, nametd);
 				Assert.assertEquals(eltd.getText(), "0");
 
