@@ -10,7 +10,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import egged.hourbank.pageobjects.Budget;
+import egged.hourbank.pageobjects.Managment;
 import egged.hourbank.utils.Base;
 import egged.hourbank.utils.Common;
 
@@ -38,7 +38,7 @@ public class UnDoChanges extends Base {
 		while (flag) {
 
 			nametd = "tdMichsa" + i;
-			WebElement eltd = Budget.clickMichsa(driver, nametd);
+			WebElement eltd = Managment.clickMichsa(driver, nametd);
 			if (eltd.getAttribute("class").equals("CellEditGrid") == true)
 
 			{
@@ -62,7 +62,7 @@ public class UnDoChanges extends Base {
 				Assert.assertEquals(element2.getText(),
 						"עדכון זה יגרום לביטול השעות שעדכנת כעת, האם לבטל שינויים?");
 				budget.btnYes.click();
-				eltd = Budget.clickMichsa(driver, nametd);
+				eltd = Managment.clickMichsa(driver, nametd);
 				Assert.assertEquals(eltd.getText(), "0");
 
 			}

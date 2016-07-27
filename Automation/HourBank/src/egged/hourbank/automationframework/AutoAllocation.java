@@ -10,7 +10,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 
-import egged.hourbank.pageobjects.Budget;
+import egged.hourbank.pageobjects.Managment;
 import egged.hourbank.utils.Base;
 
 
@@ -56,9 +56,9 @@ public class AutoAllocation extends Base {
 		for (i=0;i<count-1;i++) {
 			
 			nametd = "tdMichsa" + i;
-			eltd = Budget.clickMichsa(driver,nametd);
+			eltd = Managment.clickMichsa(driver,nametd);
 			plantdname =  "tdPrevMonth" + i;
-			plantd = Budget.clickMichsa(driver,plantdname);
+			plantd = Managment.clickMichsa(driver,plantdname);
 			if (eltd.getAttribute("class").equals("CellEditGrid") == true)
 				
 				
@@ -105,9 +105,9 @@ public class AutoAllocation extends Base {
 		for (i=0;i<count-1;i++) {
 			
 			nametd = "tdMichsa" + i;
-			eltd = Budget.clickMichsa(driver,nametd);
+			eltd = Managment.clickMichsa(driver,nametd);
 			actualtdname =  "tdShaotUsed" + i;
-			actualtd = Budget.clickMichsa(driver,actualtdname);
+			actualtd = Managment.clickMichsa(driver,actualtdname);
 			if (eltd.getAttribute("class").equals("CellEditGrid") == true)
 				
 				

@@ -13,7 +13,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import egged.hourbank.pageobjects.Budget;
+import egged.hourbank.pageobjects.Managment;
 import egged.hourbank.utils.Base;
 import egged.hourbank.utils.Common;
 
@@ -50,7 +50,7 @@ public class UpdateMichsa extends Base {
 		while (num <5) {
 
 			nametd = "tdMichsa" + i;
-			eltd = Budget.clickMichsa(driver, nametd);
+			eltd = Managment.clickMichsa(driver, nametd);
 
 			if (eltd.getAttribute("class").equals("CellEditGrid") == true)
 
@@ -91,7 +91,7 @@ public class UpdateMichsa extends Base {
 		//eltd.click();
 		//budget.typeMichsa.sendKeys("0");
 		
-		eltd = Budget.clickMichsa(driver, nametd);
+		eltd = Managment.clickMichsa(driver, nametd);
 		eltd.click();
 		budget.typeMichsa.sendKeys("30");
 		budget.btnUpdate.click();
@@ -150,7 +150,7 @@ public class UpdateMichsa extends Base {
         }
 		
 		budget.btnAcceptSuccess.click();
-		eltd = Budget.clickMichsa(driver, nametd);
+		eltd = Managment.clickMichsa(driver, nametd);
 		eltd.click();
 		budget.typeMichsa.sendKeys("201");
 		budget.btnUpdate.click();
@@ -161,7 +161,7 @@ public class UpdateMichsa extends Base {
 				"ארעה שגיאה בשמירת נתונים, אנא פנה למנהל מערכת");
 		budget.btnAccept.click();
 		
-		eltd = Budget.clickMichsa(driver, nametd);
+		eltd = Managment.clickMichsa(driver, nametd);
 		eltd.click();
 		budget.typeMichsa.sendKeys("0");
 		budget.btnUpdate.click();

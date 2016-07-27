@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
-public  class Budget {
+public  class Managment {
 
 	private static WebElement element;
 	//final WebDriver driver;

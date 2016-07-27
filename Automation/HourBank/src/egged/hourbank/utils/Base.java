@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
-import egged.hourbank.pageobjects.Budget;
+import egged.hourbank.pageobjects.Managment;
 import egged.hourbank.pageobjects.Main;
 
 public abstract  class Base {
@@ -24,7 +24,7 @@ public abstract  class Base {
 
 private WebDriver driver;
 public Main main ;
-public Budget budget ;
+public Managment budget ;
 
 public WebDriver getDriver() {
     return driver;
@@ -35,7 +35,7 @@ public WebDriver getDriver() {
 
 public void initBudget()
 {
-	  budget = PageFactory.initElements(driver, Budget.class);
+	  budget = PageFactory.initElements(driver, Managment.class);
 }
 
 

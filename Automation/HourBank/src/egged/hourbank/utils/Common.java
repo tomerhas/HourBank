@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.google.common.base.Function;
-import egged.hourbank.pageobjects.Budget;
+import egged.hourbank.pageobjects.Managment;
 import egged.hourbank.pageobjects.Main;
 
 public   class Common   {
