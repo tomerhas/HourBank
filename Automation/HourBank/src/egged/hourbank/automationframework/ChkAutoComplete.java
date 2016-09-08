@@ -1,14 +1,13 @@
 package egged.hourbank.automationframework;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 
+import egged.hourbank.pageobjects.Managment;
 import egged.hourbank.utils.Base;
 
 @Listeners({ egged.hourbank.listener.TestListener.class })
@@ -28,8 +27,6 @@ public class ChkAutoComplete extends Base {
 	public void chkAutoCompleteShem() throws InterruptedException {
 		
 	
-		
-		
 	
 		enterNanagment();
 		
@@ -42,7 +39,7 @@ public class ChkAutoComplete extends Base {
 		while (flag&&i<=ArrayShem.length) {
 			
 			String lettter= ArrayShem[i];
-			managment.searchAutoComplete.sendKeys(String.valueOf(lettter));
+			Managment.searchAutoComplete.sendKeys(String.valueOf(lettter));
 
 			Thread.sleep(300);
 			
@@ -56,9 +53,9 @@ public class ChkAutoComplete extends Base {
 			{
 
 				flag = false;
-				managment.searchAutoComplete.sendKeys(Keys.ARROW_DOWN);
+				Managment.searchAutoComplete.sendKeys(Keys.ARROW_DOWN);
 				managment.itemMisparIshiSelected.click();
-				System.out.println(managment.searchAutoComplete.getAttribute("value"));
+				System.out.println(Managment.searchAutoComplete.getAttribute("value"));
 				
 				
 
@@ -66,7 +63,7 @@ public class ChkAutoComplete extends Base {
 
 			else {
 
-				managment.searchAutoComplete.clear();
+				Managment.searchAutoComplete.clear();
 
 			}
 			i++;
@@ -76,33 +73,26 @@ public class ChkAutoComplete extends Base {
 		
 		
 		
-		managment.btnAutoComplete.click();
+		Managment.clickAutoComplete();
 		
-	    WebElement element1=driver.findElement(By.xpath("//tr[@class='clickable']//td[@id='tdName']"));
-	    System.out.println(element1.getText());
-	    Assert.assertEquals(managment.searchAutoComplete.getAttribute("value"),element1.getText());
+	    //WebElement element1=driver.findElement(By.xpath("//tr[@class='clickable']//td[@id='tdName']"));
+	    //System.out.println(element1.getText());
+	    Assert.assertEquals(Managment.searchAutoComplete.getAttribute("value"),Managment.autoCompleteName.getText());
 		
-		managment.searchAutoComplete.clear();
-		managment.searchAutoComplete.sendKeys("אאאא");
-		managment.btnAutoComplete.click();
-		WebElement element = driver.findElement(By.id("dialog-message"));
-		Assert.assertEquals(element.getText(),"מ.א/שם לא קיים למתקן זה");
-		managment.btnAccept.click();
+		//managment.searchAutoComplete.clear();
+		//managment.searchAutoComplete.sendKeys("אאאא");
+		Managment.typeAutoComplete("אאאא");
+		Managment.clickAutoComplete();
+		//WebElement element = driver.findElement(By.id("dialog-message"));
+		Assert.assertEquals(managment.autoCompleteMessage.getText(),"מ.א/שם לא קיים למתקן זה");
 		
-		
-		
-		
+		Managment.clickAccept();
 		
 		
 		
-		
-		
+	
 		
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -121,7 +111,7 @@ public class ChkAutoComplete extends Base {
 		j=1;
 		while (flag) {
 
-			managment.searchAutoComplete.sendKeys(String.valueOf(j));
+			Managment.searchAutoComplete.sendKeys(String.valueOf(j));
 
 			Thread.sleep(300);
 			
@@ -135,9 +125,9 @@ public class ChkAutoComplete extends Base {
 			{
 
 				flag = false;
-				managment.searchAutoComplete.sendKeys(Keys.ARROW_DOWN);
+				Managment.searchAutoComplete.sendKeys(Keys.ARROW_DOWN);
 				managment.itemMisparIshiSelected.click();
-				System.out.println(managment.searchAutoComplete.getAttribute("value"));
+				System.out.println(Managment.searchAutoComplete.getAttribute("value"));
 				
 				
 
@@ -145,7 +135,7 @@ public class ChkAutoComplete extends Base {
 
 			else {
 
-				managment.searchAutoComplete.clear();
+				Managment.searchAutoComplete.clear();
 
 			}
 			j++;
@@ -154,15 +144,18 @@ public class ChkAutoComplete extends Base {
 		
 		
 		
-		managment.btnAutoComplete.click();
-		Assert.assertEquals(managment.searchAutoComplete.getAttribute("value"),managment.highlightTr.getText().substring(0,5));
+		Managment.clickAutoComplete();
+		Assert.assertEquals(Managment.searchAutoComplete.getAttribute("value"),managment.highlightTr.getText().substring(0,5));
 		System.out.println(managment.highlightTr.getText().substring(0,5));
-		managment.searchAutoComplete.clear();
-		managment.searchAutoComplete.sendKeys("0");
-		managment.btnAutoComplete.click();
-		WebElement element = driver.findElement(By.id("dialog-message"));
-		Assert.assertEquals(element.getText(),"מ.א/שם לא קיים למתקן זה");
-		managment.btnAccept.click();
+		//managment.searchAutoComplete.clear();
+		//managment.searchAutoComplete.sendKeys("0");
+		Managment.typeAutoComplete("0");
+		//managment.btnAutoComplete.click();
+		Managment.clickAutoComplete();
+		//WebElement element = driver.findElement(By.id("dialog-message"));
+		Assert.assertEquals(managment.autoCompleteMessage.getText(),"מ.א/שם לא קיים למתקן זה");
+		
+		Managment.clickAccept();
 		
 		
 		

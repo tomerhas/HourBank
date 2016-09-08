@@ -1,9 +1,14 @@
 package egged.hourbank.pageobjects;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.How;
+import org.testng.Assert;
 
 public  class Managment {
 
@@ -12,7 +17,18 @@ public  class Managment {
 
 	@FindBy(how = How.ID, using = "btnShow")
 	public WebElement btnShow;
+	
+	
+	public static WebElement  btnshow1 (WebDriver driver )  {
+		
+		 element=driver.findElement(By.id("dfdsfdsf"));
+		 return element;
+				 
+				 	
+	}
 
+	
+	
 	@FindBy(how = How.ID, using = "MenuModel_MitkanName_KodYechida")
 	public WebElement mitkanName;
 
@@ -44,7 +60,7 @@ public  class Managment {
 	public WebElement btnSaveMichsaNo;
 
 	@FindBy(how = How.ID, using = "okbtn")
-	public WebElement btnAccept;
+	public static WebElement btnAccept;
 
 	@FindBy(how = How.ID, using = "btnGridOk")
 	public WebElement btnAcceptSuccess;
@@ -53,7 +69,7 @@ public  class Managment {
 	public WebElement typeMichsa;
 	
 	@FindBy(how = How.ID, using = "IconKds")
-	public WebElement lnkKds;
+	public static WebElement lnkKds;
 	
 	@FindBy(how = How.ID, using = "ctl00_upHeader")
 	public WebElement KdsHeader;
@@ -89,10 +105,10 @@ public  class Managment {
 	public WebElement listDate;
 	
 	@FindBy(how = How.ID, using = "MisparIshi")
-	public WebElement searchAutoComplete;
+	public static WebElement searchAutoComplete;
 	
 	@FindBy(how = How.CLASS_NAME, using = "SearchBG")
-	public WebElement btnAutoComplete;
+	public static WebElement btnAutoComplete;
 	
 	@FindBy(how = How.ID, using = "MisparIshi-list")
 	public WebElement listAutoComplete;
@@ -103,20 +119,100 @@ public  class Managment {
 	@FindBy(how = How.ID, using = "MisparIshi_option_selected")
 	public WebElement itemMisparIshiSelected;
 	
+	@FindBy(how = How.ID, using = "dialog-message")
+	public WebElement autoCompleteMessage;
+	
 	@FindBy(how = How.CLASS_NAME, using = "clickable")
 	public WebElement highlightTr ;
 	
 	
+	@FindBy(how = How.XPATH, using = "//tr[@class='clickable']//td[@id='tdName']")
+	public static WebElement  autoCompleteName ;
+	
+
+	
+	 @FindBys({
+		    @FindBy(id = "MenuModel_MitkanName_KodYechida"),
+		    @FindBy(tagName = "option")
+		    })
+		    public static List<WebElement> allListValues;
 	
 	
 	
+	 public static String   isMitkanSelected  ()
+	 
+	 {
+		  String returnValue=null;
+		 for (WebElement AllValues : Managment.allListValues)
+
+		{
+
+			// System.out.println(AllValues.getAttribute("value"));
+			System.out.println(AllValues.getText());
+			System.out.println(AllValues.isSelected());
+			
+			
+
+
+		if (AllValues.isSelected() == true)
+				
+
+			{
+                
+			returnValue=AllValues.getAttribute("value");
+				break; 
+				
+
+			}
+
+			else
+
+			{
+				continue;
+
+			}
+		
+		}
+	 return returnValue;
+	 
+	 
+
+		}
+	
+	 
+	
+	public static void  clickLinkTokds ()  {
+		
+		
+		Managment.lnkKds.click();
+		
+		
+	}
+	
+	
+	public static void clickAutoComplete ()   {
+		
+		Managment.btnAutoComplete.click();
+		
+		
+	}
+	
+	
+	public static void typeAutoComplete (String keys )   {
+		
+		Managment.searchAutoComplete.clear();
+		Managment.searchAutoComplete.sendKeys(keys);
+		
+		
+	}
 	
 	
 	
-	
-	
-	
-	
+	public static void clickAccept ()  {
+		
+		Managment.btnAccept.click();
+		
+	}
 	
 
 	public static WebElement clickMichsa(WebDriver driver, String elname) {
@@ -126,6 +222,20 @@ public  class Managment {
 		return element;
 
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	
 	// public Budget(WebDriver driver) { 

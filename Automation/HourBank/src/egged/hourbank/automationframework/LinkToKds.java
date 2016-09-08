@@ -8,6 +8,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 
+import egged.hourbank.pageobjects.Managment;
 import egged.hourbank.utils.Base;
 import egged.hourbank.utils.Common;
 
@@ -25,11 +26,11 @@ public class LinkToKds extends Base {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 		enterNanagment();
-		managment.lnkKds.click();
+		Managment.clickLinkTokds();
 		Common a = new Common();
 		a.waitForWindow("Nochechut", driver);
 		driver.manage().window().maximize();
-		Assert.assertEquals(managment.KdsHeader.getText(), "נוכחות מרוכזת");
+		Assert.assertEquals(managment.KdsHeader.getText(),"נוכחות מרוכזת");
 		System.out.println(managment.KdsHeader.getText());
 
 		

@@ -47,7 +47,7 @@ public class UpdateMichsa extends Base {
 		managment.btnAccept.click();
 		
 
-		while (num <5) {
+		while (num <6) {
 
 			nametd = "tdMichsa" + i;
 			eltd = Managment.clickMichsa(driver, nametd);
