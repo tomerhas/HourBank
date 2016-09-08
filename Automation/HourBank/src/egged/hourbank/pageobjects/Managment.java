@@ -2,17 +2,19 @@ package egged.hourbank.pageobjects;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.How;
-import org.testng.Assert;
 
 public  class Managment {
 
 	private static WebElement element;
+	static boolean flag = true;
+	static int i;
+	static int j;
 	//final WebDriver driver;
 
 	@FindBy(how = How.ID, using = "btnShow")
@@ -111,13 +113,13 @@ public  class Managment {
 	public static WebElement btnAutoComplete;
 	
 	@FindBy(how = How.ID, using = "MisparIshi-list")
-	public WebElement listAutoComplete;
+	public static WebElement listAutoComplete;
 	
 	@FindBy(how = How.ID, using = "k-item")
 	public WebElement itemMisparIshi;
 	
 	@FindBy(how = How.ID, using = "MisparIshi_option_selected")
-	public WebElement itemMisparIshiSelected;
+	public static WebElement itemValueSelected;
 	
 	@FindBy(how = How.ID, using = "dialog-message")
 	public WebElement autoCompleteMessage;
@@ -213,6 +215,118 @@ public  class Managment {
 		Managment.btnAccept.click();
 		
 	}
+	
+	
+	
+	
+	
+	public static void setNameAutocomplete    () throws InterruptedException  {
+		
+		
+		String [] ArrayShem={"à","á","â","ã","ä","å","æ","ç","è ","é","ë","ì","î" };
+		i=0;
+		
+		
+		//System.out.println(managment.listAutoComplete.getAttribute("style"));
+		
+		while (flag&&i<=ArrayShem.length) {
+			
+			String lettter= ArrayShem[i];
+			Managment.searchAutoComplete.sendKeys(String.valueOf(lettter));
+
+			Thread.sleep(300);
+			
+
+			String style = Managment.listAutoComplete.getAttribute("style");
+
+			//System.out.println(managment.listAutoComplete.getAttribute("style"));
+
+			if (style.contains("block"))
+
+			{
+
+				flag = false;
+				Managment.searchAutoComplete.sendKeys(Keys.ARROW_DOWN);
+				//Managment.typeAutoComplete(Keys.ARROW_DOWN);
+				Managment.itemValueSelected.click();
+				//System.out.println(Managment.searchAutoComplete.getAttribute("value"));
+				
+				
+
+			}
+
+			else {
+
+				Managment.searchAutoComplete.clear();
+
+			}
+			i++;
+
+		}
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	public static void setMisparishiAutocomplete () throws InterruptedException   {
+		
+		flag=true;
+		j=1;
+		
+		while (flag) {
+
+			Managment.searchAutoComplete.sendKeys(String.valueOf(j));
+			
+
+			Thread.sleep(300);
+			
+
+			String style = Managment.listAutoComplete.getAttribute("style");
+
+			//System.out.println(managment.listAutoComplete.getAttribute("style"));
+
+			if (style.contains("block"))
+
+			{
+
+				flag = false;
+				Managment.searchAutoComplete.sendKeys(Keys.ARROW_DOWN);
+				Managment.itemValueSelected.click();
+				//System.out.println(Managment.searchAutoComplete.getAttribute("value"));
+				
+				
+
+			}
+
+			else {
+
+				Managment.searchAutoComplete.clear();
+
+			}
+			j++;
+
+		}
+		
+		
+
+		
+		
+	}
+	
+	
+	
+	
+	
+
+	
 	
 
 	public static WebElement clickMichsa(WebDriver driver, String elname) {
