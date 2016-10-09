@@ -5,17 +5,28 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.How;
+import org.testng.Assert;
 
-public  class Managment {
+import egged.hourbank.utils.Base;
+
+public  class Managment extends Base {
 
 	private static WebElement element;
 	static boolean flag = true;
 	static int i;
 	static int j;
-	//final WebDriver driver;
+	final static String symbol = "-";
+	static WebElement eltd;
+	static WebElement plantd;
+	static WebElement actualtd;
+	static String nametd;
+	static String actualtdname;
+	static String plantdname;
+	//public static  WebDriver driver;
 
 	@FindBy(how = How.ID, using = "btnShow")
 	public WebElement btnShow;
@@ -77,22 +88,22 @@ public  class Managment {
 	public WebElement KdsHeader;
 	
 	@FindBy(how = How.ID, using = "lblAuto")
-	public WebElement lblAutoAllocation;
+	public static WebElement lblAutoAllocation;
 	
 	@FindBy(how = How.ID, using = "btnAuto")
-	public WebElement btnAutoAllocation;
+	public static  WebElement btnAutoAllocation;
 	
 	@FindBy(how = How.CLASS_NAME, using = "DisabledCal")
 	public WebElement lblAutoAllocationDisabled;
 	
 	@FindBy(how = How.ID, using = "rbTichnunPrev")
-	public WebElement radioPrevPlan;
+	public static WebElement radioPrevPlan;
 	
 	@FindBy(how = How.ID, using = "rbBizuaPrev")
 	public WebElement radioPrevActual;
 	
 	@FindBy(how = How.ID, using = "rbTichnunCur")
-	public WebElement radioCurActual;
+	public static WebElement radioCurActual;
 	
 	@FindBy(how = How.CLASS_NAME, using = "PurpleTextLink")
 	public WebElement daysLeft;
@@ -133,6 +144,22 @@ public  class Managment {
 	
 
 	
+	@FindAll(@FindBy(how = How.XPATH, using ="//tr[contains(@data-uid,'"
+			+ symbol + "')]"))
+			
+			public static List<WebElement> AllElements;
+			
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	 @FindBys({
 		    @FindBy(id = "MenuModel_MitkanName_KodYechida"),
 		    @FindBy(tagName = "option")
@@ -140,6 +167,9 @@ public  class Managment {
 		    public static List<WebElement> allListValues;
 	
 	
+	 
+	 
+	 
 	
 	 public static String   isMitkanSelected  ()
 	 
@@ -212,7 +242,7 @@ public  class Managment {
 	
 	public static void clickAccept ()  {
 		
-		Managment.btnAccept.click();
+		btnAccept.click();
 		
 	}
 	
@@ -342,11 +372,128 @@ public  class Managment {
 
 
 
+	public static void clicklblAutoAllocation() {
+
+		Managment.lblAutoAllocation.click();
+
+
+	}
 
 
 
+	public static void clickradioPrevPlan() {
+
+		Managment.radioPrevPlan.click();
 
 
+	}
+	
+	
+	
+	public static void clickbtnAutoAllocation() {
+
+		Managment.btnAutoAllocation.click();
+
+
+	}
+	
+	
+	
+	public static  int getNumOfRows()  {
+		
+		
+		int count = Managment.AllElements.size();
+		 return count;
+	
+		
+		
+		
+	}
+
+
+	
+	
+	
+	public static void assertPlanTd()  {
+		
+		int num=Managment.getNumOfRows();
+		
+		for (i=0;i<num-1;i++) {
+			
+			nametd = "tdMichsa" + i;
+			
+			eltd = Managment.clickMichsa(driver,nametd);
+			plantdname =  "tdPrevMonth" + i;
+			
+			
+			
+			plantd = Managment.clickMichsa(driver,plantdname);
+			
+			
+			
+			if (eltd.getAttribute("class").equals("CellEditGrid") == true)
+				
+				
+				
+			{
+			
+				//System.out.println(eltd.getText()+"הקצאת שעות");
+				//System.out.println(plantd.getText()+"הקצאה לחודש קודם");
+				
+				
+				Assert.assertEquals(eltd.getText(), plantd.getText());
+			
+		}
+			
+		}
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	public static void assertActualTd()   {
+		
+		int num=Managment.getNumOfRows();
+		
+		for (i=0;i<num-1;i++) {
+			
+			nametd = "tdMichsa" + i;
+			eltd = Managment.clickMichsa(driver,nametd);
+			actualtdname =  "tdShaotUsed" + i;
+			actualtd = Managment.clickMichsa(driver,actualtdname);
+			if (eltd.getAttribute("class").equals("CellEditGrid") == true)
+				
+				
+				
+			{
+			
+				//System.out.println(eltd.getText());
+				//System.out.println(actualtd.getText());
+				Assert.assertEquals(eltd.getText(), actualtd.getText());
+			
+		}
+			
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	public static void clickRadioCurActual ()   {
+		
+		radioCurActual.click();
+		
+		
+	}
 
 
 

@@ -22,7 +22,7 @@ public abstract  class Base {
 	
 	
 
-private WebDriver driver;
+protected static WebDriver driver;
 public Main main ;
 public Managment managment ;
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [HourBank]">
+  <test name="Budget(failed)">
+    <classes>
+      <class name="egged.hourbank.automationframework.UnDoChanges">
+        <methods>
+          <include name="beforeMethod"/>
+          <include name="tearDownDriver"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- egged.hourbank.automationframework.UnDoChanges -->
+      <class name="egged.hourbank.automationframework.AutoAllocation">
+        <methods>
+          <include name="tearDownDriver"/>
+          <include name="beforeMethod"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- egged.hourbank.automationframework.AutoAllocation -->
+      <class name="egged.hourbank.automationframework.UpdateMichsa">
+        <methods>
+          <include name="tearDownDriver"/>
+          <include name="updateMichsa"/>
+          <include name="beforeMethod"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- egged.hourbank.automationframework.UpdateMichsa -->
+      <class name="egged.hourbank.automationframework.LinkToKds">
+        <methods>
+          <include name="tearDownDriver"/>
+          <include name="createDriver"/>
+          <include name="beforeMethod"/>
+        </methods>
+      </class> <!-- egged.hourbank.automationframework.LinkToKds -->
+      <class name="egged.hourbank.automationframework.ChkAutoComplete">
+        <methods>
+          <include name="tearDownDriver"/>
+          <include name="createDriver"/>
+          <include name="beforeMethod"/>
+        </methods>
+      </class> <!-- egged.hourbank.automationframework.ChkAutoComplete -->
+      <class name="egged.hourbank.automationframework.ChkPrevMonth">
+        <methods>
+          <include name="beforeMethod"/>
+          <include name="tearDownDriver"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- egged.hourbank.automationframework.ChkPrevMonth -->
+      <class name="egged.hourbank.automationframework.ResetMichsa">
+        <methods>
+          <include name="tearDownDriver"/>
+          <include name="beforeMethod"/>
+          <include name="createDriver"/>
+        </methods>
+      </class> <!-- egged.hourbank.automationframework.ResetMichsa -->
+    </classes>
+  </test> <!-- Budget(failed) -->
+</suite> <!-- Failed suite [HourBank] -->
