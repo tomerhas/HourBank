@@ -2,7 +2,6 @@ package egged.hourbank.automationframework;
 
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
@@ -20,12 +19,7 @@ public class AutoAllocation extends Base {
 	//public WebDriver driver;
 	int i;
 	int j;
-	WebElement eltd;
-	WebElement plantd;
-	WebElement actualtd;
-	String nametd;
-	String actualtdname;
-	String plantdname;
+
 	
 	
 	
