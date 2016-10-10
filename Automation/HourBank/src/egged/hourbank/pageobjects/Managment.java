@@ -1,6 +1,7 @@
 package egged.hourbank.pageobjects;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -29,6 +30,10 @@ public  class Managment extends Base {
 	static String plantdname;
 	static int  day;
 	static String sysdate ;
+	static int h = 0;
+	static int michsa = 40;
+	
+	
 	//public static  WebDriver driver;
 
 	@FindBy(how = How.ID, using = "btnShow")
@@ -49,10 +54,10 @@ public  class Managment extends Base {
 	public WebElement mitkanName;
 
 	@FindBy(how = How.ID, using = "btnUpdate")
-	public WebElement btnUpdate;
+	public static WebElement btnUpdate;
 	
 	@FindBy(how = How.ID, using = "lblIpus")
-	public WebElement lblReset;
+	public static WebElement lblReset;
 	
 	@FindBy(how = How.CLASS_NAME, using = "DisabledIpus")
 	public WebElement lblResetDisabled;
@@ -64,13 +69,17 @@ public  class Managment extends Base {
 	public WebElement btnUnDoDisabled;
 
 	@FindBy(how = How.ID, using = "btnYes")
-	public WebElement btnYes;
+	public static WebElement btnYes;
 
 	@FindBy(how = How.ID, using = "btnNo")
-	public WebElement btnNo;
-
+	public static WebElement btnNo;
+	
+	
+	@FindBy(how = How.ID, using = "dialog-confirm")
+	public static WebElement  alertResetMassage;
+	
 	@FindBy(how = How.ID, using = "btnYesSave")
-	public WebElement btnSaveMichsaYes;
+	public static WebElement btnSaveMichsaYes;
 
 	@FindBy(how = How.ID, using = "btnNoSave")
 	public WebElement btnSaveMichsaNo;
@@ -79,10 +88,10 @@ public  class Managment extends Base {
 	public static WebElement btnAccept;
 
 	@FindBy(how = How.ID, using = "btnGridOk")
-	public WebElement btnAcceptSuccess;
+	public static WebElement btnAcceptSuccess;
 
 	@FindBy(how = How.ID, using = "MichsaCur")
-	public WebElement typeMichsa;
+	public static WebElement typeMichsa;
 	
 	@FindBy(how = How.ID, using = "IconKds")
 	public static WebElement lnkKds;
@@ -405,11 +414,10 @@ public  class Managment extends Base {
 	public static  int getNumOfRows()  {
 		
 		
-		int count = Managment.AllElements.size();
-		 return count;
+		return Managment.AllElements.size();
+		 
 	
-		
-		
+	
 		
 	}
 
@@ -541,6 +549,159 @@ public  class Managment extends Base {
 		
 		
 	}
+	
+	
+	public static void clickBtnUpdate()  {
+		
+		
+		btnUpdate.click();
+		
+		
+		
+	}
+	
+	
+	
+	public static void clickBtnSaveMichsaYes()  {
+		
+		
+		btnSaveMichsaYes.click();
+		
+		
+		
+	}
+	
+	
+	
+	
+public static void clickbtnAcceptSuccess()  {
+		
+		
+	btnAcceptSuccess.click();
+		
+		
+		
+	}
+	
+	
+public static void clickBtnYes()  {
+	
+	
+	btnYes.click();
+		
+		
+		
+	}
+
+
+
+public static void clickBtnNo()  {
+
+
+	btnNo.click();
+	
+	
+	
+}
+
+
+
+public static void clickLblReset()  {
+
+
+	lblReset.click();
+	
+	
+	
+}
+
+
+
+
+
+
+public static void updateMichsa( String  value  )  {
+	
+	while (flag) {
+        
+		nametd = "tdMichsa" + h;
+		eltd = Managment.clickMichsa(driver, nametd);
+		if (eltd.getAttribute("class").equals("CellEditGrid") == true)
+
+		{
+
+			flag = false;
+			eltd.click();
+			Managment.typeMichsa.sendKeys(value);
+			Managment.btnUpdate.click();
+			Managment.btnSaveMichsaYes.click();
+			Managment.btnAcceptSuccess.click();
+
+		}
+
+		h++;
+	}
+	
+	
+}
+	
+
+
+	public static void typeMichsaValues()  {
+		
+		int num=Managment.getNumOfRows();
+		for (i = h; i < num; i++) {
+
+			nametd = "tdMichsa" + i;
+			eltd = Managment.clickMichsa(driver, nametd);
+			if (eltd.getAttribute("class").equals("CellEditGrid") == true)
+
+			{
+
+				eltd.click();
+				Managment.typeMichsa.sendKeys(String.valueOf(michsa));
+				michsa += 10;
+
+			}
+
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
+	public static void assertResetMichsa ()  {
+		
+		int num=getNumOfRows();
+		
+		
+			for (i = 0; i < num; i++) {
+
+		nametd = "tdMichsa" + i;
+		eltd = Managment.clickMichsa(driver, nametd);
+		if (eltd.getAttribute("class").equals("CellEditGrid") == true)
+
+		{
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			Assert.assertEquals(eltd.getText(), "0");
+			System.out.println(eltd.getText());
+		
+
+		}
+
+	}
+		
+		
+		
+		
+		
+	}
+	
+	
+	
 	
 
 

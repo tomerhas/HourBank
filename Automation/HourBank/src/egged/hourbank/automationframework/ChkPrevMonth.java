@@ -5,9 +5,6 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
-
-import java.util.Calendar;
-
 import egged.hourbank.pageobjects.Managment;
 import egged.hourbank.utils.Base;
 
@@ -17,50 +14,23 @@ public class ChkPrevMonth extends Base {
 
 	//public WebDriver driver;
 	boolean exists;
-	//int day;
-	//String sysdate ;
-	
+
+
 
 	@Test
 	public void chkPrevMonth() {
 
 		enterNanagment();
-		 
-		
-	
-	/*	Calendar now = Calendar.getInstance();
-		
-		day  =  (now.get(Calendar.MONTH)+ 1);
-		
-		String d =String.valueOf(day);
-		
-		if (d.length()==1)
-			
-		{
-			
-		 sysdate = "0" + d + "/"
-				+ now.get(Calendar.YEAR);
-		
-		}
-		
-		
-		else {
-			
-			 sysdate =  d+ "/"
-					+ now.get(Calendar.YEAR);
-		}*/
-		
-		
-		
+
 		String date = managment.listDate.getAttribute("value");
-		
+
 		Assert.assertEquals(date.substring(3, 10),Managment.getSysdate());
-		
+
 		Assert.assertFalse(managment.btnNextMonth.isEnabled(),
 				"btnNextMonth is enabled");
-		
+
 		Managment.clickBtnPrevMonth();
-		
+
 		Assert.assertTrue(managment.btnNextMonth.isEnabled(),
 				"btnNextMonth is disabled");
 		managment.btnShow.click();
@@ -68,7 +38,7 @@ public class ChkPrevMonth extends Base {
 		try {
 			exists=managment.daysLeft.isDisplayed();
 			System.out.println(exists+"1");
-			
+
 		} catch (NoSuchElementException e) {
 			exists = false;
 			System.out.println(exists+"2");
@@ -81,12 +51,12 @@ public class ChkPrevMonth extends Base {
 			Assert.assertTrue(managment.lblResetDisabled.isDisplayed(),"lblReset is enabled");
 			Assert.assertTrue(managment.lblAutoAllocationDisabled.isDisplayed(),"lblAutoAllocation is enabled");
 			Assert.assertTrue(managment.btnUnDoDisabled.isDisplayed(),"btnUnDo is enabled");
-			
+
 
 		}
 
 		if (exists == true) {
-            System.out.println(exists+"4");
+			System.out.println(exists+"4");
 			Assert.assertTrue(managment.btnUpdate.isEnabled(),
 					"btnUpdate is disabled");
 			Assert.assertTrue(managment.btnUnDo.isEnabled(), "btnUnDo is disabled");
