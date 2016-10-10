@@ -1,16 +1,14 @@
 package egged.hourbank.automationframework;
 
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 
-import sun.security.util.Length;
-
 import java.util.Calendar;
 
+import egged.hourbank.pageobjects.Managment;
 import egged.hourbank.utils.Base;
 
 
@@ -19,8 +17,8 @@ public class ChkPrevMonth extends Base {
 
 	//public WebDriver driver;
 	boolean exists;
-	int day;
-	String sysdate ;
+	//int day;
+	//String sysdate ;
 	
 
 	@Test
@@ -30,7 +28,7 @@ public class ChkPrevMonth extends Base {
 		 
 		
 	
-		Calendar now = Calendar.getInstance();
+	/*	Calendar now = Calendar.getInstance();
 		
 		day  =  (now.get(Calendar.MONTH)+ 1);
 		
@@ -50,15 +48,19 @@ public class ChkPrevMonth extends Base {
 			
 			 sysdate =  d+ "/"
 					+ now.get(Calendar.YEAR);
-		}
+		}*/
+		
+		
 		
 		String date = managment.listDate.getAttribute("value");
 		
-		Assert.assertEquals(date.substring(3, 10),sysdate);
+		Assert.assertEquals(date.substring(3, 10),Managment.getSysdate());
 		
 		Assert.assertFalse(managment.btnNextMonth.isEnabled(),
 				"btnNextMonth is enabled");
-		managment.btnPrevMonth.click();
+		
+		Managment.clickBtnPrevMonth();
+		
 		Assert.assertTrue(managment.btnNextMonth.isEnabled(),
 				"btnNextMonth is disabled");
 		managment.btnShow.click();
@@ -90,7 +92,7 @@ public class ChkPrevMonth extends Base {
 			Assert.assertTrue(managment.btnUnDo.isEnabled(), "btnUnDo is disabled");
 			Assert.assertTrue(managment.lblReset.isEnabled(),
 					"lblReset is disabled");
-			Assert.assertTrue(managment.lblAutoAllocation.isEnabled(),
+			Assert.assertTrue(Managment.lblAutoAllocation.isEnabled(),
 					"lblAutoAllocation is disabled");
 
 		}

@@ -1,4 +1,5 @@
 package egged.hourbank.pageobjects;
+import java.util.Calendar;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -26,6 +27,8 @@ public  class Managment extends Base {
 	static String nametd;
 	static String actualtdname;
 	static String plantdname;
+	static int  day;
+	static String sysdate ;
 	//public static  WebDriver driver;
 
 	@FindBy(how = How.ID, using = "btnShow")
@@ -109,7 +112,7 @@ public  class Managment extends Base {
 	public WebElement daysLeft;
 	
 	@FindBy(how = How.ID, using = "btnPrevMonth")
-	public WebElement btnPrevMonth;
+	public static  WebElement btnPrevMonth;
 	
 	@FindBy(how = How.ID, using = "btnNextMonth")
 	public WebElement btnNextMonth;
@@ -494,6 +497,51 @@ public  class Managment extends Base {
 		
 		
 	}
+	
+	
+	
+	public static void clickBtnPrevMonth()  {
+		
+		btnPrevMonth.click();
+		
+		
+		
+	}
+	
+	
+	
+	
+	public static String getSysdate()   {
+		
+		
+		Calendar now = Calendar.getInstance();
+		
+		day  =  (now.get(Calendar.MONTH)+ 1);
+		
+		String d =String.valueOf(day);
+		
+		if (d.length()==1)
+			
+		{
+			
+		 sysdate = "0" + d + "/"
+				+ now.get(Calendar.YEAR);
+		
+		}
+		
+		
+		else {
+			
+			 sysdate =  d+ "/"
+					+ now.get(Calendar.YEAR);
+		}
+		
+		
+		return sysdate;
+		
+		
+	}
+	
 
 
 
