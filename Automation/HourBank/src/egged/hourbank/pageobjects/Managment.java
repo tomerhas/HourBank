@@ -32,6 +32,8 @@ public  class Managment extends Base {
 	static String sysdate ;
 	static int h = 0;
 	static int michsa = 40;
+	static int num = 0;
+	
 	
 	
 	//public static  WebDriver driver;
@@ -82,7 +84,7 @@ public  class Managment extends Base {
 	public static WebElement btnSaveMichsaYes;
 
 	@FindBy(how = How.ID, using = "btnNoSave")
-	public WebElement btnSaveMichsaNo;
+	public static WebElement btnSaveMichsaNo;
 
 	@FindBy(how = How.ID, using = "okbtn")
 	public static WebElement btnAccept;
@@ -91,7 +93,7 @@ public  class Managment extends Base {
 	public static WebElement btnAcceptSuccess;
 
 	@FindBy(how = How.ID, using = "MichsaCur")
-	public static WebElement typeMichsa;
+	public static  WebElement typeMichsa;
 	
 	@FindBy(how = How.ID, using = "IconKds")
 	public static WebElement lnkKds;
@@ -145,7 +147,7 @@ public  class Managment extends Base {
 	public static WebElement itemValueSelected;
 	
 	@FindBy(how = How.ID, using = "dialog-message")
-	public WebElement autoCompleteMessage;
+	public static WebElement dialogMessage;
 	
 	@FindBy(how = How.CLASS_NAME, using = "clickable")
 	public WebElement highlightTr ;
@@ -633,7 +635,7 @@ public static void updateMichsa( String  value  )  {
 			flag = false;
 			eltd.click();
 			//Managment.typeMichsa.sendKeys(value);
-			Managment.typeMichsa(value);
+			Managment.typeMichsavalue(value);
 			Managment.btnUpdate.click();
 			Managment.btnSaveMichsaYes.click();
 			Managment.btnAcceptSuccess.click();
@@ -661,7 +663,7 @@ public static void updateMichsa( String  value  )  {
 
 				eltd.click();
 				//Managment.typeMichsa.sendKeys(String.valueOf(michsa));
-				Managment.typeMichsa(String.valueOf(michsa));
+				Managment.typeMichsavalue(String.valueOf(michsa));
 				michsa += 10;
 
 			}
@@ -704,10 +706,10 @@ public static void updateMichsa( String  value  )  {
 	
 	
 	
-	public static void typeMichsa(String value)  {
+	public static void typeMichsavalue(String value1)  {
 		
 		
-		typeMichsa.sendKeys(value);
+		typeMichsa.sendKeys(value1);
 		
 		
 	}
@@ -723,6 +725,65 @@ public static void updateMichsa( String  value  )  {
 	
 	
 	
+	
+	public static void typeMichsaOverBudget(String value) {
+		
+		
+		while (num <9) {
+
+			nametd = "tdMichsa" + i;
+			eltd = Managment.clickMichsa(driver, nametd);
+
+			if (eltd.getAttribute("class").equals("CellEditGrid") == true)
+
+			{
+
+				num = num + 1;
+				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+				
+
+				eltd.click();
+				//managment.typeMichsa.sendKeys("9999");
+				Managment.typeMichsavalue(value);
+
+			//	if (num == 1) {
+			//		FirstTd = nametd;
+
+			//	}
+				
+
+			}
+
+			i++;
+
+		}
+		
+		
+		
+		
+	
+		
+	}
+	
+	
+	
+	public static void clickBtnSaveMichsaNo ()  {
+		
+		
+		
+		btnSaveMichsaNo.click();
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+
 	
 	
 	

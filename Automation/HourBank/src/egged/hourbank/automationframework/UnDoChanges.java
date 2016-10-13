@@ -2,7 +2,6 @@ package egged.hourbank.automationframework;
 
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -21,7 +20,7 @@ public class UnDoChanges extends Base {
 	public WebDriver driver;
 
 	@Test
-	public void unDoChanges() {
+	public void unDoChanges()  {
 
 		String nametd;
 		boolean flag = true;
@@ -44,10 +43,11 @@ public class UnDoChanges extends Base {
 			{
 
 				flag = false;
-				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+				
 				eltd.click();
-				//managment.typeMichsa.sendKeys("46.5");
-				Managment.typeMichsa("46.5");
+				//Managment.typeMichsa.sendKeys("46.5");
+				
+				Managment.typeMichsavalue("46.5");
 				Managment.clickbtnUnDo();
 				//WebElement element1 = driver.findElement(By
 						//.id("dialog-confirm"));

@@ -28,7 +28,7 @@ public class UpdateMichsa extends Base {
 	public void updateMichsa() {
 
 		String nametd = "";
-		int num = 0;
+		//int num = 0;
 		int i = 0;
 		String FirstTd = "";
 		WebElement eltd;
@@ -40,14 +40,14 @@ public class UpdateMichsa extends Base {
 		
 		enterNanagment();
 
-		managment.btnUpdate.click();
-		WebElement element = driver.findElement(By.id("dialog-message"));
-		System.out.println(element.getText());
-		Assert.assertEquals(element.getText(), "לא בוצע שינוי במסך");
-		managment.btnAccept.click();
+		Managment.clickBtnUpdate();
+		//WebElement element = driver.findElement(By.id("dialog-message"));
+		//System.out.println(element.getText());
+		Assert.assertEquals(Managment.dialogMessage.getText(), "לא בוצע שינוי במסך");
+		Managment.clickAccept();
 		
-
-		while (num <9) {
+        Managment.typeMichsaOverBudget("9999"); 
+	/*	while (num <9) {
 
 			nametd = "tdMichsa" + i;
 			eltd = Managment.clickMichsa(driver, nametd);
@@ -74,18 +74,18 @@ public class UpdateMichsa extends Base {
 
 			i++;
 
-		}
+		}*/
 
-		managment.btnUpdate.click();
-		WebElement element4 = driver.findElement(By.id("dialog-message"));
-		System.out.println(element4.getText());
-		Assert.assertEquals(element4.getText(),
+		Managment.clickBtnUpdate();
+		//WebElement element4 = driver.findElement(By.id("dialog-message"));
+		//System.out.println(element4.getText());
+		Assert.assertEquals(Managment.dialogMessage.getText(),
 				"לא ניתן לבצע שמירה: סה''כ המכסות שעודכנו גדול מתקציב השעות הנוספות");
-		managment.btnAccept.click();
+		Managment.clickAccept();
 		
 		
-		managment.lblReset.click();
-		managment.btnYes.click();
+		Managment.clickLblReset();
+		managment.clickBtnYes();
 		
 		//eltd = Budget.clickMichsa(driver, FirstTd);
 		//eltd.click();
@@ -93,18 +93,18 @@ public class UpdateMichsa extends Base {
 		
 		eltd = Managment.clickMichsa(driver, nametd);
 		eltd.click();
-		managment.typeMichsa.sendKeys("30");
-		managment.btnUpdate.click();
-		WebElement element1 = driver.findElement(By.id("dialog-confirm"));
-		Assert.assertEquals(element1.getText(),
+		managment.typeMichsavalue("30");
+		managment.clickBtnUpdate();
+		//WebElement element1 = driver.findElement(By.id("dialog-confirm"));
+		Assert.assertEquals(Managment.alertMassage.getText(),
 				"עדכון זה יגרום לעדכון שעות נוספות לעובדים, האם לעדכן?");
-		managment.btnSaveMichsaNo.click();
-		managment.btnUpdate.click();
-		WebElement element2 = driver.findElement(By.id("dialog-confirm"));
-		Assert.assertEquals(element2.getText(),
+		managment.clickBtnSaveMichsaNo();
+		managment.clickBtnUpdate();
+		//WebElement element2 = driver.findElement(By.id("dialog-confirm"));
+		Assert.assertEquals(Managment.alertMassage.getText(),
 				"עדכון זה יגרום לעדכון שעות נוספות לעובדים, האם לעדכן?");
 		
-		managment.btnSaveMichsaYes.click();
+		managment.clickBtnSaveMichsaYes();
 		
 		
 		

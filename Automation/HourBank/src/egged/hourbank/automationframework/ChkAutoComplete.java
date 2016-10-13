@@ -25,7 +25,7 @@ public class ChkAutoComplete extends Base {
 				Managment.autoCompleteName.getText());
 		Managment.typeAutoComplete("אאאא");
 		Managment.clickAutoComplete();
-		Assert.assertEquals(managment.autoCompleteMessage.getText(),
+		Assert.assertEquals(managment.dialogMessage.getText(),
 				"מ.א/שם לא קיים למתקן זה");
 		Managment.clickAccept();
 
@@ -43,7 +43,7 @@ public class ChkAutoComplete extends Base {
 				managment.highlightTr.getText().substring(0, 5));
 		Managment.typeAutoComplete("0");
 		Managment.clickAutoComplete();
-		Assert.assertEquals(managment.autoCompleteMessage.getText(),
+		Assert.assertEquals(managment.dialogMessage.getText(),
 				"מ.א/שם לא קיים למתקן זה");
 		Managment.clickAccept();
 	}
