@@ -63,7 +63,7 @@ public  class Managment extends Base {
 	public WebElement lblResetDisabled;
 
 	@FindBy(how = How.ID, using = "cancel")
-	public WebElement btnUnDo;
+	public static WebElement btnUnDo;
 	
 	@FindBy(how = How.CLASS_NAME, using = "DisabledLink")
 	public WebElement btnUnDoDisabled;
@@ -76,7 +76,7 @@ public  class Managment extends Base {
 	
 	
 	@FindBy(how = How.ID, using = "dialog-confirm")
-	public static WebElement  alertResetMassage;
+	public static WebElement  alertMassage;
 	
 	@FindBy(how = How.ID, using = "btnYesSave")
 	public static WebElement btnSaveMichsaYes;
@@ -632,7 +632,8 @@ public static void updateMichsa( String  value  )  {
 
 			flag = false;
 			eltd.click();
-			Managment.typeMichsa.sendKeys(value);
+			//Managment.typeMichsa.sendKeys(value);
+			Managment.typeMichsa(value);
 			Managment.btnUpdate.click();
 			Managment.btnSaveMichsaYes.click();
 			Managment.btnAcceptSuccess.click();
@@ -659,7 +660,8 @@ public static void updateMichsa( String  value  )  {
 			{
 
 				eltd.click();
-				Managment.typeMichsa.sendKeys(String.valueOf(michsa));
+				//Managment.typeMichsa.sendKeys(String.valueOf(michsa));
+				Managment.typeMichsa(String.valueOf(michsa));
 				michsa += 10;
 
 			}
@@ -699,6 +701,30 @@ public static void updateMichsa( String  value  )  {
 		
 		
 	}
+	
+	
+	
+	public static void typeMichsa(String value)  {
+		
+		
+		typeMichsa.sendKeys(value);
+		
+		
+	}
+	
+	
+	public static void clickbtnUnDo()  {
+		
+		
+		btnUnDo.click();
+		
+		
+	}
+	
+	
+	
+	
+	
 	
 	
 	

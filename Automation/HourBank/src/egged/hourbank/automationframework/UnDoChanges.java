@@ -46,22 +46,23 @@ public class UnDoChanges extends Base {
 				flag = false;
 				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 				eltd.click();
-				managment.typeMichsa.sendKeys("46.5");
-				managment.btnUnDo.click();
-				WebElement element1 = driver.findElement(By
-						.id("dialog-confirm"));
+				//managment.typeMichsa.sendKeys("46.5");
+				Managment.typeMichsa("46.5");
+				Managment.clickbtnUnDo();
+				//WebElement element1 = driver.findElement(By
+						//.id("dialog-confirm"));
 				
 				Common.Wait_For_Element_Visibile(driver, 60, "dialog-confirm", null);
-				Assert.assertEquals(element1.getText(),
+				Assert.assertEquals(Managment.alertMassage.getText(),
 						"עדכון זה יגרום לביטול השעות שעדכנת כעת, האם לבטל שינויים?");
-				managment.btnNo.click();
+				Managment.clickBtnNo();
 				Assert.assertEquals(eltd.getText(), "46.5");
-				managment.btnUnDo.click();
-				WebElement element2 = driver.findElement(By
-						.id("dialog-confirm"));
-				Assert.assertEquals(element2.getText(),
+				Managment.clickbtnUnDo();
+				//WebElement element2 = driver.findElement(By
+						//.id("dialog-confirm"));
+				Assert.assertEquals(Managment.alertMassage.getText(),
 						"עדכון זה יגרום לביטול השעות שעדכנת כעת, האם לבטל שינויים?");
-				managment.btnYes.click();
+				Managment.clickBtnYes();
 				eltd = Managment.clickMichsa(driver, nametd);
 				Assert.assertEquals(eltd.getText(), "0");
 

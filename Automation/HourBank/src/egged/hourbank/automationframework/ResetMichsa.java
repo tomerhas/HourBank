@@ -29,13 +29,13 @@ public class ResetMichsa extends Base {
 
 		Managment.clickLblReset();
 
-		Assert.assertEquals(Managment.alertResetMassage.getText(),
+		Assert.assertEquals(Managment.alertMassage.getText(),
 				"עדכון זה יגרום לאיפוס השעות הנוספות שהוקצו לעובדים, האם לאפס?");
 
 		Managment.clickBtnNo();
 		Managment.clickLblReset();
 
-		Assert.assertEquals(Managment.alertResetMassage.getText(),
+		Assert.assertEquals(Managment.alertMassage.getText(),
 				"עדכון זה יגרום לאיפוס השעות הנוספות שהוקצו לעובדים, האם לאפס?");
 
 		Managment.clickBtnYes();
