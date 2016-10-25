@@ -106,13 +106,13 @@ public class UpdateMichsa extends Base {
 				"עדכון זה יגרום לעדכון שעות נוספות לעובדים, האם לעדכן?");
 		
 		Managment.clickBtnSaveMichsaYes();
-		
+		Managment.assertUpdateMassageText();
 		
 		
 		//WebElement element3 = driver.findElement(By.id("dialog-grid"));
 		
         //System.out.println(element3.getText());
-        try {
+        /*try {
         	
         	System.out.println(Managment.updateMassage+"try");
         	//System.out.println(element3.getText()+"try");
@@ -148,7 +148,7 @@ public class UpdateMichsa extends Base {
     		
     		Assert.assertEquals(Managment.updateMassage.getText(),"הנתונים נשמרו בהצלחה");
     		
-        }
+        }*/
 		
 		Managment.clickbtnAcceptSuccess();
 		eltd = Managment.clickMichsa(driver, elementtd);

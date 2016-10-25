@@ -11,9 +11,13 @@ import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import egged.hourbank.utils.Base;
+import egged.hourbank.utils.Common;
 
 public  class Managment extends Base {
 
@@ -781,6 +785,58 @@ public static void updateMichsa( String  value  )  {
 		
 		
 		btnSaveMichsaNo.click();
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	public static void assertUpdateMassageText()    {
+		
+		   try {
+	        	
+	        	System.out.println(Managment.updateMassage+"try");
+	        	//System.out.println(element3.getText()+"try");
+	        	Common.Wait_For_Element_Visibile(driver, 60, "dialog-grid", null);
+	        	Managment.updateMassage.click();
+	        	System.out.println(Managment.updateMassage.getText()+"try");
+	        	Assert.assertEquals(Managment.updateMassage.getText(),"הנתונים נשמרו בהצלחה");
+	        	
+	        	
+	        }
+	        
+	        catch (AssertionError e)  {
+	        	
+	    		Wait<WebDriver> wait = new WebDriverWait(driver, 10);
+
+	    		// Wait for search to complete
+
+	    		wait.until(new ExpectedCondition<Boolean>() {
+
+	    			public Boolean apply(WebDriver webDriver) {
+
+	    				System.out.println("Searching...");
+	                    System.out.println(Managment.updateMassage.getText()+"catch");
+	                    //System.out.println(return element3.getText()!="");
+	    				return Managment.updateMassage.getText()!="";
+	    				
+	    				
+	    			}
+
+	    	
+	             });
+	    		
+	    		
+	    		Assert.assertEquals(Managment.updateMassage.getText(),"הנתונים נשמרו בהצלחה");
+	    		
+	        }
+		
+		
+		
+		
 		
 		
 		
