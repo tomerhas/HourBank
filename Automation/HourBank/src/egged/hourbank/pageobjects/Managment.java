@@ -80,6 +80,10 @@ public  class Managment extends Base {
 	@FindBy(how = How.ID, using = "dialog-confirm")
 	public static WebElement  alertMassage;
 	
+	@FindBy(how = How.ID, using = "dialog-grid")
+	public static WebElement  updateMassage;
+	
+	
 	@FindBy(how = How.ID, using = "btnYesSave")
 	public static WebElement btnSaveMichsaYes;
 
@@ -726,7 +730,7 @@ public static void updateMichsa( String  value  )  {
 	
 	
 	
-	public static void typeMichsaOverBudget(String value) {
+	public static String  typeMichsaOverBudget(String value) {
 		
 		
 		while (num <9) {
@@ -756,12 +760,16 @@ public static void updateMichsa( String  value  )  {
 			}
 
 			i++;
+			
+			
+		
 
 		}
 		
 		
 		
 		
+		return nametd;
 	
 		
 	}
@@ -782,7 +790,7 @@ public static void updateMichsa( String  value  )  {
 	
 	
 	
-	
+
 
 	
 	

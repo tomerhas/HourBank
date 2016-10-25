@@ -27,10 +27,11 @@ public class UpdateMichsa extends Base {
 	@Test
 	public void updateMichsa() {
 
-		String nametd = "";
+		String elementtd;
+		//String nametd="";
 		//int num = 0;
 		int i = 0;
-		String FirstTd = "";
+		//String FirstTd = "";
 		WebElement eltd;
 		
 		
@@ -46,7 +47,7 @@ public class UpdateMichsa extends Base {
 		Assert.assertEquals(Managment.dialogMessage.getText(), "לא בוצע שינוי במסך");
 		Managment.clickAccept();
 		
-        Managment.typeMichsaOverBudget("9999"); 
+		elementtd=Managment.typeMichsaOverBudget("9999"); 
 	/*	while (num <9) {
 
 			nametd = "tdMichsa" + i;
@@ -85,40 +86,40 @@ public class UpdateMichsa extends Base {
 		
 		
 		Managment.clickLblReset();
-		managment.clickBtnYes();
+		Managment.clickBtnYes();
 		
 		//eltd = Budget.clickMichsa(driver, FirstTd);
 		//eltd.click();
 		//budget.typeMichsa.sendKeys("0");
 		
-		eltd = Managment.clickMichsa(driver, nametd);
+		eltd = Managment.clickMichsa(driver, elementtd);
 		eltd.click();
-		managment.typeMichsavalue("30");
-		managment.clickBtnUpdate();
+		Managment.typeMichsavalue("30");
+		Managment.clickBtnUpdate();
 		//WebElement element1 = driver.findElement(By.id("dialog-confirm"));
 		Assert.assertEquals(Managment.alertMassage.getText(),
 				"עדכון זה יגרום לעדכון שעות נוספות לעובדים, האם לעדכן?");
-		managment.clickBtnSaveMichsaNo();
-		managment.clickBtnUpdate();
+		Managment.clickBtnSaveMichsaNo();
+		Managment.clickBtnUpdate();
 		//WebElement element2 = driver.findElement(By.id("dialog-confirm"));
 		Assert.assertEquals(Managment.alertMassage.getText(),
 				"עדכון זה יגרום לעדכון שעות נוספות לעובדים, האם לעדכן?");
 		
-		managment.clickBtnSaveMichsaYes();
+		Managment.clickBtnSaveMichsaYes();
 		
 		
 		
-		WebElement element3 = driver.findElement(By.id("dialog-grid"));
+		//WebElement element3 = driver.findElement(By.id("dialog-grid"));
 		
         //System.out.println(element3.getText());
         try {
         	
-        	System.out.println(element3+"try");
+        	System.out.println(Managment.updateMassage+"try");
         	//System.out.println(element3.getText()+"try");
         	Common.Wait_For_Element_Visibile(driver, 60, "dialog-grid", null);
-        	element3.click();
-        	System.out.println(element3.getText()+"try");
-        	Assert.assertEquals(element3.getText(),"הנתונים נשמרו בהצלחה");
+        	Managment.updateMassage.click();
+        	System.out.println(Managment.updateMassage.getText()+"try");
+        	Assert.assertEquals(Managment.updateMassage.getText(),"הנתונים נשמרו בהצלחה");
         	
         	
         }
@@ -134,9 +135,9 @@ public class UpdateMichsa extends Base {
     			public Boolean apply(WebDriver webDriver) {
 
     				System.out.println("Searching...");
-                    System.out.println(element3.getText()+"catch");
+                    System.out.println(Managment.updateMassage.getText()+"catch");
                     //System.out.println(return element3.getText()!="");
-    				return element3.getText()!="";
+    				return Managment.updateMassage.getText()!="";
     				
     				
     			}
@@ -145,28 +146,28 @@ public class UpdateMichsa extends Base {
              });
     		
     		
-    		Assert.assertEquals(element3.getText(),"הנתונים נשמרו בהצלחה");
+    		Assert.assertEquals(Managment.updateMassage.getText(),"הנתונים נשמרו בהצלחה");
     		
         }
 		
-		managment.btnAcceptSuccess.click();
-		eltd = Managment.clickMichsa(driver, nametd);
+		Managment.clickbtnAcceptSuccess();
+		eltd = Managment.clickMichsa(driver, elementtd);
 		eltd.click();
-		managment.typeMichsa.sendKeys("201");
-		managment.btnUpdate.click();
-		managment.btnSaveMichsaYes.click();
-		WebElement element5 = driver.findElement(By.id("dialog-message"));
-		System.out.println(element5.getText());
-		Assert.assertEquals(element5.getText(),
+		Managment.typeMichsavalue("201");
+		Managment.clickBtnUpdate();
+		Managment.clickBtnSaveMichsaYes();
+		//WebElement element5 = driver.findElement(By.id("dialog-message"));
+		System.out.println(Managment.dialogMessage.getText());
+		Assert.assertEquals(Managment.dialogMessage.getText(),
 				"ארעה שגיאה בשמירת נתונים, אנא פנה למנהל מערכת");
-		managment.btnAccept.click();
+		Managment.clickAccept();
 		
-		eltd = Managment.clickMichsa(driver, nametd);
+		eltd = Managment.clickMichsa(driver, elementtd);
 		eltd.click();
-		managment.typeMichsa.sendKeys("0");
-		managment.btnUpdate.click();
-		managment.btnSaveMichsaYes.click();
-		managment.btnAcceptSuccess.click();
+		Managment.typeMichsavalue("0");
+		Managment.clickBtnUpdate();
+		Managment.clickBtnSaveMichsaYes();
+		Managment.clickbtnAcceptSuccess();
 
 	}
 
