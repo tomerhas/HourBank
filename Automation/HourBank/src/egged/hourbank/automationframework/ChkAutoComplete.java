@@ -1,12 +1,17 @@
 package egged.hourbank.automationframework;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
+
 import egged.hourbank.pageobjects.Managment;
 import egged.hourbank.utils.Base;
+import egged.hourbank.utils.Common;
 
 
 
@@ -21,11 +26,16 @@ public class ChkAutoComplete extends Base {
 		enterNanagment();
 		Managment.setNameAutocomplete();
 		Managment.clickAutoComplete();
-		Assert.assertEquals(Managment.searchAutoComplete.getAttribute("value"),
-				Managment.autoCompleteName.getText());
+		//Assert.assertEquals(Managment.searchAutoComplete.getAttribute("value"),
+				//Managment.autoCompleteName.getText());
+		
+		Managment.assertAutocompleteName();
+		
+		
+		
 		Managment.typeAutoComplete("אאאא");
 		Managment.clickAutoComplete();
-		Assert.assertEquals(managment.dialogMessage.getText(),
+		Assert.assertEquals(Managment.dialogMessage.getText(),
 				"מ.א/שם לא קיים למתקן זה");
 		Managment.clickAccept();
 
@@ -43,7 +53,7 @@ public class ChkAutoComplete extends Base {
 				managment.highlightTr.getText().substring(0, 5));
 		Managment.typeAutoComplete("0");
 		Managment.clickAutoComplete();
-		Assert.assertEquals(managment.dialogMessage.getText(),
+		Assert.assertEquals(Managment.dialogMessage.getText(),
 				"מ.א/שם לא קיים למתקן זה");
 		Managment.clickAccept();
 	}
