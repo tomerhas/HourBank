@@ -42,7 +42,8 @@ namespace BsmWebApp.Controllers
         {
             if (CurrentUser.MursheBankShaot &&  Session["GeneralDetails"] == null)
             {
-                InitFilterChash();
+                if(CurrentUser.HaveHarshaotScreens)
+                    InitFilterChash();
             }
         }
 

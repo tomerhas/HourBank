@@ -95,6 +95,11 @@
 
 }
 
+.lblGrid {
+    color:#5e345f;
+    font-size:12px;
+    font-weight: 400;
+}
 .MenuTitle a:hover {
     color:#5e345f;
     text-decoration:none

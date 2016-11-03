@@ -19,6 +19,7 @@ namespace BsmCommon.DataModels.Profiles
         public List<Yechida> Yechidot { get; set; }
         public bool MursheBankShaot { get; set; }
         public PirteyOved PirteyUser { get; set; }
+        public bool HaveHarshaotScreens { get; set; }
         // public Yechida CurYechida { get; set; }
         // public List<ProfilesMasachim> ProfilesMasachim { get; set; }
 

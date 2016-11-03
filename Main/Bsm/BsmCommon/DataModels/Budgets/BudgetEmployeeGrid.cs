@@ -33,6 +33,7 @@ namespace BsmCommon.DataModels.Budgets
         public int CurYechida { get; set; }
         public string ReadOnly { get; set; }
         public int MisSign { get; set; }
-       // public float Meafyen14 { get; set; }
+        public string LastUpdateShaotShebuzu { get; set; }
+        // public float Meafyen14 { get; set; }
     }
 }

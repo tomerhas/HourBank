@@ -74,20 +74,7 @@
           </label> 
     </div>
   <div class="col-md-3">
-        @*  <label  class="TextBoxRO GeneralText"  style="width: 70px;border:none;background-color:white;margin-left:-5px;float:right">
-            @if (Model.BudgetChanges.Count > 0)
-            {  
-                 @Html.DisplayFor(model => model.BudgetChanges[(Model.BudgetChanges.Count-1)].BudgetChange.ValToDisplay)
-            }
-          </label> *@
-         @if (Model.BudgetChanges.Count > 0)
-         {  
-          <input class="pointer TextBoxRO linkstyle" onclick="ShowHistory();" value="הצג שינויים"  type="text" />
-         } 
-         else
-         {
-           <input class="TextBoxRO linkstyle linkstyleDisabled" disabled value="הצג שינויים"  type="text" />
-         } 
+      <input class="pointer TextBoxRO linkstyle" onclick="ShowHistory();" value="הצג שינויים" type="text" />
     </div>
   </div>
      

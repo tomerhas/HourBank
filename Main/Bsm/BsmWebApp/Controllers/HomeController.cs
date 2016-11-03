@@ -48,13 +48,19 @@ namespace BsmWebApp.Controllers
                 {
                     if (error == "session end")
                         ViewBag.SessionEnd = 1;
+                    else if (user.HaveHarshaotScreens)
+                    {
+                        // ViewBag.SessionEnd = 0;
+                        //  vm.Error = error;
+                        vm.ImgSrc = "~/Content/Images/Lock_Icon.png";
+                        vm.Error = error;
+                        ViewBag.SessionEnd = 0;
+                    }
                     else
                     {
-                       // ViewBag.SessionEnd = 0;
-                      //  vm.Error = error;
-                        vm.ImgSrc = "~/Content/Images/Lock_Icon.png";
-                        vm.Error= error;
-                        ViewBag.SessionEnd = 0;
+                        ViewBag.Img = "~/Content/Images/Lock_Icon.png";
+                        ViewBag.ErrorMessege = "אינך מורשה להיכנס למערכת. לבירור נא פנה למרכז התמיכה בטלפון 2466";
+                        return View("Error");
                     }
                     //  vm.SessionEnd = 0;
                     vm.Today = DateTime.Now;

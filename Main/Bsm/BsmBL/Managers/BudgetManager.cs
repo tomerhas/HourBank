@@ -379,6 +379,8 @@ namespace BsmBL.Managers
 
             budgetEmployee.ShaotShebuzu = float.Parse(row["ShaotShebuzu"].ToString());
             budgetEmployee.MisSign = int.Parse(row["mis_sign"].ToString());
+            budgetEmployee.LastUpdateShaotShebuzu =row["LastUpdateShaotShebuzu"].ToString();
+            
          //   var paar2 =  budgetEmployee.ShaotShebuzu -  budgetEmployee.MichsaCur;
             decimal paar = (decimal)budgetEmployee.ShaotShebuzu - (decimal)budgetEmployee.MichsaCur;
 

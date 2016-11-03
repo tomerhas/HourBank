@@ -88,7 +88,10 @@ namespace BsmBL.Managers
                      //   EventLog.WriteEntry("kds", " uf.Screens=" + uf.Screens.Count);
                        
                         uf.Yechidot = GetYechidotToUser(uf.PirteyUser.Isuk, uf.PirteyUser.YechidaIrgunit);
-                        
+
+                        if (uf.Screens.Count == 0)
+                            uf.HaveHarshaotScreens = false;
+                        else uf.HaveHarshaotScreens = true;
             //EventLog.WriteEntry("kds", "after  GetYechidotToUser");
             //if (uf.Yechidot.Count > 0)
             //{
@@ -96,7 +99,7 @@ namespace BsmBL.Managers
             //    //uf.CurYechida = uf.Yechidot[0];         
             //}
             //EventLog.WriteEntry("kds", "end");
-        }
+                    }
 
                 }
 

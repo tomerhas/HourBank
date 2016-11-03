@@ -156,7 +156,9 @@
                    columns.Bound(o => o.MichsaYomit).Title("מכסה יומית");
                    columns.Bound(o => o.NosafotPrev).Title("הקצאה לחודש קודם").HtmlAttributes(new { @id = ("tdPrevMonth#= Masad #") });
                    columns.Bound(o => o.MichsaCur).Title("הקצאת שעות").HtmlAttributes(new { @id = ("tdMichsa#= Masad #") ,  onfocusin = "focusInput(this);", onchange = "CheakValid(this);", @class = "CellEditGrid" }).Width(120);
-                   columns.Bound(o => o.ShaotShebuzu).Title("שעות שבוצעו").HtmlAttributes(new { @id = ("tdShaotUsed#= Masad #") });
+                   //columns.Bound(o => o.ShaotShebuzu).Title("שעות שבוצעו").ClientTemplate("#= ShaotShebuzu # <img src = '../../Content/Images/warning_kds.png' id = 'warIcon1' style = 'margin-right:7px'  title = 'קיים סידור ללא שעת התחלה או שעת גמר' />").HtmlAttributes(new { @id = ("tdShaotUsed#= Masad #") });
+                   columns.Bound(o => o.ShaotShebuzu).Title("שעות שבוצעו").ClientTemplate("#= ShaotShebuzu # <label id ='lblUsed' class='lblGrid'></label>").HtmlAttributes(new { @id = ("tdShaotUsed#= Masad #") });
+                   //.HtmlAttributes(new { @id = ("tdShaotUsed#= Masad #") });*/
                    columns.Bound(o => o.Paar).Title("פער").HtmlAttributes(new { @id = ("tdPaar") });//.ClientTemplate("<div style='direction:ltr'>#= Paar #</div>");//.HtmlAttributes(new { style = " direction:ltr;" });
                    columns.Bound(o => o.ReadOnly).Hidden();
 
@@ -169,7 +171,8 @@
 
                    //   columns.Bound(o => o.MisparIshi).Title("נוכחות").ClientTemplate("<input type='submit'  style='float: right;'  value='הפק דוח' name='action:Nochechut' />").Width(80);
                    columns.Bound(o => o.MichsaMakor).HtmlAttributes(new { @id = "tdMakorVal" }).Hidden();
-                   columns.Bound(o => o.MisSign).HtmlAttributes(new { @id = "tdMisSign" }).Hidden();
+                   columns.Bound(o => o.LastUpdateShaotShebuzu).HtmlAttributes(new { @id = "tdLastUpdate" }).Hidden();
+
     @* columns.Template(o=> @Html.ActionLink("הפק דו''ח","CreateNochechutRdl",new{ovedId=o.MisparIshi})).Width(100);
                        columns.Template(o=>{
                                         return string.Format("<a href='#' onclick='ShowPopUp({0});'>פתח</a>",o.MisparIshi);
@@ -187,8 +190,8 @@
                        .Editable(editable => editable.Mode(GridEditMode.InCell))
                        .Pageable() // scroll
                        .Sortable(c => c.AllowUnsort(false))// scroll
-                     //   .Navigatable()
-                       // .Scrollable(scr => scr.Height(500)) // scroll
+                                                           //   .Navigatable()
+                                                           // .Scrollable(scr => scr.Height(500)) // scroll
 
                        //.Filterable()
                        .Events(events => events.DataBound("onDataBound"))
@@ -606,6 +609,9 @@
                 $("#btnUpdate").removeAttr('disabled');
                 $( "#btnUpdate" ).removeClass( "DisabledExec" );
             }
+            debugger;
+
+        //    $(e.parentNode).find("td[id^='tdShaotUsed']")[0].className="editCell"; 
             // e.parentNode.cells[2].className="editCell";
         }
 
@@ -722,6 +728,13 @@
             if(dt.MisSign == 0){
                 var id ='td#tdKds'+dt.Masad; 
                 $(this).find(id).find('#warIcon').css("display", "none");
+            }
+           
+            if(dt.LastUpdateShaotShebuzu !=""){
+                var id ='td#tdShaotUsed'+dt.Masad; 
+                if(dt.LastUpdateShaotShebuzu.indexOf('/') >-1)
+                    $(this).find(id).find('#lblUsed').text("נכון לתאריך  " + dt.LastUpdateShaotShebuzu);
+                else $(this).find(id).find('#lblUsed').text(dt.LastUpdateShaotShebuzu);
             }
         });
      
