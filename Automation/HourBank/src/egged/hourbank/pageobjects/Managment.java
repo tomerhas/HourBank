@@ -1,6 +1,7 @@
 package egged.hourbank.pageobjects;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -739,7 +740,7 @@ public static void updateMichsa( String  value  )  {
 	public static String  typeMichsaOverBudget(String value) {
 		
 		
-		while (num <9) {
+		while (num <10) {
 
 			nametd = "tdMichsa" + i;
 			eltd = Managment.clickMichsa(driver, nametd);
@@ -872,6 +873,16 @@ try {
 		
 		
 		
+	}
+	
+	
+	
+	
+	
+	public static  int randomInteger(int min, int max) {
+	    Random rand = new Random();
+	    int randomNum = min + (int)(Math.random() * ((max - min) + 1));
+	    return randomNum;
 	}
 	
 	
