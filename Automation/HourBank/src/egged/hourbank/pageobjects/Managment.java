@@ -45,8 +45,8 @@ public  class Managment extends Base {
 	
 	//public static  WebDriver driver;
 
-	@FindBy(how = How.ID, using = "btnShow")
-	public WebElement btnShow;
+	/*@FindBy(how = How.ID, using = "btnShow")
+	public WebElement btnShow;*/
 	
 	
 	public static WebElement  btnshow1 (WebDriver driver )  {
@@ -97,8 +97,7 @@ public  class Managment extends Base {
 	@FindBy(how = How.ID, using = "btnNoSave")
 	public static WebElement btnSaveMichsaNo;
 
-	@FindBy(how = How.ID, using = "okbtn")
-	public static WebElement btnAccept;
+	
 
 	@FindBy(how = How.ID, using = "btnGridOk")
 	public static WebElement btnAcceptSuccess;
@@ -157,8 +156,8 @@ public  class Managment extends Base {
 	@FindBy(how = How.ID, using = "MisparIshi_option_selected")
 	public static WebElement itemValueSelected;
 	
-	@FindBy(how = How.ID, using = "dialog-message")
-	public static WebElement dialogMessage;
+	/*@FindBy(how = How.ID, using = "dialog-message")
+	public static WebElement dialogMessage;*/
 	
 	@FindBy(how = How.CLASS_NAME, using = "clickable")
 	public WebElement highlightTr ;
@@ -173,15 +172,13 @@ public  class Managment extends Base {
 			+ symbol + "')]"))
 			
 			public static List<WebElement> AllElements;
+	
+	
+	
+	
 			
 	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
@@ -265,11 +262,7 @@ public  class Managment extends Base {
 	
 	
 	
-	public static void clickAccept ()  {
-		
-		btnAccept.click();
-		
-	}
+	
 	
 	
 	
@@ -496,9 +489,17 @@ public  class Managment extends Base {
 				
 			{
 			
-				//System.out.println(eltd.getText());
+				
+				String actualtext = actualtd.getText();
+						
+				String[] actualsplit = actualtext.split(" ");
+				
+				String actual = actualsplit[0];
+				
+				
+				System.out.println(actual);
 				//System.out.println(actualtd.getText());
-				Assert.assertEquals(eltd.getText(), actualtd.getText());
+				Assert.assertEquals(eltd.getText(),actual);
 			
 		}
 			

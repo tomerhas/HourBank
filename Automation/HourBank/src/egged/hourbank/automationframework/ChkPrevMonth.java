@@ -33,7 +33,7 @@ public class ChkPrevMonth extends Base {
 
 		Assert.assertTrue(managment.btnNextMonth.isEnabled(),
 				"btnNextMonth is disabled");
-		managment.btnShow.click();
+		main.btnShow.click();
 
 		try {
 			exists=managment.daysLeft.isDisplayed();

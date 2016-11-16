@@ -4,17 +4,22 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import com.google.common.base.Function;
+
 import egged.hourbank.pageobjects.Managment;
 import egged.hourbank.pageobjects.Main;
 
@@ -24,6 +29,37 @@ public   class Common   {
 	public WebDriver driver;
 	int attempts = 0;
 	int MAX_ATTEMPTS = 20;
+	
+	
+	@FindBy(how = How.ID, using = "dialog-message")
+	public static WebElement dialogMessage;
+	
+	
+	@FindBy(how = How.ID, using = "okbtn")
+	public static WebElement btnAccept;
+	
+	
+	public static  String getDialogText () {
+		
+		
+		return  dialogMessage.getText();
+		
+		
+		
+	}
+	
+	
+	
+public static void clickAccept ()  {
+		
+		btnAccept.click();
+		
+	}
+	
+	
+	
+	
+	
 	
 	
 	

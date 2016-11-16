@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeMethod;
 
 import egged.hourbank.pageobjects.Managment;
 import egged.hourbank.utils.Base;
+import egged.hourbank.utils.Common;
 
 
 
@@ -31,9 +32,9 @@ public class ChkAutoComplete extends Base {
 		
 		Managment.typeAutoComplete("אאאא");
 		Managment.clickAutoComplete();
-		Assert.assertEquals(Managment.dialogMessage.getText(),
+		Assert.assertEquals(Common.getDialogText(),
 				"מ.א/שם לא קיים למתקן זה");
-		Managment.clickAccept();
+		Common.clickAccept();
 
 	}
 
@@ -49,9 +50,9 @@ public class ChkAutoComplete extends Base {
 				managment.highlightTr.getText().substring(0, 5));
 		Managment.typeAutoComplete("0");
 		Managment.clickAutoComplete();
-		Assert.assertEquals(Managment.dialogMessage.getText(),
+		Assert.assertEquals(Common.getDialogText(),
 				"מ.א/שם לא קיים למתקן זה");
-		Managment.clickAccept();
+		Common.clickAccept();
 	}
 
 	

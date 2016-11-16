@@ -10,6 +10,15 @@ public  class Main {
 
 	@FindBy(how = How.LINK_TEXT, using = "ניהול תקציב")
 	public  WebElement lnkBudget;
+	
+	
+	@FindBy(how = How.LINK_TEXT, using = "ניוד תקציב")
+	public  WebElement lnkMobility;
+	
+	
+	@FindBy(how = How.ID, using = "btnShow")
+	public WebElement btnShow;
+	
 
 	
 	 //public Main(WebDriver driver) { 

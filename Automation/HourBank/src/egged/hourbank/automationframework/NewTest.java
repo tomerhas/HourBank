@@ -36,7 +36,7 @@ public class NewTest extends Base{
 	  int num=Managment.getNumOfRows();
 	  Select droplist = new Select(managment.mitkanName);
 		droplist.selectByVisibleText("הנהלת מוסך אשקלון");
-		managment.btnShow.click();
+		main.btnShow.click();
 		
 		
 		
@@ -109,8 +109,7 @@ public class NewTest extends Base{
 			}*/
 		
 		
-		
-		
+	
 		
 		
 		
