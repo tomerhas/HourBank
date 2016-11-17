@@ -62,6 +62,7 @@ public class ChkAutoComplete extends Base {
 
 		driver = getDriver();
 		initBudget();
+		initCommon();
 	}
 
 }

@@ -48,6 +48,8 @@ public class Mobility extends Base {
 	@FindBy(how = How.ID, using = "KodMitkan")
 	public static WebElement listMitkan ;
 	
+	
+	
 	@FindBy(how = How.ID, using = "KodTakziv")
 	public static WebElement listBudget ;
 
@@ -56,6 +58,17 @@ public class Mobility extends Base {
 	
 	
 	
+	
+	
+	
+	
+	public static void  clickAddBudget()  {
+		
+		
+		lblAddBudget.click();
+		
+		
+	}
 	
 	
 	
@@ -87,6 +100,37 @@ public class Mobility extends Base {
 		
 		
 	}
+	
+	
+	
+	public static void  selectMitkan (String mitkan)   {
+		
+		
+		
+		Select droplist = new Select(Mobility.listMitkan);
+		droplist.selectByValue(mitkan);
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	public static void  selectBudget (String kodbudget)   {
+		
+		
+		
+		Select droplist = new Select(Mobility.listBudget);
+		droplist.selectByValue(kodbudget);
+		
+			
+		
+	}
+	
+	
 	
 	
 	public static void clickBtnUpdate()  {

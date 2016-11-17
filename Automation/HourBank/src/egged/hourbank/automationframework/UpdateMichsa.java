@@ -87,6 +87,7 @@ public class UpdateMichsa extends Base {
 	public void beforeMethod() {
 		driver = getDriver();
 		initBudget();
+		initCommon();
 
 	}
 
