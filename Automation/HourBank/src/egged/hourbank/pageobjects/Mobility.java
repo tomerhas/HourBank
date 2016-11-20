@@ -25,6 +25,11 @@ public class Mobility extends Base {
 	public static WebElement listMitkanOut ;
 	
 	
+	@FindBy(how = How.ID, using = "lblSubtract")
+	public static WebElement lblReduction ;
+	
+	
+	
 	@FindBy(how = How.ID, using = "KodMitkanIn")
 	public static WebElement listMitkanIn ;
 	
@@ -38,7 +43,15 @@ public class Mobility extends Base {
 	
 	
 	@FindBy(how = How.ID, using = "btnAuto")
-	public static WebElement btnupdate ;
+	public static WebElement btnUpdate ;
+	
+	
+	@FindBy(how = How.ID, using = "btnNewBudget")
+	public static WebElement btnUpdateNewBudget ;
+	
+	
+	@FindBy(how = How.ID, using = "btnGria")
+	public static WebElement btnUpdateReduction ;
 	
 	
 	@FindBy(how = How.ID, using = "lblAdd")
@@ -52,6 +65,30 @@ public class Mobility extends Base {
 	
 	@FindBy(how = How.ID, using = "KodTakziv")
 	public static WebElement listBudget ;
+	
+	
+	@FindBy(how = How.ID, using = "addNew")
+	public static WebElement lblCreateBudget ;
+	
+	
+	
+	@FindBy(how = How.ID, using = "inputKamutNew")
+	public static WebElement inputKamutNew ;
+	
+	
+	
+	@FindBy(how = How.ID, using = "inputResonNew")
+	public static WebElement inputReasonNew ;
+	
+	
+	@FindBy(how = How.ID, using = "inputName")
+	public static WebElement inputBudgetName ;
+	
+	
+	
+	
+	
+	
 
 	
 	
@@ -80,6 +117,17 @@ public class Mobility extends Base {
 		
 		
 	}
+	
+	
+	
+	public static void  clickReduction()  {
+		
+		
+		lblReduction.click();
+		
+		
+	}
+	
 	
 	
 	
@@ -136,7 +184,7 @@ public class Mobility extends Base {
 	public static void clickBtnUpdate()  {
 		
 		
-		btnupdate.click();
+		btnUpdate.click();
 		
 		
 		
@@ -165,9 +213,67 @@ public class Mobility extends Base {
 	
 	
 	
+	public static void typeKamutNew(String value)  {
+		
+		inputKamutNew.clear();
+		inputKamutNew.sendKeys(value);
+		
+		
+	}
 	
 	
 	
+	public static void typeReasonNew(String value)  {
+		
+		inputReasonNew.clear();
+		inputReasonNew.sendKeys(value);
+		
+		
+	}
+	
+	
+	
+	
+	public static void typeBudgetName(String value)  {
+		
+		inputBudgetName.clear();
+		inputBudgetName.sendKeys(value);
+		
+		
+	}
+	
+	
+	
+	
+	
+	public static void clickBtnReduction()  {
+		
+		
+		btnUpdateReduction.click();
+		
+		
+	}
+	
+	
+	
+	
+	public static void clickCreateBudget()  {
+		
+		
+		lblCreateBudget.click();
+		
+		
+	}
+	
+	
+	
+	public static void clickBtnUpdateBudget()  {
+		
+		
+		btnUpdateNewBudget.click();
+		
+		
+	}
 	
 	
 	

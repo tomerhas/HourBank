@@ -1,62 +1,49 @@
 package egged.hourbank.automationframework;
 
 import java.util.concurrent.TimeUnit;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
+
 import egged.hourbank.pageobjects.Mobility;
 import egged.hourbank.utils.Base;
 import egged.hourbank.utils.Common;
 
-public class BudgetMobile  extends Base {
+public class BudgetReduction   extends Base {
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
   @Test
-  public void budgetMobile() {
+  public void budgetReduction() {
 	  
-	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	  
+      driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  
 	  enterMobility();
-	  Mobility.clickNiud();
-	  Mobility.selectOutToIn("91017","92320");
-	  Mobility.clickBtnUpdate();
+	  Mobility.clickReduction();
+	  Mobility.selectMitkan("91017");
+	  Mobility.typeKamut("10");
+	  Mobility.clickBtnReduction();
 	  Assert.assertEquals(Common.getDialogText(),"חובה לעדכן את כל השדות");
 	  Common.clickAccept();
 	  Mobility.typeKamut("999999");
 	  Mobility.typeReason("טסט");
-	  Mobility.clickBtnUpdate();
+	  Mobility.clickBtnReduction();
 	  Assert.assertEquals(Common.getDialogText(),"לא ניתן לעדכן מעבר ליתרה");
 	  Common.clickAccept();
-	  Mobility.typeKamut("30");
-	  Mobility.typeReason("טסט");
-	  Mobility.clickBtnUpdate();
+	  Mobility.typeKamut("1");
+	  Mobility.clickBtnReduction();
 	  Common.Wait_For_Element_Visibile(driver, 60, "dialog-message", null);
 	  Assert.assertEquals(Common.getDialogText(),"הנתונים עודכנו בהצלחה");
-	  Common.clickAccept();	
-	  
-    
-      
-      
-  
-      
-      
-      
-      
-      
-      
-     
-      
-      
-      
-      
-      
-      
-	  
-	  
-	  
-	  
-
+	  Common.clickAccept();
 	  
 	  
 	  
@@ -75,9 +62,21 @@ public class BudgetMobile  extends Base {
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
   @BeforeMethod
   public void beforeMethod() {
-	  
 	  
 	  driver = getDriver();
 	  initMobility();
@@ -87,22 +86,5 @@ public class BudgetMobile  extends Base {
 	  
   }
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 }
+
