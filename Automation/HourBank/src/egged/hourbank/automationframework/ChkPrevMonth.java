@@ -20,7 +20,7 @@ public class ChkPrevMonth extends Base {
 	@Test
 	public void chkPrevMonth() {
 
-		enterNanagment();
+		enterNanagment("הנהלת מוסך נתניה");
 
 		String date = managment.listDate.getAttribute("value");
 

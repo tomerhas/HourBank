@@ -32,7 +32,7 @@ public class AutoAllocation extends Base {
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		
-		enterNanagment();
+		enterNanagment("הנהלת מוסך נתניה");
 		Managment.clicklblAutoAllocation();
 		Managment.clickradioPrevPlan();
 		Managment.clickbtnAutoAllocation();
@@ -53,7 +53,7 @@ public class AutoAllocation extends Base {
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		
-		enterNanagment();
+	  enterNanagment("הנהלת מוסך נתניה");
 		Managment.clicklblAutoAllocation();
 		Managment.clickRadioCurActual();
 		Managment.clickbtnAutoAllocation();

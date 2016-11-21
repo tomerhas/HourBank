@@ -94,12 +94,12 @@ public void tearDownDriver() {
 	
 	
 
-public   void enterNanagment ()    {
+public    void enterNanagment (String mitkanname)    {
 	
 	
 	main.lnkBudget.click();
 	Select droplist = new Select(managment.mitkanName);
-	droplist.selectByVisibleText("הנהלת מוסך נתניה");
+	droplist.selectByVisibleText(mitkanname);
 	main.btnShow.click();
 	
 	

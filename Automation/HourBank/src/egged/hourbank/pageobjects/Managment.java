@@ -83,21 +83,17 @@ public  class Managment extends Base {
 	@FindBy(how = How.ID, using = "btnNo")
 	public static WebElement btnNo;
 	
-	
 	@FindBy(how = How.ID, using = "dialog-confirm")
 	public static WebElement  alertMassage;
 	
 	@FindBy(how = How.ID, using = "dialog-grid")
 	public static WebElement  updateMassage;
-	
-	
+		
 	@FindBy(how = How.ID, using = "btnYesSave")
 	public static WebElement btnSaveMichsaYes;
 
 	@FindBy(how = How.ID, using = "btnNoSave")
 	public static WebElement btnSaveMichsaNo;
-
-	
 
 	@FindBy(how = How.ID, using = "btnGridOk")
 	public static WebElement btnAcceptSuccess;
@@ -162,25 +158,13 @@ public  class Managment extends Base {
 	@FindBy(how = How.CLASS_NAME, using = "clickable")
 	public WebElement highlightTr ;
 	
-	
 	@FindBy(how = How.XPATH, using = "//tr[@class='clickable']//td[@id='tdName']")
 	public static WebElement  autoCompleteName ;
-	
-
 	
 	@FindAll(@FindBy(how = How.XPATH, using ="//tr[contains(@data-uid,'"
 			+ symbol + "')]"))
 			
 			public static List<WebElement> AllElements;
-	
-	
-	
-	
-			
-	
-
-	
-	
 	
 	 @FindBys({
 		    @FindBy(id = "MenuModel_MitkanName_KodYechida"),

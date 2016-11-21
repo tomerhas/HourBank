@@ -24,7 +24,7 @@ public class LinkToKds extends Base {
 		
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		enterNanagment();
+		enterNanagment("הנהלת מוסך נתניה");
 		Managment.clickLinkTokds();
 		Common a = new Common();
 		a.waitForWindow("Nochechut", driver);

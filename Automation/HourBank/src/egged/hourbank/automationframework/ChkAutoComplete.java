@@ -20,7 +20,7 @@ public class ChkAutoComplete extends Base {
 	@Test(priority = 0)
 	public void chkAutoCompleteShem() throws InterruptedException {
 
-		enterNanagment();
+		enterNanagment("הנהלת מוסך נתניה");
 		Managment.setNameAutocomplete();
 		Managment.clickAutoComplete();
 		Assert.assertEquals(Managment.searchAutoComplete.getAttribute("value"),
@@ -43,7 +43,7 @@ public class ChkAutoComplete extends Base {
 	@Test(priority = 1)
 	public void chkAutoCompleteMispar() throws InterruptedException {
 
-		enterNanagment();
+		enterNanagment("הנהלת מוסך נתניה");
 		Managment.setMisparishiAutocomplete();
 		Managment.clickAutoComplete();
 		Assert.assertEquals(Managment.searchAutoComplete.getAttribute("value"),

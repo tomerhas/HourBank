@@ -27,7 +27,7 @@ public class UpdateMichsa extends Base {
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-		enterNanagment();
+		enterNanagment("הנהלת מוסך נתניה");
 
 		Managment.clickBtnUpdate();
 

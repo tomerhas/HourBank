@@ -29,7 +29,7 @@ public class NewTest extends Base{
 	  
 	  
 	  
-	  enterNanagment();
+	  enterNanagment("הנהלת מוסך נתניה");
 	  
 	  //Assert.assertEquals(Managment.isMitkanSelected(), "88468");
 	  

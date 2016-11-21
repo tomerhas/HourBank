@@ -13,7 +13,10 @@
             <class name="egged.hourbank.automationframework.LinkToKds" /> 
             <class name="egged.hourbank.automationframework.AutoAllocation" /> 
             <class name="egged.hourbank.automationframework.ChkPrevMonth" /> 
-            
+            <class name="egged.hourbank.automationframework.BudgetMobile" /> 
+            <class name="egged.hourbank.automationframework.AddBudget" /> 
+            <class name="egged.hourbank.automationframework.BudgetReduction" /> 
+            <class name="egged.hourbank.automationframework.CreateNewBudget" /> 
             
 		</classes>
 		
