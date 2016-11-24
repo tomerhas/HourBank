@@ -55,6 +55,24 @@ public static void clickAccept ()  {
 		btnAccept.click();
 		
 	}
+
+
+public static String getActualText(String txt , String symbol) {
+	
+	
+
+	String actualtext = txt;
+			
+	String[] actualsplit = actualtext.split(symbol);
+	
+	String actual = actualsplit[0];	
+	
+	return actual;
+	
+	
+	
+	
+}
 	
 	
 	
@@ -190,7 +208,7 @@ public static void clickAccept ()  {
 
 
 	public static WebElement Wait_For_Element_Visibile(final WebDriver driver,
-			final int timeoutSeconds, String snameId, String sclassName) {
+			final int timeoutSeconds, String snameId, String sclassName, String sxpath) {
 		FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
 
 				.withTimeout(timeoutSeconds, TimeUnit.SECONDS)
@@ -208,12 +226,28 @@ public static void clickAccept ()  {
 					element = driver.findElement(By.id(snameId));
 				}
 
-				else {
+				if (sclassName!=null) {
 
 					WebDriverWait wait = new WebDriverWait(driver, 50);
 					wait.until(ExpectedConditions.visibilityOf(driver
 							.findElement(By.className(sclassName))));
-					element = driver.findElement(By.id(snameId));
+					element = driver.findElement(By.className(sclassName));
+				}
+				
+				
+				
+				
+				if (sxpath!=null) {
+					
+					WebDriverWait wait = new WebDriverWait(driver, 50);
+					wait.until(ExpectedConditions.visibilityOf(driver
+							.findElement(By.xpath(sxpath))));
+					element = driver.findElement(By.xpath(sxpath));
+					
+					
+					
+					
+					
 				}
 
 				System.out.println("Trying to find element "
@@ -222,6 +256,10 @@ public static void clickAccept ()  {
 			}
 		});
 	}
+	
+	
+	
+	
 
 	public static WebElement Wait_For_Element_Stalenes(WebDriver driver,
 			String snameId, String sclassname) {

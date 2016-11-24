@@ -29,7 +29,7 @@ public class CreateNewBudget extends Base {
 	  Common.clickAccept();
 	  Mobility.typeReasonNew("טסט");
 	  Mobility.clickBtnUpdateBudget();
-	  Common.Wait_For_Element_Visibile(driver, 60, "dialog-message", null);
+	  Common.Wait_For_Element_Visibile(driver, 60, "dialog-message", null, null);
 	  Assert.assertEquals(Common.getDialogText(),"התקציב נוצר בהצלחה");
 	  Common.clickAccept();
 	  

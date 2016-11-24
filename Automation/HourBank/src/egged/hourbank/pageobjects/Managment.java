@@ -478,7 +478,7 @@ public  class Managment extends Base {
 						
 				String[] actualsplit = actualtext.split(" ");
 				
-				String actual = actualsplit[0];
+				String actual = actualsplit[0];	
 				
 				
 				System.out.println(actual);
@@ -788,7 +788,7 @@ public static void updateMichsa( String  value  )  {
 	        	
 	        	System.out.println(Managment.updateMassage+"try");
 	        	//System.out.println(element3.getText()+"try");
-	        	Common.Wait_For_Element_Visibile(driver, 60, "dialog-grid", null);
+	        	Common.Wait_For_Element_Visibile(driver, 60, "dialog-grid", null, null);
 	        	Managment.updateMassage.click();
 	        	System.out.println(Managment.updateMassage.getText()+"try");
 	        	Assert.assertEquals(Managment.updateMassage.getText(),"הנתונים נשמרו בהצלחה");

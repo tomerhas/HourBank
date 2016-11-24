@@ -41,7 +41,7 @@ public class BudgetReduction   extends Base {
 	  Common.clickAccept();
 	  Mobility.typeKamut("1");
 	  Mobility.clickBtnReduction();
-	  Common.Wait_For_Element_Visibile(driver, 60, "dialog-message", null);
+	  Common.Wait_For_Element_Visibile(driver, 60, "dialog-message", null, null);
 	  Assert.assertEquals(Common.getDialogText(),"הנתונים עודכנו בהצלחה");
 	  Common.clickAccept();
 	  

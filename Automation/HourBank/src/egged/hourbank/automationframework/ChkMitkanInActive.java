@@ -20,6 +20,7 @@ public class ChkMitkanInActive extends Base {
 		Assert.assertEquals(Common.getDialogText(),"לא נמצאו נתונים ליחידה והחודש הנבחר");
 		Common.clickAccept();
 	  
+		
 	  
   }
   

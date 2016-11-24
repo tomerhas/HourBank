@@ -1,7 +1,11 @@
 package egged.hourbank.pageobjects;
 
+import java.util.List;
+
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.Select;
 
@@ -85,14 +89,71 @@ public class Mobility extends Base {
 	public static WebElement inputBudgetName ;
 	
 	
+	@FindBy(how = How.ID, using = "tdTeurYechida")
+	public static WebElement firstmitkanName ;
 	
+	
+	@FindBy(how = How.CLASS_NAME, using = "ui-button ")
+	public static WebElement btnCloseDialog ;
+	
+	
+	@FindBy(how = How.XPATH, using = "//*[@id='buttons']//div/label[.='הוסף']")
+	public static WebElement addBudgetPointer ;
+	
+	
+	@FindBy(how = How.XPATH, using = "//*[@id='buttons']//div/label[.='נייד']")
+	public static WebElement mobileBudgetPointer ;
 	
 	
 	
 
+	 @FindBys({
+		    @FindBy(id = "KodMitkanIn"),
+		    @FindBy(tagName = "option")
+		    })
+		    public static List<WebElement> listMitkanInMobile;
+	 
+	 
+
+	 @FindBys({
+		    @FindBy(id = "KodMitkan"),
+		    @FindBy(tagName = "option")
+		    })
+		    public static List<WebElement> listMitkanInAdd;
 	
 	
 	
+	
+	
+	
+	public static void moveToPointer () {
+
+		
+
+		Actions action = new Actions(driver);
+
+		action.moveToElement(firstmitkanName).build().perform();
+
+		
+		
+		
+		//addBudgetPointer.click();
+		
+		
+
+	}
+	
+	
+	
+	public static void clickPointer (WebElement element) {
+		
+		
+		
+		element.click();
+		
+		
+		
+	}
 	
 	
 	
@@ -275,6 +336,61 @@ public class Mobility extends Base {
 		
 	}
 	
+	
+	
+	
+	 
+	
+	 public static String   getTextSelected  (List<WebElement> listelements )
+	 
+	 {
+		  String returnValue=null;
+		 for (WebElement AllValues : listelements)
+
+		{
+
+			// System.out.println(AllValues.getAttribute("value"));
+			//System.out.println(AllValues.getText());
+			//System.out.println(AllValues.isSelected());
+			
+			
+
+
+		if (AllValues.isSelected() == true)
+				
+
+			{
+               
+			returnValue=AllValues.getText();
+				break; 
+				
+
+			}
+
+			else
+
+			{
+				continue;
+
+			}
+		
+		}
+	 return returnValue;
+	 
+	 
+
+		}
+	 
+	 
+	 
+		
+		public static void closeDialog()  {
+			
+			
+			btnCloseDialog.click();
+			
+			
+		}
 	
 	
 	
