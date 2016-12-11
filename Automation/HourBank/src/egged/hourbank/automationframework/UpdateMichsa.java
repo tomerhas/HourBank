@@ -39,9 +39,27 @@ public class UpdateMichsa extends Base {
 
 		Managment.clickBtnUpdate();
 
-		Assert.assertEquals(Common.getDialogText(),
-				"לא ניתן לבצע שמירה: סה''כ המכסות שעודכנו גדול מתקציב השעות הנוספות");
-		Common.clickAccept();
+		
+		try {
+			
+			Assert.assertEquals(Common.getDialogText(),
+					"לא ניתן לבצע שמירה: סה''כ המכסות שעודכנו גדול מתקציב השעות הנוספות");
+			
+			Common.clickAccept();
+		}
+		
+		
+	    
+        catch (AssertionError e) {
+        	
+        	Assert.assertEquals(Managment.alertMassage.getText(),
+    				"עדכון זה יגרום לעדכון שעות נוספות לעובדים, האם לעדכן?");
+        	Managment.clickBtnSaveMichsaNo();
+        	
+        	
+        }
+		
+	
 
 		Managment.clickLblReset();
 		Managment.clickBtnYes();
