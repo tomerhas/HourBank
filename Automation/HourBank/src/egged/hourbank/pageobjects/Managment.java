@@ -104,7 +104,7 @@ public  class Managment extends Base {
 	@FindBy(how = How.ID, using = "IconKds")
 	public static WebElement lnkKds;
 	
-	@FindBy(how = How.ID, using = "ctl00_upHeader")
+	@FindBy(how = How.ID, using = "ctl00_lblHeader")
 	public WebElement KdsHeader;
 	
 	@FindBy(how = How.ID, using = "lblAuto")
