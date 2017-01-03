@@ -500,11 +500,13 @@
             return;
 
         var title="";
-
-        if($("#EmployeesList").find("span.k-dirty").length == 0 && src=="cancel"){
-            AlertMessage("לא בוצע שינוי במסך",150,300);
-            return;
-        }
+     
+        setTimeout(function(){  
+            if($("#EmployeesList").find("span.k-dirty").length == 0 && src=="cancel"){
+                AlertMessage("לא בוצע שינוי במסך",150,300);
+                return;
+            }
+           
 
         switch (src)
         {
@@ -569,7 +571,7 @@
           ]
 
         });
-      
+        }, 1000); 
     }
     $(".k-grid-save-changes").click(function(e) { return CheckHaveChanges(e);  });
     $(".k-link").click(function(e) { return GoFirstPage(e);  });
@@ -609,7 +611,7 @@
                 $("#btnUpdate").removeAttr('disabled');
                 $( "#btnUpdate" ).removeClass( "DisabledExec" );
             }
-            debugger;
+      
 
         //    $(e.parentNode).find("td[id^='tdShaotUsed']")[0].className="editCell"; 
             // e.parentNode.cells[2].className="editCell";
