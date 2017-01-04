@@ -60,6 +60,7 @@ public class UnDoChanges extends Base {
 				Managment.clickbtnUnDo();
 				//WebElement element2 = driver.findElement(By
 						//.id("dialog-confirm"));
+				Common.Wait_For_Element_Visibile(driver, 60, "dialog-confirm", null, null);
 				Assert.assertEquals(Managment.alertMassage.getText(),
 						"עדכון זה יגרום לביטול השעות שעדכנת כעת, האם לבטל שינויים?");
 				Managment.clickBtnYes();
