@@ -11,7 +11,7 @@ namespace BsmCommon.Interfaces.Dal
 {
     public interface IChangesDal
     {
-        DataTable GetChangesShaotNosafot(int KodEzor, DateTime Month, int isuk, int KodMitkan);
+        DataTable GetChangesShaotNosafot(DateTime Month, int isuk, int KodMitkan);
         DataTable GetBudgetSpecial();
         void AddTakzivLeMitkan(int p_mitkan, DateTime p_chodesh, int p_id_takziv, float p_kamut, string p_reason, int p_user);
         void AddNewTakziv(int p_id_takziv, string p_teur, float p_kamut, string p_reason, int p_user);

@@ -28,14 +28,14 @@ namespace BsmBL.DAL
             _container = container;
         }
 
-        public DataTable GetChangesShaotNosafot(int KodEzor, DateTime Month, int isuk, int KodMitkan)
+        public DataTable GetChangesShaotNosafot(DateTime Month, int isuk, int KodMitkan)
         {
             clDal oDal = _container.Resolve<clDal>();
             DataTable dt = new DataTable();
 
             try
             {//מחזיר נתוני עובד: 
-                oDal.AddParameter("p_ezor", ParameterType.ntOracleInteger, KodEzor, ParameterDir.pdInput);
+               // oDal.AddParameter("p_ezor", ParameterType.ntOracleInteger, KodEzor, ParameterDir.pdInput);
                 oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, Month, ParameterDir.pdInput);
                 oDal.AddParameter("p_isuk", ParameterType.ntOracleInteger, isuk, ParameterDir.pdInput);
                 oDal.AddParameter("p_user_yechida", ParameterType.ntOracleInteger, KodMitkan, ParameterDir.pdInput);

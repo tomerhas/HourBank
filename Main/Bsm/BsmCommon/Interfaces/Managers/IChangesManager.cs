@@ -14,7 +14,7 @@ namespace BsmCommon.Interfaces.Managers
         List<BudgetSpecialYechida> GetExtensionsBudget(int KodYechida, DateTime Month);
         List<BudgetReduction> GetReductionsBudget(int KodYechida, DateTime Month);
 
-        List<BudgetChangesGrid> GetChangesShaotNosafot(int KodEzor, DateTime Month, int isuk, int KodMitkan);
+        List<BudgetChangesGrid> GetChangesShaotNosafot(DateTime Month, int isuk, int KodMitkan);
         List<BudgetSpecial> GetBudgetSpecial();
 
         void AddTakzivLeMitkan(int p_mitkan, DateTime p_chodesh, int p_id_takziv, float p_kamut, string p_reason, int p_user);

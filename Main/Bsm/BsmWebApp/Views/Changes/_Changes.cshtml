@@ -154,17 +154,17 @@
 
 <script type="text/javascript">
    
-    var displayMessage = @Model.ShouldDisplayMessage;
+   // var displayMessage = @Model.ShouldDisplayMessage;
     var CanUpdate = true;
     $(document).ready(function(){
-        if(displayMessage==1){
-            // ModifyGrid("ipus");
-            AlertMessage("לא קיימים מתקנים בהם אתה רשאי לצפות באזור שבחרת",170,330);
-            // alert("Need to display message")
-        }
-        else if(displayMessage==2){
-            AlertMessage("אנא בחר איזור",170,330);
-        }
+        //if(displayMessage==1){
+        //    // ModifyGrid("ipus");
+        //    AlertMessage("לא קיימים מתקנים בהם אתה רשאי לצפות באזור שבחרת",170,330);
+        //    // alert("Need to display message")
+        //}
+        //else if(displayMessage==2){
+        //    AlertMessage("אנא בחר איזור",170,330);
+        //}
    
         var model = @Html.Raw(Json.Encode(Model));
         CanUpdate = model.IsMonthToEdit;

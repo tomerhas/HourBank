@@ -11,18 +11,11 @@
         <div class="bgGray" style="height: 64px;">
             <div class="row">
                 <div class="col-md-8" style="padding-top: 18px">
-                    @if (@Model.ShowEzor)
+                    @*@if (@Model.ShowEzor)
                     {
                         <label class="TextBold" style="margin-right: 20px;">אזור:</label>
-                        //if (Model.SelectedEzor != 0)
-                       // {
-                          //  @Html.DropDownListFor(m => m.SelectedEzor, Model.Ezors, new { @onchange = "EnableButton();", @class = "ddl", style = "width: 100px;height: 29px;" })
-                        //}
-                      //  else
-                       // {
                             @Html.DropDownListFor(m => m.SelectedEzor, Model.Ezors, new { @onchange = "EnableButton();ChangeCurrentEzor(this.options[this.selectedIndex].value);", @class = "ddl", style = "width: 100px;height: 29px;" })
-                        //}
-                    }
+                    }*@
                         <label class="TextBold" style="margin-right: 20px;">תאריך:</label>
                         @Html.DropDownListFor(m => m.SelectedMonth, Model.Months, new { @onchange = "EnableButton();ChangeCurrentMonth(this.options[this.selectedIndex].value);", @class = "ddl", style = "*width: 140px;height: 29px;" })
                         <input type="button" id="btnPrevMonth" value="חודש קודם" class="WhiteButton BgPrev GeneralText" onclick="SetMonth(-1);" />

@@ -192,15 +192,14 @@ namespace BsmWebApp.Controllers
             var months = GetMonthsBackList(6);
             vm.Months = new SelectList(months, "Id", "Val");
             vm.SelectedMonth = months[0].Id;
-            var ezors = GetEzorList().OrderBy(e=>e.KOD_EZOR).ToList();
-            ezors.Insert(0,new TeurEzor(0, "בחר אזור"));
-            var ezorsToUser = CurrentUser.Yechidot.GroupBy(e => e.KodEzor).ToList();      
-            vm.Ezors = new SelectList(ezors, "KOD_EZOR", "TEUR_EZOR");
-            if (ezorsToUser.Count == 1)
-                vm.SelectedEzor = ezorsToUser[0].Key;
-            else vm.SelectedEzor = 0;
-            //FilterViewModel vm = new FilterViewModel(months);
-            //vm.Month = DateTime.Parse(months[0].Id);
+            ////var ezors = GetEzorList().OrderBy(e=>e.KOD_EZOR).ToList();
+            ////ezors.Insert(0,new TeurEzor(0, "בחר אזור"));
+            ////var ezorsToUser = CurrentUser.Yechidot.GroupBy(e => e.KodEzor).ToList();      
+            ////vm.Ezors = new SelectList(ezors, "KOD_EZOR", "TEUR_EZOR");
+            ////if (ezorsToUser.Count == 1)
+            ////    vm.SelectedEzor = ezorsToUser[0].Key;
+            ////else vm.SelectedEzor = 0;
+           
 
             IGeneralManager Gmanager = _container.Resolve<IGeneralManager>();
 

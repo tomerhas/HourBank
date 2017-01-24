@@ -78,10 +78,10 @@ namespace BsmBL.Managers
             });
         }
 
-        public List<BudgetChangesGrid> GetChangesShaotNosafot(int KodEzor, DateTime Month, int isuk, int KodMitkan)
+        public List<BudgetChangesGrid> GetChangesShaotNosafot(DateTime Month, int isuk, int KodMitkan)
         {
             List<BudgetChangesGrid> list = new List<BudgetChangesGrid>();
-            var dt = _container.Resolve<IChangesDal>().GetChangesShaotNosafot(KodEzor, Month, isuk, KodMitkan);
+            var dt = _container.Resolve<IChangesDal>().GetChangesShaotNosafot(Month, isuk, KodMitkan);
             foreach (DataRow dr in dt.Rows)
             {
                 list.Add(CreateBudgetEmployeeFromDataRow(dr));

@@ -38,7 +38,7 @@ namespace BsmWebApp.Controllers
             InitFilterChash();
 
             vmResult.Filter = GetFilter();
-            vmResult.Filter.ShowEzor = true;
+          //  vmResult.Filter.ShowEzor = true;
             vmResult.Page = "Changes";
             
 
@@ -63,14 +63,17 @@ namespace BsmWebApp.Controllers
             ChangesMainViewModel vmResult = new ChangesMainViewModel();  //InitChangesVm();
 
             FilterCachedViewModel obj = (FilterCachedViewModel)Session["GeneralDetails"];
-            if (vm.SelectedEzor != 0)
-            {
-                vmResult.Changes = GetChangesShaotNosafot(vm.SelectedEzor, obj.CurMonth, CurrentUser.PirteyUser.Isuk, CurrentUser.PirteyUser.YechidaIrgunit);
-                ChangesCachedViewModel sessionVm = new ChangesCachedViewModel() { Changes = vmResult.Changes, SelectedEzor = vm.SelectedEzor, CurMonth = obj.CurMonth, Isuk = CurrentUser.PirteyUser.Isuk, YechidaIrgunit = CurrentUser.PirteyUser.YechidaIrgunit };
+            ////if (vm.SelectedEzor != 0)
+            ////{
+             vmResult.Changes = GetChangesShaotNosafot( obj.CurMonth, CurrentUser.PirteyUser.Isuk, CurrentUser.PirteyUser.YechidaIrgunit);
+           // vmResult.Changes = GetChangesShaotNosafot(vm.SelectedEzor, obj.CurMonth, CurrentUser.PirteyUser.Isuk, CurrentUser.PirteyUser.YechidaIrgunit);
 
-                Session["ChangesGrid"] = sessionVm;
+            ChangesCachedViewModel sessionVm = new ChangesCachedViewModel() { Changes = vmResult.Changes,CurMonth = obj.CurMonth, Isuk = CurrentUser.PirteyUser.Isuk, YechidaIrgunit = CurrentUser.PirteyUser.YechidaIrgunit };
+          //  ChangesCachedViewModel sessionVm = new ChangesCachedViewModel() { Changes = vmResult.Changes, SelectedEzor = vm.SelectedEzor, CurMonth = obj.CurMonth, Isuk = CurrentUser.PirteyUser.Isuk, YechidaIrgunit = CurrentUser.PirteyUser.YechidaIrgunit };
+
+            Session["ChangesGrid"] = sessionVm;
                 vmResult.Filter = GetFilter();
-                vmResult.Filter.ShowEzor = true;
+             //   vmResult.Filter.ShowEzor = true;
                 vmResult.Filter.SelectedMonth = vm.SelectedMonth;
 
                 if (DateTime.Now < vmResult.Filter.LastDateIdkunBank && CurrentUser.GetSugPeilutHatshaa("Changes") == eSugPeiluHarshaa.Update)
@@ -80,21 +83,21 @@ namespace BsmWebApp.Controllers
                 {
                     vmResult.ShouldDisplayMessage = 0;
                 }
-                else
-                {
-                    vmResult.ShouldDisplayMessage = 1;
-                }
+                ////else
+                ////{
+                ////    vmResult.ShouldDisplayMessage = 1;
+                ////}
 
                 return View(vmResult);
-            }
-            else
-            {
-                vmResult = getDefaultChangesVM();
-                vmResult.Filter.SelectedMonth = vm.SelectedMonth;
-                ChangeMonth(vm.SelectedMonth);
-                vmResult.ShouldDisplayMessage = 2;
-                return View(vmResult);
-            }
+            ////}
+            ////else
+            ////{
+            ////    vmResult = getDefaultChangesVM();
+            ////    vmResult.Filter.SelectedMonth = vm.SelectedMonth;
+            ////    ChangeMonth(vm.SelectedMonth);
+            ////    vmResult.ShouldDisplayMessage = 2;
+            ////    return View(vmResult);
+            ////}
 
            
         }
@@ -111,7 +114,7 @@ namespace BsmWebApp.Controllers
             var changesVm = (Session["ChangesGrid"]) as ChangesCachedViewModel;
             if (changesVm != null)
             {
-                var changesGridRes = GetChangesShaotNosafot(changesVm.SelectedEzor, changesVm.CurMonth, changesVm.Isuk, changesVm.YechidaIrgunit);
+                var changesGridRes = GetChangesShaotNosafot(changesVm.CurMonth, changesVm.Isuk, changesVm.YechidaIrgunit);
                 changesVm.Changes = changesGridRes;
             }
         }
@@ -138,7 +141,7 @@ namespace BsmWebApp.Controllers
             var changesVm = (Session["ChangesGrid"]) as ChangesCachedViewModel;
             if (changesVm != null)
             {
-                var changesGridRes = GetChangesShaotNosafot(changesVm.SelectedEzor, changesVm.CurMonth, changesVm.Isuk, changesVm.YechidaIrgunit);
+                var changesGridRes = GetChangesShaotNosafot(changesVm.CurMonth, changesVm.Isuk, changesVm.YechidaIrgunit);
                 changesVm.Changes = changesGridRes;
             }
         }
@@ -155,14 +158,14 @@ namespace BsmWebApp.Controllers
             var changesVm = (Session["ChangesGrid"]) as ChangesCachedViewModel;
             if (changesVm != null)
             {
-                var changesGridRes = GetChangesShaotNosafot(changesVm.SelectedEzor, changesVm.CurMonth, changesVm.Isuk, changesVm.YechidaIrgunit);
+                var changesGridRes = GetChangesShaotNosafot(changesVm.CurMonth, changesVm.Isuk, changesVm.YechidaIrgunit);
                 changesVm.Changes = changesGridRes;
             }
         }
-        private List<BudgetChangesGrid> GetChangesShaotNosafot(int KodEzor, DateTime Month, int isuk, int KodMitkan)
+        private List<BudgetChangesGrid> GetChangesShaotNosafot( DateTime Month, int isuk, int KodMitkan)
         {
             var ManagerChange = _container.Resolve<IChangesManager>();
-            var Changes = ManagerChange.GetChangesShaotNosafot(KodEzor, Month, isuk, KodMitkan);
+            var Changes = ManagerChange.GetChangesShaotNosafot(Month, isuk, KodMitkan);
             return Changes;
         }
 

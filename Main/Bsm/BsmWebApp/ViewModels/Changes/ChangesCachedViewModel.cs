@@ -8,7 +8,7 @@ namespace BsmWebApp.ViewModels.Changes
 {
     public class ChangesCachedViewModel
     {
-        public int SelectedEzor { get; set; }
+    //    public int SelectedEzor { get; set; }
         public DateTime CurMonth { get; set; }
         public int Isuk { get; set; }
         public int YechidaIrgunit { get; set; }
