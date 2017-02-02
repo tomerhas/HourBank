@@ -19,7 +19,7 @@ public class BudgetMobile  extends Base {
 	  
 	  enterMobility();
 	  Mobility.clickNiud();
-	  Mobility.selectOutToIn("91017","92320");
+	  Mobility.selectOutToIn("91017","85878");
 	  Mobility.clickBtnUpdate();
 	  Assert.assertEquals(Common.getDialogText(),"חובה לעדכן את כל השדות");
 	  Common.clickAccept();

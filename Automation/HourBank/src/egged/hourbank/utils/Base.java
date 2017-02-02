@@ -111,8 +111,8 @@ public    void enterNanagment (String mitkanname)    {
 public void enterMobility ()    {
 	
 	main.lnkMobility.click();
-	Select droplist = new Select(Mobility.listEzor);
-	droplist.selectByVisibleText("דרום");
+	//Select droplist = new Select(Mobility.listEzor);
+	//droplist.selectByVisibleText("דרום");
 	main.btnShow.click();
 	
 	
