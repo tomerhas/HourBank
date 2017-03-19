@@ -60,7 +60,7 @@ public  class Managment extends Base {
 	
 	
 	@FindBy(how = How.ID, using = "MenuModel_MitkanName_KodYechida")
-	public WebElement mitkanName;
+	public WebElement mitkanName ;
 
 	@FindBy(how = How.ID, using = "btnUpdate")
 	public static WebElement btnUpdate;
