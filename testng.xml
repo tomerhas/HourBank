@@ -1,0 +1,28 @@
+<suite  name="HourBank">
+
+    <test name="Budget">
+    
+	
+
+		<classes>
+		
+            <class name="egged.hourbank.automationframework.ChkAutoComplete" /> 
+	        <class name="egged.hourbank.automationframework.UpdateMichsa" />
+		    <class name="egged.hourbank.automationframework.UnDoChanges" />
+            <class name="egged.hourbank.automationframework.ResetMichsa" />
+            <class name="egged.hourbank.automationframework.LinkToKds" /> 
+            <class name="egged.hourbank.automationframework.AutoAllocation" /> 
+            <class name="egged.hourbank.automationframework.ChkPrevMonth" /> 
+            <class name="egged.hourbank.automationframework.BudgetMobile" /> 
+            <class name="egged.hourbank.automationframework.AddBudget" /> 
+            <class name="egged.hourbank.automationframework.BudgetReduction" /> 
+            <class name="egged.hourbank.automationframework.CreateNewBudget" /> 
+            <!--<class name="egged.hourbank.automationframework.ChkMitkanInActive" />--> 
+            <class name="egged.hourbank.automationframework.CreateNewBudget" />
+            
+		</classes>
+		
+		  </test>
+		  
+		  
+		  </suite>
