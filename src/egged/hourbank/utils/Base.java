@@ -6,6 +6,7 @@ import java.io.File;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterMethod;
@@ -68,6 +69,8 @@ public  void createDriver() {
 	
 	File file = new File("C:/Selenium/IEDriverServer.exe");
 	System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
+	DesiredCapabilities cap = new DesiredCapabilities();
+	cap.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);
 	 driver = new InternetExplorerDriver();
 	  driver.navigate().to("http://bsm");
 	  main = PageFactory.initElements(driver, Main.class);
