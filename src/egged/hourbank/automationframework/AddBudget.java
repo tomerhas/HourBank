@@ -26,6 +26,7 @@ public class AddBudget  extends Base {
 	  Mobility.clickAddBudget();	
 	  Mobility.selectMitkan("91017");
 	  Mobility.selectBudget("14");
+	  //Mobility.selectBudget("17");
 	  Mobility.clickBtnUpdate();
 	  Assert.assertEquals(Common.getDialogText(),"חובה לעדכן את כל השדות");
 	  Common.clickAccept();
@@ -35,6 +36,7 @@ public class AddBudget  extends Base {
 	  Assert.assertEquals(Common.getDialogText(),"לא ניתן לעדכן מעבר ליתרה");
 	  Common.clickAccept();
 	  Mobility.selectBudget("13");
+	  //Mobility.selectBudget("22");
 	  Mobility.typeKamut("1");
 	  Mobility.clickBtnUpdate();
 	  Common.Wait_For_Element_Visibile(driver, 60, "dialog-message", null, null);

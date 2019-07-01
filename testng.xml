@@ -18,7 +18,7 @@
             <class name="egged.hourbank.automationframework.BudgetReduction" /> 
             <class name="egged.hourbank.automationframework.CreateNewBudget" /> 
             <!--<class name="egged.hourbank.automationframework.ChkMitkanInActive" />--> 
-            <class name="egged.hourbank.automationframework.CreateNewBudget" />
+            <!--<class name="egged.hourbank.automationframework.CreateNewBudget" /-->
             
 		</classes>
 		

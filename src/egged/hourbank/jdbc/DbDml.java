@@ -61,10 +61,10 @@ public static void deleteRecordFromTable( String sdescription ) throws SQLExcept
 
 private static Connection getDBConnection() {
 
-	 String DB_CONNECTION = "jdbc:oracle:thin:@oraclewintst:1522:kdstst";
+	 String DB_CONNECTION = "jdbc:oracle:thin:@kdsprd.egged.intra:1521:kdsprd";
 	 String DB_USER = "HOUR_BANK";
 	 String DB_PASSWORD = "HB19GKM";
-	Connection dbConnection = null;
+   	Connection dbConnection = null;
 
 	try {
 

@@ -18,16 +18,21 @@ public class ChkMitkanPointer extends Base {
 	  
 	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	    enterMobility();
-	    Mobility.moveToPointer();
+	    /*Mobility.moveToPointer();
 	    Common.Wait_For_Element_Visibile(driver, 60, null, null, "//*[@id='buttons']//div/label[.='הוסף']");
 	    Mobility.clickPointer(Mobility.addBudgetPointer);
 		Assert.assertEquals(Common.getActualText(Mobility.getTextSelected(Mobility.listMitkanInAdd), "\\("),Common.getActualText(Mobility.firstmitkanName.getText(),"הוסף")+" ");
-		Mobility.closeDialog();
+		Mobility.closeDialog();*/
 		Mobility.moveToPointer();
 		Common.Wait_For_Element_Visibile(driver, 60, null, null, "//*[@id='buttons']//div/label[.='נייד']");
 		Mobility.clickPointer(Mobility.mobileBudgetPointer);
-		Assert.assertEquals(Common.getActualText(Mobility.getTextSelected(Mobility.listMitkanInMobile), "\\("),Common.getActualText(Mobility.firstmitkanName.getText(),"הוסף")+" ");
-		    
+		//Assert.assertEquals(Common.getActualText(Mobility.getTextSelected(Mobility.listMitkanInMobile), "\\("),Common.getActualText(Mobility.firstmitkanName.getText(),"הוסף")+" ");
+		System.out.println(Common.getActualText(Mobility.firstmitkanName.getText(),"הוסף")+" ");
+		System.out.println(Common.getActualText(Mobility.getTextSelected(Mobility.listMitkanInMobile),"\\("));
+		System.out.println(Mobility.getTextSelected(Mobility.listMitkanInMobile));
+		System.out.println("tttt");
+		Assert.assertEquals(Common.getActualText(Mobility.getTextSelected(Mobility.listMitkanInMobile),"\\("),Common.getActualText(Mobility.firstmitkanName.getText(),"הוסף")+" "); 
+		
 		
 		
 	  
