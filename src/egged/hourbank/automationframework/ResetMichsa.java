@@ -22,8 +22,12 @@ public class ResetMichsa extends Base {
 		// int num=Managment.getNumOfRows();
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		 
 
 		enterNanagment("הנהלת מוסך נתניה");
+		
+		
 
 		Managment.updateMichsa("20");
 

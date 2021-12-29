@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 
+import egged.hourbank.pageobjects.Managment;
 import egged.hourbank.pageobjects.Mobility;
 import egged.hourbank.utils.Base;
 import egged.hourbank.utils.Common;
@@ -59,17 +60,7 @@ public class BudgetReduction   extends Base {
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+ 
  
   
   
@@ -81,6 +72,7 @@ public class BudgetReduction   extends Base {
 	  driver = getDriver();
 	  initMobility();
 	  initCommon();
+	  
 	  
 	  
 	  

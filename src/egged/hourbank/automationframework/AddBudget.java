@@ -23,14 +23,15 @@ public class AddBudget  extends Base {
 	  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  
 	  enterMobility();
-	  Mobility.clickAddBudget();	
+	  Mobility.clickAddBudget();
 	  Mobility.selectMitkan("91017");
 	  Mobility.selectBudget("14");
 	  //Mobility.selectBudget("17");
 	  Mobility.clickBtnUpdate();
 	  Assert.assertEquals(Common.getDialogText(),"חובה לעדכן את כל השדות");
 	  Common.clickAccept();
-	  Mobility.typeKamut("250");
+	  Mobility.selectBudget("17");    // לשנות לקוד קבוע עבור אוטומצייה
+	  Mobility.typeKamut("150");
 	  Mobility.typeReason("טסט");
 	  Mobility.clickBtnUpdate();
 	  Assert.assertEquals(Common.getDialogText(),"לא ניתן לעדכן מעבר ליתרה");
@@ -51,20 +52,12 @@ public class AddBudget  extends Base {
 	  
 	  
 	  
-	  
-	  
-	  
   }
   
   
   
   
-  
-  
-  
-  
-  
-  
+ 
   
   
   
