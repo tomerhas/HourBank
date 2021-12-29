@@ -73,7 +73,7 @@ public  void createDriver() {
 	cap.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);
 	 driver = new InternetExplorerDriver();
 	  //driver.navigate().to("http://hourbanknew");
-	 driver.navigate().to("http://hourbanktest");
+	 driver.navigate().to("http://hourbanktest2");
 	  main = PageFactory.initElements(driver, Main.class);
 }
 
